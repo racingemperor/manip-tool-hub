@@ -584,6 +584,7 @@
       padding: 0;
       overflow: hidden;
       cursor: pointer;
+      position: relative;
     }
 
     .tool-card.active {
@@ -622,6 +623,26 @@
       line-height: 1.5;
     }
 
+    .tool-open-row {
+      display: flex;
+      justify-content: flex-end;
+      margin-top: 12px;
+    }
+
+    .tool-open-link {
+      border: 0;
+      background: transparent;
+      color: var(--accent);
+      font-size: 12px;
+      font-weight: 800;
+      cursor: pointer;
+      padding: 0;
+    }
+
+    .tool-open-link:hover {
+      text-decoration: underline;
+    }
+
     .tool-meta {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -645,6 +666,7 @@
       overflow: hidden;
       position: sticky;
       top: 96px;
+      scroll-margin-top: 110px;
     }
 
     .detail-header {
@@ -1160,7 +1182,7 @@
               </div>
 
               <div class="model-grid">
-                <article class="card tool-card active" data-tool-title="Tool Entry Template" data-tool-category="Perception and Grounding" data-tool-search="tool entry template perception grounding images text state api demo paper">
+                <article class="card tool-card active" data-tool-slug="tool-entry-template" data-tool-title="Tool Entry Template" data-tool-category="Perception and Grounding" data-tool-search="tool entry template perception grounding images text state api demo paper">
                   <div class="tool-thumb">Demo image / screenshot</div>
                   <div class="tool-card-body">
                     <div class="card-title">Tool Entry Template <span class="badge blue">Perception</span></div>
@@ -1174,10 +1196,13 @@
                       <div>Input<strong>Images / text / state</strong></div>
                       <div>Output<strong>Grounding result</strong></div>
                     </div>
+                    <div class="tool-open-row">
+                      <button class="tool-open-link" type="button">Open detail</button>
+                    </div>
                   </div>
                 </article>
 
-                <article class="card tool-card" data-tool-title="Paper-backed Tool Template" data-tool-category="Cognition and State Modeling" data-tool-search="paper backed tool template cognition state modeling bibtex method artifacts world model memory">
+                <article class="card tool-card" data-tool-slug="paper-backed-tool-template" data-tool-title="Paper-backed Tool Template" data-tool-category="Cognition and State Modeling" data-tool-search="paper backed tool template cognition state modeling bibtex method artifacts world model memory">
                   <div class="tool-thumb">Paper figure / pipeline</div>
                   <div class="tool-card-body">
                     <div class="card-title">Paper-backed Tool Template <span class="badge">State</span></div>
@@ -1191,10 +1216,13 @@
                       <div>Paper<strong>Title / venue</strong></div>
                       <div>Status<strong>Draft</strong></div>
                     </div>
+                    <div class="tool-open-row">
+                      <button class="tool-open-link" type="button">Open detail</button>
+                    </div>
                   </div>
                 </article>
 
-                <article class="card tool-card" data-tool-title="API Tool Template" data-tool-category="Reasoning and Planning" data-tool-search="api tool template reasoning planning endpoint schema example post get token">
+                <article class="card tool-card" data-tool-slug="api-tool-template" data-tool-title="API Tool Template" data-tool-category="Reasoning and Planning" data-tool-search="api tool template reasoning planning endpoint schema example post get token">
                   <div class="tool-thumb">API response preview</div>
                   <div class="tool-card-body">
                     <div class="card-title">API Tool Template <span class="badge blue">Planning</span></div>
@@ -1208,10 +1236,13 @@
                       <div>Method<strong>POST / GET</strong></div>
                       <div>Auth<strong>Token slot</strong></div>
                     </div>
+                    <div class="tool-open-row">
+                      <button class="tool-open-link" type="button">Open detail</button>
+                    </div>
                   </div>
                 </article>
 
-                <article class="card tool-card" data-tool-title="Execution Tool Template" data-tool-category="Execution and Control" data-tool-search="execution tool template control policy runtime benchmark rollout action trace">
+                <article class="card tool-card" data-tool-slug="execution-tool-template" data-tool-title="Execution Tool Template" data-tool-category="Execution and Control" data-tool-search="execution tool template control policy runtime benchmark rollout action trace">
                   <div class="tool-thumb">Policy rollout / action trace</div>
                   <div class="tool-card-body">
                     <div class="card-title">Execution Tool Template <span class="badge">Control</span></div>
@@ -1224,6 +1255,9 @@
                     <div class="tool-meta">
                       <div>Runtime<strong>Local / API</strong></div>
                       <div>Metric<strong>Success rate</strong></div>
+                    </div>
+                    <div class="tool-open-row">
+                      <button class="tool-open-link" type="button">Open detail</button>
                     </div>
                   </div>
                 </article>
@@ -1353,12 +1387,18 @@
     const toolResultCount = document.querySelector("#toolResultCount");
     let activeToolCategory = "Perception and Grounding";
 
-    function selectToolCard(card) {
+    function selectToolCard(card, options = {}) {
       if (!card) return;
       toolCards.forEach((item) => item.classList.remove("active"));
       card.classList.add("active");
       detailTitle.textContent = card.dataset.toolTitle || "Tool Entry Template";
       detailCategory.textContent = card.dataset.toolCategory || "Tool Category";
+      if (options.updateHash !== false && card.dataset.toolSlug) {
+        history.replaceState(null, "", `#tool/${card.dataset.toolSlug}`);
+      }
+      if (options.scroll) {
+        document.querySelector(".tool-detail")?.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
     }
 
     function updateToolCounts() {
@@ -1391,7 +1431,7 @@
       }
 
       if (![...toolCards].some((card) => card.classList.contains("active") && card.style.display !== "none")) {
-        selectToolCard(firstVisible);
+        selectToolCard(firstVisible, { updateHash: false });
       }
     }
 
@@ -1399,7 +1439,7 @@
       card.addEventListener("click", () => {
         if (card.style.display === "none") return;
         toolCards.forEach((item) => item.classList.remove("active"));
-        selectToolCard(card);
+        selectToolCard(card, { scroll: true });
       });
     });
 
@@ -1414,6 +1454,25 @@
     toolSearch?.addEventListener("input", filterTools);
     updateToolCounts();
     filterTools();
+
+    function openToolFromHash() {
+      const match = window.location.hash.match(/^#tool\/(.+)$/);
+      if (!match) return;
+      const slug = decodeURIComponent(match[1]);
+      const card = [...toolCards].find((item) => item.dataset.toolSlug === slug);
+      if (!card) return;
+      const categoryButton = [...toolCategoryButtons].find((button) => button.dataset.toolCategoryFilter === card.dataset.toolCategory);
+      if (categoryButton) {
+        activeToolCategory = categoryButton.dataset.toolCategoryFilter;
+        toolCategoryButtons.forEach((item) => item.classList.toggle("active", item === categoryButton));
+      }
+      activate("models");
+      filterTools();
+      selectToolCard(card, { updateHash: false, scroll: true });
+    }
+
+    window.addEventListener("hashchange", openToolFromHash);
+    openToolFromHash();
 
     const detailTabButtons = document.querySelectorAll("[data-detail-tab]");
     const detailPanels = document.querySelectorAll(".detail-panel");
