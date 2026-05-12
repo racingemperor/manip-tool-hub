@@ -808,12 +808,12 @@
           <span>Manip Tool Hub</span>
         </a>
         <div class="detail-search">
-          <input id="detailSearch" aria-label="Search this tool" placeholder="Search sections, API, examples, benchmark, related tools">
+          <input id="detailSearch" aria-label="Search this tool" placeholder="Search sections, code paths, examples, benchmark, related tools">
           <div class="search-results" id="detailSearchResults"></div>
         </div>
         <div class="nav-actions">
           <a class="btn" href="./#models">All Tools</a>
-          <a class="btn primary" href="#api">API Reference</a>
+          <a class="btn primary" href="#api">Code Reference</a>
         </div>
       </div>
     </header>
@@ -829,7 +829,7 @@
               <a href="#overview">Overview <span>&rarr;</span></a>
               <a href="#paper">Original Paper <span>&rarr;</span></a>
               <a href="#demo">Demo Gallery <span>&rarr;</span></a>
-              <a href="#api">API Reference <span>&rarr;</span></a>
+              <a href="#api">Code Reference <span>&rarr;</span></a>
               <a href="#code-docs">Returns and Examples <span>&rarr;</span></a>
               <a href="#tool-contract">Input Parameters <span>&rarr;</span></a>
               <a href="#test-examples">Test Examples <span>&rarr;</span></a>
@@ -846,20 +846,20 @@
       <section class="hero">
         <div class="hero-media">
           <div class="eyebrow" id="toolCategory">Reasoning and Planning</div>
-          <h1 id="toolTitle">API Tool Template</h1>
-          <p id="toolSummary">A dedicated tool detail page for paper-grounded methods, demo media, API contracts, benchmark results, and integration notes.</p>
+          <h1 id="toolTitle">Code Tool Template</h1>
+          <p id="toolSummary">A dedicated tool detail page for paper-grounded methods, demo media, code contracts, benchmark results, and integration notes.</p>
         </div>
         <div class="hero-footer">
           <div class="badge-row">
             <span class="badge blue" id="toolTask">Planning</span>
             <span class="badge">Paper</span>
             <span class="badge">Demo Images</span>
-            <span class="badge green">API Ready</span>
+            <span class="badge green">Docs Ready</span>
           </div>
           <div class="nav-actions">
             <a class="btn" href="#paper">Paper</a>
             <a class="btn" href="#demo">Demo</a>
-            <a class="btn" href="#api">API</a>
+            <a class="btn" href="#api">Code Paths</a>
           </div>
         </div>
       </section>
@@ -919,44 +919,44 @@
           <section class="card" id="api">
             <div class="card-head">
               <div>
-                <h2>API Reference</h2>
-                <p class="muted">Model this section after professional tool docs: endpoint, schema, examples, errors, and integration notes.</p>
+                <h2>Code Reference</h2>
+                <p class="muted">Use this section to point readers to repository-relative entry files, schemas, examples, errors, and integration notes.</p>
               </div>
-              <span class="badge green">Endpoint slot</span>
+              <span class="badge green">Path slot</span>
             </div>
-            <pre class="api-block" id="apiExample">POST /api/tool-name
-Content-Type: application/json
+            <pre class="api-block" id="apiExample">tools/tool-name/
+  README.md
+  demo/run_example.py
+  configs/default.yaml
+  examples/sample_input.json
 
-{
-  "input": "placeholder",
-  "parameters": {
-    "threshold": 0.5,
-    "return_visualization": true
-  }
-}</pre>
+python tools/tool-name/demo/run_example.py \
+  --config tools/tool-name/configs/default.yaml \
+  --input tools/tool-name/examples/sample_input.json \
+  --output tools/tool-name/runs/example</pre>
             <table class="param-table">
               <thead>
                 <tr>
-                  <th>Field</th>
+                  <th>Item</th>
                   <th>Type</th>
                   <th>Description</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
-                  <td>input</td>
-                  <td>string | file | JSON</td>
-                  <td>Primary tool input. Replace with the real schema.</td>
+                  <td>tool_root</td>
+                  <td>relative path</td>
+                  <td>Folder that contains the tool implementation, demo files, configs, and examples.</td>
                 </tr>
                 <tr>
-                  <td>parameters</td>
-                  <td>object</td>
-                  <td>Optional runtime options, thresholds, modes, or model settings.</td>
+                  <td>entry_file</td>
+                  <td>relative path</td>
+                  <td>Main script, notebook, or wrapper that someone should open first.</td>
                 </tr>
                 <tr>
-                  <td>response</td>
-                  <td>object</td>
-                  <td>Structured result, visualization URL, metrics, and debug traces.</td>
+                  <td>outputs</td>
+                  <td>relative path</td>
+                  <td>Expected location for result images, JSON outputs, logs, metrics, and traces.</td>
                 </tr>
               </tbody>
             </table>
@@ -965,7 +965,7 @@ Content-Type: application/json
           <section class="card" id="code-docs">
             <div class="card-head">
               <div>
-                <h2>Returns, API, and Examples</h2>
+                <h2>Returns, Code Paths, and Examples</h2>
                 <p class="muted">Short previews are shown by default. Expand a block when you need the full template.</p>
               </div>
             </div>
@@ -991,8 +991,8 @@ Content-Type: application/json
     "postprocess_ms": 5
   },
   "artifacts": {
-    "visualization": "runs/detect/result.jpg",
-    "raw_predictions": "runs/detect/predictions.json"
+    "visualization": "tools/yolo-world/runs/detect/result.jpg",
+    "raw_predictions": "tools/yolo-world/runs/detect/predictions.json"
   }
 }</pre>
                   <button class="doc-toggle" type="button">Expand full return schema</button>
@@ -1000,28 +1000,28 @@ Content-Type: application/json
               </article>
 
               <article class="doc-card">
-                <h3>API</h3>
-                <p class="muted">Use this area for a local wrapper, hosted endpoint, or future service interface.</p>
-                <div class="doc-code" data-collapsed-label="Expand API notes" data-expanded-label="Collapse API notes">
-                  <pre class="api-block">POST /api/tools/yolo-world/detect
-Content-Type: multipart/form-data
+                <h3>Code Paths</h3>
+                <p class="muted">Use this area to list the relative files someone should inspect or run inside the repository.</p>
+                <div class="doc-code" data-collapsed-label="Expand code path notes" data-expanded-label="Collapse code path notes">
+                  <pre class="api-block">Tool root:
+tools/yolo-world/
 
-image=@scene.jpg
-prompts=person,bus,car
-threshold=0.05
+Entry command:
+python tools/yolo-world/demo/image_demo.py \
+  tools/yolo-world/demo/sample_images/bus.jpg \
+  tools/yolo-world/configs/pretrain/yolo_world_v2_xl.py \
+  tools/yolo-world/weights/yolo_world_v2_xl_obj365v1_goldg_pretrain-5daf1395.pth \
+  "person,bus,car" \
+  --topk 100 \
+  --threshold 0.05 \
+  --output-dir tools/yolo-world/runs/detect
 
-Request fields:
-- image: file | URL
-- prompts: comma-separated text categories
-- threshold: confidence threshold
-- topk: max detections to return
-- return_visualization: include rendered result image
-
-Response:
-- detections: array of boxes, labels, scores
-- visualization: optional artifact URL
-- timing: optional runtime breakdown</pre>
-                  <button class="doc-toggle" type="button">Expand API notes</button>
+Important relative paths:
+- tools/yolo-world/demo/image_demo.py
+- tools/yolo-world/configs/pretrain/yolo_world_v2_xl.py
+- tools/yolo-world/demo/sample_images/bus.jpg
+- tools/yolo-world/runs/detect/predictions.json</pre>
+                  <button class="doc-toggle" type="button">Expand code path notes</button>
                 </div>
               </article>
 
@@ -1029,13 +1029,13 @@ Response:
                 <h3>Examples</h3>
                 <p class="muted">Keep one short runnable snippet visible; move longer scripts behind expand.</p>
                 <div class="doc-code" data-collapsed-label="Expand full example" data-expanded-label="Collapse example">
-                  <pre class="api-block">python demo/image_demo.py demo/sample_images/bus.jpg \
-  configs/pretrain/yolo_world_v2_xl.py \
-  weights/yolo_world_v2_xl_obj365v1_goldg_pretrain-5daf1395.pth \
+                  <pre class="api-block">python tools/yolo-world/demo/image_demo.py tools/yolo-world/demo/sample_images/bus.jpg \
+  tools/yolo-world/configs/pretrain/yolo_world_v2_xl.py \
+  tools/yolo-world/weights/yolo_world_v2_xl_obj365v1_goldg_pretrain-5daf1395.pth \
   "person,bus,car" \
   --topk 100 \
   --threshold 0.05 \
-  --output-dir runs/detect
+  --output-dir tools/yolo-world/runs/detect
 
 # Replace the prompts with task-specific vocabulary for grounding.</pre>
                   <button class="doc-toggle" type="button">Expand full example</button>
@@ -1048,13 +1048,13 @@ Response:
             <div class="card-head">
               <div>
                 <h2>Input Parameters</h2>
-                <p class="muted">A ToolUniverse-style contract for future wrappers or hosted APIs. This static page documents the fields; it does not execute them.</p>
+                <p class="muted">A ToolUniverse-style contract for repository-relative local usage. This static page documents the fields; it does not execute them.</p>
               </div>
             </div>
             <div class="parameter-list">
               <div class="parameter-item">
-                <div class="parameter-head"><code>image</code><span class="badge">file | path | URL</span><span class="badge green">required</span></div>
-                <p class="muted">Input image or scene to run open-vocabulary detection on.</p>
+                <div class="parameter-head"><code>image</code><span class="badge">relative path | file</span><span class="badge green">required</span></div>
+                <p class="muted">Project-relative image or scene path to run open-vocabulary detection on.</p>
               </div>
               <div class="parameter-item">
                 <div class="parameter-head"><code>prompts</code><span class="badge">string | string[]</span><span class="badge green">required</span></div>
@@ -1075,7 +1075,7 @@ Response:
             <div class="card-head">
               <div>
                 <h2>Test Examples</h2>
-                <p class="muted">Example inputs that someone could use when building a local wrapper or a future endpoint.</p>
+                <p class="muted">Example inputs that someone could use when wiring the local code entry for a tool.</p>
               </div>
               <span class="badge">3 examples</span>
             </div>
@@ -1083,7 +1083,7 @@ Response:
               <article class="example-item">
                 <h3>Example 1: street scene</h3>
                 <pre class="api-block">{
-  "image": "demo/sample_images/bus.jpg",
+  "image": "tools/yolo-world/demo/sample_images/bus.jpg",
   "prompts": "person,bus,car",
   "threshold": 0.05,
   "topk": 100
@@ -1092,7 +1092,7 @@ Response:
               <article class="example-item">
                 <h3>Example 2: manipulation scene</h3>
                 <pre class="api-block">{
-  "image": "workspace/scene.jpg",
+  "image": "tools/yolo-world/examples/manipulation_scene.jpg",
   "prompts": "robot arm,gripper,red cube,table",
   "threshold": 0.10,
   "topk": 50
@@ -1100,9 +1100,9 @@ Response:
               </article>
               <article class="example-item">
                 <h3>Example 3: local command</h3>
-                <pre class="api-block">python demo/image_demo.py demo/sample_images/bus.jpg \
-  configs/pretrain/yolo_world_v2_xl.py \
-  weights/yolo_world_v2_xl_obj365v1_goldg_pretrain-5daf1395.pth \
+                <pre class="api-block">python tools/yolo-world/demo/image_demo.py tools/yolo-world/demo/sample_images/bus.jpg \
+  tools/yolo-world/configs/pretrain/yolo_world_v2_xl.py \
+  tools/yolo-world/weights/yolo_world_v2_xl_obj365v1_goldg_pretrain-5daf1395.pth \
   "person,bus,car" \
   --topk 100 \
   --threshold 0.05</pre>
@@ -1138,8 +1138,8 @@ Response:
     "postprocess_ms": 5
   },
   "artifacts": {
-    "visualization": "runs/detect/result.jpg",
-    "raw_predictions": "runs/detect/predictions.json"
+    "visualization": "tools/yolo-world/runs/detect/result.jpg",
+    "raw_predictions": "tools/yolo-world/runs/detect/predictions.json"
   }
 }</pre>
                   <button class="doc-toggle" type="button">Expand success schema</button>
@@ -1168,13 +1168,13 @@ Response:
   "toolType": "Local Model",
   "category": "Perception and Grounding",
   "source": "AILab-CVC",
-  "status": "Documented; hosted API not connected",
+  "status": "Documented with relative code paths",
   "description": "Real-time open-vocabulary object detection from images and text prompts.",
   "inputSchema": {
     "type": "object",
     "required": ["image", "prompts"],
     "properties": {
-      "image": {"type": "string", "description": "Local image path, URL, or uploaded file reference"},
+      "image": {"type": "string", "description": "Project-relative image path or uploaded file reference"},
       "prompts": {"type": "string", "description": "Comma-separated object categories"},
       "threshold": {"type": "number", "default": 0.05},
       "topk": {"type": "integer", "default": 100}
@@ -1254,7 +1254,7 @@ Response:
           <div class="timeline" style="margin-top: 12px;">
             <div class="timeline-item"><span class="timeline-dot"></span><span>Add paper metadata and links.</span></div>
             <div class="timeline-item"><span class="timeline-dot"></span><span>Upload real demos, benchmark screenshots, or result visualizations.</span></div>
-            <div class="timeline-item"><span class="timeline-dot"></span><span>Define API request and response schema.</span></div>
+            <div class="timeline-item"><span class="timeline-dot"></span><span>Define relative entry paths and response schema.</span></div>
             <div class="timeline-item"><span class="timeline-dot"></span><span>Connect benchmark row and artifacts.</span></div>
           </div>
         </section>
@@ -1301,16 +1301,16 @@ Response:
             image: "https://wondervictor.github.io/images/speed_acc.png"
           }
         ],
-        apiExample: `# Local image demo from the YOLO-World repository
-python demo/image_demo.py demo/sample_images/bus.jpg \
-  configs/pretrain/yolo_world_v2_xl.py \
-  weights/yolo_world_v2_xl_obj365v1_goldg_pretrain-5daf1395.pth \
+        apiExample: `# Relative-path local entry for the YOLO-World tool folder
+python tools/yolo-world/demo/image_demo.py tools/yolo-world/demo/sample_images/bus.jpg \
+  tools/yolo-world/configs/pretrain/yolo_world_v2_xl.py \
+  tools/yolo-world/weights/yolo_world_v2_xl_obj365v1_goldg_pretrain-5daf1395.pth \
   "person,bus,car" \
   --topk 100 \
-  --threshold 0.05
+  --threshold 0.05 \
+  --output-dir tools/yolo-world/runs/detect
 
-# Deployment-oriented usage can be documented here:
-# ONNX export, local service wrapper, or a hosted inference endpoint.`,
+# Use this as a documentation path. The static page does not execute the model.`,
         benchmarkDataset: "LVIS / COCO-style open-vocabulary evaluations",
         benchmarkMetric: "AP / zero-shot detection metrics",
         benchmarkLatency: "Real-time detector family; fill exact FPS for your environment",
@@ -1340,13 +1340,13 @@ python demo/image_demo.py demo/sample_images/bus.jpg \
         status: "Draft"
       },
       "api-tool-template": {
-        title: "API Tool Template",
+        title: "Code Tool Template",
         category: "Reasoning and Planning",
         task: "Planning",
-        summary: "Template for tools with endpoint documentation, parameters, response schema, examples, and integration notes.",
-        input: "Request JSON",
+        summary: "Template for tools with local entry paths, parameters, response schema, examples, and integration notes.",
+        input: "Relative path / request JSON",
         output: "Plan / response schema",
-        runtime: "API template",
+        runtime: "Code template",
         status: "Draft"
       },
       "execution-tool-template": {
@@ -1519,8 +1519,8 @@ python demo/image_demo.py demo/sample_images/bus.jpg \
       { title: "Overview", type: "Section", text: "summary input output runtime status", target: "#overview" },
       { title: "Original Paper", type: "Section", text: "paper authors venue citation links", target: "#paper" },
       { title: "Demo Gallery", type: "Section", text: "demo images visualization benchmark screenshots", target: "#demo" },
-      { title: "API Reference", type: "Section", text: "api endpoint parameters request response", target: "#api" },
-      { title: "Returns, API, and Examples", type: "Docs", text: "returns examples code schema expand", target: "#code-docs" },
+      { title: "Code Reference", type: "Section", text: "relative paths entry file parameters request response", target: "#api" },
+      { title: "Returns, Code Paths, and Examples", type: "Docs", text: "returns examples code paths schema expand", target: "#code-docs" },
       { title: "Input Parameters", type: "Docs", text: "image prompts threshold topk required optional schema", target: "#tool-contract" },
       { title: "Test Examples", type: "Docs", text: "example inputs local command json prompts", target: "#test-examples" },
       { title: "Returns Schema", type: "Docs", text: "detections error object timing artifacts", target: "#returns-schema" },
@@ -1564,7 +1564,7 @@ python demo/image_demo.py demo/sample_images/bus.jpg \
       });
 
       if (!matches.length) {
-        detailSearchResults.innerHTML = `<button type="button"><strong>No results</strong><span>Try API, returns, demo, benchmark, paper.</span></button>`;
+        detailSearchResults.innerHTML = `<button type="button"><strong>No results</strong><span>Try code paths, returns, demo, benchmark, paper.</span></button>`;
       }
       detailSearchResults.classList.add("active");
     }

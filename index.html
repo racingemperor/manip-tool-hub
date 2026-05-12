@@ -1207,7 +1207,7 @@
           </div>
 
           <div class="tool-controls">
-            <input class="tool-search" aria-label="Search tools" placeholder="Search tools, papers, APIs, tasks">
+            <input class="tool-search" aria-label="Search tools" placeholder="Search tools, papers, code paths, tasks">
             <select class="select tool-status-filter" aria-label="Tool status">
               <option value="All">All statuses</option>
               <option value="Ready">Ready</option>
@@ -1218,7 +1218,7 @@
               <option value="All">All resources</option>
               <option value="Paper">Paper</option>
               <option value="Demo images">Demo images</option>
-              <option value="API docs">API docs</option>
+              <option value="API docs">Code docs</option>
               <option value="Benchmark">Benchmark</option>
             </select>
           </div>
@@ -1239,7 +1239,7 @@
               </div>
 
               <div class="model-grid">
-                <a class="card tool-card active" href="tool.html?tool=yolo-world" data-tool-slug="yolo-world" data-tool-title="YOLO-World" data-tool-category="Perception and Grounding" data-tool-status="Ready" data-tool-resources="Paper Demo images API docs Benchmark" data-tool-search="yolo world open vocabulary object detection grounding real time cvpr 2024 hugging face onnx demo paper api benchmark">
+                <a class="card tool-card active" href="tool.html?tool=yolo-world" data-tool-slug="yolo-world" data-tool-title="YOLO-World" data-tool-category="Perception and Grounding" data-tool-status="Ready" data-tool-resources="Paper Demo images API docs Benchmark" data-tool-search="yolo world open vocabulary object detection grounding real time cvpr 2024 hugging face onnx demo paper code paths benchmark">
                   <div class="tool-thumb image" style="background-image: linear-gradient(135deg, rgba(16, 24, 40, 0.36), rgba(53, 98, 255, 0.2)), url('https://wondervictor.github.io/images/vis_lvis.png');"><span>Open-vocabulary detection</span></div>
                   <div class="tool-card-body">
                     <div class="card-title">YOLO-World <span class="badge blue">Grounding</span></div>
@@ -1259,7 +1259,7 @@
                   </div>
                 </a>
 
-                <a class="card tool-card" href="tool.html?tool=tool-entry-template" data-tool-slug="tool-entry-template" data-tool-title="Tool Entry Template" data-tool-category="Perception and Grounding" data-tool-status="Draft" data-tool-resources="Paper Demo images API docs" data-tool-search="tool entry template perception grounding images text state api demo paper">
+                <a class="card tool-card" href="tool.html?tool=tool-entry-template" data-tool-slug="tool-entry-template" data-tool-title="Tool Entry Template" data-tool-category="Perception and Grounding" data-tool-status="Draft" data-tool-resources="Paper Demo images API docs" data-tool-search="tool entry template perception grounding images text state code demo paper">
                   <div class="tool-thumb">Demo image / screenshot</div>
                   <div class="tool-card-body">
                     <div class="card-title">Tool Entry Template <span class="badge blue">Perception</span></div>
@@ -1267,7 +1267,7 @@
                     <div class="meta-row">
                       <span class="badge">Paper</span>
                       <span class="badge">Demo</span>
-                      <span class="badge green">API</span>
+                      <span class="badge green">Code</span>
                     </div>
                     <div class="tool-meta">
                       <div>Input<strong>Images / text / state</strong></div>
@@ -1299,19 +1299,19 @@
                   </div>
                 </a>
 
-                <a class="card tool-card" href="tool.html?tool=api-tool-template" data-tool-slug="api-tool-template" data-tool-title="API Tool Template" data-tool-category="Reasoning and Planning" data-tool-status="Draft" data-tool-resources="API docs Demo images" data-tool-search="api tool template reasoning planning endpoint schema example post get token">
-                  <div class="tool-thumb">API response preview</div>
+                <a class="card tool-card" href="tool.html?tool=api-tool-template" data-tool-slug="api-tool-template" data-tool-title="Code Tool Template" data-tool-category="Reasoning and Planning" data-tool-status="Draft" data-tool-resources="API docs Demo images" data-tool-search="code tool template reasoning planning relative path schema example script wrapper">
+                  <div class="tool-thumb">Code output preview</div>
                   <div class="tool-card-body">
-                    <div class="card-title">API Tool Template <span class="badge blue">Planning</span></div>
-                    <p>Designed for tools with endpoint docs, request parameters, response schema, and sample calls.</p>
+                    <div class="card-title">Code Tool Template <span class="badge blue">Planning</span></div>
+                    <p>Designed for tools with relative entry paths, request parameters, response schema, and sample runs.</p>
                     <div class="meta-row">
-                      <span class="badge green">Endpoint</span>
+                      <span class="badge green">Entry path</span>
                       <span class="badge">Schema</span>
                       <span class="badge">Example</span>
                     </div>
                     <div class="tool-meta">
-                      <div>Method<strong>POST / GET</strong></div>
-                      <div>Auth<strong>Token slot</strong></div>
+                      <div>Entry<strong>script / notebook</strong></div>
+                      <div>Config<strong>relative path</strong></div>
                     </div>
                     <div class="tool-open-row">
                       <span class="tool-open-link">Open detail</span>
@@ -1425,15 +1425,15 @@
       { title: "Explore", type: "Section", text: "explore discovery tasks datasets tools", action: () => activate("explore") },
       { title: "Perception and Grounding", type: "Tool category", text: "perception grounding detection localization recognition", action: () => setToolFilters({ category: "Perception and Grounding", status: "All", resource: "All", query: "" }) },
       { title: "Cognition and State Modeling", type: "Tool category", text: "cognition state modeling world model memory representation", action: () => setToolFilters({ category: "Cognition and State Modeling", status: "All", resource: "All", query: "" }) },
-      { title: "Reasoning and Planning", type: "Tool category", text: "reasoning planning api endpoint schema examples", action: () => setToolFilters({ category: "Reasoning and Planning", status: "All", resource: "All", query: "" }) },
+      { title: "Reasoning and Planning", type: "Tool category", text: "reasoning planning code path schema examples", action: () => setToolFilters({ category: "Reasoning and Planning", status: "All", resource: "All", query: "" }) },
       { title: "Execution and Control", type: "Tool category", text: "execution control policy runtime rollout action trace", action: () => setToolFilters({ category: "Execution and Control", status: "All", resource: "All", query: "" }) },
-      { title: "API-ready tools", type: "Tool filter", text: "api docs endpoint schema request response examples", action: () => setToolFilters({ category: "All", status: "All", resource: "API docs", query: "" }) },
+      { title: "Code-documented tools", type: "Tool filter", text: "code docs relative paths schema request response examples", action: () => setToolFilters({ category: "All", status: "All", resource: "API docs", query: "" }) },
       { title: "Benchmark tools", type: "Tool filter", text: "benchmark leaderboard metrics evaluation artifacts", action: () => setToolFilters({ category: "All", status: "All", resource: "Benchmark", query: "" }) },
       { title: "Draft tools", type: "Tool filter", text: "draft needs content template placeholder", action: () => setToolFilters({ category: "All", status: "Draft", resource: "All", query: "" }) },
       { title: "YOLO-World", type: "Tool", text: "yolo world open vocabulary detection grounding cvpr 2024", action: () => { window.location.href = "tool.html?tool=yolo-world"; } },
       { title: "Tool Entry Template", type: "Tool", text: "perception grounding template", action: () => { window.location.href = "tool.html?tool=tool-entry-template"; } },
       { title: "Paper-backed Tool Template", type: "Tool", text: "cognition state modeling paper method", action: () => { window.location.href = "tool.html?tool=paper-backed-tool-template"; } },
-      { title: "API Tool Template", type: "Tool", text: "reasoning planning endpoint schema api examples", action: () => { window.location.href = "tool.html?tool=api-tool-template"; } },
+      { title: "Code Tool Template", type: "Tool", text: "reasoning planning relative path schema code examples", action: () => { window.location.href = "tool.html?tool=api-tool-template"; } },
       { title: "Execution Tool Template", type: "Tool", text: "execution control policy runtime rollout", action: () => { window.location.href = "tool.html?tool=execution-tool-template"; } }
     ];
 
@@ -1451,7 +1451,7 @@
         .slice(0, 8);
 
       if (!matches.length) {
-        globalSearchResults.innerHTML = `<button type="button"><strong>No results</strong><span>Try tool, dataset, API, benchmark, or YOLO.</span></button>`;
+        globalSearchResults.innerHTML = `<button type="button"><strong>No results</strong><span>Try tool, dataset, code path, benchmark, or YOLO.</span></button>`;
         globalSearchResults.classList.add("active");
         return;
       }
