@@ -514,6 +514,7 @@
       display: none;
       align-items: flex-start;
       gap: 8px;
+      pointer-events: none;
     }
 
     .floating-tab {
@@ -529,6 +530,7 @@
       text-orientation: mixed;
       font-weight: 800;
       letter-spacing: 0;
+      pointer-events: auto;
     }
 
     .floating-panel {
@@ -539,8 +541,7 @@
       transition: opacity 160ms ease, transform 160ms ease;
     }
 
-    .floating-nav:hover .floating-panel,
-    .floating-nav:focus-within .floating-panel {
+    .floating-nav.open .floating-panel {
       opacity: 1;
       transform: translateX(0);
       pointer-events: auto;
@@ -1286,6 +1287,33 @@ python demo/image_demo.py demo/sample_images/bus.jpg \
     }
 
     renderRelatedTools();
+
+    const floatingNav = document.querySelector(".floating-nav");
+    const floatingTab = document.querySelector(".floating-tab");
+    const floatingPanel = document.querySelector(".floating-panel");
+    let floatingCloseTimer;
+
+    function openFloatingNav() {
+      clearTimeout(floatingCloseTimer);
+      floatingNav?.classList.add("open");
+    }
+
+    function scheduleFloatingNavClose() {
+      clearTimeout(floatingCloseTimer);
+      floatingCloseTimer = setTimeout(() => {
+        if (!floatingNav?.matches(":focus-within")) {
+          floatingNav?.classList.remove("open");
+        }
+      }, 140);
+    }
+
+    floatingTab?.addEventListener("mouseenter", openFloatingNav);
+    floatingTab?.addEventListener("focus", openFloatingNav);
+    floatingTab?.addEventListener("click", openFloatingNav);
+    floatingTab?.addEventListener("mouseleave", scheduleFloatingNavClose);
+    floatingPanel?.addEventListener("mouseenter", openFloatingNav);
+    floatingPanel?.addEventListener("mouseleave", scheduleFloatingNavClose);
+    floatingNav?.addEventListener("focusout", scheduleFloatingNavClose);
 
     document.querySelectorAll(".doc-code").forEach((block) => {
       const toggle = block.querySelector(".doc-toggle");
