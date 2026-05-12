@@ -491,11 +491,48 @@
       background: #f8fafc;
     }
 
+    .parameter-list,
+    .example-list {
+      display: grid;
+      gap: 10px;
+    }
+
+    .parameter-item,
+    .example-item {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #f8fafc;
+      padding: 14px;
+    }
+
+    .parameter-head {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 6px;
+    }
+
+    .parameter-head code {
+      color: var(--ink);
+      font-weight: 800;
+    }
+
+    .schema-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+
     #overview,
     #paper,
     #demo,
     #api,
     #code-docs,
+    #tool-contract,
+    #test-examples,
+    #returns-schema,
+    #tool-json,
     #benchmark,
     #related,
     #metadata {
@@ -725,7 +762,8 @@
       .paper-card,
       .support-grid,
       .doc-grid,
-      .related-grid {
+      .related-grid,
+      .schema-grid {
         grid-template-columns: 1fr;
       }
 
@@ -793,6 +831,10 @@
               <a href="#demo">Demo Gallery <span>&rarr;</span></a>
               <a href="#api">API Reference <span>&rarr;</span></a>
               <a href="#code-docs">Returns and Examples <span>&rarr;</span></a>
+              <a href="#tool-contract">Input Parameters <span>&rarr;</span></a>
+              <a href="#test-examples">Test Examples <span>&rarr;</span></a>
+              <a href="#returns-schema">Returns Schema <span>&rarr;</span></a>
+              <a href="#tool-json">Full Tool JSON <span>&rarr;</span></a>
               <a href="#benchmark">Benchmark <span>&rarr;</span></a>
               <a href="#related">Related Tools <span>&rarr;</span></a>
               <a href="#metadata">Metadata <span>&rarr;</span></a>
@@ -999,6 +1041,156 @@ Response:
                   <button class="doc-toggle" type="button">Expand full example</button>
                 </div>
               </article>
+            </div>
+          </section>
+
+          <section class="card" id="tool-contract">
+            <div class="card-head">
+              <div>
+                <h2>Input Parameters</h2>
+                <p class="muted">A ToolUniverse-style contract for future wrappers or hosted APIs. This static page documents the fields; it does not execute them.</p>
+              </div>
+            </div>
+            <div class="parameter-list">
+              <div class="parameter-item">
+                <div class="parameter-head"><code>image</code><span class="badge">file | path | URL</span><span class="badge green">required</span></div>
+                <p class="muted">Input image or scene to run open-vocabulary detection on.</p>
+              </div>
+              <div class="parameter-item">
+                <div class="parameter-head"><code>prompts</code><span class="badge">string | string[]</span><span class="badge green">required</span></div>
+                <p class="muted">Object vocabulary to detect, such as person,bus,car or robot arm,gripper,red cube.</p>
+              </div>
+              <div class="parameter-item">
+                <div class="parameter-head"><code>threshold</code><span class="badge">number</span><span class="badge">optional</span></div>
+                <p class="muted">Confidence threshold. Lower values show more candidates; higher values return fewer, stronger detections.</p>
+              </div>
+              <div class="parameter-item">
+                <div class="parameter-head"><code>topk</code><span class="badge">integer</span><span class="badge">optional</span></div>
+                <p class="muted">Maximum number of candidate detections to keep after inference.</p>
+              </div>
+            </div>
+          </section>
+
+          <section class="card" id="test-examples">
+            <div class="card-head">
+              <div>
+                <h2>Test Examples</h2>
+                <p class="muted">Example inputs that someone could use when building a local wrapper or a future endpoint.</p>
+              </div>
+              <span class="badge">3 examples</span>
+            </div>
+            <div class="example-list">
+              <article class="example-item">
+                <h3>Example 1: street scene</h3>
+                <pre class="api-block">{
+  "image": "demo/sample_images/bus.jpg",
+  "prompts": "person,bus,car",
+  "threshold": 0.05,
+  "topk": 100
+}</pre>
+              </article>
+              <article class="example-item">
+                <h3>Example 2: manipulation scene</h3>
+                <pre class="api-block">{
+  "image": "workspace/scene.jpg",
+  "prompts": "robot arm,gripper,red cube,table",
+  "threshold": 0.10,
+  "topk": 50
+}</pre>
+              </article>
+              <article class="example-item">
+                <h3>Example 3: local command</h3>
+                <pre class="api-block">python demo/image_demo.py demo/sample_images/bus.jpg \
+  configs/pretrain/yolo_world_v2_xl.py \
+  weights/yolo_world_v2_xl_obj365v1_goldg_pretrain-5daf1395.pth \
+  "person,bus,car" \
+  --topk 100 \
+  --threshold 0.05</pre>
+              </article>
+            </div>
+          </section>
+
+          <section class="card" id="returns-schema">
+            <div class="card-head">
+              <div>
+                <h2>Returns Schema</h2>
+                <p class="muted">A stricter schema-style view of the expected output, including a simple error shape.</p>
+              </div>
+            </div>
+            <div class="schema-grid">
+              <article class="doc-card">
+                <h3>Success object</h3>
+                <div class="doc-code" data-collapsed-label="Expand success schema" data-expanded-label="Collapse success schema">
+                  <pre class="api-block">{
+  "image_id": "sample.jpg",
+  "detections": [
+    {
+      "label": "bus",
+      "score": 0.87,
+      "box": [124, 96, 384, 310],
+      "source_prompt": "bus",
+      "normalized_box": [0.19, 0.16, 0.60, 0.52]
+    }
+  ],
+  "timing": {
+    "preprocess_ms": 8,
+    "inference_ms": 31,
+    "postprocess_ms": 5
+  },
+  "artifacts": {
+    "visualization": "runs/detect/result.jpg",
+    "raw_predictions": "runs/detect/predictions.json"
+  }
+}</pre>
+                  <button class="doc-toggle" type="button">Expand success schema</button>
+                </div>
+              </article>
+              <article class="doc-card">
+                <h3>Error object</h3>
+                <pre class="api-block">{
+  "error": "Model weights not found",
+  "code": "WEIGHTS_MISSING"
+}</pre>
+              </article>
+            </div>
+          </section>
+
+          <section class="card" id="tool-json">
+            <div class="card-head">
+              <div>
+                <h2>Full Tool JSON</h2>
+                <p class="muted">Machine-readable metadata inspired by ToolUniverse. This is useful when you add many tools with the same structure.</p>
+              </div>
+            </div>
+            <div class="doc-code" data-collapsed-label="Expand full tool JSON" data-expanded-label="Collapse full tool JSON">
+              <pre class="api-block">{
+  "name": "YOLO-World",
+  "toolType": "Local Model",
+  "category": "Perception and Grounding",
+  "source": "AILab-CVC",
+  "status": "Documented; hosted API not connected",
+  "description": "Real-time open-vocabulary object detection from images and text prompts.",
+  "inputSchema": {
+    "type": "object",
+    "required": ["image", "prompts"],
+    "properties": {
+      "image": {"type": "string", "description": "Local image path, URL, or uploaded file reference"},
+      "prompts": {"type": "string", "description": "Comma-separated object categories"},
+      "threshold": {"type": "number", "default": 0.05},
+      "topk": {"type": "integer", "default": 100}
+    }
+  },
+  "returnSchema": {
+    "type": "object",
+    "properties": {
+      "detections": {"type": "array"},
+      "timing": {"type": "object"},
+      "artifacts": {"type": "object"},
+      "error": {"type": "string"}
+    }
+  }
+}</pre>
+              <button class="doc-toggle" type="button">Expand full tool JSON</button>
             </div>
           </section>
 
@@ -1329,6 +1521,10 @@ python demo/image_demo.py demo/sample_images/bus.jpg \
       { title: "Demo Gallery", type: "Section", text: "demo images visualization benchmark screenshots", target: "#demo" },
       { title: "API Reference", type: "Section", text: "api endpoint parameters request response", target: "#api" },
       { title: "Returns, API, and Examples", type: "Docs", text: "returns examples code schema expand", target: "#code-docs" },
+      { title: "Input Parameters", type: "Docs", text: "image prompts threshold topk required optional schema", target: "#tool-contract" },
+      { title: "Test Examples", type: "Docs", text: "example inputs local command json prompts", target: "#test-examples" },
+      { title: "Returns Schema", type: "Docs", text: "detections error object timing artifacts", target: "#returns-schema" },
+      { title: "Full Tool JSON", type: "Docs", text: "tool metadata inputSchema returnSchema machine readable", target: "#tool-json" },
       { title: "Benchmark", type: "Section", text: "evaluation metric latency artifacts", target: "#benchmark" },
       { title: "Related Tools", type: "Section", text: "recommended similar category perception grounding", target: "#related" },
       { title: "Metadata", type: "Section", text: "license owner version category", target: "#metadata" }
