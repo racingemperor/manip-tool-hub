@@ -637,7 +637,7 @@
         <div class="mark">M</div>
         <div>
           <div class="brand-title">Manip Tool Hub</div>
-          <div class="brand-subtitle">datasets, benchmarks, models</div>
+          <div class="brand-subtitle">datasets, benchmarks, tools</div>
         </div>
       </div>
 
@@ -645,12 +645,12 @@
         <button class="active" data-view-target="home"><span class="dot"></span>Home</button>
         <button data-view-target="datasets"><span class="dot"></span>Datasets</button>
         <button data-view-target="leaderboard"><span class="dot"></span>Leaderboard</button>
-        <button data-view-target="models"><span class="dot"></span>Models</button>
+        <button data-view-target="models"><span class="dot"></span>Tools</button>
         <button data-view-target="explore"><span class="dot"></span>Explore</button>
       </nav>
 
       <div class="sidebar-note">
-        Prototype only. Dataset links, benchmark numbers, and model cards are placeholders for the real content pass.
+        Prototype only. Dataset links, benchmark numbers, and tool cards are placeholders for the real content pass.
       </div>
     </aside>
 
@@ -658,7 +658,7 @@
       <header class="topbar">
         <div class="search">
           <span class="search-symbol">⌕</span>
-          <input aria-label="Search" placeholder="Search datasets, models, tasks, or benchmarks">
+          <input aria-label="Search" placeholder="Search datasets, tools, tasks, or benchmarks">
         </div>
         <div class="top-actions">
           <button class="btn ghost">Docs</button>
@@ -670,12 +670,12 @@
         <section class="view active" id="home">
           <div class="hero">
             <div class="eyebrow">Manipulation Benchmark Platform</div>
-            <h1>Find datasets, compare models, and pick tools by task.</h1>
-            <p>Home is the launch point for benchmark datasets, Hugging Face download links, leaderboard comparisons, and function-based model tools.</p>
+            <h1>Find datasets, compare tools, and pick capabilities by task.</h1>
+            <p>Home is the launch point for benchmark datasets, Hugging Face download links, leaderboard comparisons, and function-based tools.</p>
             <div class="hero-actions">
               <button class="btn primary" data-view-target="datasets">Browse Datasets</button>
               <button class="btn" data-view-target="leaderboard">View Leaderboard</button>
-              <button class="btn" data-view-target="models">Explore Models</button>
+              <button class="btn" data-view-target="models">Explore Tools</button>
             </div>
           </div>
 
@@ -704,7 +704,7 @@
               <div class="module-tile">
                 <div class="module-number">3</div>
                 <div>
-                  <h3>Model Tools</h3>
+                  <h3>Tools</h3>
                   <p>Grouped by capability such as detection, segmentation, or planning.</p>
                 </div>
               </div>
@@ -866,14 +866,14 @@
         <section class="view" id="models">
           <div class="section-head">
             <div>
-              <h2>Models</h2>
-              <p>Model tools grouped by task capability.</p>
+              <h2>Tools</h2>
+              <p>Tools grouped by task capability.</p>
             </div>
-            <button class="btn primary">Add Model Tool</button>
+            <button class="btn primary">Add Tool</button>
           </div>
 
           <div class="model-layout">
-            <aside class="category-list" aria-label="Model categories">
+            <aside class="category-list" aria-label="Tool categories">
               <button class="active">Object Detection</button>
               <button>Segmentation</button>
               <button>Image Classification</button>
@@ -884,16 +884,16 @@
 
             <div class="model-grid">
               <article class="card">
-                <div class="card-title">Model Tool Placeholder <span class="badge blue">Detection</span></div>
+                <div class="card-title">Tool Placeholder <span class="badge blue">Detection</span></div>
                 <p>Short description of input, output, supported datasets, benchmark link, and deployment format.</p>
                 <div class="meta-row">
                   <span class="badge">API</span>
                   <span class="badge">Demo</span>
-                  <span class="badge green">HF Model</span>
+                  <span class="badge green">HF Link</span>
                 </div>
               </article>
               <article class="card">
-                <div class="card-title">Model Tool Placeholder <span class="badge blue">Detection</span></div>
+                <div class="card-title">Tool Placeholder <span class="badge blue">Detection</span></div>
                 <p>Space for capabilities, supported tasks, artifacts, and leaderboard placement.</p>
                 <div class="meta-row">
                   <span class="badge">Weights</span>
@@ -902,8 +902,8 @@
                 </div>
               </article>
               <article class="card">
-                <div class="card-title">Model Tool Placeholder <span class="badge">Utility</span></div>
-                <p>Cards remain generic until concrete model tools are added.</p>
+                <div class="card-title">Tool Placeholder <span class="badge">Utility</span></div>
+                <p>Cards remain generic until concrete tools are added.</p>
                 <div class="meta-row">
                   <span class="badge">Input</span>
                   <span class="badge">Output</span>
@@ -911,7 +911,7 @@
                 </div>
               </article>
               <article class="card">
-                <div class="card-title">Model Tool Placeholder <span class="badge">Utility</span></div>
+                <div class="card-title">Tool Placeholder <span class="badge">Utility</span></div>
                 <p>Each card can point to demo, documentation, Hugging Face, and leaderboard result.</p>
                 <div class="meta-row">
                   <span class="badge">Demo</span>
@@ -927,7 +927,7 @@
           <div class="section-head">
             <div>
               <h2>Explore</h2>
-              <p>Discovery surface for tasks, datasets, model tools, and benchmark tracks.</p>
+              <p>Discovery surface for tasks, datasets, tools, and benchmark tracks.</p>
             </div>
           </div>
 
@@ -947,10 +947,10 @@
               </div>
             </article>
             <article class="card">
-              <div class="card-title">By Model</div>
+              <div class="card-title">By Tool</div>
               <p>Find tools by capability and compare their benchmark traces before choosing one.</p>
               <div class="meta-row">
-                <span class="badge">Model tools</span>
+                <span class="badge">Tools</span>
               </div>
             </article>
           </div>
