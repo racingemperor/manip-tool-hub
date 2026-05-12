@@ -135,6 +135,11 @@
       gap: 12px;
     }
 
+    .hero-media.with-image {
+      background-size: cover;
+      background-position: center;
+    }
+
     .eyebrow {
       color: #c7d7fe;
       font-size: 12px;
@@ -296,6 +301,21 @@
       font-weight: 800;
       text-align: center;
       padding: 12px;
+    }
+
+    .demo-slot.image {
+      border-style: solid;
+      background-size: cover;
+      background-position: center;
+      place-items: end start;
+      color: #ffffff;
+      text-shadow: 0 1px 2px rgba(16, 24, 40, 0.55);
+    }
+
+    .demo-slot.image span {
+      border-radius: 6px;
+      background: rgba(16, 24, 40, 0.72);
+      padding: 5px 7px;
     }
 
     .paper-card {
@@ -506,10 +526,10 @@
               </div>
             </div>
             <div class="summary-grid">
-              <div class="metric"><span>Input</span><strong>Images / text / state</strong></div>
-              <div class="metric"><span>Output</span><strong>Structured result</strong></div>
-              <div class="metric"><span>Runtime</span><strong>API / local</strong></div>
-              <div class="metric"><span>Status</span><strong>Template</strong></div>
+              <div class="metric"><span>Input</span><strong id="overviewInput">Images / text / state</strong></div>
+              <div class="metric"><span>Output</span><strong id="overviewOutput">Structured result</strong></div>
+              <div class="metric"><span>Runtime</span><strong id="overviewRuntime">API / local</strong></div>
+              <div class="metric"><span>Status</span><strong id="overviewStatus">Template</strong></div>
             </div>
           </section>
 
@@ -522,13 +542,13 @@
               <span class="badge">BibTeX slot</span>
             </div>
             <div class="paper-card">
-              <div class="paper-cover">Paper PDF / method figure</div>
+              <div class="paper-cover" id="paperCover">Paper PDF / method figure</div>
               <div class="field-list">
-                <div class="field-row"><span>Title</span><strong>Original paper title goes here.</strong></div>
-                <div class="field-row"><span>Authors</span><strong>Author list, lab, or organization.</strong></div>
-                <div class="field-row"><span>Venue</span><strong>Conference, journal, arXiv, or project page.</strong></div>
-                <div class="field-row"><span>Contribution</span><strong>Short contribution summary, method idea, and tool conversion note.</strong></div>
-                <div class="field-row"><span>Links</span><strong>PDF, code, project page, model weights, dataset references.</strong></div>
+                <div class="field-row"><span>Title</span><strong id="paperTitle">Original paper title goes here.</strong></div>
+                <div class="field-row"><span>Authors</span><strong id="paperAuthors">Author list, lab, or organization.</strong></div>
+                <div class="field-row"><span>Venue</span><strong id="paperVenue">Conference, journal, arXiv, or project page.</strong></div>
+                <div class="field-row"><span>Contribution</span><strong id="paperContribution">Short contribution summary, method idea, and tool conversion note.</strong></div>
+                <div class="field-row"><span>Links</span><strong id="paperLinks">PDF, code, project page, model weights, dataset references.</strong></div>
               </div>
             </div>
           </section>
@@ -541,10 +561,10 @@
               </div>
             </div>
             <div class="demo-grid">
-              <div class="demo-slot">Input image / scene</div>
-              <div class="demo-slot">Output overlay</div>
-              <div class="demo-slot">Pipeline figure</div>
-              <div class="demo-slot">Video thumbnail</div>
+              <div class="demo-slot" id="demoSlot1">Input image / scene</div>
+              <div class="demo-slot" id="demoSlot2">Output overlay</div>
+              <div class="demo-slot" id="demoSlot3">Pipeline figure</div>
+              <div class="demo-slot" id="demoSlot4">Video thumbnail</div>
             </div>
           </section>
 
@@ -556,7 +576,7 @@
               </div>
               <span class="badge green">Endpoint slot</span>
             </div>
-            <pre class="api-block">POST /api/tool-name
+            <pre class="api-block" id="apiExample">POST /api/tool-name
 Content-Type: application/json
 
 {
@@ -602,10 +622,10 @@ Content-Type: application/json
               </div>
             </div>
             <div class="summary-grid">
-              <div class="metric"><span>Dataset</span><strong>Evaluation split</strong></div>
-              <div class="metric"><span>Metric</span><strong>Primary score</strong></div>
-              <div class="metric"><span>Latency</span><strong>Runtime note</strong></div>
-              <div class="metric"><span>Artifacts</span><strong>Logs / traces</strong></div>
+              <div class="metric"><span>Dataset</span><strong id="benchmarkDataset">Evaluation split</strong></div>
+              <div class="metric"><span>Metric</span><strong id="benchmarkMetric">Primary score</strong></div>
+              <div class="metric"><span>Latency</span><strong id="benchmarkLatency">Runtime note</strong></div>
+              <div class="metric"><span>Artifacts</span><strong id="benchmarkArtifacts">Logs / traces</strong></div>
             </div>
           </section>
         </div>
@@ -635,9 +655,9 @@ Content-Type: application/json
             <h2>Tool Metadata</h2>
             <div class="field-list" style="margin-top: 12px;">
               <div class="field-row"><span>Category</span><strong id="sideCategory">Reasoning and Planning</strong></div>
-              <div class="field-row"><span>License</span><strong>To be added</strong></div>
-              <div class="field-row"><span>Owner</span><strong>To be added</strong></div>
-              <div class="field-row"><span>Version</span><strong>Draft</strong></div>
+              <div class="field-row"><span>License</span><strong id="sideLicense">To be added</strong></div>
+              <div class="field-row"><span>Owner</span><strong id="sideOwner">To be added</strong></div>
+              <div class="field-row"><span>Version</span><strong id="sideVersion">Draft</strong></div>
             </div>
           </section>
         </aside>
@@ -647,6 +667,61 @@ Content-Type: application/json
 
   <script>
     const tools = {
+      "yolo-world": {
+        title: "YOLO-World",
+        category: "Perception and Grounding",
+        task: "Open-vocabulary detection",
+        summary: "YOLO-World is a real-time open-vocabulary object detector that uses image inputs and text prompts to localize arbitrary object categories.",
+        input: "Image + text prompts",
+        output: "Bounding boxes, labels, scores",
+        runtime: "Python / ONNX / demo",
+        status: "Ready",
+        paperTitle: "YOLO-World: Real-Time Open-Vocabulary Object Detection",
+        paperAuthors: "Tianheng Cheng, Lin Song, Yixiao Ge, Wenyu Liu, Xinggang Wang, Ying Shan",
+        paperVenue: "CVPR 2024 / arXiv:2401.17270",
+        paperContribution: "Connects YOLO-style real-time detection with open-vocabulary text conditioning, making prompt-driven detection practical for fast perception and grounding workflows.",
+        paperLinks: [
+          ["GitHub", "https://github.com/AILab-CVC/YOLO-World"],
+          ["arXiv", "https://arxiv.org/abs/2401.17270"],
+          ["Hugging Face Demo", "https://huggingface.co/spaces/stevengrove/YOLO-World"]
+        ],
+        heroImage: "https://raw.githubusercontent.com/AILab-CVC/YOLO-World/master/assets/yolo_arch.png",
+        demos: [
+          {
+            label: "Architecture / method figure",
+            image: "https://raw.githubusercontent.com/AILab-CVC/YOLO-World/master/assets/yolo_arch.png"
+          },
+          {
+            label: "Image prompt / grounding workflow",
+            image: "https://raw.githubusercontent.com/AILab-CVC/YOLO-World/master/assets/image_prompt.png"
+          },
+          {
+            label: "Fine-tuning workflow",
+            image: "https://raw.githubusercontent.com/AILab-CVC/YOLO-World/master/assets/finetune_yoloworld.png"
+          },
+          {
+            label: "Re-parameterization / deployment",
+            image: "https://raw.githubusercontent.com/AILab-CVC/YOLO-World/master/assets/reparameterize.png"
+          }
+        ],
+        apiExample: `# Local image demo from the YOLO-World repository
+python demo/image_demo.py demo/sample_images/bus.jpg \
+  configs/pretrain/yolo_world_v2_xl.py \
+  weights/yolo_world_v2_xl_obj365v1_goldg_pretrain-5daf1395.pth \
+  "person,bus,car" \
+  --topk 100 \
+  --threshold 0.05
+
+# Deployment-oriented usage can be documented here:
+# ONNX export, local service wrapper, or a hosted inference endpoint.`,
+        benchmarkDataset: "LVIS / COCO-style open-vocabulary evaluations",
+        benchmarkMetric: "AP / zero-shot detection metrics",
+        benchmarkLatency: "Real-time detector family; fill exact FPS for your environment",
+        benchmarkArtifacts: "Weights, configs, demo scripts, ONNX export notes",
+        license: "GPL-3.0",
+        owner: "AILab-CVC",
+        version: "YOLO-World v2"
+      },
       "tool-entry-template": {
         title: "Tool Entry Template",
         category: "Perception and Grounding",
@@ -683,6 +758,72 @@ Content-Type: application/json
     document.querySelector("#toolTask").textContent = tool.task;
     document.querySelector("#toolSummary").textContent = tool.summary;
     document.querySelector("#sideCategory").textContent = tool.category;
+
+    function setText(selector, value) {
+      const element = document.querySelector(selector);
+      if (element && value) {
+        element.textContent = value;
+      }
+    }
+
+    function renderLinks(selector, links) {
+      const element = document.querySelector(selector);
+      if (!element || !links?.length) return;
+      element.innerHTML = links
+        .map(([label, url]) => `<a href="${url}" target="_blank" rel="noreferrer">${label}</a>`)
+        .join(" · ");
+    }
+
+    function renderDemo(slotId, demo) {
+      const element = document.querySelector(slotId);
+      if (!element || !demo) return;
+      element.textContent = "";
+      element.classList.remove("image");
+
+      if (demo.image) {
+        element.classList.add("image");
+        element.style.backgroundImage = `linear-gradient(135deg, rgba(16, 24, 40, 0.26), rgba(53, 98, 255, 0.12)), url('${demo.image}')`;
+        element.innerHTML = `<span>${demo.label}</span>`;
+      } else {
+        element.style.backgroundImage = "";
+        element.textContent = demo.label;
+      }
+    }
+
+    setText("#overviewInput", tool.input);
+    setText("#overviewOutput", tool.output);
+    setText("#overviewRuntime", tool.runtime);
+    setText("#overviewStatus", tool.status);
+    setText("#paperTitle", tool.paperTitle);
+    setText("#paperAuthors", tool.paperAuthors);
+    setText("#paperVenue", tool.paperVenue);
+    setText("#paperContribution", tool.paperContribution);
+    renderLinks("#paperLinks", tool.paperLinks);
+    setText("#apiExample", tool.apiExample);
+    setText("#benchmarkDataset", tool.benchmarkDataset);
+    setText("#benchmarkMetric", tool.benchmarkMetric);
+    setText("#benchmarkLatency", tool.benchmarkLatency);
+    setText("#benchmarkArtifacts", tool.benchmarkArtifacts);
+    setText("#sideLicense", tool.license);
+    setText("#sideOwner", tool.owner);
+    setText("#sideVersion", tool.version);
+
+    if (tool.heroImage) {
+      const hero = document.querySelector(".hero-media");
+      hero?.classList.add("with-image");
+      hero.style.backgroundImage = `linear-gradient(135deg, rgba(17, 24, 39, 0.9), rgba(53, 98, 255, 0.44)), url('${tool.heroImage}')`;
+    }
+
+    if (tool.heroImage) {
+      const paperCover = document.querySelector("#paperCover");
+      paperCover.classList.add("demo-slot", "image");
+      paperCover.style.backgroundImage = `linear-gradient(135deg, rgba(16, 24, 40, 0.2), rgba(53, 98, 255, 0.08)), url('${tool.heroImage}')`;
+      paperCover.innerHTML = "<span>Paper figure</span>";
+    }
+
+    tool.demos?.forEach((demo, index) => {
+      renderDemo(`#demoSlot${index + 1}`, demo);
+    });
   </script>
 </body>
 </html>
