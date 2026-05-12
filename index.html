@@ -148,8 +148,8 @@
       padding: 0 16px;
       gap: 16px;
       position: sticky;
-      top: 16px;
-      z-index: 2;
+      top: 0;
+      z-index: 20;
       backdrop-filter: blur(12px);
     }
 
@@ -181,6 +181,50 @@
       top: 50%;
       transform: translateY(-50%);
       color: var(--muted);
+    }
+
+    .global-search-results {
+      position: absolute;
+      top: calc(100% + 8px);
+      left: 0;
+      right: 0;
+      z-index: 30;
+      display: none;
+      gap: 6px;
+      max-height: 300px;
+      overflow: auto;
+      padding: 8px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #ffffff;
+      box-shadow: var(--shadow);
+    }
+
+    .global-search-results.active {
+      display: grid;
+    }
+
+    .global-search-results button {
+      border: 0;
+      border-radius: 6px;
+      background: transparent;
+      color: var(--ink);
+      display: grid;
+      gap: 2px;
+      padding: 9px 10px;
+      text-align: left;
+      cursor: pointer;
+    }
+
+    .global-search-results button:hover,
+    .global-search-results button.active {
+      background: #f5f7ff;
+      color: #2444d8;
+    }
+
+    .global-search-results span {
+      color: var(--muted);
+      font-size: 12px;
     }
 
     .top-actions {
@@ -519,6 +563,8 @@
       border-radius: 8px;
       padding: 0 12px;
       outline: none;
+      background: #ffffff;
+      color: var(--ink);
     }
 
     .tool-search:focus {
@@ -566,8 +612,8 @@
 
     .model-grid {
       display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 14px;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
     }
 
     .tool-results-head {
@@ -596,11 +642,11 @@
     }
 
     .tool-card-body {
-      padding: 14px;
+      padding: 12px;
     }
 
     .tool-thumb {
-      aspect-ratio: 16 / 9;
+      aspect-ratio: 16 / 8.5;
       background:
         linear-gradient(135deg, rgba(17, 24, 39, 0.08), rgba(53, 98, 255, 0.16)),
         radial-gradient(circle at 24% 28%, rgba(53, 98, 255, 0.38), transparent 28%),
@@ -637,8 +683,8 @@
 
     .tool-card p {
       color: var(--muted);
-      font-size: 13px;
-      line-height: 1.5;
+      font-size: 12px;
+      line-height: 1.45;
     }
 
     .tool-open-row {
@@ -664,16 +710,16 @@
     .tool-meta {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 8px;
-      margin-top: 12px;
+      gap: 6px;
+      margin-top: 10px;
       color: #475467;
-      font-size: 12px;
+      font-size: 11px;
     }
 
     .tool-meta strong {
       display: block;
       color: var(--ink);
-      font-size: 13px;
+      font-size: 12px;
       margin-top: 2px;
     }
 
@@ -865,6 +911,7 @@
         height: auto;
         align-items: stretch;
         flex-direction: column;
+        top: 0;
         padding: 12px;
       }
 
@@ -943,8 +990,9 @@
     <main class="main">
       <header class="topbar">
         <div class="search">
-          <span class="search-symbol">⌕</span>
+          <span class="search-symbol">/</span>
           <input aria-label="Search" placeholder="Search datasets, tools, tasks, or benchmarks">
+          <div class="global-search-results" id="globalSearchResults"></div>
         </div>
         <div class="top-actions">
           <button class="btn ghost">Docs</button>
@@ -1160,23 +1208,25 @@
 
           <div class="tool-controls">
             <input class="tool-search" aria-label="Search tools" placeholder="Search tools, papers, APIs, tasks">
-            <select class="select" aria-label="Tool status">
-              <option>All statuses</option>
-              <option>Ready</option>
-              <option>Draft</option>
-              <option>Needs review</option>
+            <select class="select tool-status-filter" aria-label="Tool status">
+              <option value="All">All statuses</option>
+              <option value="Ready">Ready</option>
+              <option value="Draft">Draft</option>
+              <option value="Needs review">Needs review</option>
             </select>
-            <select class="select" aria-label="Tool resource">
-              <option>All resources</option>
-              <option>Paper</option>
-              <option>Demo images</option>
-              <option>API docs</option>
+            <select class="select tool-resource-filter" aria-label="Tool resource">
+              <option value="All">All resources</option>
+              <option value="Paper">Paper</option>
+              <option value="Demo images">Demo images</option>
+              <option value="API docs">API docs</option>
+              <option value="Benchmark">Benchmark</option>
             </select>
           </div>
 
           <div class="model-layout">
             <aside class="category-list" aria-label="Tool categories">
-              <button class="active" data-tool-category-filter="Perception and Grounding">Perception and Grounding <span class="category-count">0</span></button>
+              <button class="active" data-tool-category-filter="All">All Tools <span class="category-count">0</span></button>
+              <button data-tool-category-filter="Perception and Grounding">Perception and Grounding <span class="category-count">0</span></button>
               <button data-tool-category-filter="Cognition and State Modeling">Cognition and State Modeling <span class="category-count">0</span></button>
               <button data-tool-category-filter="Reasoning and Planning">Reasoning and Planning <span class="category-count">0</span></button>
               <button data-tool-category-filter="Execution and Control">Execution and Control <span class="category-count">0</span></button>
@@ -1185,11 +1235,11 @@
             <div>
               <div class="tool-results-head">
                 <span>Tool cards use a Roboflow-style thumbnail, compact metadata, and action chips.</span>
-                <span id="toolResultCount">4 templates loaded</span>
+                <span id="toolResultCount">5 tools loaded</span>
               </div>
 
               <div class="model-grid">
-                <a class="card tool-card active" href="tool.html?tool=yolo-world" data-tool-slug="yolo-world" data-tool-title="YOLO-World" data-tool-category="Perception and Grounding" data-tool-search="yolo world open vocabulary object detection grounding real time cvpr 2024 hugging face onnx demo">
+                <a class="card tool-card active" href="tool.html?tool=yolo-world" data-tool-slug="yolo-world" data-tool-title="YOLO-World" data-tool-category="Perception and Grounding" data-tool-status="Ready" data-tool-resources="Paper Demo images API docs Benchmark" data-tool-search="yolo world open vocabulary object detection grounding real time cvpr 2024 hugging face onnx demo paper api benchmark">
                   <div class="tool-thumb image" style="background-image: linear-gradient(135deg, rgba(16, 24, 40, 0.36), rgba(53, 98, 255, 0.2)), url('https://wondervictor.github.io/images/vis_lvis.png');"><span>Open-vocabulary detection</span></div>
                   <div class="tool-card-body">
                     <div class="card-title">YOLO-World <span class="badge blue">Grounding</span></div>
@@ -1209,7 +1259,7 @@
                   </div>
                 </a>
 
-                <a class="card tool-card" href="tool.html?tool=tool-entry-template" data-tool-slug="tool-entry-template" data-tool-title="Tool Entry Template" data-tool-category="Perception and Grounding" data-tool-search="tool entry template perception grounding images text state api demo paper">
+                <a class="card tool-card" href="tool.html?tool=tool-entry-template" data-tool-slug="tool-entry-template" data-tool-title="Tool Entry Template" data-tool-category="Perception and Grounding" data-tool-status="Draft" data-tool-resources="Paper Demo images API docs" data-tool-search="tool entry template perception grounding images text state api demo paper">
                   <div class="tool-thumb">Demo image / screenshot</div>
                   <div class="tool-card-body">
                     <div class="card-title">Tool Entry Template <span class="badge blue">Perception</span></div>
@@ -1229,7 +1279,7 @@
                   </div>
                 </a>
 
-                <a class="card tool-card" href="tool.html?tool=paper-backed-tool-template" data-tool-slug="paper-backed-tool-template" data-tool-title="Paper-backed Tool Template" data-tool-category="Cognition and State Modeling" data-tool-search="paper backed tool template cognition state modeling bibtex method artifacts world model memory">
+                <a class="card tool-card" href="tool.html?tool=paper-backed-tool-template" data-tool-slug="paper-backed-tool-template" data-tool-title="Paper-backed Tool Template" data-tool-category="Cognition and State Modeling" data-tool-status="Draft" data-tool-resources="Paper Benchmark" data-tool-search="paper backed tool template cognition state modeling bibtex method artifacts world model memory">
                   <div class="tool-thumb">Paper figure / pipeline</div>
                   <div class="tool-card-body">
                     <div class="card-title">Paper-backed Tool Template <span class="badge">State</span></div>
@@ -1249,7 +1299,7 @@
                   </div>
                 </a>
 
-                <a class="card tool-card" href="tool.html?tool=api-tool-template" data-tool-slug="api-tool-template" data-tool-title="API Tool Template" data-tool-category="Reasoning and Planning" data-tool-search="api tool template reasoning planning endpoint schema example post get token">
+                <a class="card tool-card" href="tool.html?tool=api-tool-template" data-tool-slug="api-tool-template" data-tool-title="API Tool Template" data-tool-category="Reasoning and Planning" data-tool-status="Draft" data-tool-resources="API docs Demo images" data-tool-search="api tool template reasoning planning endpoint schema example post get token">
                   <div class="tool-thumb">API response preview</div>
                   <div class="tool-card-body">
                     <div class="card-title">API Tool Template <span class="badge blue">Planning</span></div>
@@ -1269,7 +1319,7 @@
                   </div>
                 </a>
 
-                <a class="card tool-card" href="tool.html?tool=execution-tool-template" data-tool-slug="execution-tool-template" data-tool-title="Execution Tool Template" data-tool-category="Execution and Control" data-tool-search="execution tool template control policy runtime benchmark rollout action trace">
+                <a class="card tool-card" href="tool.html?tool=execution-tool-template" data-tool-slug="execution-tool-template" data-tool-title="Execution Tool Template" data-tool-category="Execution and Control" data-tool-status="Draft" data-tool-resources="Demo images API docs Benchmark" data-tool-search="execution tool template control policy runtime benchmark rollout action trace">
                   <div class="tool-thumb">Policy rollout / action trace</div>
                   <div class="tool-card-body">
                     <div class="card-title">Execution Tool Template <span class="badge">Control</span></div>
@@ -1342,11 +1392,15 @@
     const buttons = document.querySelectorAll("[data-view-target]");
     const navButtons = document.querySelectorAll(".nav [data-view-target]");
     const views = document.querySelectorAll(".view");
+    const globalSearch = document.querySelector(".search input");
+    const globalSearchResults = document.querySelector("#globalSearchResults");
 
-    function activate(target) {
+    function activate(target, scrollTop = true) {
       views.forEach((view) => view.classList.toggle("active", view.id === target));
       navButtons.forEach((button) => button.classList.toggle("active", button.dataset.viewTarget === target));
-      window.scrollTo({ top: 0, behavior: "smooth" });
+      if (scrollTop) {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
     }
 
     buttons.forEach((button) => {
@@ -1363,30 +1417,129 @@
     window.addEventListener("hashchange", activateFromHash);
     activateFromHash();
 
+    const searchItems = [
+      { title: "Home", type: "Section", text: "home overview core modules", action: () => activate("home") },
+      { title: "Datasets", type: "Section", text: "datasets hugging face download annotation", action: () => activate("datasets") },
+      { title: "Leaderboard", type: "Section", text: "leaderboard benchmark metrics evaluation", action: () => activate("leaderboard") },
+      { title: "Tools", type: "Section", text: "tools perception grounding planning control api", action: () => setToolFilters({ category: "All", status: "All", resource: "All", query: "" }) },
+      { title: "Explore", type: "Section", text: "explore discovery tasks datasets tools", action: () => activate("explore") },
+      { title: "Perception and Grounding", type: "Tool category", text: "perception grounding detection localization recognition", action: () => setToolFilters({ category: "Perception and Grounding", status: "All", resource: "All", query: "" }) },
+      { title: "Cognition and State Modeling", type: "Tool category", text: "cognition state modeling world model memory representation", action: () => setToolFilters({ category: "Cognition and State Modeling", status: "All", resource: "All", query: "" }) },
+      { title: "Reasoning and Planning", type: "Tool category", text: "reasoning planning api endpoint schema examples", action: () => setToolFilters({ category: "Reasoning and Planning", status: "All", resource: "All", query: "" }) },
+      { title: "Execution and Control", type: "Tool category", text: "execution control policy runtime rollout action trace", action: () => setToolFilters({ category: "Execution and Control", status: "All", resource: "All", query: "" }) },
+      { title: "API-ready tools", type: "Tool filter", text: "api docs endpoint schema request response examples", action: () => setToolFilters({ category: "All", status: "All", resource: "API docs", query: "" }) },
+      { title: "Benchmark tools", type: "Tool filter", text: "benchmark leaderboard metrics evaluation artifacts", action: () => setToolFilters({ category: "All", status: "All", resource: "Benchmark", query: "" }) },
+      { title: "Draft tools", type: "Tool filter", text: "draft needs content template placeholder", action: () => setToolFilters({ category: "All", status: "Draft", resource: "All", query: "" }) },
+      { title: "YOLO-World", type: "Tool", text: "yolo world open vocabulary detection grounding cvpr 2024", action: () => { window.location.href = "tool.html?tool=yolo-world"; } },
+      { title: "Tool Entry Template", type: "Tool", text: "perception grounding template", action: () => { window.location.href = "tool.html?tool=tool-entry-template"; } },
+      { title: "Paper-backed Tool Template", type: "Tool", text: "cognition state modeling paper method", action: () => { window.location.href = "tool.html?tool=paper-backed-tool-template"; } },
+      { title: "API Tool Template", type: "Tool", text: "reasoning planning endpoint schema api examples", action: () => { window.location.href = "tool.html?tool=api-tool-template"; } },
+      { title: "Execution Tool Template", type: "Tool", text: "execution control policy runtime rollout", action: () => { window.location.href = "tool.html?tool=execution-tool-template"; } }
+    ];
+
+    function renderGlobalSearch(query) {
+      if (!globalSearchResults) return;
+      const normalized = query.trim().toLowerCase();
+      globalSearchResults.innerHTML = "";
+      if (!normalized) {
+        globalSearchResults.classList.remove("active");
+        return;
+      }
+
+      const matches = searchItems
+        .filter((item) => `${item.title} ${item.type} ${item.text}`.toLowerCase().includes(normalized))
+        .slice(0, 8);
+
+      if (!matches.length) {
+        globalSearchResults.innerHTML = `<button type="button"><strong>No results</strong><span>Try tool, dataset, API, benchmark, or YOLO.</span></button>`;
+        globalSearchResults.classList.add("active");
+        return;
+      }
+
+      matches.forEach((item, index) => {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = index === 0 ? "active" : "";
+        button.innerHTML = `<strong>${item.title}</strong><span>${item.type}</span>`;
+        button.addEventListener("click", () => {
+          item.action();
+          globalSearchResults.classList.remove("active");
+          globalSearch.value = "";
+        });
+        globalSearchResults.appendChild(button);
+      });
+      globalSearchResults.classList.add("active");
+    }
+
+    globalSearch?.addEventListener("input", () => renderGlobalSearch(globalSearch.value));
+    globalSearch?.addEventListener("keydown", (event) => {
+      if (event.key === "Enter") {
+        const first = globalSearchResults?.querySelector("button.active, button");
+        first?.click();
+      }
+      if (event.key === "Escape") {
+        globalSearchResults?.classList.remove("active");
+      }
+    });
+
+    document.addEventListener("click", (event) => {
+      if (!event.target.closest(".search")) {
+        globalSearchResults?.classList.remove("active");
+      }
+    });
+
     const toolCards = document.querySelectorAll(".tool-card");
     const toolSearch = document.querySelector(".tool-search");
+    const toolStatusFilter = document.querySelector(".tool-status-filter");
+    const toolResourceFilter = document.querySelector(".tool-resource-filter");
     const toolCategoryButtons = document.querySelectorAll("[data-tool-category-filter]");
     const toolResultCount = document.querySelector("#toolResultCount");
-    let activeToolCategory = "Perception and Grounding";
+    let activeToolCategory = "All";
+    const allToolCards = [...toolCards];
+
+    function normalize(value) {
+      return (value || "").trim().toLowerCase();
+    }
+
+    function setToolFilters({ query, category, status, resource } = {}) {
+      if (query !== undefined && toolSearch) toolSearch.value = query;
+      if (category !== undefined) {
+        activeToolCategory = category;
+        toolCategoryButtons.forEach((button) => {
+          button.classList.toggle("active", button.dataset.toolCategoryFilter === activeToolCategory);
+        });
+      }
+      if (status !== undefined && toolStatusFilter) toolStatusFilter.value = status;
+      if (resource !== undefined && toolResourceFilter) toolResourceFilter.value = resource;
+      activate("models", false);
+      filterTools();
+      document.querySelector("#models")?.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
 
     function updateToolCounts() {
       toolCategoryButtons.forEach((button) => {
         const category = button.dataset.toolCategoryFilter;
-        const count = [...toolCards].filter((card) => card.dataset.toolCategory === category).length;
+        const count = category === "All"
+          ? toolCards.length
+          : [...toolCards].filter((card) => card.dataset.toolCategory === category).length;
         button.querySelector(".category-count").textContent = count;
       });
     }
 
     function filterTools() {
-      const query = (toolSearch?.value || "").trim().toLowerCase();
+      const query = normalize(toolSearch?.value);
+      const status = toolStatusFilter?.value || "All";
+      const resource = toolResourceFilter?.value || "All";
       let visibleCount = 0;
       let firstVisible = null;
 
       toolCards.forEach((card) => {
-        const matchesCategory = card.dataset.toolCategory === activeToolCategory;
+        const matchesCategory = activeToolCategory === "All" || card.dataset.toolCategory === activeToolCategory;
+        const matchesStatus = status === "All" || card.dataset.toolStatus === status;
+        const matchesResource = resource === "All" || (card.dataset.toolResources || "").includes(resource);
         const text = `${card.dataset.toolSearch || ""} ${card.innerText || ""}`.toLowerCase();
         const matchesSearch = !query || text.includes(query);
-        const visible = matchesCategory && matchesSearch;
+        const visible = matchesCategory && matchesStatus && matchesResource && matchesSearch;
         card.style.display = visible ? "" : "none";
         if (visible) {
           visibleCount += 1;
@@ -1395,11 +1548,12 @@
       });
 
       if (toolResultCount) {
-        toolResultCount.textContent = `${visibleCount} template${visibleCount === 1 ? "" : "s"} shown`;
+        toolResultCount.textContent = `${visibleCount} tool${visibleCount === 1 ? "" : "s"} shown`;
       }
 
       toolCards.forEach((card) => card.classList.remove("active"));
       firstVisible?.classList.add("active");
+      return firstVisible;
     }
 
     toolCategoryButtons.forEach((button) => {
@@ -1411,6 +1565,13 @@
     });
 
     toolSearch?.addEventListener("input", filterTools);
+    toolSearch?.addEventListener("keydown", (event) => {
+      if (event.key === "Enter") {
+        filterTools()?.click();
+      }
+    });
+    toolStatusFilter?.addEventListener("change", filterTools);
+    toolResourceFilter?.addEventListener("change", filterTools);
     updateToolCounts();
     filterTools();
   </script>

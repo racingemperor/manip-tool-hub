@@ -46,7 +46,7 @@
     .topbar {
       position: sticky;
       top: 0;
-      z-index: 4;
+      z-index: 20;
       height: 64px;
       background: rgba(255, 255, 255, 0.9);
       border-bottom: 1px solid var(--line);
@@ -69,6 +69,72 @@
       align-items: center;
       gap: 10px;
       font-weight: 800;
+    }
+
+    .detail-search {
+      position: relative;
+      flex: 1;
+      max-width: 520px;
+    }
+
+    .detail-search input {
+      width: 100%;
+      height: 38px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 0 12px;
+      outline: none;
+      background: #ffffff;
+      color: var(--ink);
+    }
+
+    .detail-search input:focus {
+      border-color: #93b5fd;
+      box-shadow: 0 0 0 3px rgba(53, 98, 255, 0.12);
+    }
+
+    .search-results {
+      position: absolute;
+      top: calc(100% + 8px);
+      left: 0;
+      right: 0;
+      z-index: 30;
+      display: none;
+      gap: 6px;
+      max-height: 280px;
+      overflow: auto;
+      padding: 8px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #ffffff;
+      box-shadow: var(--shadow);
+    }
+
+    .search-results.active {
+      display: grid;
+    }
+
+    .search-results button {
+      border: 0;
+      border-radius: 6px;
+      background: transparent;
+      color: var(--ink);
+      display: grid;
+      gap: 2px;
+      padding: 9px 10px;
+      text-align: left;
+      cursor: pointer;
+    }
+
+    .search-results button:hover,
+    .search-results button.active {
+      background: #f5f7ff;
+      color: #2444d8;
+    }
+
+    .search-results span {
+      color: var(--muted);
+      font-size: 12px;
     }
 
     .mark {
@@ -216,8 +282,7 @@
       align-items: start;
     }
 
-    .main-stack,
-    .side-stack {
+    .main-stack {
       display: grid;
       gap: 16px;
     }
@@ -426,32 +491,63 @@
       background: #f8fafc;
     }
 
-    .side-stack {
-      position: static;
-    }
-
-    .content-grid > .side-stack {
-      display: grid;
-      order: -1;
-      position: static;
-      align-self: start;
-    }
-
-    .content-grid > .side-stack .card:not(.link-card) {
-      display: none;
-    }
-
     #overview,
     #paper,
     #demo,
     #api,
+    #code-docs,
     #benchmark,
+    #related,
     #metadata {
       scroll-margin-top: 150px;
     }
 
     .support-grid {
       grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .floating-nav {
+      position: fixed;
+      left: 12px;
+      top: 176px;
+      z-index: 7;
+      display: none;
+      align-items: flex-start;
+      gap: 8px;
+    }
+
+    .floating-tab {
+      width: 42px;
+      min-height: 118px;
+      border: 1px solid #c9d6ff;
+      border-radius: 10px;
+      background: #ffffff;
+      color: #2444d8;
+      box-shadow: 0 10px 26px rgba(16, 24, 40, 0.12);
+      cursor: pointer;
+      writing-mode: vertical-rl;
+      text-orientation: mixed;
+      font-weight: 800;
+      letter-spacing: 0;
+    }
+
+    .floating-panel {
+      width: 230px;
+      opacity: 0;
+      transform: translateX(-8px);
+      pointer-events: none;
+      transition: opacity 160ms ease, transform 160ms ease;
+    }
+
+    .floating-nav:hover .floating-panel,
+    .floating-nav:focus-within .floating-panel {
+      opacity: 1;
+      transform: translateX(0);
+      pointer-events: auto;
+    }
+
+    .floating-panel .card {
+      box-shadow: var(--shadow);
     }
 
     .link-list {
@@ -501,6 +597,60 @@
       box-shadow: 0 0 0 3px rgba(53, 98, 255, 0.1);
     }
 
+    .doc-grid,
+    .related-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .doc-card,
+    .related-card {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #f8fafc;
+      padding: 14px;
+      min-width: 0;
+    }
+
+    .doc-card pre {
+      max-height: 132px;
+      margin: 10px 0 0;
+    }
+
+    details.doc-more {
+      margin-top: 10px;
+    }
+
+    details.doc-more summary {
+      color: var(--accent);
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .related-card {
+      display: grid;
+      gap: 8px;
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .related-card:hover {
+      border-color: #9db5ff;
+      box-shadow: 0 0 0 3px rgba(53, 98, 255, 0.1);
+    }
+
+    .related-card strong {
+      font-size: 15px;
+    }
+
+    .related-card p {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.45;
+    }
+
     .timeline {
       display: grid;
       gap: 10px;
@@ -523,13 +673,9 @@
       margin: 5px auto 0;
     }
 
-    @media (min-width: 1540px) {
-      .content-grid > .side-stack {
-        position: fixed;
-        top: 88px;
-        left: max(24px, calc((100vw - 1500px) / 2 - 260px));
-        width: 230px;
-        z-index: 3;
+    @media (min-width: 1180px) {
+      .floating-nav {
+        display: flex;
       }
     }
 
@@ -537,16 +683,10 @@
       .content-grid,
       .summary-grid,
       .paper-card,
-      .support-grid {
+      .support-grid,
+      .doc-grid,
+      .related-grid {
         grid-template-columns: 1fr;
-      }
-
-      .side-stack {
-        position: static;
-      }
-
-      .content-grid > .side-stack {
-        order: 0;
       }
 
       h1 {
@@ -564,6 +704,11 @@
       .nav-actions {
         align-items: stretch;
         flex-direction: column;
+      }
+
+      .detail-search {
+        max-width: none;
+        width: 100%;
       }
 
       .demo-grid {
@@ -584,6 +729,10 @@
           <span class="mark">M</span>
           <span>Manip Tool Hub</span>
         </a>
+        <div class="detail-search">
+          <input id="detailSearch" aria-label="Search this tool" placeholder="Search sections, API, examples, benchmark, related tools">
+          <div class="search-results" id="detailSearchResults"></div>
+        </div>
         <div class="nav-actions">
           <a class="btn" href="./#models">All Tools</a>
           <a class="btn primary" href="#api">API Reference</a>
@@ -592,6 +741,26 @@
     </header>
 
     <main class="page">
+      <nav class="floating-nav" aria-label="Tool section navigation">
+        <button class="floating-tab" type="button">Links</button>
+        <div class="floating-panel">
+          <section class="card link-card">
+            <h2>Links</h2>
+            <p class="muted">Jump to each section.</p>
+            <div class="link-list primary-links" style="margin-top: 12px;">
+              <a href="#overview">Overview <span>&rarr;</span></a>
+              <a href="#paper">Original Paper <span>&rarr;</span></a>
+              <a href="#demo">Demo Gallery <span>&rarr;</span></a>
+              <a href="#api">API Reference <span>&rarr;</span></a>
+              <a href="#code-docs">Returns and Examples <span>&rarr;</span></a>
+              <a href="#benchmark">Benchmark <span>&rarr;</span></a>
+              <a href="#related">Related Tools <span>&rarr;</span></a>
+              <a href="#metadata">Metadata <span>&rarr;</span></a>
+            </div>
+          </section>
+        </div>
+      </nav>
+
       <section class="hero">
         <div class="hero-media">
           <div class="eyebrow" id="toolCategory">Reasoning and Planning</div>
@@ -615,7 +784,7 @@
 
       <section class="content-grid">
         <div class="main-stack">
-          <section class="card" id="benchmark">
+          <section class="card" id="overview">
             <div class="card-head">
               <div>
                 <h2>Tool Overview</h2>
@@ -711,7 +880,99 @@ Content-Type: application/json
             </table>
           </section>
 
-          <section class="card" id="overview">
+          <section class="card" id="code-docs">
+            <div class="card-head">
+              <div>
+                <h2>Returns, API, and Examples</h2>
+                <p class="muted">Short previews are shown by default. Expand a block when you need the full template.</p>
+              </div>
+            </div>
+            <div class="doc-grid">
+              <article class="doc-card">
+                <h3>Returns</h3>
+                <p class="muted">Bounding boxes, class labels, confidence scores, and optional visualization paths.</p>
+                <pre class="api-block">{
+  "detections": [
+    {"label": "bus", "score": 0.87, "box": [x1, y1, x2, y2]}
+  ],
+  "visualization": "runs/detect/result.jpg"
+}</pre>
+                <details class="doc-more">
+                  <summary>Expand full return schema</summary>
+                  <pre class="api-block">{
+  "image_id": "sample.jpg",
+  "detections": [
+    {
+      "label": "bus",
+      "score": 0.87,
+      "box": [124, 96, 384, 310],
+      "source_prompt": "bus",
+      "normalized_box": [0.19, 0.16, 0.60, 0.52]
+    }
+  ],
+  "timing": {
+    "preprocess_ms": 8,
+    "inference_ms": 31,
+    "postprocess_ms": 5
+  },
+  "artifacts": {
+    "visualization": "runs/detect/result.jpg",
+    "raw_predictions": "runs/detect/predictions.json"
+  }
+}</pre>
+                </details>
+              </article>
+
+              <article class="doc-card">
+                <h3>API</h3>
+                <p class="muted">Use this area for a local wrapper, hosted endpoint, or future service interface.</p>
+                <pre class="api-block">POST /api/tools/yolo-world/detect
+Content-Type: multipart/form-data
+
+image=@scene.jpg
+prompts=person,bus,car
+threshold=0.05</pre>
+                <details class="doc-more">
+                  <summary>Expand API notes</summary>
+                  <pre class="api-block">Request fields:
+- image: file | URL
+- prompts: comma-separated text categories
+- threshold: confidence threshold
+- topk: max detections to return
+- return_visualization: include rendered result image
+
+Response:
+- detections: array of boxes, labels, scores
+- visualization: optional artifact URL
+- timing: optional runtime breakdown</pre>
+                </details>
+              </article>
+
+              <article class="doc-card">
+                <h3>Examples</h3>
+                <p class="muted">Keep one short runnable snippet visible; move longer scripts behind expand.</p>
+                <pre class="api-block">python demo/image_demo.py \
+  demo/sample_images/bus.jpg \
+  configs/pretrain/yolo_world_v2_xl.py \
+  weights/yolo_world_v2_xl.pth \
+  "person,bus,car"</pre>
+                <details class="doc-more">
+                  <summary>Expand full example</summary>
+                  <pre class="api-block">python demo/image_demo.py demo/sample_images/bus.jpg \
+  configs/pretrain/yolo_world_v2_xl.py \
+  weights/yolo_world_v2_xl_obj365v1_goldg_pretrain-5daf1395.pth \
+  "person,bus,car" \
+  --topk 100 \
+  --threshold 0.05 \
+  --output-dir runs/detect
+
+# Replace the prompts with task-specific vocabulary for grounding.</pre>
+                </details>
+              </article>
+            </div>
+          </section>
+
+          <section class="card" id="benchmark">
             <div class="card-head">
               <div>
                 <h2>Benchmark and Evaluation</h2>
@@ -725,48 +986,34 @@ Content-Type: application/json
               <div class="metric"><span>Artifacts</span><strong id="benchmarkArtifacts">Logs / traces</strong></div>
             </div>
           </section>
+
+          <section class="card" id="related">
+            <div class="card-head">
+              <div>
+                <h2>Related Tools</h2>
+                <p class="muted" id="relatedIntro">Recommended from the same category.</p>
+              </div>
+            </div>
+            <div class="related-grid" id="relatedTools">
+              <a class="related-card" href="tool.html?tool=tool-entry-template">
+                <span class="badge blue">Perception and Grounding</span>
+                <strong>Tool Entry Template</strong>
+                <p>Template for visual recognition, localization, scene grounding, and perception-facing tool entries.</p>
+              </a>
+              <a class="related-card" href="tool.html?tool=yolo-world">
+                <span class="badge blue">Open-vocabulary detection</span>
+                <strong>YOLO-World</strong>
+                <p>Real-time prompt-driven detector for boxes, classes, and grounding outputs.</p>
+              </a>
+              <a class="related-card" href="./#models">
+                <span class="badge">Browse category</span>
+                <strong>More Perception Tools</strong>
+                <p>Open the Tools page filtered around perception, grounding, detection, and localization entries.</p>
+              </a>
+            </div>
+          </section>
         </div>
 
-        <aside class="side-stack">
-          <section class="card link-card">
-            <h2>Links</h2>
-            <p class="muted">Jump to each section.</p>
-            <div class="link-list primary-links" style="margin-top: 12px;">
-              <a href="#overview">Overview <span>&rarr;</span></a>
-              <a href="#paper">Original Paper <span>&rarr;</span></a>
-              <a href="#demo">Demo Gallery <span>&rarr;</span></a>
-              <a href="#api">API Reference <span>&rarr;</span></a>
-              <a href="#benchmark">Benchmark <span>&rarr;</span></a>
-              <a href="#metadata">Metadata <span>&rarr;</span></a>
-            </div>
-            <div class="link-list" style="margin-top: 12px;">
-              <a href="#paper">Paper <span>→</span></a>
-              <a href="#demo">Demo Gallery <span>→</span></a>
-              <a href="#api">API Reference <span>→</span></a>
-              <a href="./#leaderboard">Leaderboard <span>→</span></a>
-            </div>
-          </section>
-
-          <section class="card">
-            <h2>Integration Checklist</h2>
-            <div class="timeline" style="margin-top: 12px;">
-              <div class="timeline-item"><span class="timeline-dot"></span><span>Add paper metadata and links.</span></div>
-              <div class="timeline-item"><span class="timeline-dot"></span><span>Upload demo images or video thumbnails.</span></div>
-              <div class="timeline-item"><span class="timeline-dot"></span><span>Define API request and response schema.</span></div>
-              <div class="timeline-item"><span class="timeline-dot"></span><span>Connect benchmark row and artifacts.</span></div>
-            </div>
-          </section>
-
-          <section class="card">
-            <h2>Tool Metadata</h2>
-            <div class="field-list" style="margin-top: 12px;">
-              <div class="field-row"><span>Category</span><strong id="sideCategory">Reasoning and Planning</strong></div>
-              <div class="field-row"><span>License</span><strong id="sideLicense">To be added</strong></div>
-              <div class="field-row"><span>Owner</span><strong id="sideOwner">To be added</strong></div>
-              <div class="field-row"><span>Version</span><strong id="sideVersion">Draft</strong></div>
-            </div>
-          </section>
-        </aside>
       </section>
 
       <section class="content-grid support-grid">
@@ -854,31 +1101,49 @@ python demo/image_demo.py demo/sample_images/bus.jpg \
         title: "Tool Entry Template",
         category: "Perception and Grounding",
         task: "Perception",
-        summary: "Template for visual recognition, localization, scene grounding, and perception-facing tool entries."
+        summary: "Template for visual recognition, localization, scene grounding, and perception-facing tool entries.",
+        input: "Images / text / state",
+        output: "Grounding result",
+        runtime: "Template",
+        status: "Draft"
       },
       "paper-backed-tool-template": {
         title: "Paper-backed Tool Template",
         category: "Cognition and State Modeling",
         task: "State",
-        summary: "Template for tools derived from papers, with space for method diagrams, citations, artifacts, and implementation notes."
+        summary: "Template for tools derived from papers, with space for method diagrams, citations, artifacts, and implementation notes.",
+        input: "Paper / method notes",
+        output: "State model artifact",
+        runtime: "Template",
+        status: "Draft"
       },
       "api-tool-template": {
         title: "API Tool Template",
         category: "Reasoning and Planning",
         task: "Planning",
-        summary: "Template for tools with endpoint documentation, parameters, response schema, examples, and integration notes."
+        summary: "Template for tools with endpoint documentation, parameters, response schema, examples, and integration notes.",
+        input: "Request JSON",
+        output: "Plan / response schema",
+        runtime: "API template",
+        status: "Draft"
       },
       "execution-tool-template": {
         title: "Execution Tool Template",
         category: "Execution and Control",
         task: "Control",
-        summary: "Template for policies, controllers, runtime wrappers, rollouts, videos, traces, and benchmark artifacts."
+        summary: "Template for policies, controllers, runtime wrappers, rollouts, videos, traces, and benchmark artifacts.",
+        input: "State / action request",
+        output: "Action trace",
+        runtime: "Runtime template",
+        status: "Draft"
       }
     };
 
     const params = new URLSearchParams(window.location.search);
     const slug = params.get("tool") || "api-tool-template";
     const tool = tools[slug] || tools["api-tool-template"];
+    const detailSearch = document.querySelector("#detailSearch");
+    const detailSearchResults = document.querySelector("#detailSearchResults");
 
     document.title = `${tool.title} - Manip Tool Hub`;
     document.querySelector("#toolTitle").textContent = tool.title;
@@ -950,6 +1215,113 @@ python demo/image_demo.py demo/sample_images/bus.jpg \
 
     tool.demos?.forEach((demo, index) => {
       renderDemo(`#demoSlot${index + 1}`, demo);
+    });
+
+    const toolCatalog = Object.entries(tools).map(([toolSlug, item]) => ({
+      slug: toolSlug,
+      title: item.title,
+      category: item.category,
+      task: item.task,
+      summary: item.summary
+    }));
+
+    function renderRelatedTools() {
+      const related = document.querySelector("#relatedTools");
+      const intro = document.querySelector("#relatedIntro");
+      if (!related) return;
+
+      const sameCategory = toolCatalog
+        .filter((item) => item.category === tool.category && item.slug !== slug)
+        .slice(0, 3);
+
+      intro.textContent = `Recommended from ${tool.category}.`;
+      related.innerHTML = sameCategory.map((item) => `
+        <a class="related-card" href="tool.html?tool=${item.slug}">
+          <span class="badge blue">${item.category}</span>
+          <strong>${item.title}</strong>
+          <p>${item.summary}</p>
+        </a>
+      `).join("");
+
+      while (related.children.length < 3) {
+        const placeholder = document.createElement("a");
+        placeholder.className = "related-card";
+        placeholder.href = "./#models";
+        placeholder.innerHTML = `
+          <span class="badge">${tool.category}</span>
+          <strong>Add another ${tool.task} tool</strong>
+          <p>This slot is reserved for a future tool from the same category, so recommendations stay category-specific.</p>
+        `;
+        related.appendChild(placeholder);
+      }
+    }
+
+    renderRelatedTools();
+
+    const detailSearchItems = [
+      { title: "Overview", type: "Section", text: "summary input output runtime status", target: "#overview" },
+      { title: "Original Paper", type: "Section", text: "paper authors venue citation links", target: "#paper" },
+      { title: "Demo Gallery", type: "Section", text: "demo images visualization benchmark screenshots", target: "#demo" },
+      { title: "API Reference", type: "Section", text: "api endpoint parameters request response", target: "#api" },
+      { title: "Returns, API, and Examples", type: "Docs", text: "returns examples code schema expand", target: "#code-docs" },
+      { title: "Benchmark", type: "Section", text: "evaluation metric latency artifacts", target: "#benchmark" },
+      { title: "Related Tools", type: "Section", text: "recommended similar category perception grounding", target: "#related" },
+      { title: "Metadata", type: "Section", text: "license owner version category", target: "#metadata" }
+    ];
+
+    function jumpTo(target) {
+      document.querySelector(target)?.scrollIntoView({ behavior: "smooth", block: "start" });
+      const params = new URLSearchParams(window.location.search);
+      const query = params.toString();
+      history.replaceState(null, "", `${window.location.pathname}${query ? `?${query}` : ""}${target}`);
+    }
+
+    function renderDetailSearch(query) {
+      if (!detailSearchResults) return;
+      const normalized = query.trim().toLowerCase();
+      detailSearchResults.innerHTML = "";
+      if (!normalized) {
+        detailSearchResults.classList.remove("active");
+        return;
+      }
+
+      const matches = detailSearchItems
+        .filter((item) => `${item.title} ${item.type} ${item.text}`.toLowerCase().includes(normalized))
+        .slice(0, 8);
+
+      matches.forEach((item, index) => {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = index === 0 ? "active" : "";
+        button.innerHTML = `<strong>${item.title}</strong><span>${item.type}</span>`;
+        button.addEventListener("click", () => {
+          jumpTo(item.target);
+          detailSearchResults.classList.remove("active");
+          detailSearch.value = "";
+        });
+        detailSearchResults.appendChild(button);
+      });
+
+      if (!matches.length) {
+        detailSearchResults.innerHTML = `<button type="button"><strong>No results</strong><span>Try API, returns, demo, benchmark, paper.</span></button>`;
+      }
+      detailSearchResults.classList.add("active");
+    }
+
+    detailSearch?.addEventListener("input", () => renderDetailSearch(detailSearch.value));
+    detailSearch?.addEventListener("keydown", (event) => {
+      if (event.key === "Enter") {
+        detailSearchResults?.querySelector("button.active, button")?.click();
+      }
+      if (event.key === "Escape") {
+        detailSearchResults?.classList.remove("active");
+      }
+    });
+
+    document.addEventListener("click", (event) => {
+      if (!event.target.closest(".detail-search")) {
+        detailSearchResults?.classList.remove("active");
+      }
     });
   </script>
 </body>
