@@ -613,20 +613,59 @@
       min-width: 0;
     }
 
-    .doc-card pre {
-      max-height: 132px;
-      margin: 10px 0 0;
-    }
-
-    details.doc-more {
+    .doc-code {
+      position: relative;
       margin-top: 10px;
     }
 
-    details.doc-more summary {
-      color: var(--accent);
+    .doc-code .api-block {
+      max-height: 178px;
+      margin: 0;
+      overflow: hidden;
+      transition: max-height 180ms ease;
+      border-radius: 8px 8px 0 0;
+    }
+
+    .doc-code.expanded .api-block {
+      max-height: none;
+      overflow-x: auto;
+      overflow-y: visible;
+    }
+
+    .doc-code::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 40px;
+      height: 54px;
+      border-radius: 0 0 8px 8px;
+      pointer-events: none;
+      background: linear-gradient(180deg, rgba(17, 24, 39, 0), #111827);
+      transition: opacity 160ms ease;
+    }
+
+    .doc-code.expanded::after {
+      opacity: 0;
+    }
+
+    .doc-toggle {
+      width: 100%;
+      min-height: 40px;
+      border: 1px solid #c9d6ff;
+      border-radius: 0 0 8px 8px;
+      background: #eef4ff;
+      color: #2444d8;
       cursor: pointer;
       font-size: 13px;
       font-weight: 800;
+      text-align: left;
+      padding: 0 12px;
+    }
+
+    .doc-toggle:hover {
+      border-color: var(--accent);
+      background: #e7efff;
     }
 
     .related-card {
@@ -891,14 +930,7 @@ Content-Type: application/json
               <article class="doc-card">
                 <h3>Returns</h3>
                 <p class="muted">Bounding boxes, class labels, confidence scores, and optional visualization paths.</p>
-                <pre class="api-block">{
-  "detections": [
-    {"label": "bus", "score": 0.87, "box": [x1, y1, x2, y2]}
-  ],
-  "visualization": "runs/detect/result.jpg"
-}</pre>
-                <details class="doc-more">
-                  <summary>Expand full return schema</summary>
+                <div class="doc-code" data-collapsed-label="Expand full return schema" data-expanded-label="Collapse return schema">
                   <pre class="api-block">{
   "image_id": "sample.jpg",
   "detections": [
@@ -920,21 +952,22 @@ Content-Type: application/json
     "raw_predictions": "runs/detect/predictions.json"
   }
 }</pre>
-                </details>
+                  <button class="doc-toggle" type="button">Expand full return schema</button>
+                </div>
               </article>
 
               <article class="doc-card">
                 <h3>API</h3>
                 <p class="muted">Use this area for a local wrapper, hosted endpoint, or future service interface.</p>
-                <pre class="api-block">POST /api/tools/yolo-world/detect
+                <div class="doc-code" data-collapsed-label="Expand API notes" data-expanded-label="Collapse API notes">
+                  <pre class="api-block">POST /api/tools/yolo-world/detect
 Content-Type: multipart/form-data
 
 image=@scene.jpg
 prompts=person,bus,car
-threshold=0.05</pre>
-                <details class="doc-more">
-                  <summary>Expand API notes</summary>
-                  <pre class="api-block">Request fields:
+threshold=0.05
+
+Request fields:
 - image: file | URL
 - prompts: comma-separated text categories
 - threshold: confidence threshold
@@ -945,19 +978,14 @@ Response:
 - detections: array of boxes, labels, scores
 - visualization: optional artifact URL
 - timing: optional runtime breakdown</pre>
-                </details>
+                  <button class="doc-toggle" type="button">Expand API notes</button>
+                </div>
               </article>
 
               <article class="doc-card">
                 <h3>Examples</h3>
                 <p class="muted">Keep one short runnable snippet visible; move longer scripts behind expand.</p>
-                <pre class="api-block">python demo/image_demo.py \
-  demo/sample_images/bus.jpg \
-  configs/pretrain/yolo_world_v2_xl.py \
-  weights/yolo_world_v2_xl.pth \
-  "person,bus,car"</pre>
-                <details class="doc-more">
-                  <summary>Expand full example</summary>
+                <div class="doc-code" data-collapsed-label="Expand full example" data-expanded-label="Collapse example">
                   <pre class="api-block">python demo/image_demo.py demo/sample_images/bus.jpg \
   configs/pretrain/yolo_world_v2_xl.py \
   weights/yolo_world_v2_xl_obj365v1_goldg_pretrain-5daf1395.pth \
@@ -967,7 +995,8 @@ Response:
   --output-dir runs/detect
 
 # Replace the prompts with task-specific vocabulary for grounding.</pre>
-                </details>
+                  <button class="doc-toggle" type="button">Expand full example</button>
+                </div>
               </article>
             </div>
           </section>
@@ -1257,6 +1286,14 @@ python demo/image_demo.py demo/sample_images/bus.jpg \
     }
 
     renderRelatedTools();
+
+    document.querySelectorAll(".doc-code").forEach((block) => {
+      const toggle = block.querySelector(".doc-toggle");
+      toggle?.addEventListener("click", () => {
+        const expanded = block.classList.toggle("expanded");
+        toggle.textContent = expanded ? block.dataset.expandedLabel : block.dataset.collapsedLabel;
+      });
+    });
 
     const detailSearchItems = [
       { title: "Overview", type: "Section", text: "summary input output runtime status", target: "#overview" },
