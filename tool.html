@@ -288,7 +288,7 @@
     }
 
     .demo-slot {
-      aspect-ratio: 4 / 3;
+      aspect-ratio: 16 / 10;
       border: 1px dashed #b8c2d6;
       border-radius: 8px;
       background:
@@ -396,8 +396,15 @@
     }
 
     .side-stack {
-      position: sticky;
-      top: 82px;
+      position: static;
+    }
+
+    .content-grid > .side-stack .card:nth-child(-n + 2) {
+      display: none;
+    }
+
+    .support-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
     .link-list {
@@ -444,7 +451,8 @@
     @media (max-width: 980px) {
       .content-grid,
       .summary-grid,
-      .paper-card {
+      .paper-card,
+      .support-grid {
         grid-template-columns: 1fr;
       }
 
@@ -662,6 +670,28 @@ Content-Type: application/json
           </section>
         </aside>
       </section>
+
+      <section class="content-grid support-grid">
+        <section class="card">
+          <h2>Quick Links</h2>
+          <div class="link-list" style="margin-top: 12px;">
+            <a href="#paper">Paper <span>&rarr;</span></a>
+            <a href="#demo">Demo Gallery <span>&rarr;</span></a>
+            <a href="#api">API Reference <span>&rarr;</span></a>
+            <a href="./#leaderboard">Leaderboard <span>&rarr;</span></a>
+          </div>
+        </section>
+
+        <section class="card">
+          <h2>Integration Checklist</h2>
+          <div class="timeline" style="margin-top: 12px;">
+            <div class="timeline-item"><span class="timeline-dot"></span><span>Add paper metadata and links.</span></div>
+            <div class="timeline-item"><span class="timeline-dot"></span><span>Upload real demos, benchmark screenshots, or result visualizations.</span></div>
+            <div class="timeline-item"><span class="timeline-dot"></span><span>Define API request and response schema.</span></div>
+            <div class="timeline-item"><span class="timeline-dot"></span><span>Connect benchmark row and artifacts.</span></div>
+          </div>
+        </section>
+      </section>
     </main>
   </div>
 
@@ -685,23 +715,23 @@ Content-Type: application/json
           ["arXiv", "https://arxiv.org/abs/2401.17270"],
           ["Hugging Face Demo", "https://huggingface.co/spaces/stevengrove/YOLO-World"]
         ],
-        heroImage: "https://raw.githubusercontent.com/AILab-CVC/YOLO-World/master/assets/yolo_arch.png",
+        heroImage: "https://wondervictor.github.io/images/vis_lvis.png",
         demos: [
           {
-            label: "Architecture / method figure",
-            image: "https://raw.githubusercontent.com/AILab-CVC/YOLO-World/master/assets/yolo_arch.png"
+            label: "LVIS open-vocabulary detection results",
+            image: "https://wondervictor.github.io/images/vis_lvis.png"
           },
           {
-            label: "Image prompt / grounding workflow",
-            image: "https://raw.githubusercontent.com/AILab-CVC/YOLO-World/master/assets/image_prompt.png"
+            label: "User vocabulary prompt detection",
+            image: "https://wondervictor.github.io/images/user_vocab.png"
           },
           {
-            label: "Fine-tuning workflow",
-            image: "https://raw.githubusercontent.com/AILab-CVC/YOLO-World/master/assets/finetune_yoloworld.png"
+            label: "Referring / grounding visualization",
+            image: "https://wondervictor.github.io/images/vis_referring.png"
           },
           {
-            label: "Re-parameterization / deployment",
-            image: "https://raw.githubusercontent.com/AILab-CVC/YOLO-World/master/assets/reparameterize.png"
+            label: "Speed and accuracy benchmark",
+            image: "https://wondervictor.github.io/images/speed_acc.png"
           }
         ],
         apiExample: `# Local image demo from the YOLO-World repository
