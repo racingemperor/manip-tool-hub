@@ -210,7 +210,7 @@
 
     .content-grid {
       display: grid;
-      grid-template-columns: minmax(0, 1fr) 330px;
+      grid-template-columns: minmax(0, 1fr);
       gap: 18px;
       margin-top: 18px;
       align-items: start;
@@ -257,7 +257,7 @@
 
     .summary-grid {
       display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
+      grid-template-columns: repeat(4, minmax(180px, 1fr));
       gap: 10px;
     }
 
@@ -365,6 +365,37 @@
       font-weight: 700;
     }
 
+    .external-links {
+      display: grid;
+      gap: 8px;
+    }
+
+    .external-links a {
+      border: 1px solid #b7c7ff;
+      border-radius: 8px;
+      background: #f5f7ff;
+      color: #1d4ed8;
+      display: grid;
+      gap: 3px;
+      padding: 10px 12px;
+      text-decoration: none;
+    }
+
+    .external-links a:hover {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(53, 98, 255, 0.1);
+    }
+
+    .external-links strong {
+      font-size: 13px;
+    }
+
+    .external-links span {
+      color: #475467;
+      font-size: 12px;
+      overflow-wrap: anywhere;
+    }
+
     .api-block {
       border-radius: 8px;
       background: #111827;
@@ -399,8 +430,14 @@
       position: static;
     }
 
-    .content-grid > .side-stack .card:nth-child(-n + 2) {
+    .content-grid > .side-stack {
       display: none;
+    }
+
+    #paper,
+    #demo,
+    #api {
+      scroll-margin-top: 150px;
     }
 
     .support-grid {
@@ -673,6 +710,16 @@ Content-Type: application/json
 
       <section class="content-grid support-grid">
         <section class="card">
+          <h2>Tool Metadata</h2>
+          <div class="field-list" style="margin-top: 12px;">
+            <div class="field-row"><span>Category</span><strong id="sideCategory">Reasoning and Planning</strong></div>
+            <div class="field-row"><span>License</span><strong id="sideLicense">To be added</strong></div>
+            <div class="field-row"><span>Owner</span><strong id="sideOwner">To be added</strong></div>
+            <div class="field-row"><span>Version</span><strong id="sideVersion">Draft</strong></div>
+          </div>
+        </section>
+
+        <section class="card">
           <h2>Quick Links</h2>
           <div class="link-list" style="margin-top: 12px;">
             <a href="#paper">Paper <span>&rarr;</span></a>
@@ -787,21 +834,20 @@ python demo/image_demo.py demo/sample_images/bus.jpg \
     document.querySelector("#toolCategory").textContent = tool.category;
     document.querySelector("#toolTask").textContent = tool.task;
     document.querySelector("#toolSummary").textContent = tool.summary;
-    document.querySelector("#sideCategory").textContent = tool.category;
-
     function setText(selector, value) {
-      const element = document.querySelector(selector);
-      if (element && value) {
+      document.querySelectorAll(selector).forEach((element) => {
+        if (value) {
         element.textContent = value;
-      }
+        }
+      });
     }
 
     function renderLinks(selector, links) {
       const element = document.querySelector(selector);
       if (!element || !links?.length) return;
-      element.innerHTML = links
-        .map(([label, url]) => `<a href="${url}" target="_blank" rel="noreferrer">${label}</a>`)
-        .join(" · ");
+      element.innerHTML = `<div class="external-links">${links
+        .map(([label, url]) => `<a href="${url}" target="_blank" rel="noreferrer"><strong>${label} &rarr;</strong><span>${url}</span></a>`)
+        .join("")}</div>`;
     }
 
     function renderDemo(slotId, demo) {
