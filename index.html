@@ -501,7 +501,7 @@
 
     .model-layout {
       display: grid;
-      grid-template-columns: 230px minmax(0, 1fr) 380px;
+      grid-template-columns: 230px minmax(0, 1fr);
       gap: 16px;
       align-items: start;
     }
@@ -585,6 +585,9 @@
       overflow: hidden;
       cursor: pointer;
       position: relative;
+      display: block;
+      color: inherit;
+      text-decoration: none;
     }
 
     .tool-card.active {
@@ -789,17 +792,6 @@
 
     .field-row span:first-child {
       color: var(--muted);
-    }
-
-    @media (max-width: 1250px) {
-      .model-layout {
-        grid-template-columns: 220px minmax(0, 1fr);
-      }
-
-      .tool-detail {
-        grid-column: 1 / -1;
-        position: static;
-      }
     }
 
     .empty-state {
@@ -1182,7 +1174,7 @@
               </div>
 
               <div class="model-grid">
-                <article class="card tool-card active" data-tool-slug="tool-entry-template" data-tool-title="Tool Entry Template" data-tool-category="Perception and Grounding" data-tool-search="tool entry template perception grounding images text state api demo paper">
+                <a class="card tool-card active" href="tool.html?tool=tool-entry-template" data-tool-slug="tool-entry-template" data-tool-title="Tool Entry Template" data-tool-category="Perception and Grounding" data-tool-search="tool entry template perception grounding images text state api demo paper">
                   <div class="tool-thumb">Demo image / screenshot</div>
                   <div class="tool-card-body">
                     <div class="card-title">Tool Entry Template <span class="badge blue">Perception</span></div>
@@ -1197,12 +1189,12 @@
                       <div>Output<strong>Grounding result</strong></div>
                     </div>
                     <div class="tool-open-row">
-                      <button class="tool-open-link" type="button">Open detail</button>
+                      <span class="tool-open-link">Open detail</span>
                     </div>
                   </div>
-                </article>
+                </a>
 
-                <article class="card tool-card" data-tool-slug="paper-backed-tool-template" data-tool-title="Paper-backed Tool Template" data-tool-category="Cognition and State Modeling" data-tool-search="paper backed tool template cognition state modeling bibtex method artifacts world model memory">
+                <a class="card tool-card" href="tool.html?tool=paper-backed-tool-template" data-tool-slug="paper-backed-tool-template" data-tool-title="Paper-backed Tool Template" data-tool-category="Cognition and State Modeling" data-tool-search="paper backed tool template cognition state modeling bibtex method artifacts world model memory">
                   <div class="tool-thumb">Paper figure / pipeline</div>
                   <div class="tool-card-body">
                     <div class="card-title">Paper-backed Tool Template <span class="badge">State</span></div>
@@ -1217,12 +1209,12 @@
                       <div>Status<strong>Draft</strong></div>
                     </div>
                     <div class="tool-open-row">
-                      <button class="tool-open-link" type="button">Open detail</button>
+                      <span class="tool-open-link">Open detail</span>
                     </div>
                   </div>
-                </article>
+                </a>
 
-                <article class="card tool-card" data-tool-slug="api-tool-template" data-tool-title="API Tool Template" data-tool-category="Reasoning and Planning" data-tool-search="api tool template reasoning planning endpoint schema example post get token">
+                <a class="card tool-card" href="tool.html?tool=api-tool-template" data-tool-slug="api-tool-template" data-tool-title="API Tool Template" data-tool-category="Reasoning and Planning" data-tool-search="api tool template reasoning planning endpoint schema example post get token">
                   <div class="tool-thumb">API response preview</div>
                   <div class="tool-card-body">
                     <div class="card-title">API Tool Template <span class="badge blue">Planning</span></div>
@@ -1237,12 +1229,12 @@
                       <div>Auth<strong>Token slot</strong></div>
                     </div>
                     <div class="tool-open-row">
-                      <button class="tool-open-link" type="button">Open detail</button>
+                      <span class="tool-open-link">Open detail</span>
                     </div>
                   </div>
-                </article>
+                </a>
 
-                <article class="card tool-card" data-tool-slug="execution-tool-template" data-tool-title="Execution Tool Template" data-tool-category="Execution and Control" data-tool-search="execution tool template control policy runtime benchmark rollout action trace">
+                <a class="card tool-card" href="tool.html?tool=execution-tool-template" data-tool-slug="execution-tool-template" data-tool-title="Execution Tool Template" data-tool-category="Execution and Control" data-tool-search="execution tool template control policy runtime benchmark rollout action trace">
                   <div class="tool-thumb">Policy rollout / action trace</div>
                   <div class="tool-card-body">
                     <div class="card-title">Execution Tool Template <span class="badge">Control</span></div>
@@ -1257,65 +1249,12 @@
                       <div>Metric<strong>Success rate</strong></div>
                     </div>
                     <div class="tool-open-row">
-                      <button class="tool-open-link" type="button">Open detail</button>
+                      <span class="tool-open-link">Open detail</span>
                     </div>
                   </div>
-                </article>
+                </a>
               </div>
             </div>
-
-            <aside class="tool-detail" aria-label="Selected tool detail">
-              <div class="detail-header">
-                <div class="meta-row">
-                  <span class="badge blue" id="detailCategory">Perception and Grounding</span>
-                  <span class="badge green">Template</span>
-                </div>
-                <h3 id="detailTitle">Tool Entry Template</h3>
-                <p>Use this panel for the full tool profile: original paper, method notes, demo media, API details, and evaluation links.</p>
-              </div>
-
-              <div class="detail-tabs" role="tablist" aria-label="Tool detail tabs">
-                <button class="active" data-detail-tab="overview">Overview</button>
-                <button data-detail-tab="paper">Paper</button>
-                <button data-detail-tab="demo">Demo</button>
-                <button data-detail-tab="api">API</button>
-              </div>
-
-              <div class="detail-panel active" id="detail-overview">
-                <div class="field-list">
-                  <div class="field-row"><span>Function</span><strong>What capability this tool provides.</strong></div>
-                  <div class="field-row"><span>Input</span><strong>Images, text prompt, robot state, point cloud, or dataset item.</strong></div>
-                  <div class="field-row"><span>Output</span><strong>Prediction, plan, action, score, mask, pose, or structured JSON.</strong></div>
-                  <div class="field-row"><span>Links</span><strong>Repository, Hugging Face, demo, docs, benchmark row.</strong></div>
-                </div>
-              </div>
-
-              <div class="detail-panel" id="detail-paper">
-                <div class="placeholder-box">
-                  Original paper title, authors, venue, abstract summary, method diagram, PDF link, BibTeX, and notes copied from the paper.
-                </div>
-              </div>
-
-              <div class="detail-panel" id="detail-demo">
-                <div class="demo-grid">
-                  <div class="demo-slot">Input image / scene</div>
-                  <div class="demo-slot">Output overlay</div>
-                  <div class="demo-slot">Pipeline figure</div>
-                  <div class="demo-slot">Video thumbnail</div>
-                </div>
-              </div>
-
-              <div class="detail-panel" id="detail-api">
-                <div class="api-block">POST /api/tool-name
-{
-  "input": "placeholder",
-  "parameters": {}
-}</div>
-                <div class="placeholder-box">
-                  Reserve space for endpoint URL, authentication, request schema, response schema, rate limits, SDK snippets, and error cases.
-                </div>
-              </div>
-            </aside>
           </div>
         </section>
 
@@ -1379,27 +1318,21 @@
       button.addEventListener("click", () => activate(button.dataset.viewTarget));
     });
 
+    function activateFromHash() {
+      const target = window.location.hash.replace("#", "");
+      if (target && document.getElementById(target)?.classList.contains("view")) {
+        activate(target);
+      }
+    }
+
+    window.addEventListener("hashchange", activateFromHash);
+    activateFromHash();
+
     const toolCards = document.querySelectorAll(".tool-card");
-    const detailTitle = document.querySelector("#detailTitle");
-    const detailCategory = document.querySelector("#detailCategory");
     const toolSearch = document.querySelector(".tool-search");
     const toolCategoryButtons = document.querySelectorAll("[data-tool-category-filter]");
     const toolResultCount = document.querySelector("#toolResultCount");
     let activeToolCategory = "Perception and Grounding";
-
-    function selectToolCard(card, options = {}) {
-      if (!card) return;
-      toolCards.forEach((item) => item.classList.remove("active"));
-      card.classList.add("active");
-      detailTitle.textContent = card.dataset.toolTitle || "Tool Entry Template";
-      detailCategory.textContent = card.dataset.toolCategory || "Tool Category";
-      if (options.updateHash !== false && card.dataset.toolSlug) {
-        history.replaceState(null, "", `#tool/${card.dataset.toolSlug}`);
-      }
-      if (options.scroll) {
-        document.querySelector(".tool-detail")?.scrollIntoView({ behavior: "smooth", block: "start" });
-      }
-    }
 
     function updateToolCounts() {
       toolCategoryButtons.forEach((button) => {
@@ -1430,18 +1363,9 @@
         toolResultCount.textContent = `${visibleCount} template${visibleCount === 1 ? "" : "s"} shown`;
       }
 
-      if (![...toolCards].some((card) => card.classList.contains("active") && card.style.display !== "none")) {
-        selectToolCard(firstVisible, { updateHash: false });
-      }
+      toolCards.forEach((card) => card.classList.remove("active"));
+      firstVisible?.classList.add("active");
     }
-
-    toolCards.forEach((card) => {
-      card.addEventListener("click", () => {
-        if (card.style.display === "none") return;
-        toolCards.forEach((item) => item.classList.remove("active"));
-        selectToolCard(card, { scroll: true });
-      });
-    });
 
     toolCategoryButtons.forEach((button) => {
       button.addEventListener("click", () => {
@@ -1454,36 +1378,6 @@
     toolSearch?.addEventListener("input", filterTools);
     updateToolCounts();
     filterTools();
-
-    function openToolFromHash() {
-      const match = window.location.hash.match(/^#tool\/(.+)$/);
-      if (!match) return;
-      const slug = decodeURIComponent(match[1]);
-      const card = [...toolCards].find((item) => item.dataset.toolSlug === slug);
-      if (!card) return;
-      const categoryButton = [...toolCategoryButtons].find((button) => button.dataset.toolCategoryFilter === card.dataset.toolCategory);
-      if (categoryButton) {
-        activeToolCategory = categoryButton.dataset.toolCategoryFilter;
-        toolCategoryButtons.forEach((item) => item.classList.toggle("active", item === categoryButton));
-      }
-      activate("models");
-      filterTools();
-      selectToolCard(card, { updateHash: false, scroll: true });
-    }
-
-    window.addEventListener("hashchange", openToolFromHash);
-    openToolFromHash();
-
-    const detailTabButtons = document.querySelectorAll("[data-detail-tab]");
-    const detailPanels = document.querySelectorAll(".detail-panel");
-
-    detailTabButtons.forEach((button) => {
-      button.addEventListener("click", () => {
-        const target = button.dataset.detailTab;
-        detailTabButtons.forEach((item) => item.classList.toggle("active", item === button));
-        detailPanels.forEach((panel) => panel.classList.toggle("active", panel.id === `detail-${target}`));
-      });
-    });
   </script>
 </body>
 </html>

@@ -1,0 +1,688 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tool Detail - Manip Tool Hub</title>
+  <style>
+    :root {
+      --bg: #f7f8fb;
+      --panel: #ffffff;
+      --ink: #172033;
+      --muted: #667085;
+      --line: #d9dee8;
+      --soft: #eef2f7;
+      --nav: #101828;
+      --accent: #3562ff;
+      --green: #0e9f6e;
+      --shadow: 0 16px 36px rgba(16, 24, 40, 0.08);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      letter-spacing: 0;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button,
+    input,
+    select {
+      font: inherit;
+    }
+
+    .shell {
+      min-height: 100vh;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 4;
+      height: 64px;
+      background: rgba(255, 255, 255, 0.9);
+      border-bottom: 1px solid var(--line);
+      backdrop-filter: blur(12px);
+    }
+
+    .topbar-inner {
+      max-width: 1240px;
+      height: 100%;
+      margin: 0 auto;
+      padding: 0 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 800;
+    }
+
+    .mark {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      background: var(--nav);
+      color: #ffffff;
+      display: grid;
+      place-items: center;
+    }
+
+    .nav-actions {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .btn {
+      height: 38px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: #ffffff;
+      color: var(--ink);
+      padding: 0 12px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .btn.primary {
+      border-color: var(--accent);
+      background: var(--accent);
+      color: #ffffff;
+    }
+
+    .page {
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 24px 20px 56px;
+    }
+
+    .hero {
+      border-radius: 8px;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      background: #ffffff;
+      box-shadow: var(--shadow);
+    }
+
+    .hero-media {
+      min-height: 280px;
+      background:
+        linear-gradient(135deg, rgba(17, 24, 39, 0.86), rgba(53, 98, 255, 0.56)),
+        radial-gradient(circle at 18% 28%, rgba(53, 98, 255, 0.72), transparent 28%),
+        radial-gradient(circle at 82% 42%, rgba(14, 159, 110, 0.5), transparent 24%),
+        #101828;
+      color: #ffffff;
+      display: grid;
+      align-content: end;
+      padding: 28px;
+      gap: 12px;
+    }
+
+    .eyebrow {
+      color: #c7d7fe;
+      font-size: 12px;
+      font-weight: 800;
+      text-transform: uppercase;
+    }
+
+    h1,
+    h2,
+    h3,
+    p {
+      margin: 0;
+    }
+
+    h1 {
+      max-width: 820px;
+      font-size: 38px;
+      line-height: 1.12;
+      font-weight: 800;
+    }
+
+    .hero-media p {
+      max-width: 760px;
+      color: #e5e7eb;
+      line-height: 1.6;
+      font-size: 15px;
+    }
+
+    .hero-footer {
+      padding: 16px 18px;
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .badge-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .badge {
+      min-height: 23px;
+      display: inline-flex;
+      align-items: center;
+      border-radius: 6px;
+      border: 1px solid var(--line);
+      background: #f8fafc;
+      color: #344054;
+      padding: 2px 7px;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .badge.blue {
+      border-color: #bfdbfe;
+      background: #eff6ff;
+      color: #1d4ed8;
+    }
+
+    .badge.green {
+      border-color: #a7f3d0;
+      background: #ecfdf5;
+      color: #047857;
+    }
+
+    .content-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 330px;
+      gap: 18px;
+      margin-top: 18px;
+      align-items: start;
+    }
+
+    .main-stack,
+    .side-stack {
+      display: grid;
+      gap: 16px;
+    }
+
+    .card {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 18px;
+      box-shadow: 0 1px 2px rgba(16, 24, 40, 0.04);
+    }
+
+    .card-head {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .card h2 {
+      font-size: 20px;
+      line-height: 1.25;
+    }
+
+    .card h3 {
+      font-size: 15px;
+      line-height: 1.35;
+      margin-bottom: 6px;
+    }
+
+    .muted {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.55;
+    }
+
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .metric {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #f8fafc;
+      padding: 12px;
+      min-height: 78px;
+    }
+
+    .metric span {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .metric strong {
+      display: block;
+      margin-top: 6px;
+      font-size: 15px;
+    }
+
+    .demo-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .demo-slot {
+      aspect-ratio: 4 / 3;
+      border: 1px dashed #b8c2d6;
+      border-radius: 8px;
+      background:
+        linear-gradient(135deg, rgba(53, 98, 255, 0.1), rgba(14, 159, 110, 0.12)),
+        #f8fafc;
+      display: grid;
+      place-items: center;
+      color: #667085;
+      font-size: 13px;
+      font-weight: 800;
+      text-align: center;
+      padding: 12px;
+    }
+
+    .paper-card {
+      display: grid;
+      grid-template-columns: 160px minmax(0, 1fr);
+      gap: 14px;
+      align-items: start;
+    }
+
+    .paper-cover {
+      aspect-ratio: 3 / 4;
+      border-radius: 8px;
+      background:
+        linear-gradient(135deg, rgba(17, 24, 39, 0.08), rgba(53, 98, 255, 0.18)),
+        repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.55) 0 10px, rgba(255, 255, 255, 0.2) 10px 14px);
+      border: 1px solid var(--line);
+      display: grid;
+      place-items: center;
+      color: #667085;
+      font-size: 12px;
+      font-weight: 800;
+      text-align: center;
+      padding: 12px;
+    }
+
+    .field-list {
+      display: grid;
+      gap: 9px;
+    }
+
+    .field-row {
+      display: grid;
+      grid-template-columns: 120px minmax(0, 1fr);
+      gap: 12px;
+      padding-bottom: 9px;
+      border-bottom: 1px solid var(--line);
+      font-size: 13px;
+    }
+
+    .field-row:last-child {
+      border-bottom: 0;
+      padding-bottom: 0;
+    }
+
+    .field-row span:first-child {
+      color: var(--muted);
+      font-weight: 700;
+    }
+
+    .api-block {
+      border-radius: 8px;
+      background: #111827;
+      color: #e5e7eb;
+      padding: 14px;
+      overflow-x: auto;
+      font-family: "SF Mono", Consolas, monospace;
+      font-size: 12px;
+      line-height: 1.65;
+    }
+
+    .param-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 12px;
+    }
+
+    .param-table th,
+    .param-table td {
+      padding: 10px 12px;
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      font-size: 13px;
+    }
+
+    .param-table th {
+      color: #475467;
+      background: #f8fafc;
+    }
+
+    .side-stack {
+      position: sticky;
+      top: 82px;
+    }
+
+    .link-list {
+      display: grid;
+      gap: 8px;
+    }
+
+    .link-list a {
+      min-height: 38px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 10px;
+      color: #344054;
+      font-size: 13px;
+      font-weight: 700;
+      background: #ffffff;
+    }
+
+    .timeline {
+      display: grid;
+      gap: 10px;
+    }
+
+    .timeline-item {
+      display: grid;
+      grid-template-columns: 24px minmax(0, 1fr);
+      gap: 10px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .timeline-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 999px;
+      background: var(--accent);
+      margin: 5px auto 0;
+    }
+
+    @media (max-width: 980px) {
+      .content-grid,
+      .summary-grid,
+      .paper-card {
+        grid-template-columns: 1fr;
+      }
+
+      .side-stack {
+        position: static;
+      }
+
+      h1 {
+        font-size: 30px;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .topbar {
+        height: auto;
+      }
+
+      .topbar-inner,
+      .hero-footer,
+      .nav-actions {
+        align-items: stretch;
+        flex-direction: column;
+      }
+
+      .demo-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .field-row {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <header class="topbar">
+      <div class="topbar-inner">
+        <a class="brand" href="./">
+          <span class="mark">M</span>
+          <span>Manip Tool Hub</span>
+        </a>
+        <div class="nav-actions">
+          <a class="btn" href="./#models">All Tools</a>
+          <a class="btn primary" href="#api">API Reference</a>
+        </div>
+      </div>
+    </header>
+
+    <main class="page">
+      <section class="hero">
+        <div class="hero-media">
+          <div class="eyebrow" id="toolCategory">Reasoning and Planning</div>
+          <h1 id="toolTitle">API Tool Template</h1>
+          <p id="toolSummary">A dedicated tool detail page for paper-grounded methods, demo media, API contracts, benchmark results, and integration notes.</p>
+        </div>
+        <div class="hero-footer">
+          <div class="badge-row">
+            <span class="badge blue" id="toolTask">Planning</span>
+            <span class="badge">Paper</span>
+            <span class="badge">Demo Images</span>
+            <span class="badge green">API Ready</span>
+          </div>
+          <div class="nav-actions">
+            <a class="btn" href="#paper">Paper</a>
+            <a class="btn" href="#demo">Demo</a>
+            <a class="btn" href="#api">API</a>
+          </div>
+        </div>
+      </section>
+
+      <section class="content-grid">
+        <div class="main-stack">
+          <section class="card">
+            <div class="card-head">
+              <div>
+                <h2>Tool Overview</h2>
+                <p class="muted">Keep this area concise: capability, input, output, where it fits in the pipeline, and why it matters.</p>
+              </div>
+            </div>
+            <div class="summary-grid">
+              <div class="metric"><span>Input</span><strong>Images / text / state</strong></div>
+              <div class="metric"><span>Output</span><strong>Structured result</strong></div>
+              <div class="metric"><span>Runtime</span><strong>API / local</strong></div>
+              <div class="metric"><span>Status</span><strong>Template</strong></div>
+            </div>
+          </section>
+
+          <section class="card" id="paper">
+            <div class="card-head">
+              <div>
+                <h2>Original Paper</h2>
+                <p class="muted">Reserved for the paper content that motivates the tool.</p>
+              </div>
+              <span class="badge">BibTeX slot</span>
+            </div>
+            <div class="paper-card">
+              <div class="paper-cover">Paper PDF / method figure</div>
+              <div class="field-list">
+                <div class="field-row"><span>Title</span><strong>Original paper title goes here.</strong></div>
+                <div class="field-row"><span>Authors</span><strong>Author list, lab, or organization.</strong></div>
+                <div class="field-row"><span>Venue</span><strong>Conference, journal, arXiv, or project page.</strong></div>
+                <div class="field-row"><span>Contribution</span><strong>Short contribution summary, method idea, and tool conversion note.</strong></div>
+                <div class="field-row"><span>Links</span><strong>PDF, code, project page, model weights, dataset references.</strong></div>
+              </div>
+            </div>
+          </section>
+
+          <section class="card" id="demo">
+            <div class="card-head">
+              <div>
+                <h2>Demo Gallery</h2>
+                <p class="muted">Use real screenshots, before/after overlays, videos, or result traces when tools are added.</p>
+              </div>
+            </div>
+            <div class="demo-grid">
+              <div class="demo-slot">Input image / scene</div>
+              <div class="demo-slot">Output overlay</div>
+              <div class="demo-slot">Pipeline figure</div>
+              <div class="demo-slot">Video thumbnail</div>
+            </div>
+          </section>
+
+          <section class="card" id="api">
+            <div class="card-head">
+              <div>
+                <h2>API Reference</h2>
+                <p class="muted">Model this section after professional tool docs: endpoint, schema, examples, errors, and integration notes.</p>
+              </div>
+              <span class="badge green">Endpoint slot</span>
+            </div>
+            <pre class="api-block">POST /api/tool-name
+Content-Type: application/json
+
+{
+  "input": "placeholder",
+  "parameters": {
+    "threshold": 0.5,
+    "return_visualization": true
+  }
+}</pre>
+            <table class="param-table">
+              <thead>
+                <tr>
+                  <th>Field</th>
+                  <th>Type</th>
+                  <th>Description</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>input</td>
+                  <td>string | file | JSON</td>
+                  <td>Primary tool input. Replace with the real schema.</td>
+                </tr>
+                <tr>
+                  <td>parameters</td>
+                  <td>object</td>
+                  <td>Optional runtime options, thresholds, modes, or model settings.</td>
+                </tr>
+                <tr>
+                  <td>response</td>
+                  <td>object</td>
+                  <td>Structured result, visualization URL, metrics, and debug traces.</td>
+                </tr>
+              </tbody>
+            </table>
+          </section>
+
+          <section class="card">
+            <div class="card-head">
+              <div>
+                <h2>Benchmark and Evaluation</h2>
+                <p class="muted">Space for leaderboard rows, evaluation split, metrics, reproducibility notes, and failure cases.</p>
+              </div>
+            </div>
+            <div class="summary-grid">
+              <div class="metric"><span>Dataset</span><strong>Evaluation split</strong></div>
+              <div class="metric"><span>Metric</span><strong>Primary score</strong></div>
+              <div class="metric"><span>Latency</span><strong>Runtime note</strong></div>
+              <div class="metric"><span>Artifacts</span><strong>Logs / traces</strong></div>
+            </div>
+          </section>
+        </div>
+
+        <aside class="side-stack">
+          <section class="card">
+            <h2>Quick Links</h2>
+            <div class="link-list" style="margin-top: 12px;">
+              <a href="#paper">Paper <span>→</span></a>
+              <a href="#demo">Demo Gallery <span>→</span></a>
+              <a href="#api">API Reference <span>→</span></a>
+              <a href="./#leaderboard">Leaderboard <span>→</span></a>
+            </div>
+          </section>
+
+          <section class="card">
+            <h2>Integration Checklist</h2>
+            <div class="timeline" style="margin-top: 12px;">
+              <div class="timeline-item"><span class="timeline-dot"></span><span>Add paper metadata and links.</span></div>
+              <div class="timeline-item"><span class="timeline-dot"></span><span>Upload demo images or video thumbnails.</span></div>
+              <div class="timeline-item"><span class="timeline-dot"></span><span>Define API request and response schema.</span></div>
+              <div class="timeline-item"><span class="timeline-dot"></span><span>Connect benchmark row and artifacts.</span></div>
+            </div>
+          </section>
+
+          <section class="card">
+            <h2>Tool Metadata</h2>
+            <div class="field-list" style="margin-top: 12px;">
+              <div class="field-row"><span>Category</span><strong id="sideCategory">Reasoning and Planning</strong></div>
+              <div class="field-row"><span>License</span><strong>To be added</strong></div>
+              <div class="field-row"><span>Owner</span><strong>To be added</strong></div>
+              <div class="field-row"><span>Version</span><strong>Draft</strong></div>
+            </div>
+          </section>
+        </aside>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    const tools = {
+      "tool-entry-template": {
+        title: "Tool Entry Template",
+        category: "Perception and Grounding",
+        task: "Perception",
+        summary: "Template for visual recognition, localization, scene grounding, and perception-facing tool entries."
+      },
+      "paper-backed-tool-template": {
+        title: "Paper-backed Tool Template",
+        category: "Cognition and State Modeling",
+        task: "State",
+        summary: "Template for tools derived from papers, with space for method diagrams, citations, artifacts, and implementation notes."
+      },
+      "api-tool-template": {
+        title: "API Tool Template",
+        category: "Reasoning and Planning",
+        task: "Planning",
+        summary: "Template for tools with endpoint documentation, parameters, response schema, examples, and integration notes."
+      },
+      "execution-tool-template": {
+        title: "Execution Tool Template",
+        category: "Execution and Control",
+        task: "Control",
+        summary: "Template for policies, controllers, runtime wrappers, rollouts, videos, traces, and benchmark artifacts."
+      }
+    };
+
+    const params = new URLSearchParams(window.location.search);
+    const slug = params.get("tool") || "api-tool-template";
+    const tool = tools[slug] || tools["api-tool-template"];
+
+    document.title = `${tool.title} - Manip Tool Hub`;
+    document.querySelector("#toolTitle").textContent = tool.title;
+    document.querySelector("#toolCategory").textContent = tool.category;
+    document.querySelector("#toolTask").textContent = tool.task;
+    document.querySelector("#toolSummary").textContent = tool.summary;
+    document.querySelector("#sideCategory").textContent = tool.category;
+  </script>
+</body>
+</html>
