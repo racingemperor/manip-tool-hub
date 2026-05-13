@@ -991,7 +991,7 @@
       <header class="topbar">
         <div class="search">
           <span class="search-symbol">/</span>
-          <input aria-label="Search" placeholder="Search datasets, tools, tasks, or benchmarks">
+          <input aria-label="Search tools" placeholder="Search tools by name, task, or description">
           <div class="global-search-results" id="globalSearchResults"></div>
         </div>
         <div class="top-actions">
@@ -1416,6 +1416,14 @@
     const views = document.querySelectorAll(".view");
     const globalSearch = document.querySelector(".search input");
     const globalSearchResults = document.querySelector("#globalSearchResults");
+    const toolCards = document.querySelectorAll(".tool-card");
+    const toolSearch = document.querySelector(".tool-search");
+    const toolStatusFilter = document.querySelector(".tool-status-filter");
+    const toolResourceFilter = document.querySelector(".tool-resource-filter");
+    const toolCategoryButtons = document.querySelectorAll("[data-tool-category-filter]");
+    const toolResultCount = document.querySelector("#toolResultCount");
+    let activeToolCategory = "All";
+    const allToolCards = [...toolCards];
 
     function activate(target, scrollTop = true) {
       views.forEach((view) => view.classList.toggle("active", view.id === target));
@@ -1439,42 +1447,44 @@
     window.addEventListener("hashchange", activateFromHash);
     activateFromHash();
 
-    const searchItems = [
-      { title: "Home", type: "Section", text: "home overview core modules", action: () => activate("home") },
-      { title: "Datasets", type: "Section", text: "datasets hugging face download annotation", action: () => activate("datasets") },
-      { title: "Leaderboard", type: "Section", text: "leaderboard benchmark metrics evaluation", action: () => activate("leaderboard") },
-      { title: "Tools", type: "Section", text: "tools perception grounding planning control api", action: () => setToolFilters({ category: "All", status: "All", resource: "All", query: "" }) },
-      { title: "Explore", type: "Section", text: "explore discovery tasks datasets tools", action: () => activate("explore") },
-      { title: "Perception and Grounding", type: "Tool category", text: "perception grounding detection localization recognition", action: () => setToolFilters({ category: "Perception and Grounding", status: "All", resource: "All", query: "" }) },
-      { title: "Cognition and State Modeling", type: "Tool category", text: "cognition state modeling world model memory representation", action: () => setToolFilters({ category: "Cognition and State Modeling", status: "All", resource: "All", query: "" }) },
-      { title: "Reasoning and Planning", type: "Tool category", text: "reasoning planning code path schema examples", action: () => setToolFilters({ category: "Reasoning and Planning", status: "All", resource: "All", query: "" }) },
-      { title: "Execution and Control", type: "Tool category", text: "execution control policy runtime rollout action trace", action: () => setToolFilters({ category: "Execution and Control", status: "All", resource: "All", query: "" }) },
-      { title: "Code-documented tools", type: "Tool filter", text: "code docs relative paths schema request response examples", action: () => setToolFilters({ category: "All", status: "All", resource: "API docs", query: "" }) },
-      { title: "Benchmark tools", type: "Tool filter", text: "benchmark leaderboard metrics evaluation artifacts", action: () => setToolFilters({ category: "All", status: "All", resource: "Benchmark", query: "" }) },
-      { title: "Draft tools", type: "Tool filter", text: "draft needs content template placeholder", action: () => setToolFilters({ category: "All", status: "Draft", resource: "All", query: "" }) },
-      { title: "YOLO-World", type: "Tool", text: "yolo world open vocabulary detection grounding cvpr 2024", action: () => { window.location.href = "tool.html?tool=yolo-world"; } },
-      { title: "Hydra", type: "Tool", text: "hydra mit spark 3d scene graph spatial perception robotics mapping state modeling", action: () => { window.location.href = "tool.html?tool=hydra"; } },
-      { title: "Tool Entry Template", type: "Tool", text: "perception grounding template", action: () => { window.location.href = "tool.html?tool=tool-entry-template"; } },
-      { title: "Paper-backed Tool Template", type: "Tool", text: "cognition state modeling paper method", action: () => { window.location.href = "tool.html?tool=paper-backed-tool-template"; } },
-      { title: "Code Tool Template", type: "Tool", text: "reasoning planning relative path schema code examples", action: () => { window.location.href = "tool.html?tool=api-tool-template"; } },
-      { title: "Execution Tool Template", type: "Tool", text: "execution control policy runtime rollout", action: () => { window.location.href = "tool.html?tool=execution-tool-template"; } }
-    ];
+    function normalize(value) {
+      return (value || "").trim().toLowerCase();
+    }
+
+    function getToolSearchText(card) {
+      return [
+        card.dataset.toolTitle,
+        card.dataset.toolSlug,
+        card.dataset.toolCategory,
+        card.dataset.toolStatus,
+        card.dataset.toolResources,
+        card.dataset.toolSearch,
+        card.innerText
+      ].filter(Boolean).join(" ").toLowerCase();
+    }
 
     function renderGlobalSearch(query) {
       if (!globalSearchResults) return;
-      const normalized = query.trim().toLowerCase();
+      const normalized = normalize(query);
       globalSearchResults.innerHTML = "";
       if (!normalized) {
         globalSearchResults.classList.remove("active");
         return;
       }
 
-      const matches = searchItems
-        .filter((item) => `${item.title} ${item.type} ${item.text}`.toLowerCase().includes(normalized))
+      const matches = allToolCards
+        .map((card) => ({
+          title: card.dataset.toolTitle || "Untitled Tool",
+          category: card.dataset.toolCategory || "Tool",
+          status: card.dataset.toolStatus || "",
+          href: card.getAttribute("href"),
+          text: getToolSearchText(card)
+        }))
+        .filter((item) => item.text.includes(normalized))
         .slice(0, 8);
 
       if (!matches.length) {
-        globalSearchResults.innerHTML = `<button type="button"><strong>No results</strong><span>Try tool, dataset, code path, benchmark, or YOLO.</span></button>`;
+        globalSearchResults.innerHTML = `<button type="button"><strong>No matching tools</strong><span>Search by tool name, task, category, description, input, output, paper, or code keyword.</span></button>`;
         globalSearchResults.classList.add("active");
         return;
       }
@@ -1483,9 +1493,9 @@
         const button = document.createElement("button");
         button.type = "button";
         button.className = index === 0 ? "active" : "";
-        button.innerHTML = `<strong>${item.title}</strong><span>${item.type}</span>`;
+        button.innerHTML = `<strong>${item.title}</strong><span>${item.category}${item.status ? ` · ${item.status}` : ""}</span>`;
         button.addEventListener("click", () => {
-          item.action();
+          window.location.href = item.href;
           globalSearchResults.classList.remove("active");
           globalSearch.value = "";
         });
@@ -1510,19 +1520,6 @@
         globalSearchResults?.classList.remove("active");
       }
     });
-
-    const toolCards = document.querySelectorAll(".tool-card");
-    const toolSearch = document.querySelector(".tool-search");
-    const toolStatusFilter = document.querySelector(".tool-status-filter");
-    const toolResourceFilter = document.querySelector(".tool-resource-filter");
-    const toolCategoryButtons = document.querySelectorAll("[data-tool-category-filter]");
-    const toolResultCount = document.querySelector("#toolResultCount");
-    let activeToolCategory = "All";
-    const allToolCards = [...toolCards];
-
-    function normalize(value) {
-      return (value || "").trim().toLowerCase();
-    }
 
     function setToolFilters({ query, category, status, resource } = {}) {
       if (query !== undefined && toolSearch) toolSearch.value = query;
@@ -1560,7 +1557,7 @@
         const matchesCategory = activeToolCategory === "All" || card.dataset.toolCategory === activeToolCategory;
         const matchesStatus = status === "All" || card.dataset.toolStatus === status;
         const matchesResource = resource === "All" || (card.dataset.toolResources || "").includes(resource);
-        const text = `${card.dataset.toolSearch || ""} ${card.innerText || ""}`.toLowerCase();
+        const text = getToolSearchText(card);
         const matchesSearch = !query || text.includes(query);
         const visible = matchesCategory && matchesStatus && matchesResource && matchesSearch;
         card.style.display = visible ? "" : "none";
