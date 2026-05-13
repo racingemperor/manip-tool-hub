@@ -164,7 +164,7 @@
       height: 40px;
       border: 1px solid var(--line);
       border-radius: 8px;
-      padding: 0 14px 0 38px;
+      padding: 0 14px;
       background: #ffffff;
       color: var(--ink);
       outline: none;
@@ -173,14 +173,6 @@
     .search input:focus {
       border-color: #93b5fd;
       box-shadow: 0 0 0 3px rgba(53, 98, 255, 0.12);
-    }
-
-    .search-symbol {
-      position: absolute;
-      left: 14px;
-      top: 50%;
-      transform: translateY(-50%);
-      color: var(--muted);
     }
 
     .global-search-results {
@@ -1080,8 +1072,7 @@
     <main class="main">
       <header class="topbar">
         <div class="search">
-          <span class="search-symbol">/</span>
-          <input aria-label="Search tools" placeholder="Search tools by name, task, or description">
+          <input aria-label="Search tools" placeholder="Search tools">
           <div class="global-search-results" id="globalSearchResults"></div>
         </div>
         <div class="top-actions">
@@ -1296,7 +1287,7 @@
           </div>
 
           <div class="tool-controls">
-            <input class="tool-search" aria-label="Search tools" placeholder="Search tools, papers, code paths, tasks">
+            <input class="tool-search" aria-label="Search tools" placeholder="Search tools or tasks">
             <select class="select tool-status-filter" aria-label="Tool status">
               <option value="All">All statuses</option>
               <option value="Draft">Draft</option>
