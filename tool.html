@@ -174,6 +174,31 @@
       color: #ffffff;
     }
 
+    .back-to-top {
+      position: fixed;
+      right: 14px;
+      bottom: 18px;
+      z-index: 25;
+      width: 44px;
+      height: 44px;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid #c9d6ff;
+      border-radius: 999px;
+      background: #ffffff;
+      color: #2444d8;
+      box-shadow: 0 10px 26px rgba(16, 24, 40, 0.14);
+      cursor: pointer;
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .back-to-top:focus-visible {
+      outline: 3px solid rgba(53, 98, 255, 0.24);
+      outline-offset: 3px;
+    }
+
     .page {
       width: min(100%, 1500px);
       margin: 0 auto;
@@ -808,7 +833,11 @@
       }
 
       .topbar {
+        position: static;
+        top: auto;
+        z-index: auto;
         height: auto;
+        backdrop-filter: none;
       }
 
       .topbar-inner,
@@ -831,6 +860,10 @@
       .btn {
         width: 100%;
         justify-content: center;
+      }
+
+      .back-to-top {
+        display: inline-flex;
       }
 
       .hero-media {
@@ -1337,6 +1370,8 @@ Important relative paths:
         </section>
       </section>
     </main>
+
+    <button class="back-to-top" type="button" aria-label="Back to top">Top</button>
   </div>
 
   <script>
@@ -1502,6 +1537,7 @@ python tools/hydra/examples/run_hydra.py \
     const tool = tools[slug] || tools["api-tool-template"];
     const detailSearch = document.querySelector("#detailSearch");
     const detailSearchResults = document.querySelector("#detailSearchResults");
+    const backToTop = document.querySelector(".back-to-top");
 
     document.title = `${tool.title} - Manip Tool Hub`;
     document.querySelector("#toolTitle").textContent = tool.title;
@@ -1720,6 +1756,10 @@ python tools/hydra/examples/run_hydra.py \
       if (!event.target.closest(".detail-search")) {
         detailSearchResults?.classList.remove("active");
       }
+    });
+
+    backToTop?.addEventListener("click", () => {
+      window.scrollTo({ top: 0, behavior: "smooth" });
     });
   </script>
 </body>
