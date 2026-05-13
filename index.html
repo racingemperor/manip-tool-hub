@@ -1424,10 +1424,24 @@
     const toolResultCount = document.querySelector("#toolResultCount");
     let activeToolCategory = "All";
     const allToolCards = [...toolCards];
+    const viewIds = new Set([...views].map((view) => view.id));
 
-    function activate(target, scrollTop = true) {
-      views.forEach((view) => view.classList.toggle("active", view.id === target));
-      navButtons.forEach((button) => button.classList.toggle("active", button.dataset.viewTarget === target));
+    function syncViewHash(target) {
+      const hash = target === "home" ? "" : `#${target}`;
+      const nextUrl = `${window.location.pathname}${window.location.search}${hash}`;
+      const currentUrl = `${window.location.pathname}${window.location.search}${window.location.hash}`;
+      if (nextUrl !== currentUrl) {
+        history.pushState(null, "", nextUrl);
+      }
+    }
+
+    function activate(target, scrollTop = true, updateHash = true) {
+      const safeTarget = viewIds.has(target) ? target : "home";
+      if (updateHash) {
+        syncViewHash(safeTarget);
+      }
+      views.forEach((view) => view.classList.toggle("active", view.id === safeTarget));
+      navButtons.forEach((button) => button.classList.toggle("active", button.dataset.viewTarget === safeTarget));
       if (scrollTop) {
         window.scrollTo({ top: 0, behavior: "smooth" });
       }
@@ -1439,12 +1453,11 @@
 
     function activateFromHash() {
       const target = window.location.hash.replace("#", "");
-      if (target && document.getElementById(target)?.classList.contains("view")) {
-        activate(target);
-      }
+      activate(viewIds.has(target) ? target : "home", false, false);
     }
 
     window.addEventListener("hashchange", activateFromHash);
+    window.addEventListener("popstate", activateFromHash);
     activateFromHash();
 
     function normalize(value) {
