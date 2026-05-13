@@ -485,6 +485,7 @@
 
     .api-block {
       max-width: 100%;
+      min-width: 0;
       border-radius: 8px;
       background: #111827;
       color: #e5e7eb;
@@ -524,6 +525,7 @@
 
     .parameter-item,
     .example-item {
+      min-width: 0;
       border: 1px solid var(--line);
       border-radius: 8px;
       background: #f8fafc;
@@ -801,6 +803,10 @@
     }
 
     @media (max-width: 640px) {
+      .page {
+        padding: 12px 10px 36px;
+      }
+
       .topbar {
         height: auto;
       }
@@ -812,9 +818,28 @@
         flex-direction: column;
       }
 
+      .topbar-inner {
+        padding: 12px 10px;
+        gap: 10px;
+      }
+
       .detail-search {
         max-width: none;
         width: 100%;
+      }
+
+      .btn {
+        width: 100%;
+        justify-content: center;
+      }
+
+      .hero-media {
+        min-height: 220px;
+        padding: 22px;
+      }
+
+      .card {
+        padding: 14px;
       }
 
       .demo-grid {
@@ -823,6 +848,30 @@
 
       .field-row {
         grid-template-columns: 1fr;
+      }
+
+      .example-item,
+      .parameter-item,
+      .doc-card,
+      .related-card {
+        padding: 12px;
+      }
+
+      .api-block,
+      .doc-code .api-block,
+      .doc-code.expanded .api-block {
+        white-space: pre-wrap;
+        overflow-wrap: anywhere;
+        word-break: break-word;
+        overflow-x: hidden;
+        font-size: 11px;
+        line-height: 1.6;
+        padding: 12px;
+      }
+
+      .param-table {
+        display: block;
+        overflow-x: auto;
       }
     }
   </style>
