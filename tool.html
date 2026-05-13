@@ -385,12 +385,12 @@
     .demo-grid {
       min-width: 0;
       display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 12px;
+      grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+      gap: 10px;
     }
 
     .demo-slot {
-      aspect-ratio: 16 / 10;
+      aspect-ratio: 4 / 3;
       border: 1px dashed #b8c2d6;
       border-radius: 8px;
       background:
@@ -399,10 +399,11 @@
       display: grid;
       place-items: center;
       color: #667085;
-      font-size: 13px;
+      font-size: 12px;
       font-weight: 800;
       text-align: center;
-      padding: 12px;
+      padding: 10px;
+      overflow: hidden;
     }
 
     .demo-slot.image {
@@ -876,7 +877,14 @@
       }
 
       .demo-grid {
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 8px;
+      }
+
+      .demo-slot {
+        aspect-ratio: 1 / 1;
+        padding: 8px;
+        font-size: 11px;
       }
 
       .field-row {
@@ -1015,14 +1023,15 @@
             <div class="card-head">
               <div>
                 <h2>Demo Gallery</h2>
-                <p class="muted">Use real screenshots, before/after overlays, videos, or result traces when tools are added.</p>
+                <p class="muted">Compact real screenshots, result crops, videos, or benchmark traces for quick visual scanning.</p>
               </div>
+              <span class="badge" id="demoCount">Demo images</span>
             </div>
-            <div class="demo-grid">
-              <div class="demo-slot" id="demoSlot1">Input image / scene</div>
-              <div class="demo-slot" id="demoSlot2">Output overlay</div>
-              <div class="demo-slot" id="demoSlot3">Pipeline figure</div>
-              <div class="demo-slot" id="demoSlot4">Video thumbnail</div>
+            <div class="demo-grid" id="demoGrid">
+              <div class="demo-slot">Input image / scene</div>
+              <div class="demo-slot">Output overlay</div>
+              <div class="demo-slot">Pipeline figure</div>
+              <div class="demo-slot">Video thumbnail</div>
             </div>
           </section>
 
@@ -1397,20 +1406,44 @@ Important relative paths:
         heroImage: "https://wondervictor.github.io/images/vis_lvis.png",
         demos: [
           {
-            label: "LVIS open-vocabulary detection results",
-            image: "https://wondervictor.github.io/images/vis_lvis.png"
+            label: "LVIS indoor objects",
+            image: "https://wondervictor.github.io/images/vis_lvis.png",
+            position: "left top"
           },
           {
-            label: "User vocabulary prompt detection",
-            image: "https://wondervictor.github.io/images/user_vocab.png"
+            label: "LVIS street and vehicles",
+            image: "https://wondervictor.github.io/images/vis_lvis.png",
+            position: "center bottom"
           },
           {
-            label: "Referring / grounding visualization",
-            image: "https://wondervictor.github.io/images/vis_referring.png"
+            label: "User vocabulary: people",
+            image: "https://wondervictor.github.io/images/user_vocab.png",
+            position: "left center"
           },
           {
-            label: "Speed and accuracy benchmark",
-            image: "https://wondervictor.github.io/images/speed_acc.png"
+            label: "User vocabulary: animals",
+            image: "https://wondervictor.github.io/images/user_vocab.png",
+            position: "center center"
+          },
+          {
+            label: "User vocabulary: outdoor scene",
+            image: "https://wondervictor.github.io/images/user_vocab.png",
+            position: "right center"
+          },
+          {
+            label: "Referring detection: people",
+            image: "https://wondervictor.github.io/images/vis_referring.png",
+            position: "left top"
+          },
+          {
+            label: "Referring detection: sports and sky",
+            image: "https://wondervictor.github.io/images/vis_referring.png",
+            position: "right bottom"
+          },
+          {
+            label: "Speed / accuracy benchmark",
+            image: "https://wondervictor.github.io/images/speed_acc.png",
+            position: "center center"
           }
         ],
         apiExample: `# Relative-path local entry for the YOLO-World tool folder
@@ -1453,20 +1486,34 @@ python tools/yolo-world/demo/image_demo.py tools/yolo-world/demo/sample_images/b
         heroImage: "https://raw.githubusercontent.com/MIT-SPARK/Hydra/main/doc/media/hydra.GIF",
         demos: [
           {
-            label: "Hydra 3D scene graph demo",
-            image: "https://raw.githubusercontent.com/MIT-SPARK/Hydra/main/doc/media/hydra.GIF"
+            label: "Online 3D scene graph playback",
+            image: "https://raw.githubusercontent.com/MIT-SPARK/Hydra/main/doc/media/hydra.GIF",
+            position: "center center"
           },
           {
-            label: "Dynamic scene graph pipeline",
-            image: "https://raw.githubusercontent.com/MIT-SPARK/Hydra/main/doc/media/hydra.GIF"
+            label: "Metric-semantic mesh hierarchy",
+            image: "https://mit.edu/sparklab/assets/images/posts/hydra-foundations.png",
+            position: "center center"
           },
           {
-            label: "Spatial perception result placeholder",
-            image: "https://raw.githubusercontent.com/MIT-SPARK/Hydra/main/doc/media/hydra.GIF"
+            label: "Buildings, rooms, and places",
+            image: "https://mit.edu/sparklab/assets/images/posts/hydra-foundations.png",
+            position: "center top"
           },
           {
-            label: "Benchmark / evaluation visualization placeholder",
-            image: "https://raw.githubusercontent.com/MIT-SPARK/Hydra/main/doc/media/hydra.GIF"
+            label: "Object-level indoor observations",
+            image: "https://mit.edu/sparklab/assets/images/posts/hydra-foundations.png",
+            position: "center bottom"
+          },
+          {
+            label: "Realtime reconstruction view",
+            image: "https://raw.githubusercontent.com/MIT-SPARK/Hydra/main/doc/media/hydra.GIF",
+            position: "left center"
+          },
+          {
+            label: "Optimized graph visualization",
+            image: "https://raw.githubusercontent.com/MIT-SPARK/Hydra/main/doc/media/hydra.GIF",
+            position: "right center"
           }
         ],
         apiExample: `# Relative-path local entry for the Hydra tool folder
@@ -1561,19 +1608,42 @@ python tools/hydra/examples/run_hydra.py \
         .join("")}</div>`;
     }
 
-    function renderDemo(slotId, demo) {
-      const element = document.querySelector(slotId);
-      if (!element || !demo) return;
+    function createDemoSlot(demo) {
+      const element = document.createElement("div");
+      element.className = "demo-slot";
       element.textContent = "";
       element.classList.remove("image");
 
       if (demo.image) {
         element.classList.add("image");
         element.style.backgroundImage = `linear-gradient(135deg, rgba(16, 24, 40, 0.26), rgba(53, 98, 255, 0.12)), url('${demo.image}')`;
+        element.style.backgroundPosition = demo.position || "center";
         element.innerHTML = `<span>${demo.label}</span>`;
       } else {
         element.style.backgroundImage = "";
         element.textContent = demo.label;
+      }
+
+      return element;
+    }
+
+    function renderDemos(demos) {
+      const grid = document.querySelector("#demoGrid");
+      const count = document.querySelector("#demoCount");
+      if (!grid) return;
+
+      const items = demos?.length ? demos : [
+        { label: "Input image / scene" },
+        { label: "Output overlay" },
+        { label: "Pipeline figure" },
+        { label: "Video thumbnail" }
+      ];
+
+      grid.innerHTML = "";
+      items.forEach((demo) => grid.appendChild(createDemoSlot(demo)));
+
+      if (count) {
+        count.textContent = `${items.length} demo images`;
       }
     }
 
@@ -1608,9 +1678,7 @@ python tools/hydra/examples/run_hydra.py \
       paperCover.innerHTML = "<span>Paper figure</span>";
     }
 
-    tool.demos?.forEach((demo, index) => {
-      renderDemo(`#demoSlot${index + 1}`, demo);
-    });
+    renderDemos(tool.demos);
 
     const toolCatalog = Object.entries(tools).map(([toolSlug, item]) => ({
       slug: toolSlug,
