@@ -882,7 +882,7 @@
             <span class="badge blue" id="toolTask">Planning</span>
             <span class="badge">Paper</span>
             <span class="badge">Demo Images</span>
-            <span class="badge green">Docs Ready</span>
+            <span class="badge green" id="toolStatusBadge">Docs Ready</span>
           </div>
           <div class="nav-actions">
             <a class="btn" href="#paper">Paper</a>
@@ -1300,7 +1300,7 @@ Important relative paths:
         input: "Image + text prompts",
         output: "Bounding boxes, labels, scores",
         runtime: "Python / ONNX / demo",
-        status: "Ready",
+        status: "Code Linked",
         paperTitle: "YOLO-World: Real-Time Open-Vocabulary Object Detection",
         paperAuthors: "Tianheng Cheng, Lin Song, Yixiao Ge, Wenyu Liu, Xinggang Wang, Ying Shan",
         paperVenue: "CVPR 2024 / arXiv:2401.17270",
@@ -1346,6 +1346,65 @@ python tools/yolo-world/demo/image_demo.py tools/yolo-world/demo/sample_images/b
         license: "GPL-3.0",
         owner: "AILab-CVC",
         version: "YOLO-World v2"
+      },
+      "hydra": {
+        title: "Hydra",
+        category: "Cognition and State Modeling",
+        task: "3D scene graph construction",
+        summary: "Hydra is a real-time spatial perception system that incrementally builds 3D scene graphs for robots from sensor streams, semantics, and geometric mapping signals.",
+        input: "Sensor data + semantic/geometric cues",
+        output: "Layered 3D scene graph",
+        runtime: "Ubuntu 24.04 / ROS2 Jazzy / Python bindings",
+        status: "Code Linked",
+        paperTitle: "Hydra: A Real-time Spatial Perception System for 3D Scene Graph Construction and Optimization",
+        paperAuthors: "Nathan Hughes, Yun Chang, Luca Carlone",
+        paperVenue: "RSS 2022; Foundations of Spatial Perception for Robotics, IJRR 2024",
+        paperContribution: "Builds and optimizes dynamic 3D scene graphs online, giving robotics systems a structured representation of places, objects, rooms, agents, and metric-semantic spatial context.",
+        paperLinks: [
+          ["GitHub", "https://github.com/MIT-SPARK/Hydra"],
+          ["RSS 2022 Paper", "https://arxiv.org/abs/2201.13360"],
+          ["IJRR 2024 Foundations Paper", "https://arxiv.org/abs/2304.02246"],
+          ["Installation Docs", "https://github.com/MIT-SPARK/Hydra?tab=readme-ov-file#installation"]
+        ],
+        heroImage: "https://raw.githubusercontent.com/MIT-SPARK/Hydra/main/doc/media/hydra.GIF",
+        demos: [
+          {
+            label: "Hydra 3D scene graph demo",
+            image: "https://raw.githubusercontent.com/MIT-SPARK/Hydra/main/doc/media/hydra.GIF"
+          },
+          {
+            label: "Dynamic scene graph pipeline",
+            image: "https://raw.githubusercontent.com/MIT-SPARK/Hydra/main/doc/media/hydra.GIF"
+          },
+          {
+            label: "Spatial perception result placeholder",
+            image: "https://raw.githubusercontent.com/MIT-SPARK/Hydra/main/doc/media/hydra.GIF"
+          },
+          {
+            label: "Benchmark / evaluation visualization placeholder",
+            image: "https://raw.githubusercontent.com/MIT-SPARK/Hydra/main/doc/media/hydra.GIF"
+          }
+        ],
+        apiExample: `# Relative-path local entry for the Hydra tool folder
+python tools/hydra/examples/run_hydra.py \
+  --config tools/hydra/configs/default.yaml \
+  --input tools/hydra/examples/sample_sequence \
+  --output tools/hydra/runs/scene_graph
+
+# Suggested repository layout when adding local files:
+# tools/hydra/README.md
+# tools/hydra/configs/default.yaml
+# tools/hydra/examples/sample_sequence/
+# tools/hydra/runs/scene_graph/
+
+# This page documents the path. It does not execute Hydra.`,
+        benchmarkDataset: "Replica / Matterport-style indoor sequences; fill exact split when connected",
+        benchmarkMetric: "Scene graph quality, reconstruction consistency, object/place accuracy",
+        benchmarkLatency: "Real-time spatial perception system; fill FPS or runtime from target setup",
+        benchmarkArtifacts: "Scene graph outputs, config files, logs, visualization GIFs",
+        license: "BSD-2-Clause",
+        owner: "MIT-SPARK",
+        version: "main branch"
       },
       "tool-entry-template": {
         title: "Tool Entry Template",
@@ -1399,6 +1458,7 @@ python tools/yolo-world/demo/image_demo.py tools/yolo-world/demo/sample_images/b
     document.querySelector("#toolTitle").textContent = tool.title;
     document.querySelector("#toolCategory").textContent = tool.category;
     document.querySelector("#toolTask").textContent = tool.task;
+    document.querySelector("#toolStatusBadge").textContent = tool.status;
     document.querySelector("#toolSummary").textContent = tool.summary;
     function setText(selector, value) {
       document.querySelectorAll(selector).forEach((element) => {

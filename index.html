@@ -1210,9 +1210,11 @@
             <input class="tool-search" aria-label="Search tools" placeholder="Search tools, papers, code paths, tasks">
             <select class="select tool-status-filter" aria-label="Tool status">
               <option value="All">All statuses</option>
-              <option value="Ready">Ready</option>
               <option value="Draft">Draft</option>
-              <option value="Needs review">Needs review</option>
+              <option value="Docs Ready">Docs Ready</option>
+              <option value="Code Linked">Code Linked</option>
+              <option value="Runnable">Runnable</option>
+              <option value="Verified">Verified</option>
             </select>
             <select class="select tool-resource-filter" aria-label="Tool resource">
               <option value="All">All resources</option>
@@ -1235,11 +1237,11 @@
             <div>
               <div class="tool-results-head">
                 <span>Tool cards use a Roboflow-style thumbnail, compact metadata, and action chips.</span>
-                <span id="toolResultCount">5 tools loaded</span>
+                <span id="toolResultCount">6 tools loaded</span>
               </div>
 
               <div class="model-grid">
-                <a class="card tool-card active" href="tool.html?tool=yolo-world" data-tool-slug="yolo-world" data-tool-title="YOLO-World" data-tool-category="Perception and Grounding" data-tool-status="Ready" data-tool-resources="Paper Demo images API docs Benchmark" data-tool-search="yolo world open vocabulary object detection grounding real time cvpr 2024 hugging face onnx demo paper code paths benchmark">
+                <a class="card tool-card active" href="tool.html?tool=yolo-world" data-tool-slug="yolo-world" data-tool-title="YOLO-World" data-tool-category="Perception and Grounding" data-tool-status="Code Linked" data-tool-resources="Paper Demo images API docs Benchmark" data-tool-search="yolo world open vocabulary object detection grounding real time cvpr 2024 hugging face onnx demo paper code paths benchmark">
                   <div class="tool-thumb image" style="background-image: linear-gradient(135deg, rgba(16, 24, 40, 0.36), rgba(53, 98, 255, 0.2)), url('https://wondervictor.github.io/images/vis_lvis.png');"><span>Open-vocabulary detection</span></div>
                   <div class="tool-card-body">
                     <div class="card-title">YOLO-World <span class="badge blue">Grounding</span></div>
@@ -1252,6 +1254,26 @@
                     <div class="tool-meta">
                       <div>Input<strong>Image / text prompts</strong></div>
                       <div>Output<strong>Boxes / classes</strong></div>
+                    </div>
+                    <div class="tool-open-row">
+                      <span class="tool-open-link">Open detail</span>
+                    </div>
+                  </div>
+                </a>
+
+                <a class="card tool-card" href="tool.html?tool=hydra" data-tool-slug="hydra" data-tool-title="Hydra" data-tool-category="Cognition and State Modeling" data-tool-status="Code Linked" data-tool-resources="Paper Demo images API docs Benchmark" data-tool-search="hydra mit spark 3d scene graph spatial perception robotics mapping slam semantic scene graph ros2 python bindings rss ijrr code docs benchmark">
+                  <div class="tool-thumb image" style="background-image: linear-gradient(135deg, rgba(16, 24, 40, 0.42), rgba(14, 159, 110, 0.18)), url('https://raw.githubusercontent.com/MIT-SPARK/Hydra/main/doc/media/hydra.GIF');"><span>3D scene graph construction</span></div>
+                  <div class="tool-card-body">
+                    <div class="card-title">Hydra <span class="badge">State Modeling</span></div>
+                    <p>Real-time spatial perception system that incrementally builds 3D scene graphs from robot sensor data.</p>
+                    <div class="meta-row">
+                      <span class="badge">RSS 2022</span>
+                      <span class="badge">ROS2</span>
+                      <span class="badge green">BSD-2</span>
+                    </div>
+                    <div class="tool-meta">
+                      <div>Input<strong>Sensor data / semantics</strong></div>
+                      <div>Output<strong>3D scene graph</strong></div>
                     </div>
                     <div class="tool-open-row">
                       <span class="tool-open-link">Open detail</span>
@@ -1431,6 +1453,7 @@
       { title: "Benchmark tools", type: "Tool filter", text: "benchmark leaderboard metrics evaluation artifacts", action: () => setToolFilters({ category: "All", status: "All", resource: "Benchmark", query: "" }) },
       { title: "Draft tools", type: "Tool filter", text: "draft needs content template placeholder", action: () => setToolFilters({ category: "All", status: "Draft", resource: "All", query: "" }) },
       { title: "YOLO-World", type: "Tool", text: "yolo world open vocabulary detection grounding cvpr 2024", action: () => { window.location.href = "tool.html?tool=yolo-world"; } },
+      { title: "Hydra", type: "Tool", text: "hydra mit spark 3d scene graph spatial perception robotics mapping state modeling", action: () => { window.location.href = "tool.html?tool=hydra"; } },
       { title: "Tool Entry Template", type: "Tool", text: "perception grounding template", action: () => { window.location.href = "tool.html?tool=tool-entry-template"; } },
       { title: "Paper-backed Tool Template", type: "Tool", text: "cognition state modeling paper method", action: () => { window.location.href = "tool.html?tool=paper-backed-tool-template"; } },
       { title: "Code Tool Template", type: "Tool", text: "reasoning planning relative path schema code examples", action: () => { window.location.href = "tool.html?tool=api-tool-template"; } },
