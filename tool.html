@@ -1629,6 +1629,101 @@ python tools/anygrasp/grasp_tracking/demo.py \
         owner: "GraspNet",
         version: "AnyGrasp SDK main"
       },
+      "zoedepth": {
+        title: "ZoeDepth",
+        category: "Perception and Grounding",
+        task: "Metric depth estimation",
+        summary: "ZoeDepth estimates metric depth from a single RGB image by combining relative depth priors with metric depth prediction, enabling zero-shot transfer across indoor and outdoor scenes.",
+        input: "RGB image",
+        output: "Metric depth map",
+        runtime: "Python / PyTorch / Torch Hub / Gradio UI",
+        status: "Code Linked",
+        paperTitle: "ZoeDepth: Zero-shot Transfer by Combining Relative and Metric Depth",
+        paperAuthors: "Shariq Farooq Bhat, Reiner Birkl, Diana Wofk, Peter Wonka, Matthias Muller",
+        paperVenue: "arXiv:2302.12288, 2023",
+        paperContribution: "Combines strong relative depth estimation with metric depth heads, allowing monocular depth prediction to generalize across datasets such as NYU Depth V2 and KITTI.",
+        paperLinks: [
+          ["GitHub", "https://github.com/isl-org/ZoeDepth"],
+          ["arXiv", "https://arxiv.org/abs/2302.12288"],
+          ["Hugging Face Demo", "https://huggingface.co/spaces/shariqfarooq/ZoeDepth"],
+          ["Colab", "https://colab.research.google.com/github/isl-org/ZoeDepth"]
+        ],
+        heroImage: "https://raw.githubusercontent.com/isl-org/ZoeDepth/main/assets/zoedepth-teaser.png",
+        demos: [
+          {
+            label: "Teaser: RGB to metric depth",
+            image: "https://raw.githubusercontent.com/isl-org/ZoeDepth/main/assets/zoedepth-teaser.png",
+            position: "center center"
+          },
+          {
+            label: "Indoor depth transfer",
+            image: "https://raw.githubusercontent.com/isl-org/ZoeDepth/main/assets/zoedepth-teaser.png",
+            position: "left top"
+          },
+          {
+            label: "Outdoor scene depth",
+            image: "https://raw.githubusercontent.com/isl-org/ZoeDepth/main/assets/zoedepth-teaser.png",
+            position: "center top"
+          },
+          {
+            label: "Relative depth prior",
+            image: "https://raw.githubusercontent.com/isl-org/ZoeDepth/main/assets/zoedepth-teaser.png",
+            position: "right top"
+          },
+          {
+            label: "Metric depth output",
+            image: "https://raw.githubusercontent.com/isl-org/ZoeDepth/main/assets/zoedepth-teaser.png",
+            position: "left bottom"
+          },
+          {
+            label: "Zero-shot result panel",
+            image: "https://raw.githubusercontent.com/isl-org/ZoeDepth/main/assets/zoedepth-teaser.png",
+            position: "center bottom"
+          },
+          {
+            label: "NYU / KITTI evaluation view",
+            image: "https://raw.githubusercontent.com/isl-org/ZoeDepth/main/assets/zoedepth-teaser.png",
+            position: "right bottom"
+          },
+          {
+            label: "Depth visualization strip",
+            image: "https://raw.githubusercontent.com/isl-org/ZoeDepth/main/assets/zoedepth-teaser.png",
+            position: "center center"
+          }
+        ],
+        apiExample: `# Relative-path local entry for the ZoeDepth tool folder
+python tools/zoedepth/sanity.py
+
+# Torch Hub inference path:
+python tools/zoedepth/examples/infer_depth.py \
+  --image tools/zoedepth/examples/input.jpg \
+  --model ZoeD_N \
+  --output tools/zoedepth/runs/depth_output.png
+
+# Gradio UI path:
+python -m tools/zoedepth.ui.app
+
+# Evaluation examples:
+python tools/zoedepth/evaluate.py -m zoedepth -d nyu
+python tools/zoedepth/evaluate.py -m zoedepth_nk -d nyu
+
+# Suggested repository layout when adding local files:
+# tools/zoedepth/README.md
+# tools/zoedepth/sanity.py
+# tools/zoedepth/evaluate.py
+# tools/zoedepth/ui/app.py
+# tools/zoedepth/examples/input.jpg
+# tools/zoedepth/runs/depth_output.png
+
+# This page documents the path. The static page does not execute ZoeDepth.`,
+        benchmarkDataset: "NYU Depth V2 / KITTI Eigen splits",
+        benchmarkMetric: "Monocular depth estimation metrics such as AbsRel, RMSE, delta accuracy",
+        benchmarkLatency: "Torch/PyTorch inference runtime depends on ZoeD_N, ZoeD_K, or ZoeD_NK model and target GPU",
+        benchmarkArtifacts: "Torch Hub entries, sanity scripts, evaluation scripts, Gradio UI, model configs",
+        license: "MIT",
+        owner: "isl-org",
+        version: "main branch"
+      },
       "tool-entry-template": {
         title: "Tool Entry Template",
         category: "Perception and Grounding",
