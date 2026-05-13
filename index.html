@@ -534,6 +534,105 @@
       color: var(--accent);
     }
 
+    .leaderboard-note {
+      margin-bottom: 14px;
+      border: 1px solid #bfdbfe;
+      border-radius: 8px;
+      background: #eff6ff;
+      color: #1e3a8a;
+      padding: 12px 14px;
+      font-size: 13px;
+      line-height: 1.55;
+    }
+
+    .leaderboard-tracks {
+      display: grid;
+      gap: 16px;
+    }
+
+    .leaderboard-track {
+      min-width: 0;
+    }
+
+    .leaderboard-track-head {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 8px;
+    }
+
+    .leaderboard-track-head h3 {
+      font-size: 17px;
+      line-height: 1.25;
+    }
+
+    .leaderboard-track-head p {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.45;
+      margin-top: 3px;
+    }
+
+    .score-chip {
+      display: inline-flex;
+      align-items: center;
+      min-height: 24px;
+      border-radius: 6px;
+      border: 1px solid #fed7aa;
+      background: #fff7ed;
+      color: #9a3412;
+      padding: 2px 8px;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .metric-cell {
+      display: grid;
+      gap: 4px;
+      min-width: 190px;
+      white-space: normal;
+    }
+
+    .metric-cell span:last-child {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.35;
+    }
+
+    .tool-table-link {
+      color: var(--accent);
+      font-weight: 800;
+      text-decoration: none;
+    }
+
+    .tool-table-link:hover {
+      text-decoration: underline;
+    }
+
+    .artifact-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      max-width: 320px;
+      white-space: normal;
+    }
+
+    .artifact-list .badge {
+      min-height: 20px;
+      font-size: 11px;
+    }
+
+    .empty-track {
+      border: 1px dashed var(--line);
+      border-radius: 8px;
+      background: #ffffff;
+      color: var(--muted);
+      padding: 14px;
+      font-size: 13px;
+      line-height: 1.55;
+    }
+
     .model-layout {
       display: grid;
       grid-template-columns: 230px minmax(0, 1fr);
@@ -948,6 +1047,11 @@
         flex-direction: column;
       }
 
+      .leaderboard-track-head {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
       .section-head .btn {
         align-self: stretch;
         justify-content: center;
@@ -1188,75 +1292,32 @@
           <div class="section-head">
             <div>
               <h2>Leaderboard</h2>
-              <p>Ranking view for models evaluated on the same dataset split.</p>
+              <p>Grouped ranking for real tools only. Draft templates are excluded.</p>
             </div>
-            <button class="btn primary">Submit Result</button>
+          </div>
+
+          <div class="leaderboard-note">
+            Ranking is grouped by the four tool categories. Within each category, rows are ordered by the primary metric first, then speed, model size, and artifact completeness. Current rows are ready for real benchmark values, so missing comparable scores are marked as pending instead of inventing numbers.
           </div>
 
           <div class="toolbar">
             <div class="filters">
-              <select class="select" aria-label="Benchmark filter">
-                <option>All benchmarks</option>
-                <option>Detection evaluation set</option>
-                <option>Manipulation evaluation set</option>
+              <select class="select leaderboard-category-filter" aria-label="Leaderboard category filter">
+                <option value="All">All categories</option>
+                <option value="Perception and Grounding">Perception and Grounding</option>
+                <option value="Cognition and State Modeling">Cognition and State Modeling</option>
+                <option value="Reasoning and Planning">Reasoning and Planning</option>
+                <option value="Execution and Control">Execution and Control</option>
               </select>
-              <select class="select" aria-label="Metric filter">
-                <option>Sort by primary metric</option>
-                <option>Sort by mAP</option>
-                <option>Sort by success rate</option>
-                <option>Sort by FPS</option>
+              <select class="select leaderboard-sort-filter" aria-label="Leaderboard sort logic">
+                <option value="primary">Primary metric first</option>
+                <option value="speed">Speed first</option>
+                <option value="artifacts">Artifacts first</option>
               </select>
             </div>
           </div>
 
-          <div class="table-wrap">
-            <table>
-              <thead>
-                <tr>
-                  <th>Rank</th>
-                  <th>Model</th>
-                  <th>Task</th>
-                  <th>Dataset Split</th>
-                  <th>Primary Metric</th>
-                  <th>Speed</th>
-                  <th>Model Size</th>
-                  <th>Artifacts</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td class="rank">#1</td>
-                  <td>Model Placeholder</td>
-                  <td>Object Detection</td>
-                  <td>Evaluation Set</td>
-                  <td>--</td>
-                  <td>--</td>
-                  <td>--</td>
-                  <td><button class="btn">View</button></td>
-                </tr>
-                <tr>
-                  <td class="rank">#2</td>
-                  <td>Model Placeholder</td>
-                  <td>Segmentation</td>
-                  <td>Evaluation Set</td>
-                  <td>--</td>
-                  <td>--</td>
-                  <td>--</td>
-                  <td><button class="btn">View</button></td>
-                </tr>
-                <tr>
-                  <td class="rank">#3</td>
-                  <td>Model Placeholder</td>
-                  <td>Manipulation</td>
-                  <td>Evaluation Set</td>
-                  <td>--</td>
-                  <td>--</td>
-                  <td>--</td>
-                  <td><button class="btn">View</button></td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
+          <div class="leaderboard-tracks" id="leaderboardTracks"></div>
         </section>
 
         <section class="view" id="models">
@@ -1623,9 +1684,181 @@
     const toolResourceFilter = document.querySelector(".tool-resource-filter");
     const toolCategoryButtons = document.querySelectorAll("[data-tool-category-filter]");
     const toolResultCount = document.querySelector("#toolResultCount");
+    const leaderboardTracks = document.querySelector("#leaderboardTracks");
+    const leaderboardCategoryFilter = document.querySelector(".leaderboard-category-filter");
+    const leaderboardSortFilter = document.querySelector(".leaderboard-sort-filter");
     let activeToolCategory = "All";
     const allToolCards = [...toolCards];
     const viewIds = new Set([...views].map((view) => view.id));
+    const leaderboardCategories = [
+      {
+        name: "Perception and Grounding",
+        primary: "Task-specific perception metric",
+        note: "Detection, depth, segmentation, video masks, and grasp perception are ranked only within their comparable task scope."
+      },
+      {
+        name: "Cognition and State Modeling",
+        primary: "State quality / reconstruction / trajectory metric",
+        note: "Spatial state tools use accuracy, map quality, reconstruction quality, and robustness as primary evidence."
+      },
+      {
+        name: "Reasoning and Planning",
+        primary: "Task success / plan quality",
+        note: "Ready for planning tools once real entries replace the draft template."
+      },
+      {
+        name: "Execution and Control",
+        primary: "Success rate / rollout quality",
+        note: "Ready for controllers and execution policies once real entries replace the draft template."
+      }
+    ];
+
+    const leaderboardRows = [
+      {
+        slug: "yolo-world",
+        name: "YOLO-World",
+        category: "Perception and Grounding",
+        task: "Open-vocabulary detection",
+        dataset: "LVIS / COCO-style open-vocabulary evaluations",
+        metric: "AP / zero-shot detection metrics",
+        scoreLabel: "Pending",
+        speed: "Real-time detector family",
+        size: "YOLO-style model family",
+        artifacts: ["Paper", "Demo", "ONNX", "Weights"],
+        completeness: 4,
+        speedRank: 1,
+        sizeRank: 2,
+        href: "tool.html?tool=yolo-world"
+      },
+      {
+        slug: "fastsam",
+        name: "FastSAM",
+        category: "Perception and Grounding",
+        task: "Promptable segmentation",
+        dataset: "SA-1B-style promptable segmentation evaluations",
+        metric: "Mask quality, prompt response quality, runtime versus SAM variants",
+        scoreLabel: "Pending",
+        speed: "Designed as a fast SAM-style pipeline",
+        size: "FastSAM checkpoint family",
+        artifacts: ["Paper", "Demo", "Gradio", "Replicate"],
+        completeness: 4,
+        speedRank: 2,
+        sizeRank: 3,
+        href: "tool.html?tool=fastsam"
+      },
+      {
+        slug: "cutie",
+        name: "Cutie",
+        category: "Perception and Grounding",
+        task: "Video object segmentation",
+        dataset: "DAVIS / YouTubeVOS-style video object segmentation benchmarks",
+        metric: "J&F, temporal consistency, mask quality, runtime",
+        scoreLabel: "Pending",
+        speed: "VOS runtime depends on target setup",
+        size: "Pretrained VOS checkpoints",
+        artifacts: ["Paper", "GUI", "Demo", "Masks"],
+        completeness: 4,
+        speedRank: 4,
+        sizeRank: 4,
+        href: "tool.html?tool=cutie"
+      },
+      {
+        slug: "anygrasp",
+        name: "AnyGrasp",
+        category: "Perception and Grounding",
+        task: "6-DoF grasp perception",
+        dataset: "GraspNet-1Billion / RGB-D grasp detection and tracking demos",
+        metric: "Grasp success, grasp quality score, collision-free candidate quality",
+        scoreLabel: "Pending",
+        speed: "Efficient RGB-D grasp perception pipeline",
+        size: "SDK / checkpoint dependent",
+        artifacts: ["Paper", "Demo", "RGB-D", "SDK"],
+        completeness: 4,
+        speedRank: 5,
+        sizeRank: 5,
+        href: "tool.html?tool=anygrasp"
+      },
+      {
+        slug: "zoedepth",
+        name: "ZoeDepth",
+        category: "Perception and Grounding",
+        task: "Metric depth estimation",
+        dataset: "NYU Depth V2 / KITTI Eigen splits",
+        metric: "AbsRel, RMSE, delta accuracy",
+        scoreLabel: "Pending",
+        speed: "Torch inference depends on ZoeD variant",
+        size: "ZoeD_N / ZoeD_K / ZoeD_NK variants",
+        artifacts: ["Paper", "Torch Hub", "Gradio", "Configs"],
+        completeness: 4,
+        speedRank: 6,
+        sizeRank: 6,
+        href: "tool.html?tool=zoedepth"
+      },
+      {
+        slug: "dust3r",
+        name: "DUSt3R",
+        category: "Cognition and State Modeling",
+        task: "Geometric 3D reconstruction",
+        dataset: "Multi-view reconstruction and visual localization datasets",
+        metric: "3D reconstruction quality, camera pose accuracy, matching quality",
+        scoreLabel: "Pending",
+        speed: "PyTorch inference and alignment runtime depends on views",
+        size: "Pretrained reconstruction checkpoints",
+        artifacts: ["Paper", "Demo UI", "Checkpoints", "Pointmaps"],
+        completeness: 4,
+        speedRank: 3,
+        sizeRank: 4,
+        href: "tool.html?tool=dust3r"
+      },
+      {
+        slug: "fast-livo2",
+        name: "FAST-LIVO2",
+        category: "Cognition and State Modeling",
+        task: "LiDAR-inertial-visual odometry",
+        dataset: "FAST-LIVO2-Dataset / NTU VIRAL / HILTI-style sequences",
+        metric: "Trajectory accuracy, mapping quality, runtime, robustness",
+        scoreLabel: "Pending",
+        speed: "Real-time ROS odometry and mapping",
+        size: "C++ / ROS package",
+        artifacts: ["Paper", "ROS", "Configs", "Trajectories"],
+        completeness: 4,
+        speedRank: 1,
+        sizeRank: 1,
+        href: "tool.html?tool=fast-livo2"
+      },
+      {
+        slug: "r3live",
+        name: "R3LIVE",
+        category: "Cognition and State Modeling",
+        task: "RGB-colored LIV mapping",
+        dataset: "R3LIVE-dataset and LiDAR-degenerated mapping sequences",
+        metric: "State estimation accuracy, RGB map quality, robustness",
+        scoreLabel: "Pending",
+        speed: "Real-time mapping package",
+        size: "C++ / ROS package",
+        artifacts: ["Paper", "ROS", "Dataset", "Meshes"],
+        completeness: 4,
+        speedRank: 2,
+        sizeRank: 2,
+        href: "tool.html?tool=r3live"
+      },
+      {
+        slug: "hydra",
+        name: "Hydra",
+        category: "Cognition and State Modeling",
+        task: "3D scene graph construction",
+        dataset: "Replica / Matterport-style indoor sequences",
+        metric: "Scene graph quality, reconstruction consistency, object/place accuracy",
+        scoreLabel: "Pending",
+        speed: "Real-time spatial perception system",
+        size: "ROS2 / Python bindings / scene graph stack",
+        artifacts: ["Paper", "ROS2", "GIF", "Configs"],
+        completeness: 4,
+        speedRank: 4,
+        sizeRank: 5,
+        href: "tool.html?tool=hydra"
+      }
+    ];
 
     function syncViewHash(target) {
       const hash = target === "home" ? "" : `#${target}`;
@@ -1718,6 +1951,111 @@
       globalSearchResults.classList.add("active");
     }
 
+    function compareLeaderboardRows(a, b, sortMode) {
+      if (sortMode === "speed") {
+        return (a.speedRank || 99) - (b.speedRank || 99)
+          || (b.completeness || 0) - (a.completeness || 0)
+          || a.name.localeCompare(b.name);
+      }
+
+      if (sortMode === "artifacts") {
+        return (b.completeness || 0) - (a.completeness || 0)
+          || (a.speedRank || 99) - (b.speedRank || 99)
+          || a.name.localeCompare(b.name);
+      }
+
+      return (b.primaryScore ?? -Infinity) - (a.primaryScore ?? -Infinity)
+        || (a.speedRank || 99) - (b.speedRank || 99)
+        || (a.sizeRank || 99) - (b.sizeRank || 99)
+        || (b.completeness || 0) - (a.completeness || 0)
+        || a.name.localeCompare(b.name);
+    }
+
+    function renderLeaderboard() {
+      if (!leaderboardTracks) return;
+      const activeCategory = leaderboardCategoryFilter?.value || "All";
+      const sortMode = leaderboardSortFilter?.value || "primary";
+      const categories = leaderboardCategories.filter((category) => activeCategory === "All" || category.name === activeCategory);
+      leaderboardTracks.innerHTML = "";
+
+      categories.forEach((category) => {
+        const rows = leaderboardRows
+          .filter((row) => row.category === category.name)
+          .sort((a, b) => compareLeaderboardRows(a, b, sortMode));
+
+        const section = document.createElement("section");
+        section.className = "leaderboard-track";
+
+        const head = document.createElement("div");
+        head.className = "leaderboard-track-head";
+        head.innerHTML = `
+          <div>
+            <h3>${category.name}</h3>
+            <p>${category.note}</p>
+          </div>
+          <span class="badge blue">${category.primary}</span>
+        `;
+        section.appendChild(head);
+
+        if (!rows.length) {
+          const empty = document.createElement("div");
+          empty.className = "empty-track";
+          empty.textContent = "No real tools in this category yet. The category template is kept in Tools, but templates are excluded from Leaderboard ranking.";
+          section.appendChild(empty);
+          leaderboardTracks.appendChild(section);
+          return;
+        }
+
+        const wrap = document.createElement("div");
+        wrap.className = "table-wrap";
+        wrap.innerHTML = `
+          <table>
+            <thead>
+              <tr>
+                <th>Rank</th>
+                <th>Tool</th>
+                <th>Task</th>
+                <th>Dataset Split</th>
+                <th>Primary Metric</th>
+                <th>Speed</th>
+                <th>Model / Runtime Size</th>
+                <th>Artifacts</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        `;
+
+        const tbody = wrap.querySelector("tbody");
+        rows.forEach((row, index) => {
+          const tr = document.createElement("tr");
+          tr.innerHTML = `
+            <td class="rank">#${index + 1}</td>
+            <td><a class="tool-table-link" href="${row.href}">${row.name}</a></td>
+            <td>${row.task}</td>
+            <td>${row.dataset}</td>
+            <td>
+              <div class="metric-cell">
+                <span class="score-chip">${row.scoreLabel || "Pending"}</span>
+                <span>${row.metric}</span>
+              </div>
+            </td>
+            <td>${row.speed}</td>
+            <td>${row.size}</td>
+            <td>
+              <div class="artifact-list">
+                ${row.artifacts.map((artifact) => `<span class="badge">${artifact}</span>`).join("")}
+              </div>
+            </td>
+          `;
+          tbody.appendChild(tr);
+        });
+
+        section.appendChild(wrap);
+        leaderboardTracks.appendChild(section);
+      });
+    }
+
     globalSearch?.addEventListener("input", () => renderGlobalSearch(globalSearch.value));
     globalSearch?.addEventListener("keydown", (event) => {
       if (event.key === "Enter") {
@@ -1806,6 +2144,9 @@
     });
     toolStatusFilter?.addEventListener("change", filterTools);
     toolResourceFilter?.addEventListener("change", filterTools);
+    leaderboardCategoryFilter?.addEventListener("change", renderLeaderboard);
+    leaderboardSortFilter?.addEventListener("change", renderLeaderboard);
+    renderLeaderboard();
     updateToolCounts();
     filterTools();
   </script>
