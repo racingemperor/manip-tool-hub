@@ -767,11 +767,50 @@
       gap: 8px;
       color: inherit;
       text-decoration: none;
+      padding: 0;
+      overflow: hidden;
     }
 
     .related-card:hover {
       border-color: #9db5ff;
       box-shadow: 0 0 0 3px rgba(53, 98, 255, 0.1);
+    }
+
+    .related-thumb {
+      aspect-ratio: 16 / 8.5;
+      min-height: 112px;
+      background:
+        linear-gradient(135deg, rgba(17, 24, 39, 0.28), rgba(53, 98, 255, 0.16)),
+        #dfe6f3;
+      background-size: cover;
+      background-position: center;
+      display: flex;
+      align-items: flex-end;
+      padding: 10px;
+    }
+
+    .related-thumb span {
+      display: inline-flex;
+      max-width: 100%;
+      border-radius: 6px;
+      background: rgba(17, 24, 39, 0.82);
+      color: #ffffff;
+      font-size: 12px;
+      font-weight: 800;
+      line-height: 1.2;
+      padding: 6px 8px;
+    }
+
+    .related-thumb.placeholder {
+      background:
+        linear-gradient(135deg, rgba(53, 98, 255, 0.12), rgba(14, 159, 110, 0.12)),
+        repeating-linear-gradient(45deg, #eef2f7 0 10px, #e5eaf3 10px 12px);
+    }
+
+    .related-body {
+      display: grid;
+      gap: 8px;
+      padding: 12px;
     }
 
     .related-card strong {
@@ -894,8 +933,12 @@
       .example-item,
       .parameter-item,
       .doc-card,
-      .related-card {
+      .related-body {
         padding: 12px;
+      }
+
+      .related-thumb {
+        min-height: 120px;
       }
 
       .api-block,
@@ -1336,19 +1379,28 @@ Important relative paths:
             </div>
             <div class="related-grid" id="relatedTools">
               <a class="related-card" href="tool.html?tool=tool-entry-template">
-                <span class="badge blue">Perception and Grounding</span>
-                <strong>Tool Entry Template</strong>
-                <p>Template for visual recognition, localization, scene grounding, and perception-facing tool entries.</p>
+                <div class="related-thumb placeholder"><span>Perception and Grounding</span></div>
+                <div class="related-body">
+                  <span class="badge blue">Perception and Grounding</span>
+                  <strong>Tool Entry Template</strong>
+                  <p>Template for visual recognition, localization, scene grounding, and perception-facing tool entries.</p>
+                </div>
               </a>
               <a class="related-card" href="tool.html?tool=yolo-world">
-                <span class="badge blue">Open-vocabulary detection</span>
-                <strong>YOLO-World</strong>
-                <p>Real-time prompt-driven detector for boxes, classes, and grounding outputs.</p>
+                <div class="related-thumb" style="background-image: linear-gradient(135deg, rgba(17, 24, 39, 0.28), rgba(53, 98, 255, 0.16)), url('https://wondervictor.github.io/images/vis_lvis.png');"><span>Open-vocabulary detection</span></div>
+                <div class="related-body">
+                  <span class="badge blue">Open-vocabulary detection</span>
+                  <strong>YOLO-World</strong>
+                  <p>Real-time prompt-driven detector for boxes, classes, and grounding outputs.</p>
+                </div>
               </a>
               <a class="related-card" href="./#models">
-                <span class="badge">Browse category</span>
-                <strong>More Perception Tools</strong>
-                <p>Open the Tools page filtered around perception, grounding, detection, and localization entries.</p>
+                <div class="related-thumb placeholder"><span>Browse category</span></div>
+                <div class="related-body">
+                  <span class="badge">Browse category</span>
+                  <strong>More Perception Tools</strong>
+                  <p>Open the Tools page filtered around perception, grounding, detection, and localization entries.</p>
+                </div>
               </a>
             </div>
           </section>
@@ -2149,7 +2201,9 @@ python tools/dust3r/demo.py \
       title: item.title,
       category: item.category,
       task: item.task,
-      summary: item.summary
+      summary: item.summary,
+      heroImage: item.heroImage,
+      status: item.status
     }));
 
     function shuffleItems(items) {
@@ -2167,26 +2221,40 @@ python tools/dust3r/demo.py \
       if (!related) return;
 
       const sameCategory = shuffleItems(
-        toolCatalog.filter((item) => item.category === tool.category && item.slug !== slug)
+        toolCatalog.filter((item) => item.category === tool.category && item.slug !== slug && item.status !== "Draft")
       ).slice(0, 3);
 
       intro.textContent = `Randomly recommended from ${tool.category}.`;
-      related.innerHTML = sameCategory.map((item) => `
-        <a class="related-card" href="tool.html?tool=${item.slug}">
-          <span class="badge blue">${item.category}</span>
-          <strong>${item.title}</strong>
-          <p>${item.summary}</p>
-        </a>
-      `).join("");
+      related.innerHTML = sameCategory.map((item) => {
+        const thumbClass = item.heroImage ? "related-thumb" : "related-thumb placeholder";
+        const thumbStyle = item.heroImage
+          ? ` style="background-image: linear-gradient(135deg, rgba(17, 24, 39, 0.28), rgba(53, 98, 255, 0.16)), url('${item.heroImage}');"`
+          : "";
+        return `
+          <a class="related-card" href="tool.html?tool=${item.slug}">
+            <div class="${thumbClass}"${thumbStyle}>
+              <span>${item.task}</span>
+            </div>
+            <div class="related-body">
+              <span class="badge blue">${item.category}</span>
+              <strong>${item.title}</strong>
+              <p>${item.summary}</p>
+            </div>
+          </a>
+        `;
+      }).join("");
 
       while (related.children.length < 3) {
         const placeholder = document.createElement("a");
         placeholder.className = "related-card";
         placeholder.href = "./#models";
         placeholder.innerHTML = `
-          <span class="badge">${tool.category}</span>
-          <strong>Add another ${tool.task} tool</strong>
-          <p>This slot is reserved for a future tool from the same category, so recommendations stay category-specific.</p>
+          <div class="related-thumb placeholder"><span>${tool.category}</span></div>
+          <div class="related-body">
+            <span class="badge">${tool.category}</span>
+            <strong>Add another ${tool.task} tool</strong>
+            <p>This slot is reserved for a future tool from the same category, so recommendations stay category-specific.</p>
+          </div>
         `;
         related.appendChild(placeholder);
       }
