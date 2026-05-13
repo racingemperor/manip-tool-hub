@@ -1536,6 +1536,99 @@ python tools/hydra/examples/run_hydra.py \
         owner: "MIT-SPARK",
         version: "main branch"
       },
+      "anygrasp": {
+        title: "AnyGrasp",
+        category: "Perception and Grounding",
+        task: "6-DoF grasp perception",
+        summary: "AnyGrasp is a robust grasp perception tool for predicting and tracking 6-DoF robotic grasps from RGB-D observations and point clouds.",
+        input: "RGB-D image / point cloud",
+        output: "6-DoF grasp poses, scores, widths",
+        runtime: "Python / PyTorch / MinkowskiEngine / SDK demo",
+        status: "Code Linked",
+        paperTitle: "AnyGrasp: Robust and Efficient Grasp Perception in Spatial and Temporal Domains",
+        paperAuthors: "Hao-Shu Fang, Chenxi Wang, Hongjie Fang, Minghao Gou, Jirong Liu, Hengxu Yan, Wenhai Liu, Yichen Xie, Cewu Lu",
+        paperVenue: "IEEE Transactions on Robotics, 2023 / arXiv:2212.08333",
+        paperContribution: "Provides a grasp perception pipeline that detects robust 6-DoF grasp candidates and supports temporal tracking, enabling robotic manipulation in cluttered and dynamic scenes.",
+        paperLinks: [
+          ["GitHub", "https://github.com/graspnet/anygrasp_sdk"],
+          ["Project Page", "https://graspnet.net/anygrasp.html"],
+          ["arXiv", "https://arxiv.org/abs/2212.08333"],
+          ["Dataset", "https://graspnet.net/datasets.html"]
+        ],
+        heroImage: "https://graspnet.net/images/anygrasp_1_small.gif",
+        demos: [
+          {
+            label: "Cluttered scene grasping",
+            image: "https://graspnet.net/images/anygrasp_1_small.gif",
+            position: "center center"
+          },
+          {
+            label: "Fish catching demo",
+            image: "https://graspnet.net/images/anygrasp-fish.gif",
+            position: "center center"
+          },
+          {
+            label: "Broken pot fragments",
+            image: "https://graspnet.net/images/broken.gif",
+            position: "center center"
+          },
+          {
+            label: "Human comparison sequence",
+            image: "https://graspnet.net/images/vshuman_gif.gif",
+            position: "center center"
+          },
+          {
+            label: "Grasp pose visualization",
+            image: "https://graspnet.net/images/grasppose.gif",
+            position: "center center"
+          },
+          {
+            label: "Prediction variance view",
+            image: "https://graspnet.net/images/variance.gif",
+            position: "center center"
+          },
+          {
+            label: "RGB-D demo color input",
+            image: "https://raw.githubusercontent.com/graspnet/anygrasp_sdk/main/grasp_detection/example_data/color.png",
+            position: "center center"
+          },
+          {
+            label: "Depth input example",
+            image: "https://raw.githubusercontent.com/graspnet/anygrasp_sdk/main/grasp_detection/example_data/depth.png",
+            position: "center center"
+          }
+        ],
+        apiExample: `# Relative-path local entry for the AnyGrasp tool folder
+python tools/anygrasp/grasp_detection/demo.py \
+  --checkpoint_path tools/anygrasp/log/checkpoint_detection.tar \
+  --max_gripper_width 0.1 \
+  --gripper_height 0.03 \
+  --debug
+
+# Optional temporal tracking entry:
+python tools/anygrasp/grasp_tracking/demo.py \
+  --checkpoint_path tools/anygrasp/log/checkpoint_tracking.tar \
+  -filter oneeuro \
+  --debug
+
+# Suggested repository layout when adding local files:
+# tools/anygrasp/README.md
+# tools/anygrasp/grasp_detection/demo.py
+# tools/anygrasp/grasp_tracking/demo.py
+# tools/anygrasp/grasp_detection/example_data/color.png
+# tools/anygrasp/grasp_detection/example_data/depth.png
+# tools/anygrasp/log/
+
+# This page documents the path. The static page does not execute AnyGrasp.
+# The official implementation requires the licensed AnyGrasp SDK binaries and model weights.`,
+        benchmarkDataset: "GraspNet-1Billion / RGB-D grasp detection and tracking demos",
+        benchmarkMetric: "Grasp success, grasp quality score, collision-free candidate quality",
+        benchmarkLatency: "Efficient grasp perception pipeline; fill exact runtime for target GPU and SDK build",
+        benchmarkArtifacts: "RGB-D example data, grasp detection demo, grasp tracking demo, license registration notes",
+        license: "Licensed SDK",
+        owner: "GraspNet",
+        version: "AnyGrasp SDK main"
+      },
       "tool-entry-template": {
         title: "Tool Entry Template",
         category: "Perception and Grounding",
