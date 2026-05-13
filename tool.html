@@ -1688,16 +1688,25 @@ python tools/hydra/examples/run_hydra.py \
       summary: item.summary
     }));
 
+    function shuffleItems(items) {
+      const shuffled = [...items];
+      for (let index = shuffled.length - 1; index > 0; index -= 1) {
+        const randomIndex = Math.floor(Math.random() * (index + 1));
+        [shuffled[index], shuffled[randomIndex]] = [shuffled[randomIndex], shuffled[index]];
+      }
+      return shuffled;
+    }
+
     function renderRelatedTools() {
       const related = document.querySelector("#relatedTools");
       const intro = document.querySelector("#relatedIntro");
       if (!related) return;
 
-      const sameCategory = toolCatalog
-        .filter((item) => item.category === tool.category && item.slug !== slug)
-        .slice(0, 3);
+      const sameCategory = shuffleItems(
+        toolCatalog.filter((item) => item.category === tool.category && item.slug !== slug)
+      ).slice(0, 3);
 
-      intro.textContent = `Recommended from ${tool.category}.`;
+      intro.textContent = `Randomly recommended from ${tool.category}.`;
       related.innerHTML = sameCategory.map((item) => `
         <a class="related-card" href="tool.html?tool=${item.slug}">
           <span class="badge blue">${item.category}</span>
