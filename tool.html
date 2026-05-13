@@ -763,64 +763,64 @@
     }
 
     .related-card {
-      display: grid;
-      gap: 8px;
+      position: relative;
+      display: flex;
+      align-items: flex-end;
+      min-height: 168px;
       color: inherit;
       text-decoration: none;
       padding: 0;
       overflow: hidden;
+      background:
+        linear-gradient(135deg, rgba(17, 24, 39, 0.78), rgba(53, 98, 255, 0.42)),
+        #dfe6f3;
+      background-size: cover;
+      background-position: center;
     }
 
     .related-card:hover {
       border-color: #9db5ff;
       box-shadow: 0 0 0 3px rgba(53, 98, 255, 0.1);
+      transform: translateY(-1px);
     }
 
-    .related-thumb {
-      aspect-ratio: 16 / 8.5;
-      min-height: 112px;
+    .related-card.placeholder {
       background:
-        linear-gradient(135deg, rgba(17, 24, 39, 0.28), rgba(53, 98, 255, 0.16)),
-        #dfe6f3;
-      background-size: cover;
-      background-position: center;
-      display: flex;
-      align-items: flex-end;
-      padding: 10px;
+        linear-gradient(135deg, rgba(17, 24, 39, 0.72), rgba(53, 98, 255, 0.32)),
+        repeating-linear-gradient(45deg, #e7ecf5 0 10px, #dbe3ef 10px 12px);
     }
 
-    .related-thumb span {
-      display: inline-flex;
-      max-width: 100%;
-      border-radius: 6px;
-      background: rgba(17, 24, 39, 0.82);
-      color: #ffffff;
-      font-size: 12px;
-      font-weight: 800;
-      line-height: 1.2;
-      padding: 6px 8px;
-    }
-
-    .related-thumb.placeholder {
-      background:
-        linear-gradient(135deg, rgba(53, 98, 255, 0.12), rgba(14, 159, 110, 0.12)),
-        repeating-linear-gradient(45deg, #eef2f7 0 10px, #e5eaf3 10px 12px);
-    }
-
-    .related-body {
+    .related-content {
       display: grid;
-      gap: 8px;
-      padding: 12px;
+      gap: 7px;
+      width: 100%;
+      padding: 16px;
+      color: #ffffff;
     }
 
     .related-card strong {
-      font-size: 15px;
+      color: #ffffff;
+      font-size: 24px;
+      line-height: 1.08;
+      text-shadow: 0 1px 2px rgba(17, 24, 39, 0.42);
     }
 
     .related-card p {
-      color: var(--muted);
+      color: rgba(255, 255, 255, 0.88);
       font-size: 13px;
       line-height: 1.45;
+      display: -webkit-box;
+      overflow: hidden;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 2;
+    }
+
+    .related-card .badge {
+      width: fit-content;
+      max-width: 100%;
+      border-color: rgba(255, 255, 255, 0.4);
+      background: rgba(17, 24, 39, 0.54);
+      color: #ffffff;
     }
 
     .timeline {
@@ -932,13 +932,20 @@
 
       .example-item,
       .parameter-item,
-      .doc-card,
-      .related-body {
+      .doc-card {
         padding: 12px;
       }
 
-      .related-thumb {
-        min-height: 120px;
+      .related-card {
+        min-height: 150px;
+      }
+
+      .related-content {
+        padding: 14px;
+      }
+
+      .related-card strong {
+        font-size: 22px;
       }
 
       .api-block,
@@ -1378,25 +1385,22 @@ Important relative paths:
               </div>
             </div>
             <div class="related-grid" id="relatedTools">
-              <a class="related-card" href="tool.html?tool=tool-entry-template">
-                <div class="related-thumb placeholder"><span>Perception and Grounding</span></div>
-                <div class="related-body">
+              <a class="related-card placeholder" href="tool.html?tool=tool-entry-template">
+                <div class="related-content">
                   <span class="badge blue">Perception and Grounding</span>
                   <strong>Tool Entry Template</strong>
                   <p>Template for visual recognition, localization, scene grounding, and perception-facing tool entries.</p>
                 </div>
               </a>
-              <a class="related-card" href="tool.html?tool=yolo-world">
-                <div class="related-thumb" style="background-image: linear-gradient(135deg, rgba(17, 24, 39, 0.28), rgba(53, 98, 255, 0.16)), url('https://wondervictor.github.io/images/vis_lvis.png');"><span>Open-vocabulary detection</span></div>
-                <div class="related-body">
+              <a class="related-card" href="tool.html?tool=yolo-world" style="background-image: linear-gradient(135deg, rgba(17, 24, 39, 0.78), rgba(53, 98, 255, 0.42)), url('https://wondervictor.github.io/images/vis_lvis.png');">
+                <div class="related-content">
                   <span class="badge blue">Open-vocabulary detection</span>
                   <strong>YOLO-World</strong>
                   <p>Real-time prompt-driven detector for boxes, classes, and grounding outputs.</p>
                 </div>
               </a>
-              <a class="related-card" href="./#models">
-                <div class="related-thumb placeholder"><span>Browse category</span></div>
-                <div class="related-body">
+              <a class="related-card placeholder" href="./#models">
+                <div class="related-content">
                   <span class="badge">Browse category</span>
                   <strong>More Perception Tools</strong>
                   <p>Open the Tools page filtered around perception, grounding, detection, and localization entries.</p>
@@ -2226,16 +2230,13 @@ python tools/dust3r/demo.py \
 
       intro.textContent = `Randomly recommended from ${tool.category}.`;
       related.innerHTML = sameCategory.map((item) => {
-        const thumbClass = item.heroImage ? "related-thumb" : "related-thumb placeholder";
-        const thumbStyle = item.heroImage
-          ? ` style="background-image: linear-gradient(135deg, rgba(17, 24, 39, 0.28), rgba(53, 98, 255, 0.16)), url('${item.heroImage}');"`
+        const cardClass = item.heroImage ? "related-card" : "related-card placeholder";
+        const cardStyle = item.heroImage
+          ? ` style="background-image: linear-gradient(135deg, rgba(17, 24, 39, 0.78), rgba(53, 98, 255, 0.42)), url('${item.heroImage}');"`
           : "";
         return `
-          <a class="related-card" href="tool.html?tool=${item.slug}">
-            <div class="${thumbClass}"${thumbStyle}>
-              <span>${item.task}</span>
-            </div>
-            <div class="related-body">
+          <a class="${cardClass}" href="tool.html?tool=${item.slug}"${cardStyle}>
+            <div class="related-content">
               <span class="badge blue">${item.category}</span>
               <strong>${item.title}</strong>
               <p>${item.summary}</p>
@@ -2246,11 +2247,10 @@ python tools/dust3r/demo.py \
 
       while (related.children.length < 3) {
         const placeholder = document.createElement("a");
-        placeholder.className = "related-card";
+        placeholder.className = "related-card placeholder";
         placeholder.href = "./#models";
         placeholder.innerHTML = `
-          <div class="related-thumb placeholder"><span>${tool.category}</span></div>
-          <div class="related-body">
+          <div class="related-content">
             <span class="badge">${tool.category}</span>
             <strong>Add another ${tool.task} tool</strong>
             <p>This slot is reserved for a future tool from the same category, so recommendations stay category-specific.</p>
