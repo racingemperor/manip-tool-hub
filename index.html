@@ -994,6 +994,66 @@
       line-height: 1.6;
     }
 
+    .explore-layout {
+      display: grid;
+      gap: 16px;
+    }
+
+    .explore-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .explore-card {
+      min-width: 0;
+      min-height: 156px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #ffffff;
+      box-shadow: 0 1px 2px rgba(16, 24, 40, 0.04);
+      padding: 14px;
+      display: grid;
+      gap: 12px;
+      align-content: space-between;
+      text-align: left;
+      color: inherit;
+      text-decoration: none;
+      cursor: pointer;
+      transition: border-color 0.16s ease, box-shadow 0.16s ease, transform 0.16s ease;
+    }
+
+    .explore-card:hover,
+    .explore-card:focus-visible {
+      border-color: #b9c5d8;
+      box-shadow: var(--shadow);
+      transform: translateY(-1px);
+      outline: none;
+    }
+
+    .explore-card h3 {
+      font-size: 15px;
+      line-height: 1.3;
+      margin-top: 8px;
+    }
+
+    .explore-card p {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.45;
+      margin-top: 5px;
+    }
+
+    .explore-card .meta-row {
+      margin-top: 10px;
+    }
+
+    .explore-row {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+    }
+
     @media (max-width: 1050px) {
       .app {
         grid-template-columns: 1fr;
@@ -1084,6 +1144,8 @@
       .grid.cards-3,
       .grid.cards-2,
       .module-strip,
+      .explore-grid,
+      .explore-row,
       .model-grid,
       .model-layout {
         grid-template-columns: 1fr;
@@ -1647,39 +1709,131 @@
           <div class="section-head">
             <div>
               <h2>Explore</h2>
-              <p>Discovery surface for tasks, datasets, tools, and benchmark tracks.</p>
+              <p>Discovery surface for users who know the task or scenario before they know the exact tool name.</p>
             </div>
           </div>
 
-          <div class="grid cards-3">
-            <article class="card">
-              <div class="card-title">By Task</div>
-              <p>Browse resources grouped around detection, segmentation, manipulation, and other task families.</p>
-              <div class="meta-row">
-                <span class="badge blue">Task map</span>
+          <div class="explore-layout">
+            <div class="section">
+              <div class="section-head">
+                <div>
+                  <h2>Popular Tool Categories</h2>
+                  <p>Start from a capability group and jump into the matching tool set.</p>
+                </div>
               </div>
-            </article>
-            <article class="card">
-              <div class="card-title">By Dataset</div>
-              <p>Start from a dataset, then move to downloads, evaluation splits, and matching leaderboard rows.</p>
-              <div class="meta-row">
-                <span class="badge green">HF links</span>
+              <div class="explore-grid">
+                <button class="explore-card" type="button" data-explore-category="Perception and Grounding" data-explore-status="Code Linked">
+                  <div>
+                    <span class="badge blue">5 tools</span>
+                    <h3>Perception and Grounding</h3>
+                    <p>Detection, segmentation, depth, video masks, and grasp perception.</p>
+                  </div>
+                  <div class="meta-row">
+                    <span class="badge">YOLO-World</span>
+                    <span class="badge">AnyGrasp</span>
+                  </div>
+                </button>
+                <button class="explore-card" type="button" data-explore-category="Cognition and State Modeling" data-explore-status="Code Linked">
+                  <div>
+                    <span class="badge blue">4 tools</span>
+                    <h3>Cognition and State Modeling</h3>
+                    <p>Scene graphs, odometry, RGB mapping, and multi-view 3D reconstruction.</p>
+                  </div>
+                  <div class="meta-row">
+                    <span class="badge">FAST-LIVO2</span>
+                    <span class="badge">DUSt3R</span>
+                  </div>
+                </button>
+                <button class="explore-card" type="button" data-explore-category="Reasoning and Planning" data-explore-status="Draft">
+                  <div>
+                    <span class="badge">Template</span>
+                    <h3>Reasoning and Planning</h3>
+                    <p>Reserved for planners, symbolic policies, long-horizon reasoning, and task graphs.</p>
+                  </div>
+                  <div class="meta-row">
+                    <span class="badge">Planning</span>
+                  </div>
+                </button>
+                <button class="explore-card" type="button" data-explore-category="Execution and Control" data-explore-status="Draft">
+                  <div>
+                    <span class="badge">Template</span>
+                    <h3>Execution and Control</h3>
+                    <p>Reserved for control policies, rollout tools, manipulation execution, and robot actions.</p>
+                  </div>
+                  <div class="meta-row">
+                    <span class="badge">Control</span>
+                  </div>
+                </button>
               </div>
-            </article>
-            <article class="card">
-              <div class="card-title">By Tool</div>
-              <p>Find tools by capability and compare their benchmark traces before choosing one.</p>
-              <div class="meta-row">
-                <span class="badge">Tools</span>
-              </div>
-            </article>
-          </div>
+            </div>
 
-          <div class="section">
-            <div class="empty-state">
-              <div>
-                <h2>Content-ready discovery area</h2>
-                <p>This area is intentionally empty of real entries. It is ready for task collections, saved searches, featured benchmarks, or curated model groups.</p>
+            <div class="section">
+              <div class="section-head">
+                <div>
+                  <h2>Task Shortcuts</h2>
+                  <p>Search by the problem you want to solve.</p>
+                </div>
+              </div>
+              <div class="explore-row">
+                <button class="explore-card" type="button" data-explore-query="detection">
+                  <div>
+                    <span class="badge blue">Grounding</span>
+                    <h3>Find open-vocabulary detectors</h3>
+                    <p>Tools that connect image regions with text prompts and flexible vocabularies.</p>
+                  </div>
+                  <div class="meta-row"><span class="badge">AP / FPS</span></div>
+                </button>
+                <button class="explore-card" type="button" data-explore-query="segmentation">
+                  <div>
+                    <span class="badge blue">Segmentation</span>
+                    <h3>Find mask and tracking tools</h3>
+                    <p>Promptable segmentation, video object masks, and interactive mask workflows.</p>
+                  </div>
+                  <div class="meta-row"><span class="badge">J&F / AR</span></div>
+                </button>
+                <button class="explore-card" type="button" data-explore-query="mapping">
+                  <div>
+                    <span class="badge green">Mapping</span>
+                    <h3>Find state and mapping tools</h3>
+                    <p>SLAM, odometry, scene graph construction, and multi-view reconstruction.</p>
+                  </div>
+                  <div class="meta-row"><span class="badge">RMSE / ms</span></div>
+                </button>
+              </div>
+            </div>
+
+            <div class="section">
+              <div class="section-head">
+                <div>
+                  <h2>Featured Starting Points</h2>
+                  <p>Quick paths into representative tools and benchmark-backed entries.</p>
+                </div>
+              </div>
+              <div class="explore-row">
+                <a class="explore-card" href="tool.html?tool=yolo-world">
+                  <div>
+                    <span class="badge blue">35.4 AP</span>
+                    <h3>YOLO-World</h3>
+                    <p>Real-time open-vocabulary detection for prompt-driven perception.</p>
+                  </div>
+                  <div class="meta-row"><span class="badge">Open detail</span></div>
+                </a>
+                <a class="explore-card" href="tool.html?tool=fast-livo2">
+                  <div>
+                    <span class="badge blue">30.03 ms</span>
+                    <h3>FAST-LIVO2</h3>
+                    <p>Direct LiDAR-inertial-visual odometry with real-time mapping results.</p>
+                  </div>
+                  <div class="meta-row"><span class="badge">Open detail</span></div>
+                </a>
+                <button class="explore-card" type="button" data-view-target="leaderboard">
+                  <div>
+                    <span class="badge green">Benchmarks</span>
+                    <h3>Compare real metrics</h3>
+                    <p>Review AP, J&F, success rate, RMSE, drift, and runtime by category.</p>
+                  </div>
+                  <div class="meta-row"><span class="badge">Open Leaderboard</span></div>
+                </button>
               </div>
             </div>
           </div>
@@ -1703,6 +1857,8 @@
     const leaderboardTracks = document.querySelector("#leaderboardTracks");
     const leaderboardCategoryFilter = document.querySelector(".leaderboard-category-filter");
     const leaderboardSortFilter = document.querySelector(".leaderboard-sort-filter");
+    const exploreCategoryButtons = document.querySelectorAll("[data-explore-category]");
+    const exploreQueryButtons = document.querySelectorAll("[data-explore-query]");
     let activeToolCategory = "All";
     const allToolCards = [...toolCards];
     const viewIds = new Set([...views].map((view) => view.id));
@@ -2170,6 +2326,26 @@
     });
     toolStatusFilter?.addEventListener("change", filterTools);
     toolResourceFilter?.addEventListener("change", filterTools);
+    exploreCategoryButtons.forEach((button) => {
+      button.addEventListener("click", () => {
+        setToolFilters({
+          query: "",
+          category: button.dataset.exploreCategory,
+          status: button.dataset.exploreStatus || "All",
+          resource: "All"
+        });
+      });
+    });
+    exploreQueryButtons.forEach((button) => {
+      button.addEventListener("click", () => {
+        setToolFilters({
+          query: button.dataset.exploreQuery,
+          category: "All",
+          status: "All",
+          resource: "All"
+        });
+      });
+    });
     leaderboardCategoryFilter?.addEventListener("change", renderLeaderboard);
     leaderboardSortFilter?.addEventListener("change", renderLeaderboard);
     renderLeaderboard();
