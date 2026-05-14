@@ -871,20 +871,105 @@ tr:last-child td {
 }
 
 .tool-pagination {
-  margin-top: 14px;
+  margin-top: 18px;
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-wrap: wrap;
+  gap: 18px;
+}
+
+.page-numbers,
+.page-jump {
+  display: flex;
+  align-items: center;
   gap: 10px;
 }
 
-.tool-pagination span {
-  color: var(--muted);
-  font-size: 13px;
+.page-numbers {
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.page-jump {
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.page-number,
+.page-ellipsis,
+.page-next,
+.page-jump input {
+  height: 42px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #ffffff;
+  color: #111827;
+  font-size: 15px;
   font-weight: 700;
 }
 
-.tool-pagination .btn:disabled {
+.page-number,
+.page-ellipsis {
+  width: 42px;
+  display: inline-grid;
+  place-items: center;
+}
+
+.page-number,
+.page-next {
+  cursor: pointer;
+  transition: border-color 0.16s ease, background 0.16s ease, color 0.16s ease, box-shadow 0.16s ease;
+}
+
+.page-number:hover,
+.page-next:hover {
+  border-color: #93b5fd;
+  box-shadow: 0 0 0 3px rgba(53, 98, 255, 0.1);
+}
+
+.page-number.active {
+  border-color: #0ea5e9;
+  background: #0ea5e9;
+  color: #ffffff;
+  box-shadow: 0 8px 18px rgba(14, 165, 233, 0.24);
+}
+
+.page-ellipsis {
+  color: #111827;
+}
+
+.page-next {
+  min-width: 126px;
+  padding: 0 22px;
+}
+
+.page-jump {
+  color: #111827;
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.page-jump input {
+  width: 74px;
+  padding: 0 10px;
+  text-align: center;
+  outline: none;
+  appearance: textfield;
+}
+
+.page-jump input::-webkit-outer-spin-button,
+.page-jump input::-webkit-inner-spin-button {
+  appearance: none;
+  margin: 0;
+}
+
+.page-jump input:focus {
+  border-color: #93b5fd;
+  box-shadow: 0 0 0 3px rgba(53, 98, 255, 0.12);
+}
+
+.tool-pagination button:disabled {
   cursor: not-allowed;
   opacity: 0.45;
 }
@@ -1948,6 +2033,31 @@ tr:last-child td {
   .tool-card .badge {
     font-size: 11px;
     min-height: 20px;
+  }
+
+  .tool-pagination {
+    gap: 12px;
+  }
+
+  .page-number,
+  .page-ellipsis,
+  .page-next,
+  .page-jump input {
+    height: 38px;
+    font-size: 14px;
+  }
+
+  .page-number,
+  .page-ellipsis {
+    width: 38px;
+  }
+
+  .page-next {
+    min-width: 104px;
+  }
+
+  .page-jump {
+    font-size: 13px;
   }
 
   .dataset-card {

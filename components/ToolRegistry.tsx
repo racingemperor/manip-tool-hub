@@ -1,11 +1,12 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState, type FormEvent } from "react";
 import { toolCategories, tools } from "@/data/tools";
 import { getToolResources, searchHaystack } from "@/lib/tools";
 import { ToolCard } from "./ToolCard";
 
 const pageSize = 8;
+type PaginationItem = number | "ellipsis";
 
 export function ToolRegistry() {
   const [category, setCategory] = useState("All");
@@ -13,6 +14,7 @@ export function ToolRegistry() {
   const [resource, setResource] = useState("All");
   const [query, setQuery] = useState("");
   const [page, setPage] = useState(1);
+  const [jumpValue, setJumpValue] = useState("");
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
@@ -47,6 +49,35 @@ export function ToolRegistry() {
   const paginatedTools = filteredTools.slice((safePage - 1) * pageSize, safePage * pageSize);
   const firstItem = filteredTools.length ? (safePage - 1) * pageSize + 1 : 0;
   const lastItem = Math.min(safePage * pageSize, filteredTools.length);
+  const paginationItems = useMemo<PaginationItem[]>(() => {
+    if (totalPages <= 8) return Array.from({ length: totalPages }, (_, index) => index + 1);
+
+    const pages = new Set<number>([1, totalPages]);
+    if (safePage <= 5) {
+      for (let item = 2; item <= 7; item += 1) pages.add(item);
+    } else if (safePage >= totalPages - 4) {
+      for (let item = totalPages - 6; item < totalPages; item += 1) pages.add(item);
+    } else {
+      for (let item = safePage - 2; item <= safePage + 2; item += 1) pages.add(item);
+    }
+
+    return [...pages].sort((a, b) => a - b).reduce<PaginationItem[]>((items, item, index, sorted) => {
+      if (index > 0 && item - sorted[index - 1] > 1) items.push("ellipsis");
+      items.push(item);
+      return items;
+    }, []);
+  }, [safePage, totalPages]);
+
+  function goToPage(nextPage: number) {
+    setPage(Math.min(totalPages, Math.max(1, nextPage)));
+  }
+
+  function submitJump(event?: FormEvent<HTMLFormElement>) {
+    event?.preventDefault();
+    const nextPage = Number.parseInt(jumpValue, 10);
+    if (Number.isFinite(nextPage)) goToPage(nextPage);
+    setJumpValue("");
+  }
 
   return (
     <>
@@ -92,13 +123,48 @@ export function ToolRegistry() {
           </div>
           {totalPages > 1 ? (
             <div className="tool-pagination" aria-label="Tool pagination">
-              <button className="btn" type="button" disabled={safePage === 1} onClick={() => setPage((value) => Math.max(1, value - 1))}>
-                Previous
-              </button>
-              <span>Page {safePage} of {totalPages}</span>
-              <button className="btn primary" type="button" disabled={safePage === totalPages} onClick={() => setPage((value) => Math.min(totalPages, value + 1))}>
-                Next
-              </button>
+              <div className="page-numbers" aria-label="Page numbers">
+                {safePage > 1 ? (
+                  <button className="page-next" type="button" onClick={() => goToPage(safePage - 1)}>
+                    上一页
+                  </button>
+                ) : null}
+                {paginationItems.map((item, index) => item === "ellipsis" ? (
+                  <span className="page-ellipsis" key={`ellipsis-${index}`}>...</span>
+                ) : (
+                  <button
+                    className={`page-number ${item === safePage ? "active" : ""}`}
+                    type="button"
+                    aria-current={item === safePage ? "page" : undefined}
+                    key={item}
+                    onClick={() => goToPage(item)}
+                  >
+                    {item}
+                  </button>
+                ))}
+                {safePage < totalPages ? (
+                  <button className="page-next" type="button" onClick={() => goToPage(safePage + 1)}>
+                    下一页
+                  </button>
+                ) : null}
+              </div>
+              <form className="page-jump" onSubmit={submitJump}>
+                <span>共 {totalPages} 页 / {filteredTools.length} 个，跳至</span>
+                <input
+                  aria-label="Jump to page"
+                  inputMode="numeric"
+                  min={1}
+                  max={totalPages}
+                  pattern="[0-9]*"
+                  type="number"
+                  value={jumpValue}
+                  onBlur={() => {
+                    if (jumpValue) submitJump();
+                  }}
+                  onChange={(event) => setJumpValue(event.target.value)}
+                />
+                <span>页</span>
+              </form>
             </div>
           ) : null}
         </>
