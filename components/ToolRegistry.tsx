@@ -126,7 +126,7 @@ export function ToolRegistry() {
               <div className="page-numbers" aria-label="Page numbers">
                 {safePage > 1 ? (
                   <button className="page-next" type="button" onClick={() => goToPage(safePage - 1)}>
-                    上一页
+                    Previous
                   </button>
                 ) : null}
                 {paginationItems.map((item, index) => item === "ellipsis" ? (
@@ -144,7 +144,7 @@ export function ToolRegistry() {
                 ))}
                 {safePage < totalPages ? (
                   <button className="page-next" type="button" onClick={() => goToPage(safePage + 1)}>
-                    下一页
+                    Next
                   </button>
                 ) : null}
               </div>
