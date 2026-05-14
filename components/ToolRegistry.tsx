@@ -5,11 +5,14 @@ import { toolCategories, tools } from "@/data/tools";
 import { getToolResources, searchHaystack } from "@/lib/tools";
 import { ToolCard } from "./ToolCard";
 
+const pageSize = 8;
+
 export function ToolRegistry() {
   const [category, setCategory] = useState("All");
   const [status, setStatus] = useState("All");
   const [resource, setResource] = useState("All");
   const [query, setQuery] = useState("");
+  const [page, setPage] = useState(1);
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
@@ -18,6 +21,10 @@ export function ToolRegistry() {
     if (nextCategory && ["All", ...toolCategories].includes(nextCategory)) setCategory(nextCategory);
     if (nextQuery) setQuery(nextQuery);
   }, []);
+
+  useEffect(() => {
+    setPage(1);
+  }, [category, status, resource, query]);
 
   const filteredTools = useMemo(() => {
     const normalized = query.trim().toLowerCase();
@@ -35,6 +42,11 @@ export function ToolRegistry() {
       toolCategories.map((item) => [item, tools.filter((tool) => tool.category === item).length])
     );
   }, []);
+  const totalPages = Math.max(1, Math.ceil(filteredTools.length / pageSize));
+  const safePage = Math.min(page, totalPages);
+  const paginatedTools = filteredTools.slice((safePage - 1) * pageSize, safePage * pageSize);
+  const firstItem = filteredTools.length ? (safePage - 1) * pageSize + 1 : 0;
+  const lastItem = Math.min(safePage * pageSize, filteredTools.length);
 
   return (
     <>
@@ -46,6 +58,12 @@ export function ToolRegistry() {
           value={query}
           onChange={(event) => setQuery(event.target.value)}
         />
+        <select className="select tool-category-filter" aria-label="Tool category" value={category} onChange={(event) => setCategory(event.target.value)}>
+          <option value="All">All categories ({tools.length})</option>
+          {toolCategories.map((item) => (
+            <option value={item} key={item}>{item} ({counts[item]})</option>
+          ))}
+        </select>
         <select className="select tool-status-filter" aria-label="Tool status" value={status} onChange={(event) => setStatus(event.target.value)}>
           <option value="All">All statuses</option>
           <option value="Draft">Draft</option>
@@ -63,39 +81,35 @@ export function ToolRegistry() {
         </select>
       </div>
 
-      <div className="model-layout">
-        <aside className="category-list" aria-label="Tool categories">
-          <button className={category === "All" ? "active" : ""} type="button" onClick={() => setCategory("All")}>
-            All Tools <span className="category-count">{tools.length}</span>
-          </button>
-          {toolCategories.map((item) => (
-            <button className={category === item ? "active" : ""} key={item} type="button" onClick={() => setCategory(item)}>
-              <span>{item}</span>
-              <span className="category-count">{counts[item]}</span>
-            </button>
-          ))}
-        </aside>
-
-        <div>
-          <div className="tool-results-head">
-            <span>Tool cards use compact metadata, benchmark signals, and detail links.</span>
-            <span>{filteredTools.length} tools loaded</span>
-          </div>
-
-          {filteredTools.length ? (
-            <div className="model-grid">
-              {filteredTools.map((tool) => <ToolCard tool={tool} key={tool.slug} />)}
-            </div>
-          ) : (
-            <div className="empty-state">
-              <div>
-                <h2>No matching tools</h2>
-                <p>Try a broader category, resource, status, or search phrase.</p>
-              </div>
-            </div>
-          )}
-        </div>
+      <div className="tool-results-head">
+        <span>{filteredTools.length ? `${firstItem}-${lastItem} of ${filteredTools.length} tools` : "0 tools"}</span>
       </div>
+
+      {filteredTools.length ? (
+        <>
+          <div className="model-grid">
+            {paginatedTools.map((tool) => <ToolCard tool={tool} key={tool.slug} />)}
+          </div>
+          {totalPages > 1 ? (
+            <div className="tool-pagination" aria-label="Tool pagination">
+              <button className="btn" type="button" disabled={safePage === 1} onClick={() => setPage((value) => Math.max(1, value - 1))}>
+                Previous
+              </button>
+              <span>Page {safePage} of {totalPages}</span>
+              <button className="btn primary" type="button" disabled={safePage === totalPages} onClick={() => setPage((value) => Math.min(totalPages, value + 1))}>
+                Next
+              </button>
+            </div>
+          ) : null}
+        </>
+      ) : (
+        <div className="empty-state">
+          <div>
+            <h2>No matching tools</h2>
+            <p>Try a broader category, resource, status, or search phrase.</p>
+          </div>
+        </div>
+      )}
     </>
   );
 }

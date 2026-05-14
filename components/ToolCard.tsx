@@ -1,10 +1,9 @@
 import Link from "next/link";
 import type { Tool } from "@/data/tools";
 import { assetPath } from "@/lib/assets";
-import { categoryShortLabel, getToolResources, venueLabel } from "@/lib/tools";
+import { categoryShortLabel, venueLabel } from "@/lib/tools";
 
 export function ToolCard({ tool }: { tool: Tool }) {
-  const resources = getToolResources(tool);
   const backgroundImage = tool.heroImage
     ? `linear-gradient(135deg, rgba(16, 24, 40, 0.38), rgba(53, 98, 255, 0.18)), url('${assetPath(tool.heroImage)}')`
     : undefined;
@@ -19,16 +18,13 @@ export function ToolCard({ tool }: { tool: Tool }) {
       </div>
       <div className="tool-card-body">
         <div className="card-title">
-          {tool.title}
+          <span>{tool.title}</span>
           <span className="badge blue">{categoryShortLabel(tool.category, tool.task)}</span>
         </div>
         <p>{tool.summary}</p>
         <div className="meta-row">
           <span className="badge">{venueLabel(tool)}</span>
-          {resources.slice(1, 2).map((resource) => (
-            <span className="badge" key={resource}>{resource.replace(" images", "")}</span>
-          ))}
-          <span className="badge green">{tool.license || tool.status}</span>
+          <span className="badge green">{tool.status}</span>
         </div>
         <div className="tool-meta">
           <div>Input<strong>{tool.input}</strong></div>

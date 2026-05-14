@@ -709,75 +709,25 @@ tr:last-child td {
   margin-bottom: 8px;
 }
 
-.model-layout {
-  display: grid;
-  grid-template-columns: 230px minmax(0, 1fr);
-  gap: 16px;
-  align-items: start;
-  min-width: 0;
-}
-
 .tool-controls {
   display: grid;
-  grid-template-columns: minmax(220px, 1fr) auto auto;
+  grid-template-columns: minmax(260px, 1fr) minmax(190px, auto) minmax(150px, auto) minmax(150px, auto);
   gap: 10px;
   margin-bottom: 14px;
-}
-
-.category-list {
-  background: #ffffff;
-  border: 1px solid var(--line);
-  border-radius: 8px;
-  padding: 8px;
-  align-self: start;
-  min-width: 0;
-}
-
-.category-list button {
-  width: 100%;
-  border: 0;
-  background: transparent;
-  text-align: left;
-  border-radius: 6px;
-  padding: 10px 12px;
-  color: #344054;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 10px;
-  min-width: 0;
-}
-
-.category-list button.active,
-.category-list button:hover {
-  background: #eef2ff;
-  color: #2444d8;
-}
-
-.category-count {
-  min-width: 22px;
-  height: 20px;
-  flex: 0 0 auto;
-  border-radius: 999px;
-  display: inline-grid;
-  place-items: center;
-  background: #f2f4f7;
-  color: #667085;
-  font-size: 11px;
-  font-weight: 700;
 }
 
 .model-grid {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 12px;
+  min-height: 492px;
+  align-content: start;
 }
 
 .tool-results-head {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-end;
   gap: 12px;
   margin-bottom: 10px;
   color: var(--muted);
@@ -791,14 +741,18 @@ tr:last-child td {
   position: relative;
   display: block;
   color: inherit;
+  height: 240px;
 }
 
 .tool-card-body {
-  padding: 12px;
+  height: calc(100% - 90px);
+  padding: 10px;
+  display: grid;
+  grid-template-rows: auto auto auto 1fr;
 }
 
 .tool-thumb {
-  aspect-ratio: 16 / 8.5;
+  height: 90px;
   background:
     linear-gradient(135deg, rgba(17, 24, 39, 0.08), rgba(53, 98, 255, 0.16)),
     radial-gradient(circle at 24% 28%, rgba(53, 98, 255, 0.38), transparent 28%),
@@ -816,7 +770,7 @@ tr:last-child td {
   background-size: cover;
   background-position: center;
   place-items: end start;
-  padding: 10px;
+  padding: 9px;
   color: #ffffff;
   text-shadow: 0 1px 2px rgba(16, 24, 40, 0.45);
 }
@@ -827,6 +781,13 @@ tr:last-child td {
   background: rgba(16, 24, 40, 0.74);
   color: #ffffff;
   padding: 5px 7px;
+  max-width: 100%;
+  font-size: 12px;
+  line-height: 1.2;
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
 }
 
 .tool-card h3 {
@@ -838,13 +799,19 @@ tr:last-child td {
 .tool-card p {
   color: var(--muted);
   font-size: 12px;
-  line-height: 1.45;
+  line-height: 1.35;
+  min-height: 32px;
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
 }
 
 .tool-open-row {
   display: flex;
+  align-self: end;
   justify-content: flex-end;
-  margin-top: 12px;
+  margin-top: 8px;
 }
 
 .tool-open-link {
@@ -858,10 +825,10 @@ tr:last-child td {
 }
 
 .tool-meta {
-  display: grid;
+  display: none;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 6px;
-  margin-top: 10px;
+  margin-top: 8px;
   color: #475467;
   font-size: 11px;
 }
@@ -871,7 +838,78 @@ tr:last-child td {
   color: var(--ink);
   font-size: 12px;
   margin-top: 2px;
-  overflow-wrap: anywhere;
+  line-height: 1.25;
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.tool-card .meta-row {
+  gap: 6px;
+  margin-top: 9px;
+  min-height: 24px;
+  max-height: 54px;
+  overflow: hidden;
+}
+
+.tool-card .badge {
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.tool-card .card-title {
+  align-items: start;
+  gap: 8px;
+  margin-bottom: 7px;
+}
+
+.tool-card .card-title > span:first-child {
+  min-width: 0;
+}
+
+.tool-pagination {
+  margin-top: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.tool-pagination span {
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.tool-pagination .btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.45;
+}
+
+@supports (-webkit-touch-callout: none) {
+  .tool-card {
+    height: 232px;
+  }
+
+  .tool-thumb {
+    height: 84px;
+  }
+
+  .tool-card-body {
+    height: calc(100% - 84px);
+  }
+
+  .tool-card p {
+    font-size: 11.5px;
+    line-height: 1.32;
+  }
+
+  .tool-meta strong {
+    font-size: 11.5px;
+  }
 }
 
 .explore-layout {
@@ -1728,7 +1766,7 @@ tr:last-child td {
 
 @media (max-width: 1180px) {
   .model-grid {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 }
 
@@ -1751,10 +1789,13 @@ tr:last-child td {
   }
 
   .module-strip,
-  .model-grid,
   .explore-grid,
   .summary-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .model-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 
   .content-grid,
@@ -1859,10 +1900,13 @@ tr:last-child td {
   .module-strip,
   .explore-grid,
   .explore-row,
-  .model-grid,
-  .model-layout,
   .summary-grid {
     grid-template-columns: 1fr;
+  }
+
+  .model-grid {
+    grid-template-columns: 1fr;
+    min-height: 0;
   }
 
   .tool-controls {
@@ -1880,15 +1924,30 @@ tr:last-child td {
     min-width: 0;
   }
 
-  .category-list {
-    width: 100%;
-    overflow: hidden;
+  .tool-card {
+    height: 204px;
   }
 
-  .category-list button {
+  .tool-thumb {
+    height: 76px;
+  }
+
+  .tool-card-body {
+    height: calc(100% - 76px);
+    padding: 8px;
+  }
+
+  .tool-card p {
+    font-size: 11.5px;
+  }
+
+  .tool-card .card-title {
     font-size: 14px;
-    line-height: 1.3;
-    white-space: normal;
+  }
+
+  .tool-card .badge {
+    font-size: 11px;
+    min-height: 20px;
   }
 
   .dataset-card {
@@ -1993,6 +2052,18 @@ tr:last-child td {
 @media (max-width: 420px) {
   .tool-controls {
     grid-template-columns: 1fr;
+  }
+
+  .tool-card {
+    height: 196px;
+  }
+
+  .tool-thumb {
+    height: 72px;
+  }
+
+  .tool-card-body {
+    height: calc(100% - 72px);
   }
 
   .hero {
