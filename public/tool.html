@@ -1,0 +1,17 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Redirecting to tool detail</title>
+    <script>
+      const params = new URLSearchParams(window.location.search);
+      const slug = params.get("tool") || "api-tool-template";
+      const base = window.location.pathname.replace(/\/tool\.html$/, "");
+      window.location.replace(`${base}/tools/${slug}/`);
+    </script>
+  </head>
+  <body>
+    <p>Redirecting to the tool detail page.</p>
+  </body>
+</html>
