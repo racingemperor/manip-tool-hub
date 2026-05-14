@@ -416,6 +416,8 @@
     }
 
     .module-tile {
+      color: inherit;
+      text-align: left;
       min-height: 120px;
       border-radius: 8px;
       border: 1px solid var(--line);
@@ -423,6 +425,17 @@
       padding: 14px;
       display: grid;
       align-content: space-between;
+      cursor: pointer;
+      box-shadow: 0 1px 2px rgba(16, 24, 40, 0.04);
+      transition: border-color 0.16s ease, box-shadow 0.16s ease, transform 0.16s ease;
+    }
+
+    .module-tile:hover,
+    .module-tile:focus-visible {
+      border-color: #b9c5d8;
+      box-shadow: var(--shadow);
+      transform: translateY(-1px);
+      outline: none;
     }
 
     .module-tile h3 {
@@ -1190,34 +1203,34 @@
               </div>
             </div>
             <div class="module-strip">
-              <div class="module-tile">
+              <button class="module-tile" type="button" data-view-target="datasets">
                 <div class="module-number">1</div>
                 <div>
                   <h3>Dataset Library</h3>
                   <p>Cards with task, format, license, and Hugging Face download entry.</p>
                 </div>
-              </div>
-              <div class="module-tile">
+              </button>
+              <button class="module-tile" type="button" data-view-target="leaderboard">
                 <div class="module-number">2</div>
                 <div>
                   <h3>Leaderboard</h3>
                   <p>Comparable tool performance on a shared evaluation set.</p>
                 </div>
-              </div>
-              <div class="module-tile">
+              </button>
+              <button class="module-tile" type="button" data-view-target="models">
                 <div class="module-number">3</div>
                 <div>
                   <h3>Tools</h3>
                   <p>Grouped by capability such as detection, segmentation, or planning.</p>
                 </div>
-              </div>
-              <div class="module-tile">
+              </button>
+              <button class="module-tile" type="button" data-view-target="explore">
                 <div class="module-number">4</div>
                 <div>
                   <h3>Explore</h3>
                   <p>Task-oriented discovery for datasets, tools, and benchmark tracks.</p>
                 </div>
-              </div>
+              </button>
             </div>
           </div>
         </section>
