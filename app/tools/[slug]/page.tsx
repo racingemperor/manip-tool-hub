@@ -1,12 +1,21 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { BackToTop } from "@/components/BackToTop";
-import { CodePanel } from "@/components/CodePanel";
+import { DemoGallery } from "@/components/DemoGallery";
 import { FloatingLinks } from "@/components/FloatingLinks";
 import { RelatedTools } from "@/components/RelatedTools";
-import { SearchBox } from "@/components/SearchBox";
+import { ToolApiExamples } from "@/components/ToolApiExamples";
+import { ToolDetailSearch, type ToolDetailSearchEntry } from "@/components/ToolDetailSearch";
 import { realTools, tools } from "@/data/tools";
 import { assetPath } from "@/lib/assets";
+import {
+  buildCodePaths,
+  buildErrorSchema,
+  buildReturnSchema,
+  buildTestExamples,
+  buildToolJson,
+  inferParameters
+} from "@/lib/toolDocs";
 
 export const dynamicParams = false;
 
@@ -37,6 +46,86 @@ export default async function ToolDetailPage({ params }: { params: Promise<{ slu
     { label: "Pipeline figure" },
     { label: "Video thumbnail" }
   ];
+  const parameters = inferParameters(tool);
+  const returnSchema = buildReturnSchema(tool);
+  const errorSchema = buildErrorSchema(tool);
+  const testExamples = buildTestExamples(tool);
+  const toolJson = buildToolJson(tool);
+  const codePaths = buildCodePaths(tool);
+  const searchEntries: ToolDetailSearchEntry[] = [
+    {
+      title: "Overview",
+      section: "Overview",
+      href: "#overview",
+      text: [tool.title, tool.category, tool.task, tool.summary, tool.input, tool.output, tool.runtime, tool.status].join(" ")
+    },
+    {
+      title: "Paper",
+      section: "Paper",
+      href: "#paper",
+      text: [
+        tool.paperTitle,
+        tool.paperAuthors,
+        tool.paperVenue,
+        tool.paperContribution,
+        ...(tool.paperLinks || []).flatMap((link) => [link.label, link.url])
+      ].filter(Boolean).join(" ")
+    },
+    {
+      title: "Demo Images",
+      section: "Demo",
+      href: "#demo",
+      text: demos.map((demo) => `${demo.label} ${demo.image || ""}`).join(" ")
+    },
+    {
+      title: "Repository-Relative Example",
+      section: "API And Examples",
+      href: "#api",
+      text: tool.apiExample || ""
+    },
+    {
+      title: "Input Parameters",
+      section: "API And Examples",
+      href: "#tool-contract",
+      text: parameters.map((parameter) => `${parameter.name} ${parameter.type} ${parameter.description}`).join(" ")
+    },
+    {
+      title: "Test Examples",
+      section: "API And Examples",
+      href: "#test-examples",
+      text: testExamples.map((example) => `${example.title} ${example.code}`).join(" ")
+    },
+    {
+      title: "Return Preview and Code Paths",
+      section: "API And Examples",
+      href: "#code-docs",
+      text: `${JSON.stringify(returnSchema)} ${codePaths}`
+    },
+    {
+      title: "Returns Schema",
+      section: "API And Examples",
+      href: "#returns-schema",
+      text: `${JSON.stringify(returnSchema)} ${JSON.stringify(errorSchema)}`
+    },
+    {
+      title: "Full Tool JSON",
+      section: "API And Examples",
+      href: "#tool-json",
+      text: JSON.stringify(toolJson)
+    },
+    {
+      title: "Benchmark",
+      section: "Benchmark",
+      href: "#benchmark",
+      text: [tool.benchmarkDataset, tool.benchmarkMetric, tool.benchmarkLatency, tool.benchmarkArtifacts].filter(Boolean).join(" ")
+    },
+    {
+      title: "Metadata",
+      section: "Metadata",
+      href: "#metadata",
+      text: [tool.owner, tool.license, tool.version, tool.slug].filter(Boolean).join(" ")
+    }
+  ];
 
   return (
     <div className="shell">
@@ -46,10 +135,7 @@ export default async function ToolDetailPage({ params }: { params: Promise<{ slu
             <span className="mark">E</span>
             <span>Embodied Tools</span>
           </Link>
-          <SearchBox className="detail-search" placeholder="Search tools" />
-          <div className="nav-actions">
-            <Link className="btn primary" href="/tools">All Tools</Link>
-          </div>
+          <ToolDetailSearch entries={searchEntries} />
         </div>
       </header>
 
@@ -132,32 +218,25 @@ export default async function ToolDetailPage({ params }: { params: Promise<{ slu
                   <p className="muted">{demos.length} demo images</p>
                 </div>
               </div>
-              <div className="demo-grid">
-                {demos.map((demo, index) => {
-                  const backgroundImage = demo.image
-                    ? `linear-gradient(135deg, rgba(16, 24, 40, 0.26), rgba(53, 98, 255, 0.12)), url('${assetPath(demo.image)}')`
-                    : undefined;
-                  return (
-                    <div
-                      className={`demo-slot ${demo.image ? "image" : ""}`}
-                      key={`${demo.label}-${index}`}
-                      style={backgroundImage ? { backgroundImage, backgroundPosition: demo.position || "center" } : undefined}
-                    >
-                      <span>{demo.label}</span>
-                    </div>
-                  );
-                })}
-              </div>
+              <DemoGallery demos={demos} />
             </section>
 
             <section className="card" id="api">
               <div className="card-head">
                 <div>
                   <h2>API And Examples</h2>
-                  <p className="muted">Relative local paths for documentation and future integration.</p>
+                  <p className="muted">Inputs, examples, return schemas, local paths, and full JSON metadata for future integration.</p>
                 </div>
               </div>
-              <CodePanel code={tool.apiExample || "# Add a relative-path example for this tool."} />
+              <ToolApiExamples
+                tool={tool}
+                parameters={parameters}
+                returnSchema={returnSchema}
+                errorSchema={errorSchema}
+                testExamples={testExamples}
+                toolJson={toolJson}
+                codePaths={codePaths}
+              />
             </section>
 
             <section className="card" id="benchmark">

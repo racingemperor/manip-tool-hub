@@ -1,16 +1,42 @@
 "use client";
 
+import type { CSSProperties } from "react";
 import { useState } from "react";
 
-export function CodePanel({ code }: { code: string }) {
+type CodePanelProps = {
+  code: string;
+  previewLines?: number;
+  previewChars?: number;
+  expandLabel?: string;
+  collapseLabel?: string;
+};
+
+export function CodePanel({
+  code,
+  previewLines = 10,
+  previewChars = 900,
+  expandLabel = "Read full code",
+  collapseLabel = "Show less code"
+}: CodePanelProps) {
   const [expanded, setExpanded] = useState(false);
+  const lineCount = code.split(/\r\n|\r|\n/).length;
+  const isLong = lineCount > previewLines || code.length > previewChars;
+  const previewHeight = `${Math.max(132, previewLines * 20 + 28)}px`;
+  const style = { "--code-preview-height": previewHeight } as CSSProperties;
 
   return (
-    <div className={`doc-code ${expanded ? "expanded" : ""}`}>
+    <div className={`doc-code ${isLong ? "collapsible" : ""} ${expanded ? "expanded" : ""}`} style={style}>
       <pre className="api-block">{code}</pre>
-      <button className="doc-toggle" type="button" onClick={() => setExpanded((value) => !value)}>
-        {expanded ? "Collapse code" : "Expand code"}
-      </button>
+      {isLong ? (
+        <button
+          className="doc-toggle"
+          type="button"
+          aria-expanded={expanded}
+          onClick={() => setExpanded((value) => !value)}
+        >
+          {expanded ? collapseLabel : expandLabel}
+        </button>
+      ) : null}
     </div>
   );
 }

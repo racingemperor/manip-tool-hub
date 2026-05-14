@@ -40,6 +40,13 @@ export type Tool = {
   version?: string;
 };
 
+export type ToolParameter = {
+  name: string;
+  type: string;
+  required: boolean;
+  description: string;
+};
+
 export const toolCategories: ToolCategory[] = [
   "Perception and Grounding",
   "Cognition and State Modeling",
