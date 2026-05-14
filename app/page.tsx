@@ -13,7 +13,7 @@ export default function HomePage() {
     <SiteShell>
       <section>
         <div className="hero">
-          <div className="eyebrow">Manipulation Benchmark Platform</div>
+          <div className="eyebrow">Embodied Tools</div>
           <h1>Find datasets, compare tools, and pick capabilities by task.</h1>
           <p>
             A standardized tool extension and management framework for embodied intelligence, by encapsulating heterogeneous perception, control and physical constraint modules, endows the visual language model (VLM) with high robustness, reliability and real-time closed-loop decision-making and execution capabilities in complex physical interactions.

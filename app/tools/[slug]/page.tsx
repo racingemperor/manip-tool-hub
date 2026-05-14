@@ -43,7 +43,7 @@ export default async function ToolDetailPage({ params }: { params: Promise<{ slu
       <header className="detail-topbar">
         <div className="topbar-inner">
           <Link className="brand" href="/tools">
-            <span className="mark">M</span>
+            <span className="mark">E</span>
             <span>Embodied Tools</span>
           </Link>
           <SearchBox className="detail-search" placeholder="Search tools" />

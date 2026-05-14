@@ -20,10 +20,10 @@ export function SiteShell({ children }: { children: ReactNode }) {
     <div className="app">
       <aside className="sidebar">
         <Link className="brand" href="/">
-          <div className="mark">M</div>
+          <div className="mark">E</div>
           <div>
             <div className="brand-title">Embodied Tools</div>
-            <div className="brand-subtitle">datasets, benchmarks, tools</div>
+            <div className="brand-subtitle">embodied tools</div>
           </div>
         </Link>
 
