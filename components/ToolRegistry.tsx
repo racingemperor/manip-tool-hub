@@ -149,7 +149,7 @@ export function ToolRegistry() {
                 ) : null}
               </div>
               <form className="page-jump" onSubmit={submitJump}>
-                <span>共 {totalPages} 页 / {filteredTools.length} 个，跳至</span>
+                <span>Total {totalPages} pages / {filteredTools.length} tools, go to</span>
                 <input
                   aria-label="Jump to page"
                   inputMode="numeric"
@@ -163,7 +163,7 @@ export function ToolRegistry() {
                   }}
                   onChange={(event) => setJumpValue(event.target.value)}
                 />
-                <span>页</span>
+                <span>page</span>
               </form>
             </div>
           ) : null}

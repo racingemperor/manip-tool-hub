@@ -871,22 +871,27 @@ tr:last-child td {
   display: inline-flex;
   align-items: center;
   gap: 4px;
-  padding: 0 8px;
+  min-width: 58px;
+  padding: 0 9px;
   font-size: 11px;
   font-weight: 800;
   cursor: pointer;
   transition: background 0.16s ease, border-color 0.16s ease, color 0.16s ease, box-shadow 0.16s ease;
 }
 
-.tool-action span:first-child {
-  width: 12px;
-  height: 12px;
-  border-radius: 999px;
+.tool-action-icon {
+  width: 14px;
+  height: 14px;
   display: inline-grid;
   place-items: center;
-  background: #eef2f7;
   color: #667085;
-  font-size: 10px;
+  font-size: 14px;
+  line-height: 1;
+}
+
+.tool-action-count {
+  min-width: 16px;
+  text-align: left;
   line-height: 1;
 }
 
@@ -904,8 +909,7 @@ tr:last-child td {
   color: #be123c;
 }
 
-.tool-action.active.like span:first-child {
-  background: #fecdd3;
+.tool-action.active.like .tool-action-icon {
   color: #be123c;
 }
 
@@ -915,8 +919,7 @@ tr:last-child td {
   color: #1d4ed8;
 }
 
-.tool-action.active.save span:first-child {
-  background: #dbeafe;
+.tool-action.active.save .tool-action-icon {
   color: #1d4ed8;
 }
 
@@ -926,13 +929,15 @@ tr:last-child td {
 
 .tool-engagement.detail .tool-action {
   height: 36px;
+  min-width: 72px;
   padding: 0 12px;
   font-size: 13px;
 }
 
-.tool-engagement.detail .tool-action span:first-child {
+.tool-engagement.detail .tool-action-icon {
   width: 16px;
   height: 16px;
+  font-size: 16px;
 }
 
 .tool-card .meta-row {
