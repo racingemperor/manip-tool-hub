@@ -380,6 +380,9 @@
       display: block;
       margin-top: 6px;
       font-size: 15px;
+      line-height: 1.45;
+      overflow-wrap: anywhere;
+      word-break: break-word;
     }
 
     .demo-grid {
@@ -1511,10 +1514,10 @@ python tools/yolo-world/demo/image_demo.py tools/yolo-world/demo/sample_images/b
   --output-dir tools/yolo-world/runs/detect
 
 # Use this as a documentation path. The static page does not execute the model.`,
-        benchmarkDataset: "LVIS / COCO-style open-vocabulary evaluations",
-        benchmarkMetric: "AP / zero-shot detection metrics",
-        benchmarkLatency: "Real-time detector family; fill exact FPS for your environment",
-        benchmarkArtifacts: "Weights, configs, demo scripts, ONNX export notes",
+        benchmarkDataset: "LVIS minival zero-shot evaluation with 1,203 categories; COCO val2017 for fine-tuned detector tests.",
+        benchmarkMetric: "YOLO-World-L reports 35.4 Fixed AP on LVIS minival, with AP_r 27.6, AP_c 34.1, and AP_f 38.0. The paper also reports 35.0 AP without pseudo-labeled CC3M.",
+        benchmarkLatency: "52.0 FPS on one NVIDIA V100 without TensorRT for the re-parameterized YOLO-World-L; the original non-re-parameterized version is reported at 17.6 FPS.",
+        benchmarkArtifacts: "Official paper, speed-accuracy figure, LVIS/COCO evaluation tables, weights, configs, demo scripts, and ONNX export notes.",
         license: "GPL-3.0",
         owner: "AILab-CVC",
         version: "YOLO-World v2"
@@ -1584,10 +1587,10 @@ python tools/hydra/examples/run_hydra.py \
 # tools/hydra/runs/scene_graph/
 
 # This page documents the path. It does not execute Hydra.`,
-        benchmarkDataset: "Replica / Matterport-style indoor sequences; fill exact split when connected",
-        benchmarkMetric: "Scene graph quality, reconstruction consistency, object/place accuracy",
-        benchmarkLatency: "Real-time spatial perception system; fill FPS or runtime from target setup",
-        benchmarkArtifacts: "Scene graph outputs, config files, logs, visualization GIFs",
+        benchmarkDataset: "uHumans2 Apartment, Office, Subway and SidPac Floor 1-3 / Floor 3-4 scene-graph construction sequences.",
+        benchmarkMetric: "Timing breakdown includes Office objects 24.1+/-12.8 ms, places 8.1+/-1.3 ms, rooms 19.0+/-12.3 ms; SidPac Floor 3-4 objects 75.3+/-37.0 ms, places 4.2+/-2.1 ms, rooms 15.0+/-14.6 ms.",
+        benchmarkLatency: "On NVIDIA Xavier NX for uHumans2 Office, Hydra reports objects 75+/-35 ms, places 33+/-6 ms, and rooms 55+/-41 ms, targeting a 5 Hz keyframe rate.",
+        benchmarkArtifacts: "RSS 2022 paper, component timing table, room precision/recall evaluation, loop-closure ablation, scene graph outputs, config files, logs, and visualization GIFs.",
         license: "BSD-2-Clause",
         owner: "MIT-SPARK",
         version: "main branch"
@@ -1677,10 +1680,10 @@ python tools/anygrasp/grasp_tracking/demo.py \
 
 # This page documents the path. The static page does not execute AnyGrasp.
 # The official implementation requires the licensed AnyGrasp SDK binaries and model weights.`,
-        benchmarkDataset: "GraspNet-1Billion / RGB-D grasp detection and tracking demos",
-        benchmarkMetric: "Grasp success, grasp quality score, collision-free candidate quality",
-        benchmarkLatency: "Efficient grasp perception pipeline; fill exact runtime for target GPU and SDK build",
-        benchmarkArtifacts: "RGB-D example data, grasp detection demo, grasp tracking demo, license registration notes",
+        benchmarkDataset: "Real bin-picking benchmark with 300+ unseen daily objects; GraspNet-1Billion extended training data with 144 real objects and 268 scenes.",
+        benchmarkMetric: "Attempt-centric success is 93.3% for AnyGrasp versus 72.2% for DexNet 4.0 and 93.9% for human subjects; object-centric completion is 99.8%. Dynamic fish-catching success is 75.5% versus 62.5% for the heuristic baseline.",
+        benchmarkLatency: "The paper reports 100 ms grasp prediction and less than 200 ms overall decision time; single UR5 setup reaches 900+ mean picks per hour.",
+        benchmarkArtifacts: "AnyGrasp paper, success-rate table, RGB-D examples, grasp detection demo, grasp tracking demo, SDK registration notes, and real-robot videos.",
         license: "Licensed SDK",
         owner: "GraspNet",
         version: "AnyGrasp SDK main"
@@ -1772,10 +1775,10 @@ python tools/zoedepth/evaluate.py -m zoedepth_nk -d nyu
 # tools/zoedepth/runs/depth_output.png
 
 # This page documents the path. The static page does not execute ZoeDepth.`,
-        benchmarkDataset: "NYU Depth V2 / KITTI Eigen splits",
-        benchmarkMetric: "Monocular depth estimation metrics such as AbsRel, RMSE, delta accuracy",
-        benchmarkLatency: "Torch/PyTorch inference runtime depends on ZoeD_N, ZoeD_K, or ZoeD_NK model and target GPU",
-        benchmarkArtifacts: "Torch Hub entries, sanity scripts, evaluation scripts, Gradio UI, model configs",
+        benchmarkDataset: "NYU Depth V2 official test split, KITTI Eigen/Garg-style split, plus zero-shot indoor/outdoor transfer sets.",
+        benchmarkMetric: "On NYU Depth V2, ZoeD-M12-N reports delta1 0.955, REL 0.075, RMSE 0.270, and log10 0.032. The universal ZoeD-M12-NK reports REL 0.077 on NYU and REL 0.057 on KITTI.",
+        benchmarkLatency: "PyTorch inference depends on backbone and resolution; the paper reports ZoeDepth variants from 42M parameters (Swin2-T) to 345M parameters (BEiT-L).",
+        benchmarkArtifacts: "ZoeDepth paper, NYU/KITTI quantitative tables, Torch Hub entries, sanity scripts, evaluation scripts, Gradio UI, and model configs.",
         license: "MIT",
         owner: "isl-org",
         version: "main branch"
@@ -1830,10 +1833,10 @@ python tools/fastsam/app_gradio.py
 # tools/fastsam/output/
 
 # This page documents the path. The static page does not execute FastSAM.`,
-        benchmarkDataset: "SA-1B-style promptable segmentation evaluations",
-        benchmarkMetric: "Mask quality, prompt response quality, runtime versus SAM variants",
-        benchmarkLatency: "Reported as much faster than SAM-H in the FastSAM paper; fill exact FPS for target GPU",
-        benchmarkArtifacts: "Prompt modes, Gradio demo, Replicate demo, model checkpoints, output masks",
+        benchmarkDataset: "COCO object-proposal evaluation, LVIS v1 zero-shot proposal evaluation, BSDS500 edge detection, and instance-segmentation checks.",
+        benchmarkMetric: "COCO box AR@1000 is 63.7, which is 1.2 points above SAM-H E32 in the reported setup. LVIS v1 bbox AR@1000 is 57.1, with AR_s 44.3, AR_m 77.1, and AR_l 85.3.",
+        benchmarkLatency: "FastSAM reports 40 ms on a single NVIDIA RTX 3090 and 68M parameters; the paper states 50x faster than SAM-H with 32x32 point prompts and 170x faster than SAM-H with 64x64.",
+        benchmarkArtifacts: "FastSAM paper, speed table, COCO/LVIS proposal tables, prompt modes, Gradio demo, Replicate demo, model checkpoints, and output masks.",
         license: "Apache-2.0",
         owner: "CASIA-IVA-Lab",
         version: "main branch"
@@ -1887,10 +1890,10 @@ python tools/cutie/interactive_demo.py \
 # tools/cutie/examples/masks/
 
 # This page documents the path. The static page does not execute Cutie.`,
-        benchmarkDataset: "DAVIS / YouTubeVOS-style video object segmentation benchmarks",
-        benchmarkMetric: "J&F, temporal consistency, mask quality, runtime",
-        benchmarkLatency: "Designed for faster and more robust video object segmentation; fill exact FPS for target setup",
-        benchmarkArtifacts: "Scripting demo, interactive GUI, pretrained model download script, example frames and masks",
+        benchmarkDataset: "MOSE validation, DAVIS-2017 validation/test-dev, YouTubeVOS-2019 validation, plus LVOS and BURST-style long-video checks in the supplement.",
+        benchmarkMetric: "Cutie-base with MOSE training reports MOSE J&F 68.3, DAVIS-17 val J&F 88.8, DAVIS-17 test J&F 85.3, and YouTubeVOS-2019 G 86.5.",
+        benchmarkLatency: "Cutie-base reports 36.4 FPS on V100; Cutie-small with MOSE training reports 45.5 FPS. The paper states +8.7 J&F over XMem and +4.2 J&F over DeAOT on MOSE while being 3x faster than DeAOT.",
+        benchmarkArtifacts: "Cutie paper, MOSE/DAVIS/YouTubeVOS tables, scripting demo, interactive GUI, pretrained model download script, example frames, and masks.",
         license: "Apache-2.0",
         owner: "hkchengrex",
         version: "main branch"
@@ -1938,10 +1941,10 @@ rosbag play tools/fast-livo2/datasets/YOUR_DOWNLOADED.bag
 # tools/fast-livo2/config/NTU_VIRAL.yaml
 
 # This page documents the path. The static page does not execute FAST-LIVO2.`,
-        benchmarkDataset: "FAST-LIVO2-Dataset / NTU VIRAL / HILTI-style sequences",
-        benchmarkMetric: "Trajectory accuracy, mapping quality, runtime, robustness in degraded scenes",
-        benchmarkLatency: "Real-time odometry and mapping; fill exact runtime from ROS platform",
-        benchmarkArtifacts: "ROS launch files, YAML configs, evaluation logs, pose trajectories",
+        benchmarkDataset: "Hilti'22, Hilti'23, NTU VIRAL, MARS-LVIG AMvalley03, and the FAST-LIVO2 private degraded-scene dataset.",
+        benchmarkMetric: "Average processing time is 30.03 ms per LiDAR+image frame on an Intel i7-10700K; AMvalley03 sequential update reports APE RMSE 0.68 m versus 3.12 m asynchronous and 2.45 m synchronous-standard.",
+        benchmarkLatency: "Average split is 17.13 ms LiDAR + 12.90 ms image; ARM average is 78.44 ms. Airborne mapping reports APE RMSE 0.64 m / 0.27 m on two public sequences versus R3LIVE 2.76 m / 0.52 m.",
+        benchmarkArtifacts: "FAST-LIVO2 paper and supplement, ROS launch files, YAML configs, runtime table, APE/RMSE reports, evaluation logs, and pose trajectories.",
         license: "GPLv2",
         owner: "hku-mars",
         version: "main branch"
@@ -1994,10 +1997,10 @@ roslaunch r3live r3live_reconstruct_mesh.launch
 # tools/r3live/datasets/
 
 # This page documents the path. The static page does not execute R3LIVE.`,
-        benchmarkDataset: "R3LIVE-dataset and LiDAR-degenerated mapping sequences",
-        benchmarkMetric: "State estimation accuracy, RGB map quality, robustness, reconstruction completeness",
-        benchmarkLatency: "Real-time mapping package; fill exact runtime from ROS platform",
-        benchmarkArtifacts: "ROS launch files, dataset bags, RGB map outputs, mesh reconstruction utilities",
+        benchmarkDataset: "HKUST campus loop trajectories and Belcher Bay Promenade RTK sequences from the R3LIVE paper.",
+        benchmarkMetric: "Campus loop drift is 0.093 m, 0.154 m, 0.164 m, and 0.102 m over 1,317 m, 1,524 m, 1,372 m, and 1,191 m trajectories. RPE tables report RTE/RRE over 50-300 m sub-sequences.",
+        benchmarkLatency: "PC VIO per-frame cost is 7.01 ms at 320x256 / 0.10 m point resolution, 11.53 ms at 640x512 / 0.10 m, and 13.63 ms at 1280x1024 / 0.10 m; LIO per-frame cost is 18.40 ms.",
+        benchmarkArtifacts: "R3LIVE paper, drift table, RPE table, runtime table, ROS launch files, dataset bags, RGB map outputs, and mesh reconstruction utilities.",
         license: "GPLv2 for academic/personal use",
         owner: "hku-mars",
         version: "master branch"
@@ -2049,10 +2052,10 @@ python tools/dust3r/demo.py \
 # tools/dust3r/visloc.py
 
 # This page documents the path. The static page does not execute DUSt3R.`,
-        benchmarkDataset: "Multi-view reconstruction and visual localization datasets",
-        benchmarkMetric: "3D reconstruction quality, camera pose accuracy, matching quality, confidence masks",
-        benchmarkLatency: "PyTorch inference and alignment runtime depends on model resolution and number of views",
-        benchmarkArtifacts: "Gradio demo, pretrained checkpoints, pointmaps, confidence maps, global alignment outputs",
+        benchmarkDataset: "CO3Dv2 and RealEstate10K multi-view pose; DTU, ETH3D, Tanks and Temples, ScanNet, 7Scenes, and Cambridge-Landmarks evaluation tables.",
+        benchmarkMetric: "DUSt3R 512 with global alignment reports CO3Dv2 RRA@15 96.2, RTA@15 86.8, mAA@30 76.7, and RealEstate10K mAA@30 67.7. DTU zero-shot MVS reports accuracy 2.677 mm, completeness 0.805 mm, and overall 1.741 mm.",
+        benchmarkLatency: "All main results use the same 512px model; multi-view global alignment scales with image count and pair count. The supplement reports training on about 8.5M extracted image pairs.",
+        benchmarkArtifacts: "DUSt3R paper, MVS/pose/depth tables, Gradio demo, pretrained checkpoints, pointmaps, confidence maps, and global alignment outputs.",
         license: "CC BY-NC-SA 4.0",
         owner: "naver",
         version: "main branch"
