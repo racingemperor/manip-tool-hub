@@ -7,25 +7,30 @@ type CodePanelProps = {
   code: string;
   previewLines?: number;
   previewChars?: number;
+  equalPreviewHeight?: boolean;
   expandLabel?: string;
   collapseLabel?: string;
 };
 
 export function CodePanel({
   code,
-  previewLines = 10,
-  previewChars = 900,
+  previewLines = 5,
+  previewChars = 560,
+  equalPreviewHeight = false,
   expandLabel = "Read full code",
   collapseLabel = "Show less code"
 }: CodePanelProps) {
   const [expanded, setExpanded] = useState(false);
   const lineCount = code.split(/\r\n|\r|\n/).length;
   const isLong = lineCount > previewLines || code.length > previewChars;
-  const previewHeight = `${Math.max(132, previewLines * 20 + 28)}px`;
+  const previewHeight = `${Math.max(96, previewLines * 18 + 24)}px`;
   const style = { "--code-preview-height": previewHeight } as CSSProperties;
 
   return (
-    <div className={`doc-code ${isLong ? "collapsible" : ""} ${expanded ? "expanded" : ""}`} style={style}>
+    <div
+      className={`doc-code ${isLong ? "collapsible" : ""} ${equalPreviewHeight ? "equal-preview" : ""} ${expanded ? "expanded" : ""}`}
+      style={style}
+    >
       <pre className="api-block">{code}</pre>
       {isLong ? (
         <button

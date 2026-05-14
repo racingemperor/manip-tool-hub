@@ -65,7 +65,7 @@ export function ToolApiExamples({
             <p className="muted">Keep paths in the style of the original paper, GitHub repository, or official demo. The website displays this text only.</p>
           </div>
         </div>
-        <CodePanel code={tool.apiExample || `python tools/${tool.slug}/demo/run_example.py --input tools/${tool.slug}/examples/input`} previewLines={9} />
+        <CodePanel code={tool.apiExample || `python tools/${tool.slug}/demo/run_example.py --input tools/${tool.slug}/examples/input`} previewLines={5} />
       </article>
 
       <article className="api-doc-section" id="tool-contract">
@@ -106,7 +106,7 @@ export function ToolApiExamples({
                 <span className="badge">Example {index + 1}</span>
                 <h4>{example.title}</h4>
               </div>
-              <CodePanel code={example.code} previewLines={8} />
+              <CodePanel code={example.code} previewLines={5} equalPreviewHeight />
             </article>
           ))}
         </div>
@@ -123,11 +123,11 @@ export function ToolApiExamples({
         <div className="doc-grid">
           <article className="doc-card">
             <h3>Success object</h3>
-            <CodePanel code={JSON.stringify(returnSchema, null, 2)} previewLines={12} />
+            <CodePanel code={JSON.stringify(returnSchema, null, 2)} previewLines={5} equalPreviewHeight />
           </article>
           <article className="doc-card">
             <h3>Repository paths</h3>
-            <CodePanel code={codePaths} previewLines={8} />
+            <CodePanel code={codePaths} previewLines={5} equalPreviewHeight />
           </article>
           <article className="doc-card">
             <h3>Integration note</h3>
@@ -149,11 +149,11 @@ export function ToolApiExamples({
         <div className="schema-grid">
           <article className="doc-card">
             <h3>Success schema</h3>
-            <CodePanel code={JSON.stringify(returnSchema, null, 2)} previewLines={14} />
+            <CodePanel code={JSON.stringify(returnSchema, null, 2)} previewLines={5} equalPreviewHeight />
           </article>
           <article className="doc-card">
             <h3>Error schema</h3>
-            <CodePanel code={JSON.stringify(errorSchema, null, 2)} previewLines={10} />
+            <CodePanel code={JSON.stringify(errorSchema, null, 2)} previewLines={5} equalPreviewHeight />
           </article>
         </div>
       </article>
@@ -166,7 +166,7 @@ export function ToolApiExamples({
             <p className="muted">Machine-readable metadata for the catalog. It mirrors a ToolUniverse-style record but remains documentation-only.</p>
           </div>
         </div>
-        <CodePanel code={JSON.stringify(toolJson, null, 2)} previewLines={14} />
+        <CodePanel code={JSON.stringify(toolJson, null, 2)} previewLines={6} />
       </article>
     </div>
   );
