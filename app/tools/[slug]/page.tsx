@@ -6,6 +6,7 @@ import { FloatingLinks } from "@/components/FloatingLinks";
 import { RelatedTools } from "@/components/RelatedTools";
 import { ToolApiExamples } from "@/components/ToolApiExamples";
 import { ToolDetailSearch, type ToolDetailSearchEntry } from "@/components/ToolDetailSearch";
+import { ToolEngagement } from "@/components/ToolEngagement";
 import { realTools, tools } from "@/data/tools";
 import { assetPath } from "@/lib/assets";
 import {
@@ -157,7 +158,10 @@ export default async function ToolDetailPage({ params }: { params: Promise<{ slu
               <span className="badge">{tool.runtime}</span>
               <span className="badge green">{tool.status}</span>
             </div>
-            <Link className="btn" href="/tools">Back to Tools</Link>
+            <div className="hero-actions">
+              <ToolEngagement slug={tool.slug} variant="detail" />
+              <Link className="btn" href="/tools">Back to Tools</Link>
+            </div>
           </div>
         </section>
 

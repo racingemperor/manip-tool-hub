@@ -2,6 +2,7 @@ import Link from "next/link";
 import type { Tool } from "@/data/tools";
 import { assetPath } from "@/lib/assets";
 import { categoryShortLabel, venueLabel } from "@/lib/tools";
+import { ToolEngagement } from "./ToolEngagement";
 
 export function ToolCard({ tool }: { tool: Tool }) {
   const backgroundImage = tool.heroImage
@@ -9,31 +10,34 @@ export function ToolCard({ tool }: { tool: Tool }) {
     : undefined;
 
   return (
-    <Link className="card tool-card" href={`/tools/${tool.slug}`}>
-      <div
-        className={`tool-thumb ${tool.heroImage ? "image" : ""}`}
-        style={backgroundImage ? { backgroundImage } : undefined}
-      >
-        <span>{tool.task}</span>
+    <article className="card tool-card">
+      <Link className="tool-card-main" href={`/tools/${tool.slug}`} aria-label={`Open ${tool.title} detail`}>
+        <div
+          className={`tool-thumb ${tool.heroImage ? "image" : ""}`}
+          style={backgroundImage ? { backgroundImage } : undefined}
+        >
+          <span>{tool.task}</span>
+        </div>
+        <div className="tool-card-body">
+          <div className="card-title">
+            <span>{tool.title}</span>
+            <span className="badge blue">{categoryShortLabel(tool.category, tool.task)}</span>
+          </div>
+          <p>{tool.summary}</p>
+          <div className="meta-row">
+            <span className="badge">{venueLabel(tool)}</span>
+            <span className="badge green">{tool.status}</span>
+          </div>
+          <div className="tool-meta">
+            <div>Input<strong>{tool.input}</strong></div>
+            <div>Output<strong>{tool.output}</strong></div>
+          </div>
+        </div>
+      </Link>
+      <div className="tool-open-row">
+        <ToolEngagement slug={tool.slug} />
+        <Link className="tool-open-link" href={`/tools/${tool.slug}`}>Open detail</Link>
       </div>
-      <div className="tool-card-body">
-        <div className="card-title">
-          <span>{tool.title}</span>
-          <span className="badge blue">{categoryShortLabel(tool.category, tool.task)}</span>
-        </div>
-        <p>{tool.summary}</p>
-        <div className="meta-row">
-          <span className="badge">{venueLabel(tool)}</span>
-          <span className="badge green">{tool.status}</span>
-        </div>
-        <div className="tool-meta">
-          <div>Input<strong>{tool.input}</strong></div>
-          <div>Output<strong>{tool.output}</strong></div>
-        </div>
-        <div className="tool-open-row">
-          <span className="tool-open-link">Open detail</span>
-        </div>
-      </div>
-    </Link>
+    </article>
   );
 }
