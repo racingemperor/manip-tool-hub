@@ -11,7 +11,12 @@ type DemoGalleryProps = {
 export function DemoGallery({ demos }: DemoGalleryProps) {
   const imageDemos = useMemo(() => demos.filter((demo) => demo.image), [demos]);
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
+  const [previewIndex, setPreviewIndex] = useState(0);
   const activeDemo = activeIndex === null ? null : imageDemos[activeIndex];
+
+  useEffect(() => {
+    setPreviewIndex((index) => Math.min(index, Math.max(0, imageDemos.length - 1)));
+  }, [imageDemos.length]);
 
   useEffect(() => {
     if (activeIndex === null) return;
@@ -39,36 +44,78 @@ export function DemoGallery({ demos }: DemoGalleryProps) {
     setActiveIndex((index) => index === null ? null : (index + delta + imageDemos.length) % imageDemos.length);
   }
 
+  function shiftPreview(delta: number) {
+    setPreviewIndex((index) => (index + delta + imageDemos.length) % imageDemos.length);
+  }
+
+  function demoBackground(demo: ToolDemo) {
+    return demo.image
+      ? `linear-gradient(135deg, rgba(16, 24, 40, 0.22), rgba(53, 98, 255, 0.08)), url('${assetPath(demo.image)}')`
+      : undefined;
+  }
+
+  if (!imageDemos.length) {
+    return (
+      <div className="demo-empty-grid">
+        {demos.map((demo, index) => (
+          <div className="demo-slot" key={`${demo.label}-${index}`}>
+            <span>{demo.label}</span>
+          </div>
+        ))}
+      </div>
+    );
+  }
+
   return (
     <>
-      <div className="demo-grid">
-        {demos.map((demo, index) => {
-          const backgroundImage = demo.image
-            ? `linear-gradient(135deg, rgba(16, 24, 40, 0.26), rgba(53, 98, 255, 0.12)), url('${assetPath(demo.image)}')`
-            : undefined;
-          const content = <span>{demo.label}</span>;
-
-          if (!demo.image) {
-            return (
-              <div className="demo-slot" key={`${demo.label}-${index}`}>
-                {content}
-              </div>
-            );
-          }
-
-          return (
-            <button
-              className="demo-slot image demo-slot-button"
-              key={`${demo.label}-${index}`}
-              style={{ backgroundImage, backgroundPosition: demo.position || "center" }}
-              type="button"
-              onClick={() => openDemo(demo)}
-              aria-label={`Open full image: ${demo.label}`}
-            >
-              {content}
+      <div className="demo-carousel">
+        <div className="demo-stage">
+          {imageDemos.length > 1 ? (
+            <button className="demo-nav prev" type="button" onClick={() => shiftPreview(-1)} aria-label="Previous demo image">
+              Previous
             </button>
-          );
-        })}
+          ) : null}
+          <div className="demo-viewport">
+            <div className="demo-track" style={{ transform: `translateX(-${previewIndex * 100}%)` }}>
+              {imageDemos.map((demo, index) => (
+                <button
+                  className="demo-slide"
+                  key={`${demo.label}-${index}`}
+                  style={{ backgroundImage: demoBackground(demo), backgroundPosition: demo.position || "center" }}
+                  type="button"
+                  onClick={() => setActiveIndex(index)}
+                  aria-label={`Open full image: ${demo.label}`}
+                >
+                  <span>{demo.label}</span>
+                </button>
+              ))}
+            </div>
+          </div>
+          {imageDemos.length > 1 ? (
+            <button className="demo-nav next" type="button" onClick={() => shiftPreview(1)} aria-label="Next demo image">
+              Next
+            </button>
+          ) : null}
+        </div>
+
+        {imageDemos.length > 1 ? (
+          <div className="demo-carousel-footer">
+            <span className="demo-count">{previewIndex + 1} / {imageDemos.length}</span>
+            <div className="demo-thumbs" aria-label="Demo image thumbnails">
+              {imageDemos.map((demo, index) => (
+                <button
+                  className={`demo-thumb-button ${index === previewIndex ? "active" : ""}`}
+                  key={`${demo.label}-thumb-${index}`}
+                  style={{ backgroundImage: demoBackground(demo), backgroundPosition: demo.position || "center" }}
+                  type="button"
+                  aria-label={`Show demo image ${index + 1}: ${demo.label}`}
+                  aria-current={index === previewIndex ? "true" : undefined}
+                  onClick={() => setPreviewIndex(index)}
+                />
+              ))}
+            </div>
+          </div>
+        ) : null}
       </div>
 
       {activeDemo?.image ? (

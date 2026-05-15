@@ -341,7 +341,7 @@ export default async function ToolDetailPage({ params }: { params: Promise<{ slu
                 </div>
               </div>
 
-              <div className="resource-link-grid">
+              <div className={`resource-link-grid count-${resourceLinks.length}`}>
                 {resourceLinks.length ? resourceLinks.map((link) => (
                   <a href={link.url} key={`${link.label}-${link.url}`} target="_blank" rel="noreferrer">
                     <strong>{link.label}</strong>
@@ -364,6 +364,8 @@ export default async function ToolDetailPage({ params }: { params: Promise<{ slu
                   <CodePanel
                     code={tool.apiExample || `python tools/${tool.slug}/demo/run_example.py --input tools/${tool.slug}/examples/input`}
                     previewLines={5}
+                    previewHeightPx={190}
+                    equalPreviewHeight
                     expandLabel="Read full example"
                     collapseLabel="Show less example"
                   />
@@ -373,6 +375,8 @@ export default async function ToolDetailPage({ params }: { params: Promise<{ slu
                   <CodePanel
                     code={JSON.stringify(returnPreview, null, 2)}
                     previewLines={5}
+                    previewHeightPx={190}
+                    equalPreviewHeight
                     expandLabel="Read full result shape"
                     collapseLabel="Show less result shape"
                   />
@@ -404,7 +408,7 @@ export default async function ToolDetailPage({ params }: { params: Promise<{ slu
                 </article>
                 <article className="citation-card">
                   <h3>Citation</h3>
-                  <CodePanel code={citation} previewLines={6} expandLabel="Read full citation" collapseLabel="Show less citation" />
+                  <CodePanel code={citation} previewLines={6} previewHeightPx={230} equalPreviewHeight expandLabel="Read full citation" collapseLabel="Show less citation" />
                 </article>
               </div>
 
