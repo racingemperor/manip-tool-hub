@@ -1964,6 +1964,7 @@ tr:last-child td {
 .doc-code {
   position: relative;
   margin-top: 10px;
+  border-radius: 8px;
 }
 
 .usage-card > .doc-code.equal-preview:not(.expanded),
@@ -1972,12 +1973,14 @@ tr:last-child td {
   min-height: var(--code-preview-height, 190px);
   padding-bottom: 36px;
   overflow: hidden;
+  border: 1px solid #c9d6ff;
+  background: #eef4ff;
 }
 
 .usage-card > .doc-code.equal-preview:not(.expanded) .api-block,
 .citation-card .doc-code.equal-preview:not(.expanded) .api-block {
   position: absolute;
-  inset: 0 0 36px;
+  inset: 0;
   width: 100%;
   height: auto;
   max-height: none;
@@ -1989,7 +1992,7 @@ tr:last-child td {
 }
 
 .doc-code.collapsible .api-block {
-  border-radius: 8px 8px 0 0;
+  border-radius: 8px;
   transition: max-height 180ms ease;
 }
 
@@ -2022,7 +2025,7 @@ tr:last-child td {
   width: 100%;
   min-height: 36px;
   border: 1px solid #c9d6ff;
-  border-radius: 0 0 8px 8px;
+  border-radius: 8px;
   background: #eef4ff;
   color: #2444d8;
   cursor: pointer;
@@ -2030,6 +2033,15 @@ tr:last-child td {
   font-weight: 800;
   text-align: left;
   padding: 0 12px;
+}
+
+.doc-code.equal-preview:not(.expanded) .doc-toggle {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1;
+  border-radius: 0 0 8px 8px;
 }
 
 .doc-toggle:hover {
