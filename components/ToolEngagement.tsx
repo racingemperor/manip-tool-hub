@@ -36,14 +36,6 @@ function toggleValue(values: string[], slug: string) {
   return values.includes(slug) ? values.filter((item) => item !== slug) : [...values, slug];
 }
 
-function stableCount(slug: string, salt: number, min: number, range: number) {
-  let hash = salt;
-  for (const char of slug) {
-    hash = (hash * 31 + char.charCodeAt(0)) % 9973;
-  }
-  return min + (hash % range);
-}
-
 export function ToolEngagement({ slug, variant = "card" }: ToolEngagementProps) {
   const [state, setState] = useState<EngagementState>({ liked: [], saved: [] });
 
@@ -53,10 +45,8 @@ export function ToolEngagement({ slug, variant = "card" }: ToolEngagementProps) 
 
   const liked = state.liked.includes(slug);
   const saved = state.saved.includes(slug);
-  const baseLikes = useMemo(() => stableCount(slug, 17, 24, 96), [slug]);
-  const baseSaves = useMemo(() => stableCount(slug, 43, 8, 64), [slug]);
-  const likeCount = baseLikes + (liked ? 1 : 0);
-  const saveCount = baseSaves + (saved ? 1 : 0);
+  const likeCount = liked ? 1 : 0;
+  const saveCount = saved ? 1 : 0;
   const className = useMemo(() => `tool-engagement ${variant === "detail" ? "detail" : ""}`, [variant]);
 
   function update(nextState: EngagementState) {
