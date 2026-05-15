@@ -1008,9 +1008,9 @@ tr:last-child td {
   border: 1px solid var(--line);
   border-radius: 8px;
   background: #ffffff;
-  color: #111827;
-  font-size: 15px;
-  font-weight: 700;
+  color: #344054;
+  font-size: 14px;
+  font-weight: 500;
 }
 
 .page-number,
@@ -1036,11 +1036,12 @@ tr:last-child td {
   border-color: #0ea5e9;
   background: #0ea5e9;
   color: #ffffff;
+  font-weight: 600;
   box-shadow: 0 8px 18px rgba(14, 165, 233, 0.24);
 }
 
 .page-ellipsis {
-  color: #111827;
+  color: #667085;
 }
 
 .page-next {
@@ -1049,9 +1050,9 @@ tr:last-child td {
 }
 
 .page-jump {
-  color: #111827;
-  font-size: 15px;
-  font-weight: 700;
+  color: #475467;
+  font-size: 14px;
+  font-weight: 500;
 }
 
 .page-jump input {
@@ -2594,6 +2595,7 @@ tr:last-child td {
 
   .page-jump {
     font-size: 13px;
+    font-weight: 500;
   }
 
   .dataset-card {
