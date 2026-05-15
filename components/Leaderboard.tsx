@@ -1,12 +1,33 @@
 "use client";
 
 import Link from "next/link";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { leaderboardCategories, leaderboardRows } from "@/data/leaderboard";
+import { emptyEngagementState, readEngagementState, type EngagementState } from "@/lib/engagement";
 
 export function Leaderboard() {
   const [category, setCategory] = useState("All");
   const [sort, setSort] = useState("primary");
+  const [engagement, setEngagement] = useState<EngagementState>(emptyEngagementState());
+
+  useEffect(() => {
+    setEngagement(readEngagementState());
+  }, []);
+
+  const hotRows = useMemo(() => {
+    return leaderboardRows
+      .map((row) => {
+        const likes = engagement.liked.includes(row.slug) ? 1 : 0;
+        const saves = engagement.saved.includes(row.slug) ? 1 : 0;
+        return {
+          ...row,
+          likes,
+          saves,
+          hotness: likes + saves
+        };
+      })
+      .sort((a, b) => b.hotness - a.hotness || b.likes - a.likes || a.rankOrder - b.rankOrder || a.name.localeCompare(b.name));
+  }, [engagement]);
 
   const tracks = useMemo(() => {
     return leaderboardCategories
@@ -26,7 +47,7 @@ export function Leaderboard() {
   return (
     <>
       <div className="leaderboard-note">
-        Ranking is grouped by the four tool categories. The values shown here are source-reported benchmark numbers, so AP, J&amp;F, REL, success rate, APE/RMSE, and runtime are not mixed into one universal score. Templates are excluded.
+        Ranking is grouped by the four tool categories. The values shown here are source-reported benchmark numbers, so AP, J&amp;F, REL, success rate, APE/RMSE, and runtime are not mixed into one universal score. Templates are excluded. Hotness is calculated as likes + saves from the current engagement data.
       </div>
 
       <div className="toolbar">
@@ -46,6 +67,44 @@ export function Leaderboard() {
       </div>
 
       <div className="leaderboard-tracks">
+        <section className="leaderboard-track hotness-track">
+          <div className="leaderboard-track-head">
+            <div>
+              <h3>Hotness Ranking</h3>
+              <p>Ranked by total engagement: likes plus saves. Current static deployment uses the same local engagement data shown on tool cards.</p>
+            </div>
+            <span className="score-chip">Likes + Saves</span>
+          </div>
+          <div className="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Rank</th>
+                  <th>Tool</th>
+                  <th>Category</th>
+                  <th>Task</th>
+                  <th>Likes</th>
+                  <th>Saves</th>
+                  <th>Hotness</th>
+                </tr>
+              </thead>
+              <tbody>
+                {hotRows.map((row, index) => (
+                  <tr key={row.slug}>
+                    <td data-label="Rank"><span className="rank">#{index + 1}</span></td>
+                    <td data-label="Tool"><Link className="tool-table-link" href={`/tools/${row.slug}`}>{row.name}</Link></td>
+                    <td data-label="Category">{row.category}</td>
+                    <td data-label="Task">{row.task}</td>
+                    <td data-label="Likes"><span className="engagement-rank-value">♡ {row.likes}</span></td>
+                    <td data-label="Saves"><span className="engagement-rank-value">☆ {row.saves}</span></td>
+                    <td data-label="Hotness"><span className="score-chip">{row.hotness}</span></td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </section>
+
         {tracks.map((track) => (
           <section className="leaderboard-track" key={track.name}>
             <div className="leaderboard-track-head">
@@ -72,18 +131,18 @@ export function Leaderboard() {
                   <tbody>
                     {track.rows.map((row, index) => (
                       <tr key={row.slug}>
-                        <td><span className="rank">#{index + 1}</span></td>
-                        <td><Link className="tool-table-link" href={`/tools/${row.slug}`}>{row.name}</Link></td>
-                        <td>{row.task}</td>
-                        <td>{row.dataset}</td>
-                        <td>
+                        <td data-label="Rank"><span className="rank">#{index + 1}</span></td>
+                        <td data-label="Tool"><Link className="tool-table-link" href={`/tools/${row.slug}`}>{row.name}</Link></td>
+                        <td data-label="Task">{row.task}</td>
+                        <td data-label="Dataset">{row.dataset}</td>
+                        <td data-label="Metric">
                           <div className="metric-cell">
                             <strong>{row.scoreLabel}</strong>
                             <span>{row.metric}</span>
                           </div>
                         </td>
-                        <td>{row.speed}</td>
-                        <td>
+                        <td data-label="Speed">{row.speed}</td>
+                        <td data-label="Artifacts">
                           <div className="artifact-list">
                             {row.artifacts.map((artifact) => <span className="badge" key={artifact}>{artifact}</span>)}
                           </div>

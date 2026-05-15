@@ -1,40 +1,12 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-
-type EngagementState = {
-  liked: string[];
-  saved: string[];
-};
+import { emptyEngagementState, readEngagementState, toggleEngagementValue, writeEngagementState, type EngagementState } from "@/lib/engagement";
 
 type ToolEngagementProps = {
   slug: string;
   variant?: "card" | "detail";
 };
-
-const storageKey = "embodied-tools-engagement:v1";
-
-function readState(): EngagementState {
-  try {
-    const raw = window.localStorage.getItem(storageKey);
-    if (!raw) return { liked: [], saved: [] };
-    const parsed = JSON.parse(raw) as Partial<EngagementState>;
-    return {
-      liked: Array.isArray(parsed.liked) ? parsed.liked : [],
-      saved: Array.isArray(parsed.saved) ? parsed.saved : []
-    };
-  } catch {
-    return { liked: [], saved: [] };
-  }
-}
-
-function writeState(state: EngagementState) {
-  window.localStorage.setItem(storageKey, JSON.stringify(state));
-}
-
-function toggleValue(values: string[], slug: string) {
-  return values.includes(slug) ? values.filter((item) => item !== slug) : [...values, slug];
-}
 
 function HeartIcon({ active }: { active: boolean }) {
   return (
@@ -67,10 +39,10 @@ function StarIcon({ active }: { active: boolean }) {
 }
 
 export function ToolEngagement({ slug, variant = "card" }: ToolEngagementProps) {
-  const [state, setState] = useState<EngagementState>({ liked: [], saved: [] });
+  const [state, setState] = useState<EngagementState>(emptyEngagementState());
 
   useEffect(() => {
-    setState(readState());
+    setState(readEngagementState());
   }, []);
 
   const liked = state.liked.includes(slug);
@@ -81,7 +53,7 @@ export function ToolEngagement({ slug, variant = "card" }: ToolEngagementProps) 
 
   function update(nextState: EngagementState) {
     setState(nextState);
-    writeState(nextState);
+    writeEngagementState(nextState);
   }
 
   return (
@@ -91,7 +63,7 @@ export function ToolEngagement({ slug, variant = "card" }: ToolEngagementProps) 
         type="button"
         aria-pressed={liked}
         aria-label={`${liked ? "Unlike" : "Like"} this tool, ${likeCount} likes`}
-        onClick={() => update({ ...state, liked: toggleValue(state.liked, slug) })}
+        onClick={() => update({ ...state, liked: toggleEngagementValue(state.liked, slug) })}
       >
         <span className="tool-action-icon" aria-hidden="true"><HeartIcon active={liked} /></span>
         <span className="tool-action-count">{likeCount}</span>
@@ -101,7 +73,7 @@ export function ToolEngagement({ slug, variant = "card" }: ToolEngagementProps) 
         type="button"
         aria-pressed={saved}
         aria-label={`${saved ? "Unsave" : "Save"} this tool, ${saveCount} saves`}
-        onClick={() => update({ ...state, saved: toggleValue(state.saved, slug) })}
+        onClick={() => update({ ...state, saved: toggleEngagementValue(state.saved, slug) })}
       >
         <span className="tool-action-icon" aria-hidden="true"><StarIcon active={saved} /></span>
         <span className="tool-action-count">{saveCount}</span>

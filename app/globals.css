@@ -635,6 +635,17 @@ tr:last-child td {
   margin-top: 3px;
 }
 
+.hotness-track {
+  border: 1px solid #bfdbfe;
+  border-radius: 8px;
+  background: #f8fbff;
+  padding: 14px;
+}
+
+.hotness-track .table-wrap {
+  background: #ffffff;
+}
+
 .score-chip {
   display: inline-flex;
   align-items: center;
@@ -646,6 +657,20 @@ tr:last-child td {
   padding: 2px 8px;
   font-size: 12px;
   font-weight: 700;
+  white-space: nowrap;
+}
+
+.engagement-rank-value {
+  display: inline-flex;
+  align-items: center;
+  min-height: 24px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: #ffffff;
+  color: #475467;
+  padding: 2px 9px;
+  font-size: 12px;
+  font-weight: 600;
   white-space: nowrap;
 }
 
@@ -2600,6 +2625,58 @@ tr:last-child td {
 
   .dataset-card {
     grid-template-columns: 1fr;
+  }
+
+  .leaderboard-track .table-wrap {
+    overflow-x: visible;
+  }
+
+  .leaderboard-track table,
+  .leaderboard-track thead,
+  .leaderboard-track tbody,
+  .leaderboard-track tr,
+  .leaderboard-track th,
+  .leaderboard-track td {
+    display: block;
+    width: 100%;
+    min-width: 0;
+  }
+
+  .leaderboard-track thead {
+    display: none;
+  }
+
+  .leaderboard-track tr {
+    border-bottom: 1px solid var(--line);
+    padding: 10px;
+  }
+
+  .leaderboard-track tr:last-child {
+    border-bottom: 0;
+  }
+
+  .leaderboard-track td {
+    border-bottom: 0;
+    padding: 5px 0;
+    font-size: 12px;
+    overflow-wrap: anywhere;
+  }
+
+  .leaderboard-track td::before {
+    content: attr(data-label);
+    display: block;
+    color: var(--muted);
+    font-size: 11px;
+    font-weight: 800;
+    margin-bottom: 3px;
+  }
+
+  .leaderboard-track .metric-cell {
+    min-width: 0;
+  }
+
+  .leaderboard-track .artifact-list {
+    max-width: none;
   }
 
   .thumb {
