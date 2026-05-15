@@ -9,7 +9,16 @@ type DemoGalleryProps = {
 };
 
 export function DemoGallery({ demos }: DemoGalleryProps) {
-  const imageDemos = useMemo(() => demos.filter((demo) => demo.image), [demos]);
+  const imageDemos = useMemo(() => {
+    const seen = new Set<string>();
+    return demos.filter((demo) => {
+      if (!demo.image) return false;
+      const key = demo.image.toLowerCase();
+      if (seen.has(key)) return false;
+      seen.add(key);
+      return true;
+    });
+  }, [demos]);
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
   const activeDemo = activeIndex === null ? null : imageDemos[activeIndex];
 

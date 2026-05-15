@@ -127,34 +127,14 @@ export const tools: Tool[] = [
         "position": "left top"
       },
       {
-        "label": "LVIS street and vehicles",
-        "image": "assets/tools/yolo-world/vis-lvis.png",
-        "position": "center bottom"
-      },
-      {
         "label": "User vocabulary: people",
         "image": "assets/tools/yolo-world/user-vocab.png",
         "position": "left center"
       },
       {
-        "label": "User vocabulary: animals",
-        "image": "assets/tools/yolo-world/user-vocab.png",
-        "position": "center center"
-      },
-      {
-        "label": "User vocabulary: outdoor scene",
-        "image": "assets/tools/yolo-world/user-vocab.png",
-        "position": "right center"
-      },
-      {
         "label": "Referring detection: people",
         "image": "assets/tools/yolo-world/vis-referring.png",
         "position": "left top"
-      },
-      {
-        "label": "Referring detection: sports and sky",
-        "image": "assets/tools/yolo-world/vis-referring.png",
-        "position": "right bottom"
       },
       {
         "label": "Speed / accuracy benchmark",
@@ -289,31 +269,6 @@ export const tools: Tool[] = [
         "label": "Online 3D scene graph playback",
         "image": "assets/tools/hydra/hydra.gif",
         "position": "center center"
-      },
-      {
-        "label": "Metric-semantic mesh hierarchy",
-        "image": "assets/tools/hydra/hydra.gif",
-        "position": "center top"
-      },
-      {
-        "label": "Buildings, rooms, and places",
-        "image": "assets/tools/hydra/hydra.gif",
-        "position": "left center"
-      },
-      {
-        "label": "Object-level indoor observations",
-        "image": "assets/tools/hydra/hydra.gif",
-        "position": "right center"
-      },
-      {
-        "label": "Realtime reconstruction view",
-        "image": "assets/tools/hydra/hydra.gif",
-        "position": "left center"
-      },
-      {
-        "label": "Optimized graph visualization",
-        "image": "assets/tools/hydra/hydra.gif",
-        "position": "right center"
       }
     ],
     "apiExample": "# Relative-path local entry for the Hydra tool folder\npython tools/hydra/examples/run_hydra.py   --config tools/hydra/configs/default.yaml   --input tools/hydra/examples/sample_sequence   --output tools/hydra/runs/scene_graph\n\n# Suggested repository layout when adding local files:\n# tools/hydra/README.md\n# tools/hydra/configs/default.yaml\n# tools/hydra/examples/sample_sequence/\n# tools/hydra/runs/scene_graph/\n\n# This page documents the path. It does not execute Hydra.",
@@ -603,41 +558,6 @@ export const tools: Tool[] = [
     "demos": [
       {
         "label": "Teaser: RGB to metric depth",
-        "image": "assets/tools/zoedepth/zoedepth-teaser.png",
-        "position": "center center"
-      },
-      {
-        "label": "Indoor depth transfer",
-        "image": "assets/tools/zoedepth/zoedepth-teaser.png",
-        "position": "left top"
-      },
-      {
-        "label": "Outdoor scene depth",
-        "image": "assets/tools/zoedepth/zoedepth-teaser.png",
-        "position": "center top"
-      },
-      {
-        "label": "Relative depth prior",
-        "image": "assets/tools/zoedepth/zoedepth-teaser.png",
-        "position": "right top"
-      },
-      {
-        "label": "Metric depth output",
-        "image": "assets/tools/zoedepth/zoedepth-teaser.png",
-        "position": "left bottom"
-      },
-      {
-        "label": "Zero-shot result panel",
-        "image": "assets/tools/zoedepth/zoedepth-teaser.png",
-        "position": "center bottom"
-      },
-      {
-        "label": "NYU / KITTI evaluation view",
-        "image": "assets/tools/zoedepth/zoedepth-teaser.png",
-        "position": "right bottom"
-      },
-      {
-        "label": "Depth visualization strip",
         "image": "assets/tools/zoedepth/zoedepth-teaser.png",
         "position": "center center"
       }
@@ -1094,11 +1014,6 @@ export const tools: Tool[] = [
         "position": "center center"
       },
       {
-        "label": "Video thumbnail frame 0",
-        "image": "assets/tools/fast-livo2/demo-0.jpg",
-        "position": "center center"
-      },
-      {
         "label": "Video thumbnail frame 1",
         "image": "assets/tools/fast-livo2/demo-1.jpg",
         "position": "center center"
@@ -1419,31 +1334,6 @@ export const tools: Tool[] = [
         "label": "Image matching",
         "image": "assets/tools/dust3r/matching.jpg",
         "position": "center center"
-      },
-      {
-        "label": "Pointmap output",
-        "image": "assets/tools/dust3r/pipeline1.jpg",
-        "position": "left center"
-      },
-      {
-        "label": "Global alignment view",
-        "image": "assets/tools/dust3r/demo.jpg",
-        "position": "right center"
-      },
-      {
-        "label": "Confidence and matching",
-        "image": "assets/tools/dust3r/matching.jpg",
-        "position": "center bottom"
-      },
-      {
-        "label": "Reconstruction crop",
-        "image": "assets/tools/dust3r/demo.jpg",
-        "position": "left bottom"
-      },
-      {
-        "label": "Pair viewer crop",
-        "image": "assets/tools/dust3r/pipeline1.jpg",
-        "position": "right center"
       }
     ],
     "apiExample": "# Relative-path local entry for the DUSt3R tool folder\npython tools/dust3r/demo.py   --model_name DUSt3R_ViTLarge_BaseDecoder_512_dpt   --local_network\n\n# Local checkpoint example:\npython tools/dust3r/demo.py   --weights tools/dust3r/checkpoints/DUSt3R_ViTLarge_BaseDecoder_512_dpt.pth   --image_size 512\n\n# Programmatic entry points:\n# tools/dust3r/dust3r/inference.py\n# tools/dust3r/dust3r/model.py\n# tools/dust3r/dust3r/cloud_opt/\n# tools/dust3r/visloc.py\n\n# This page documents the path. The static page does not execute DUSt3R.",
