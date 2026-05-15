@@ -8,13 +8,6 @@ import { ToolCard } from "./ToolCard";
 const pageSize = 8;
 type PaginationItem = number | "ellipsis";
 
-const categoryDescriptions: Record<string, string> = {
-  "Perception and Grounding": "Visual recognition, grounding, depth, segmentation, and grasp perception tools.",
-  "Cognition and State Modeling": "Scene graphs, odometry, mapping, reconstruction, and state representation tools.",
-  "Reasoning and Planning": "Task reasoning, planning, symbolic structure, and long-horizon decision tools.",
-  "Execution and Control": "Controllers, policies, rollouts, physical actions, and closed-loop execution tools."
-};
-
 function categoryButtonLabel(category: string, count: number) {
   if (category === "All") return `All Tools (${tools.length})`;
   return `${category} (${count})`;
@@ -56,17 +49,6 @@ export function ToolRegistry() {
       toolCategories.map((item) => [item, tools.filter((tool) => tool.category === item).length])
     );
   }, []);
-  const categorySamples = useMemo(() => {
-    return Object.fromEntries(
-      toolCategories.map((item) => [
-        item,
-        tools
-          .filter((tool) => tool.category === item)
-          .slice(0, 3)
-          .map((tool) => tool.title)
-      ])
-    );
-  }, []);
   const totalPages = Math.max(1, Math.ceil(filteredTools.length / pageSize));
   const safePage = Math.min(page, totalPages);
   const paginatedTools = filteredTools.slice((safePage - 1) * pageSize, safePage * pageSize);
@@ -95,11 +77,6 @@ export function ToolRegistry() {
     setPage(Math.min(totalPages, Math.max(1, nextPage)));
   }
 
-  function chooseCategory(nextCategory: string) {
-    setCategory(nextCategory);
-    setPage(1);
-  }
-
   function submitJump(event?: FormEvent<HTMLFormElement>) {
     event?.preventDefault();
     const nextPage = Number.parseInt(jumpValue, 10);
@@ -109,32 +86,6 @@ export function ToolRegistry() {
 
   return (
     <>
-      <div className="tool-category-board" aria-label="Tool category directory">
-        <button
-          className={`tool-category-panel all-tools-panel ${category === "All" ? "active" : ""}`}
-          type="button"
-          onClick={() => chooseCategory("All")}
-        >
-          <span className="category-kicker">Directory</span>
-          <strong>All Tools</strong>
-          <p>Browse every real entry and template through search, category, status, and resource filters.</p>
-          <span className="category-count">{tools.length} entries</span>
-        </button>
-        {toolCategories.map((item) => (
-          <button
-            className={`tool-category-panel ${category === item ? "active" : ""}`}
-            type="button"
-            key={item}
-            onClick={() => chooseCategory(item)}
-          >
-            <span className="category-kicker">{counts[item]} tools</span>
-            <strong>{item}</strong>
-            <p>{categoryDescriptions[item]}</p>
-            <span className="category-samples">{categorySamples[item].join(" / ") || "Template ready"}</span>
-          </button>
-        ))}
-      </div>
-
       <div className="tool-controls">
         <input
           className="tool-search"

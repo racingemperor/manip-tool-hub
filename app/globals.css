@@ -716,107 +716,6 @@ tr:last-child td {
   margin-bottom: 14px;
 }
 
-.tool-category-board {
-  min-width: 0;
-  display: grid;
-  grid-template-columns: minmax(0, 1.08fr) minmax(0, 1fr) minmax(0, 1fr);
-  grid-template-areas:
-    "all perception cognition"
-    "all planning execution";
-  gap: 12px;
-  margin-bottom: 16px;
-}
-
-.tool-category-panel {
-  min-width: 0;
-  min-height: 152px;
-  border: 1px solid var(--line);
-  border-radius: 8px;
-  background: #ffffff;
-  color: inherit;
-  padding: 16px;
-  text-align: left;
-  cursor: pointer;
-  display: grid;
-  align-content: space-between;
-  gap: 10px;
-  box-shadow: 0 10px 24px rgba(16, 24, 40, 0.04);
-  transition: border-color 0.16s ease, box-shadow 0.16s ease, transform 0.16s ease, background 0.16s ease;
-}
-
-.tool-category-panel:nth-child(1) {
-  grid-area: all;
-}
-
-.tool-category-panel:nth-child(2) {
-  grid-area: perception;
-}
-
-.tool-category-panel:nth-child(3) {
-  grid-area: cognition;
-}
-
-.tool-category-panel:nth-child(4) {
-  grid-area: planning;
-}
-
-.tool-category-panel:nth-child(5) {
-  grid-area: execution;
-}
-
-.tool-category-panel:hover,
-.tool-category-panel:focus-visible,
-.tool-category-panel.active {
-  border-color: #93b5fd;
-  box-shadow: 0 14px 32px rgba(53, 98, 255, 0.12);
-  transform: translateY(-1px);
-  outline: none;
-}
-
-.tool-category-panel.active {
-  background: #f5f7ff;
-}
-
-.all-tools-panel {
-  min-height: 316px;
-  background:
-    linear-gradient(135deg, rgba(53, 98, 255, 0.12), rgba(14, 159, 110, 0.08)),
-    #ffffff;
-}
-
-.category-kicker,
-.category-count,
-.category-samples {
-  color: var(--muted);
-  font-size: 12px;
-  font-weight: 800;
-  line-height: 1.4;
-}
-
-.tool-category-panel strong {
-  display: block;
-  color: var(--ink);
-  font-size: 20px;
-  line-height: 1.18;
-}
-
-.all-tools-panel strong {
-  font-size: 28px;
-}
-
-.tool-category-panel p {
-  color: var(--muted);
-  font-size: 13px;
-  line-height: 1.45;
-}
-
-.category-samples {
-  display: block;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
 .model-grid {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -2246,18 +2145,6 @@ tr:last-child td {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
-  .tool-category-board {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    grid-template-areas:
-      "all all"
-      "perception cognition"
-      "planning execution";
-  }
-
-  .all-tools-panel {
-    min-height: 184px;
-  }
-
   .model-grid {
     grid-template-columns: repeat(4, minmax(0, 1fr));
   }
@@ -2370,40 +2257,11 @@ tr:last-child td {
   .explore-grid,
   .explore-row,
   .summary-grid,
-  .tool-category-board,
   .parameter-board,
   .io-flow,
   .compact-parameters,
   .resource-link-grid {
     grid-template-columns: 1fr;
-  }
-
-  .tool-category-board {
-    grid-template-areas:
-      "all"
-      "perception"
-      "cognition"
-      "planning"
-      "execution";
-  }
-
-  .tool-category-panel,
-  .all-tools-panel {
-    min-height: 132px;
-    padding: 14px;
-  }
-
-  .all-tools-panel strong,
-  .tool-category-panel strong {
-    font-size: 19px;
-  }
-
-  .category-samples {
-    white-space: normal;
-    display: -webkit-box;
-    overflow: hidden;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 2;
   }
 
   .model-grid {
@@ -2427,7 +2285,7 @@ tr:last-child td {
   }
 
   .tool-card {
-    height: 214px;
+    height: 236px;
   }
 
   .tool-thumb {
@@ -2435,12 +2293,13 @@ tr:last-child td {
   }
 
   .tool-card-body {
-    height: 96px;
+    height: 108px;
     padding: 8px;
   }
 
   .tool-card p {
     font-size: 11.5px;
+    min-height: 30px;
   }
 
   .tool-card .card-title {
@@ -2450,6 +2309,48 @@ tr:last-child td {
   .tool-card .badge {
     font-size: 11px;
     min-height: 20px;
+  }
+
+  .tool-card .meta-row {
+    display: none;
+  }
+
+  .tool-open-row {
+    padding: 0 12px 12px;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .tool-engagement {
+    gap: 8px;
+    flex: 0 0 auto;
+  }
+
+  .tool-action {
+    width: 66px;
+    min-width: 66px;
+    height: 32px;
+    justify-content: center;
+    gap: 6px;
+    padding: 0 8px;
+    font-size: 12px;
+  }
+
+  .tool-action-icon {
+    width: 15px;
+    height: 15px;
+    flex: 0 0 15px;
+  }
+
+  .tool-action-count {
+    min-width: 10px;
+    text-align: center;
+    flex: 0 0 auto;
+  }
+
+  .tool-open-link {
+    margin-left: auto;
+    font-size: 13px;
   }
 
   .tool-pagination {
@@ -2582,7 +2483,7 @@ tr:last-child td {
   }
 
   .tool-card {
-    height: 208px;
+    height: 232px;
   }
 
   .tool-thumb {
@@ -2590,7 +2491,17 @@ tr:last-child td {
   }
 
   .tool-card-body {
-    height: 94px;
+    height: 106px;
+  }
+
+  .tool-open-row {
+    padding: 0 10px 10px;
+    gap: 8px;
+  }
+
+  .tool-action {
+    width: 62px;
+    min-width: 62px;
   }
 
   .hero {
