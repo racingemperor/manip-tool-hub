@@ -278,7 +278,7 @@ export default async function ToolDetailPage({ params }: { params: Promise<{ slu
                 <article className="preset-card">
                   <div
                     className={`preset-visual ${tool.presetExample.image ? "image" : ""}`}
-                    style={tool.presetExample.image ? { backgroundImage: `linear-gradient(135deg, rgba(17, 24, 39, 0.38), rgba(53, 98, 255, 0.16)), url('${assetPath(tool.presetExample.image)}')` } : undefined}
+                    style={tool.presetExample.image ? { backgroundImage: `linear-gradient(135deg, rgba(17, 24, 39, 0.18), rgba(53, 98, 255, 0.06)), url('${assetPath(tool.presetExample.image)}')` } : undefined}
                   >
                     <span>{tool.presetExample.title}</span>
                   </div>
