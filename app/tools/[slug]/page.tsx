@@ -4,6 +4,7 @@ import { BackToTop } from "@/components/BackToTop";
 import { CodePanel } from "@/components/CodePanel";
 import { DemoGallery } from "@/components/DemoGallery";
 import { FloatingLinks } from "@/components/FloatingLinks";
+import { PresetExample } from "@/components/PresetExample";
 import { RelatedTools } from "@/components/RelatedTools";
 import { ToolDetailSearch, type ToolDetailSearchEntry } from "@/components/ToolDetailSearch";
 import { ToolEngagement } from "@/components/ToolEngagement";
@@ -275,22 +276,7 @@ export default async function ToolDetailPage({ params }: { params: Promise<{ slu
                     <p className="muted">A quick-run style example for the documentation page. The static site shows the workflow; the model runs in the original repository.</p>
                   </div>
                 </div>
-                <article className="preset-card">
-                  <div
-                    className={`preset-visual ${tool.presetExample.image ? "image" : ""}`}
-                    style={tool.presetExample.image ? { backgroundImage: `linear-gradient(135deg, rgba(17, 24, 39, 0.18), rgba(53, 98, 255, 0.06)), url('${assetPath(tool.presetExample.image)}')` } : undefined}
-                  >
-                    <span>{tool.presetExample.title}</span>
-                  </div>
-                  <div className="preset-copy">
-                    <div className="field-list">
-                      <div className="field-row"><span>Input</span><strong>{tool.presetExample.input}</strong></div>
-                      {tool.presetExample.prompt ? <div className="field-row"><span>Prompt</span><strong>{tool.presetExample.prompt}</strong></div> : null}
-                      <div className="field-row"><span>Expected</span><strong>{tool.presetExample.expectedOutput}</strong></div>
-                    </div>
-                    <button className="btn primary quick-run" type="button" disabled>{tool.presetExample.runLabel || "Quick Run"}</button>
-                  </div>
-                </article>
+                <PresetExample example={tool.presetExample} />
               </section>
             ) : null}
 
