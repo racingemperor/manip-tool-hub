@@ -268,7 +268,7 @@ export default async function ToolDetailPage({ params }: { params: Promise<{ slu
             </section>
 
             {tool.presetExample ? (
-              <section className="card detail-module module-secondary">
+              <section className="card detail-module module-secondary preset-module">
                 <div className="card-head">
                   <div>
                     <h2>Preset Example</h2>
