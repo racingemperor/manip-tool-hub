@@ -1600,8 +1600,9 @@ tr:last-child td {
 .preset-card {
   min-width: 0;
   display: grid;
-  grid-template-columns: minmax(190px, 0.82fr) minmax(0, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 190px), 1fr));
   gap: 12px;
+  align-items: start;
   border: 1px solid var(--line);
   border-radius: 8px;
   background: #ffffff;
@@ -1609,7 +1610,12 @@ tr:last-child td {
 }
 
 .preset-visual {
+  width: 100%;
+  min-width: 0;
   min-height: 150px;
+  max-height: 360px;
+  aspect-ratio: 4 / 3;
+  align-self: start;
   border: 1px dashed #b8c2d6;
   border-radius: 8px;
   background:
@@ -1644,18 +1650,48 @@ tr:last-child td {
 
 .preset-copy {
   min-width: 0;
+  container-type: inline-size;
   display: grid;
+  grid-template-rows: 1fr auto;
   align-content: start;
   gap: 10px;
 }
 
+.preset-copy .field-row {
+  grid-template-columns: minmax(58px, max-content) minmax(0, 1fr);
+  column-gap: 14px;
+  font-size: 12.5px;
+}
+
+.preset-copy .field-row > * {
+  overflow-wrap: break-word;
+  word-break: normal;
+}
+
+.preset-copy .field-row span:first-child {
+  white-space: nowrap;
+}
+
+.preset-copy .field-row strong {
+  line-height: 1.42;
+}
+
 .quick-run {
   width: fit-content;
+  max-width: 100%;
+  white-space: normal;
 }
 
 .quick-run:disabled {
   cursor: default;
   opacity: 0.72;
+}
+
+@container (max-width: 240px) {
+  .preset-copy .field-row {
+    grid-template-columns: 1fr;
+    row-gap: 4px;
+  }
 }
 
 .info-pair-grid {
@@ -2934,6 +2970,10 @@ tr:last-child td {
   }
 
   .field-row {
+    grid-template-columns: 1fr;
+  }
+
+  .preset-copy .field-row {
     grid-template-columns: 1fr;
   }
 
