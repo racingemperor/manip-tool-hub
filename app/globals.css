@@ -1599,10 +1599,11 @@ tr:last-child td {
 
 .preset-card {
   min-width: 0;
+  container-type: inline-size;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 190px), 1fr));
   gap: 12px;
-  align-items: start;
+  align-items: stretch;
   border: 1px solid var(--line);
   border-radius: 8px;
   background: #ffffff;
@@ -1612,10 +1613,11 @@ tr:last-child td {
 .preset-visual {
   width: 100%;
   min-width: 0;
+  height: 100%;
   min-height: 150px;
-  max-height: 360px;
-  aspect-ratio: 4 / 3;
-  align-self: start;
+  max-height: none;
+  aspect-ratio: auto;
+  align-self: stretch;
   border: 1px dashed #b8c2d6;
   border-radius: 8px;
   background:
@@ -1685,6 +1687,15 @@ tr:last-child td {
 .quick-run:disabled {
   cursor: default;
   opacity: 0.72;
+}
+
+@container (max-width: 410px) {
+  .preset-visual {
+    height: auto;
+    max-height: 360px;
+    aspect-ratio: 4 / 3;
+    align-self: start;
+  }
 }
 
 @container (max-width: 240px) {
