@@ -635,17 +635,6 @@ tr:last-child td {
   margin-top: 3px;
 }
 
-.hotness-track {
-  border: 1px solid #bfdbfe;
-  border-radius: 8px;
-  background: #f8fbff;
-  padding: 14px;
-}
-
-.hotness-track .table-wrap {
-  background: #ffffff;
-}
-
 .score-chip {
   display: inline-flex;
   align-items: center;
@@ -660,25 +649,39 @@ tr:last-child td {
   white-space: nowrap;
 }
 
-.engagement-rank-value {
-  display: inline-flex;
-  align-items: center;
-  min-height: 24px;
-  border: 1px solid var(--line);
-  border-radius: 999px;
-  background: #ffffff;
-  color: #475467;
-  padding: 2px 9px;
-  font-size: 12px;
-  font-weight: 600;
-  white-space: nowrap;
-}
-
 .metric-cell {
   display: grid;
   gap: 4px;
   min-width: 190px;
   white-space: normal;
+}
+
+.hotness-inline {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 7px;
+}
+
+.hotness-inline span,
+.hotness-inline strong {
+  min-height: 22px;
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: #ffffff;
+  color: #475467;
+  padding: 2px 8px;
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.hotness-inline strong {
+  border-color: #bfdbfe;
+  background: #eff6ff;
+  color: #1d4ed8;
 }
 
 .metric-cell span:last-child {

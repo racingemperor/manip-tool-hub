@@ -14,20 +14,11 @@ export function Leaderboard() {
     setEngagement(readEngagementState());
   }, []);
 
-  const hotRows = useMemo(() => {
-    return leaderboardRows
-      .map((row) => {
-        const likes = engagement.liked.includes(row.slug) ? 1 : 0;
-        const saves = engagement.saved.includes(row.slug) ? 1 : 0;
-        return {
-          ...row,
-          likes,
-          saves,
-          hotness: likes + saves
-        };
-      })
-      .sort((a, b) => b.hotness - a.hotness || b.likes - a.likes || a.rankOrder - b.rankOrder || a.name.localeCompare(b.name));
-  }, [engagement]);
+  function getEngagement(slug: string) {
+    const likes = engagement.liked.includes(slug) ? 1 : 0;
+    const saves = engagement.saved.includes(slug) ? 1 : 0;
+    return { likes, saves, hotness: likes + saves };
+  }
 
   const tracks = useMemo(() => {
     return leaderboardCategories
@@ -38,11 +29,16 @@ export function Leaderboard() {
           .sort((a, b) => {
             if (sort === "speed") return a.speedRank - b.speedRank || a.rankOrder - b.rankOrder;
             if (sort === "artifacts") return b.completeness - a.completeness || a.rankOrder - b.rankOrder;
+            if (sort === "hotness") {
+              const aEngagement = getEngagement(a.slug);
+              const bEngagement = getEngagement(b.slug);
+              return bEngagement.hotness - aEngagement.hotness || bEngagement.likes - aEngagement.likes || a.rankOrder - b.rankOrder;
+            }
             return a.rankOrder - b.rankOrder;
           });
         return { ...item, rows };
       });
-  }, [category, sort]);
+  }, [category, sort, engagement]);
 
   return (
     <>
@@ -60,6 +56,7 @@ export function Leaderboard() {
           </select>
           <select className="select" aria-label="Leaderboard sort logic" value={sort} onChange={(event) => setSort(event.target.value)}>
             <option value="primary">Primary metric first</option>
+            <option value="hotness">Hotness first</option>
             <option value="speed">Speed first</option>
             <option value="artifacts">Artifacts first</option>
           </select>
@@ -67,44 +64,6 @@ export function Leaderboard() {
       </div>
 
       <div className="leaderboard-tracks">
-        <section className="leaderboard-track hotness-track">
-          <div className="leaderboard-track-head">
-            <div>
-              <h3>Hotness Ranking</h3>
-              <p>Ranked by total engagement: likes plus saves. Current static deployment uses the same local engagement data shown on tool cards.</p>
-            </div>
-            <span className="score-chip">Likes + Saves</span>
-          </div>
-          <div className="table-wrap">
-            <table>
-              <thead>
-                <tr>
-                  <th>Rank</th>
-                  <th>Tool</th>
-                  <th>Category</th>
-                  <th>Task</th>
-                  <th>Likes</th>
-                  <th>Saves</th>
-                  <th>Hotness</th>
-                </tr>
-              </thead>
-              <tbody>
-                {hotRows.map((row, index) => (
-                  <tr key={row.slug}>
-                    <td data-label="Rank"><span className="rank">#{index + 1}</span></td>
-                    <td data-label="Tool"><Link className="tool-table-link" href={`/tools/${row.slug}`}>{row.name}</Link></td>
-                    <td data-label="Category">{row.category}</td>
-                    <td data-label="Task">{row.task}</td>
-                    <td data-label="Likes"><span className="engagement-rank-value">♡ {row.likes}</span></td>
-                    <td data-label="Saves"><span className="engagement-rank-value">☆ {row.saves}</span></td>
-                    <td data-label="Hotness"><span className="score-chip">{row.hotness}</span></td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </section>
-
         {tracks.map((track) => (
           <section className="leaderboard-track" key={track.name}>
             <div className="leaderboard-track-head">
@@ -140,6 +99,13 @@ export function Leaderboard() {
                             <strong>{row.scoreLabel}</strong>
                             <span>{row.metric}</span>
                           </div>
+                          {sort === "hotness" ? (
+                            <div className="hotness-inline">
+                              <span>♡ {getEngagement(row.slug).likes}</span>
+                              <span>☆ {getEngagement(row.slug).saves}</span>
+                              <strong>{getEngagement(row.slug).hotness}</strong>
+                            </div>
+                          ) : null}
                         </td>
                         <td data-label="Speed">{row.speed}</td>
                         <td data-label="Artifacts">
