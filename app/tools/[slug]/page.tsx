@@ -102,11 +102,38 @@ export default async function ToolDetailPage({ params }: { params: Promise<{ slu
     codeDownload,
     project,
     paper,
+    ...(tool.modelLinks || []),
     ...(tool.paperLinks || []).filter((link) => ![github?.url, huggingFace?.url, project?.url, paper?.url].includes(link.url))
-  ].filter(Boolean) as ToolLink[];
+  ].filter(Boolean).filter((link, index, links) => links.findIndex((item) => item?.url === link?.url) === index) as ToolLink[];
   const citation = buildCitation(tool);
-  const usageSteps = buildUsageSteps(tool);
+  const usageSteps = tool.deploymentNotes?.length ? tool.deploymentNotes : buildUsageSteps(tool);
   const triggerText = buildTriggerText(tool);
+  const parameterNotes = tool.parameterNotes?.length
+    ? tool.parameterNotes
+    : parameters.map((parameter) => ({
+      name: parameter.name,
+      control: parameter.type.includes("path") ? "path" as const : parameter.type.includes("number") || parameter.type.includes("integer") ? "number" as const : "text" as const,
+      defaultValue: parameter.required ? "required" : "optional",
+      meaning: parameter.description
+    }));
+  const outputNotes = tool.outputNotes?.length
+    ? tool.outputNotes
+    : [
+      { name: "result", meaning: tool.output },
+      { name: "score", meaning: "Confidence or quality score when the original tool reports one." },
+      { name: "artifact", meaning: "Visualization, map, mask, trajectory, JSON, or log saved by the local run." }
+    ];
+  const benchmarkRows = tool.benchmarkRows?.length
+    ? tool.benchmarkRows
+    : [
+      {
+        dataset: tool.benchmarkDataset || "Add benchmark dataset",
+        metric: "Core result",
+        value: tool.benchmarkMetric || "Add source-reported number",
+        runtime: tool.benchmarkLatency,
+        source: tool.paperVenue || "Add source"
+      }
+    ];
   const searchEntries: ToolDetailSearchEntry[] = [
     {
       title: "Introduction",
@@ -121,9 +148,15 @@ export default async function ToolDetailPage({ params }: { params: Promise<{ slu
       text: [
         tool.input,
         tool.output,
+        tool.shortExplanation,
+        tool.presetExample?.title,
+        tool.presetExample?.prompt,
+        tool.presetExample?.expectedOutput,
         triggerText,
         tool.runtime,
         ...parameters.map((parameter) => `${parameter.name} ${parameter.type} ${parameter.description}`),
+        ...parameterNotes.map((parameter) => `${parameter.name} ${parameter.control} ${parameter.defaultValue || ""} ${parameter.meaning}`),
+        ...outputNotes.map((output) => `${output.name} ${output.meaning}`),
         demos.map((demo) => `${demo.label} ${demo.image || ""}`).join(" ")
       ].join(" ")
     },
@@ -150,7 +183,8 @@ export default async function ToolDetailPage({ params }: { params: Promise<{ slu
         tool.benchmarkDataset,
         tool.benchmarkMetric,
         tool.benchmarkLatency,
-        tool.benchmarkArtifacts
+        tool.benchmarkArtifacts,
+        ...benchmarkRows.map((row) => `${row.dataset} ${row.metric} ${row.value} ${row.runtime || ""} ${row.source || ""}`)
       ].filter(Boolean).join(" ")
     },
     {
@@ -208,6 +242,10 @@ export default async function ToolDetailPage({ params }: { params: Promise<{ slu
                 </div>
               </div>
               <div className="tool-intro-layout">
+                <article className="brief-card">
+                  <h3>Short Explanation</h3>
+                  <p>{tool.shortExplanation || tool.summary}</p>
+                </article>
                 <div className="parameter-board">
                   <div className="metric"><span>Input</span><strong>{tool.input}</strong></div>
                   <div className="metric"><span>Output</span><strong>{tool.output}</strong></div>
@@ -228,17 +266,58 @@ export default async function ToolDetailPage({ params }: { params: Promise<{ slu
                 </div>
               </div>
 
-              <div className="parameter-list compact-parameters">
-                {parameters.map((parameter) => (
-                  <div className="parameter-item" key={parameter.name}>
-                    <div className="parameter-head">
-                      <code>{parameter.name}</code>
-                      <span className="badge">{parameter.type}</span>
-                      <span className={`badge ${parameter.required ? "green" : ""}`}>{parameter.required ? "required" : "optional"}</span>
-                    </div>
-                    <p className="muted">{parameter.description}</p>
+              {tool.presetExample ? (
+                <article className="preset-card">
+                  <div
+                    className={`preset-visual ${tool.presetExample.image ? "image" : ""}`}
+                    style={tool.presetExample.image ? { backgroundImage: `linear-gradient(135deg, rgba(17, 24, 39, 0.38), rgba(53, 98, 255, 0.16)), url('${assetPath(tool.presetExample.image)}')` } : undefined}
+                  >
+                    <span>{tool.presetExample.title}</span>
                   </div>
-                ))}
+                  <div className="preset-copy">
+                    <div className="mini-section-head">
+                      <h3>Preset Example</h3>
+                      <p className="muted">A quick-run style example for the documentation page. The static site shows the workflow; the model runs in the original repository.</p>
+                    </div>
+                    <div className="field-list">
+                      <div className="field-row"><span>Input</span><strong>{tool.presetExample.input}</strong></div>
+                      {tool.presetExample.prompt ? <div className="field-row"><span>Prompt</span><strong>{tool.presetExample.prompt}</strong></div> : null}
+                      <div className="field-row"><span>Expected</span><strong>{tool.presetExample.expectedOutput}</strong></div>
+                    </div>
+                    <button className="btn primary quick-run" type="button" disabled>{tool.presetExample.runLabel || "Quick Run"}</button>
+                  </div>
+                </article>
+              ) : null}
+
+              <div className="info-pair-grid">
+                <article className="usage-card">
+                  <h3>Parameter Explanation</h3>
+                  <div className="control-list">
+                    {parameterNotes.map((parameter) => (
+                      <div className="control-row" key={parameter.name}>
+                        <div className="control-head">
+                          <code>{parameter.name}</code>
+                          <span className="badge blue">{parameter.control}</span>
+                          {parameter.defaultValue ? <span className="badge">{parameter.defaultValue}</span> : null}
+                        </div>
+                        <p>{parameter.meaning}</p>
+                      </div>
+                    ))}
+                  </div>
+                </article>
+                <article className="usage-card">
+                  <h3>Output Explanation</h3>
+                  <div className="control-list">
+                    {outputNotes.map((output) => (
+                      <div className="control-row" key={output.name}>
+                        <div className="control-head">
+                          <code>{output.name}</code>
+                        </div>
+                        <p>{output.meaning}</p>
+                      </div>
+                    ))}
+                  </div>
+                </article>
               </div>
 
               <div className="demo-module">
@@ -326,9 +405,34 @@ export default async function ToolDetailPage({ params }: { params: Promise<{ slu
               </div>
 
               <div className="benchmark-focus">
-                <div className="field-row"><span>Dataset</span><strong>{tool.benchmarkDataset || "Add one clear source-reported benchmark dataset."}</strong></div>
-                <div className="field-row"><span>Core Result</span><strong>{tool.benchmarkMetric || "Add one or two intuitive source-reported numbers."}</strong></div>
-                <div className="field-row"><span>Runtime</span><strong>{tool.benchmarkLatency || "Add FPS, ms, success rate timing, or deployment runtime if reported."}</strong></div>
+                <div className="mini-section-head">
+                  <h3>Benchmark</h3>
+                  <p className="muted">Only compact, source-reported numbers are shown here.</p>
+                </div>
+                <div className="benchmark-table-wrap">
+                  <table className="benchmark-table">
+                    <thead>
+                      <tr>
+                        <th>Dataset</th>
+                        <th>Metric</th>
+                        <th>Value</th>
+                        <th>Runtime</th>
+                        <th>Source</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {benchmarkRows.map((row) => (
+                        <tr key={`${row.dataset}-${row.metric}`}>
+                          <td>{row.dataset}</td>
+                          <td>{row.metric}</td>
+                          <td><strong>{row.value}</strong></td>
+                          <td>{row.runtime || "Not reported"}</td>
+                          <td>{row.source || tool.paperVenue || "Paper"}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
                 <div className="field-row"><span>Artifacts</span><strong>{tool.benchmarkArtifacts || "Add paper, logs, videos, configs, or evaluation files."}</strong></div>
               </div>
             </section>
