@@ -38,7 +38,7 @@ export function ToolDetailSearch({ entries }: ToolDetailSearchProps) {
         {normalized && matches.length === 0 ? (
           <button type="button">
             <strong>No matching content</strong>
-            <span>Search this tool&apos;s paper, demos, API notes, benchmark, or metadata.</span>
+            <span>Search this tool&apos;s intro, demo, usage links, citation, benchmark, or related sections.</span>
           </button>
         ) : null}
         {matches.map((entry) => (

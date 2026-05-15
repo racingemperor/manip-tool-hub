@@ -3,18 +3,11 @@
 import { useEffect, useRef, useState } from "react";
 
 const detailLinks = [
-  ["Overview", "#overview"],
-  ["Paper", "#paper"],
-  ["Demo", "#demo"],
-  ["API", "#api"],
-  ["Returns", "#code-docs"],
-  ["Parameters", "#tool-contract"],
-  ["Examples", "#test-examples"],
-  ["Schema", "#returns-schema"],
-  ["Tool JSON", "#tool-json"],
-  ["Benchmark", "#benchmark"],
-  ["Related", "#related"],
-  ["Metadata", "#metadata"]
+  ["Introduction", "#introduction"],
+  ["Tool Intro", "#tool-introduction"],
+  ["How To Use", "#how-to-use"],
+  ["Academic Info", "#academic-info"],
+  ["Related", "#related"]
 ];
 
 export function FloatingLinks() {
