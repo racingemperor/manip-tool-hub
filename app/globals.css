@@ -1222,8 +1222,8 @@ tr:last-child td {
 
 .main-stack {
   min-width: 0;
-  display: grid;
-  gap: 16px;
+  columns: 430px 3;
+  column-gap: 16px;
 }
 
 .card-head {
@@ -1394,6 +1394,16 @@ tr:last-child td {
 
 .detail-module {
   min-width: 0;
+  width: 100%;
+  display: inline-block;
+  margin: 0 0 16px;
+  vertical-align: top;
+  break-inside: avoid;
+}
+
+#related.detail-module {
+  display: block;
+  column-span: all;
 }
 
 .tool-intro-layout,
@@ -1405,20 +1415,20 @@ tr:last-child td {
 }
 
 .tool-intro-layout {
-  grid-template-columns: minmax(0, 1.05fr) minmax(280px, 0.95fr);
+  grid-template-columns: 1fr;
 }
 
 .parameter-board {
   min-width: 0;
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
   gap: 10px;
 }
 
 .io-flow {
   min-width: 0;
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
   gap: 10px;
 }
 
@@ -1459,7 +1469,7 @@ tr:last-child td {
 }
 
 .compact-parameters {
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
   margin-top: 12px;
 }
 
@@ -1479,7 +1489,7 @@ tr:last-child td {
 .resource-link-grid {
   min-width: 0;
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
   gap: 10px;
   margin-bottom: 12px;
 }
@@ -1515,7 +1525,7 @@ tr:last-child td {
 }
 
 .usage-layout {
-  grid-template-columns: minmax(260px, 0.8fr) minmax(0, 1.1fr) minmax(0, 1fr);
+  grid-template-columns: 1fr;
 }
 
 .usage-card {
@@ -1535,7 +1545,7 @@ tr:last-child td {
 }
 
 .academic-layout {
-  grid-template-columns: minmax(0, 1.25fr) minmax(280px, 0.75fr);
+  grid-template-columns: 1fr;
   align-items: start;
 }
 
@@ -2147,6 +2157,12 @@ tr:last-child td {
 
   .model-grid {
     grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .main-stack {
+    columns: auto;
+    display: grid;
+    gap: 16px;
   }
 
   .content-grid,
