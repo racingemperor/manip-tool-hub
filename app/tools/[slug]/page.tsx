@@ -234,7 +234,7 @@ export default async function ToolDetailPage({ params }: { params: Promise<{ slu
 
         <div className="content-grid">
           <div className="main-stack">
-            <section className="card detail-module" id="tool-introduction">
+            <section className="card detail-module module-primary" id="tool-introduction">
               <div className="card-head">
                 <div>
                   <h2>Tool Introduction</h2>
@@ -265,8 +265,16 @@ export default async function ToolDetailPage({ params }: { params: Promise<{ slu
                   </article>
                 </div>
               </div>
+            </section>
 
-              {tool.presetExample ? (
+            {tool.presetExample ? (
+              <section className="card detail-module module-secondary">
+                <div className="card-head">
+                  <div>
+                    <h2>Preset Example</h2>
+                    <p className="muted">A quick-run style example for the documentation page. The static site shows the workflow; the model runs in the original repository.</p>
+                  </div>
+                </div>
                 <article className="preset-card">
                   <div
                     className={`preset-visual ${tool.presetExample.image ? "image" : ""}`}
@@ -275,10 +283,6 @@ export default async function ToolDetailPage({ params }: { params: Promise<{ slu
                     <span>{tool.presetExample.title}</span>
                   </div>
                   <div className="preset-copy">
-                    <div className="mini-section-head">
-                      <h3>Preset Example</h3>
-                      <p className="muted">A quick-run style example for the documentation page. The static site shows the workflow; the model runs in the original repository.</p>
-                    </div>
                     <div className="field-list">
                       <div className="field-row"><span>Input</span><strong>{tool.presetExample.input}</strong></div>
                       {tool.presetExample.prompt ? <div className="field-row"><span>Prompt</span><strong>{tool.presetExample.prompt}</strong></div> : null}
@@ -287,8 +291,16 @@ export default async function ToolDetailPage({ params }: { params: Promise<{ slu
                     <button className="btn primary quick-run" type="button" disabled>{tool.presetExample.runLabel || "Quick Run"}</button>
                   </div>
                 </article>
-              ) : null}
+              </section>
+            ) : null}
 
+            <section className="card detail-module module-secondary">
+              <div className="card-head">
+                <div>
+                  <h2>Parameters And Output</h2>
+                  <p className="muted">Readable controls and the meaning of each returned artifact.</p>
+                </div>
+              </div>
               <div className="info-pair-grid">
                 <article className="usage-card">
                   <h3>Parameter Explanation</h3>
@@ -319,17 +331,9 @@ export default async function ToolDetailPage({ params }: { params: Promise<{ slu
                   </div>
                 </article>
               </div>
-
-              <div className="demo-module">
-                <div className="mini-section-head">
-                  <h3>Demo</h3>
-                  <p className="muted">{demos.length} visual references. Click any image to inspect the original size.</p>
-                </div>
-                <DemoGallery demos={demos} />
-              </div>
             </section>
 
-            <section className="card detail-module" id="how-to-use">
+            <section className="card detail-module module-primary" id="how-to-use">
               <div className="card-head">
                 <div>
                   <h2>How To Use</h2>
@@ -376,7 +380,7 @@ export default async function ToolDetailPage({ params }: { params: Promise<{ slu
               </div>
             </section>
 
-            <section className="card detail-module" id="academic-info">
+            <section className="card detail-module module-full" id="academic-info">
               <div className="card-head">
                 <div>
                   <h2>Academic Info</h2>
@@ -437,7 +441,19 @@ export default async function ToolDetailPage({ params }: { params: Promise<{ slu
               </div>
             </section>
 
-            <section className="card detail-module" id="related">
+            <section className="card detail-module module-full">
+              <div className="card-head">
+                <div>
+                  <h2>Demo Images</h2>
+                  <p className="muted">Visual references from the original tool. Click any image to inspect the original size.</p>
+                </div>
+              </div>
+              <div className="demo-module">
+                <DemoGallery demos={demos} />
+              </div>
+            </section>
+
+            <section className="card detail-module module-full" id="related">
               <div className="card-head">
                 <div>
                   <h2>Related Tools</h2>
