@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState, type FormEvent } from "react";
+import { useDeferredValue, useEffect, useMemo, useRef, useState, type FormEvent } from "react";
 import { toolCategories, tools } from "@/data/tools";
 import { getToolResources, searchHaystack } from "@/lib/tools";
 import { ToolCard } from "./ToolCard";
@@ -14,10 +14,12 @@ function categoryButtonLabel(category: string, count: number) {
 }
 
 export function ToolRegistry() {
+  const resultsRef = useRef<HTMLDivElement>(null);
   const [category, setCategory] = useState("All");
   const [status, setStatus] = useState("All");
   const [resource, setResource] = useState("All");
   const [query, setQuery] = useState("");
+  const deferredQuery = useDeferredValue(query);
   const [page, setPage] = useState(1);
   const [jumpValue, setJumpValue] = useState("");
 
@@ -34,7 +36,7 @@ export function ToolRegistry() {
   }, [category, status, resource, query]);
 
   const filteredTools = useMemo(() => {
-    const normalized = query.trim().toLowerCase();
+    const normalized = deferredQuery.trim().toLowerCase();
     return tools.filter((tool) => {
       const matchesCategory = category === "All" || tool.category === category;
       const matchesStatus = status === "All" || tool.status === status;
@@ -42,7 +44,7 @@ export function ToolRegistry() {
       const matchesQuery = !normalized || searchHaystack(tool).includes(normalized);
       return matchesCategory && matchesStatus && matchesResource && matchesQuery;
     });
-  }, [category, status, resource, query]);
+  }, [category, status, resource, deferredQuery]);
 
   const counts = useMemo(() => {
     return Object.fromEntries(
@@ -73,8 +75,13 @@ export function ToolRegistry() {
     }, []);
   }, [safePage, totalPages]);
 
-  function goToPage(nextPage: number) {
+  function goToPage(nextPage: number, scroll = true) {
     setPage(Math.min(totalPages, Math.max(1, nextPage)));
+    if (scroll) {
+      window.requestAnimationFrame(() => {
+        resultsRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+      });
+    }
   }
 
   function submitJump(event?: FormEvent<HTMLFormElement>) {
@@ -117,14 +124,14 @@ export function ToolRegistry() {
         </select>
       </div>
 
-      <div className="tool-results-head">
+      <div className="tool-results-head" ref={resultsRef} aria-live="polite">
         <strong>{category === "All" ? "Current Tools" : category}</strong>
         <span>{filteredTools.length ? `${firstItem}-${lastItem} of ${filteredTools.length} tools` : "0 tools"}</span>
       </div>
 
       {filteredTools.length ? (
         <>
-          <div className="model-grid">
+          <div className="model-grid" key={`${category}-${status}-${resource}-${deferredQuery}-${safePage}`}>
             {paginatedTools.map((tool) => <ToolCard tool={tool} key={tool.slug} />)}
           </div>
           {totalPages > 1 ? (

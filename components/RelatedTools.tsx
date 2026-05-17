@@ -19,6 +19,16 @@ export function RelatedTools({ current, candidates }: { current: Tool; candidate
     setItems(pickRandom(sameCategory.length >= 3 ? sameCategory : fallback, 3));
   }, [current, candidates]);
 
+  if (!items.length) {
+    return (
+      <div className="related-grid loading" aria-hidden="true">
+        {Array.from({ length: 3 }, (_, index) => (
+          <div className="related-card placeholder loading-card" key={index} />
+        ))}
+      </div>
+    );
+  }
+
   return (
     <div className="related-grid">
       {items.map((tool) => {
