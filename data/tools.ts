@@ -1298,7 +1298,7 @@ export const tools: Tool[] = [
         "url": "https://huggingface.co/spaces/naver/DUSt3R"
       }
     ],
-    "heroImage": "assets/tools/dust3r/demo.jpg",
+    "heroImage": "assets/tools/dust3r/matching.jpg",
     "demos": [
       {
         "label": "Interactive demo result",
