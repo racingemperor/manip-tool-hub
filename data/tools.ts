@@ -1406,6 +1406,868 @@ export const tools: Tool[] = [
     "version": "main branch"
   },
   {
+    "slug": "query-3d-scene-graph",
+    "title": "query_3d_scene_graph",
+    "category": "Cognition and State Modeling",
+    "task": "Queryable 3D scene memory",
+    "summary": "Queries a stored 3D scene graph to recover previously observed object locations and spatial relations.",
+    "input": "Scene graph + object query + relation query",
+    "output": "Object matches, 3D positions, neighbor relations, confidence",
+    "runtime": "Local / hybrid wrapper",
+    "status": "Runnable",
+    "paperTitle": "SceneGraphFusion-style queryable memory tool",
+    "paperVenue": "Submitted tool sheet / local wrapper",
+    "paperContribution": "Turns historical 3D scene graph observations into a query interface for objects that are no longer visible.",
+    "paperLinks": [],
+    "apiExample": "python tools/query-3d-scene-graph/run.py --request tools/query-3d-scene-graph/examples/request.json --output tools/query-3d-scene-graph/runs/result.json",
+    "shortExplanation": "Use this tool when the current view cannot see an object but the robot may have observed it earlier in the mapped scene.",
+    "presetExample": {
+      "title": "Recover a previously seen object",
+      "input": "tools/query-3d-scene-graph/examples/request.json",
+      "prompt": "object_query: table; relation_query: nearby chairs",
+      "runLabel": "Query scene graph",
+      "expectedOutput": "Matched nodes with 3D centers, bounding boxes, relation edges, and confidence values."
+    },
+    "parameterNotes": [
+      {
+        "name": "dataset_root",
+        "control": "path",
+        "defaultValue": "/path/to/3RScan",
+        "meaning": "Root folder containing the stored scans or scene graph artifacts."
+      },
+      {
+        "name": "target_scan_id",
+        "control": "text",
+        "defaultValue": "f62fd5fd-9a3f-2f44-883a-1e5cf819608e",
+        "meaning": "Scene identifier used to select the historical graph."
+      },
+      {
+        "name": "object_query",
+        "control": "text",
+        "meaning": "Object class, instance, or natural-language target to search for."
+      },
+      {
+        "name": "relation_query",
+        "control": "text",
+        "meaning": "Optional spatial relation such as near, on, lower than, or connected to."
+      }
+    ],
+    "outputNotes": [
+      {
+        "name": "matches",
+        "meaning": "Candidate graph nodes matching the object query."
+      },
+      {
+        "name": "position_3d",
+        "meaning": "Stored 3D center and bounding-box size for each matched node."
+      },
+      {
+        "name": "confidence",
+        "meaning": "Confidence or matching score produced by the local wrapper."
+      }
+    ],
+    "deploymentNotes": [
+      "Prepare a 3D scene graph dataset or converted scan graph under the tool folder.",
+      "Write the object and relation query as repository-relative JSON.",
+      "Run the local wrapper and save graph matches under tools/query-3d-scene-graph/runs/.",
+      "Use the returned 3D positions as memory hints for downstream perception or planning."
+    ],
+    "benchmarkDataset": "Not provided in the submitted spreadsheet.",
+    "benchmarkMetric": "No source-reported benchmark number was included for this local wrapper.",
+    "benchmarkLatency": "Interactive, according to the submitted spreadsheet.",
+    "benchmarkArtifacts": "Input/output JSON examples and local deployment notes from the submitted spreadsheet.",
+    "license": "Not specified",
+    "owner": "Hu Yibo",
+    "version": "local wrapper"
+  },
+  {
+    "slug": "query-historical-action-timeline",
+    "title": "query_historical_action_timeline",
+    "category": "Cognition and State Modeling",
+    "task": "Historical action timeline query",
+    "summary": "Queries a stored action timeline to confirm whether a task step happened and when it occurred.",
+    "input": "Action history + query action + time window",
+    "output": "Action occurrence times and status",
+    "runtime": "Local / cloud wrapper",
+    "status": "Runnable",
+    "paperTitle": "MS-TCN-style action timeline tool",
+    "paperVenue": "Submitted tool sheet / local wrapper",
+    "paperContribution": "Exposes temporal action segmentation outputs as a memory query interface for SOP and multi-step tasks.",
+    "paperLinks": [
+      {
+        "label": "MS-TCN Reference",
+        "url": "https://github.com/yabufarha/ms-tcn"
+      }
+    ],
+    "apiExample": "python tools/query-historical-action-timeline/run.py --features tools/query-historical-action-timeline/examples/video_001_features.npy --query-action pour --output tools/query-historical-action-timeline/runs/timeline.json",
+    "shortExplanation": "Use this tool to check whether a previous step was already completed before the planner continues.",
+    "presetExample": {
+      "title": "Check whether a step happened",
+      "input": "tools/query-historical-action-timeline/examples/video_001_features.npy",
+      "prompt": "query_action: pour; time_window: full video",
+      "runLabel": "Query timeline",
+      "expectedOutput": "A list of start and end frames for matching action segments."
+    },
+    "parameterNotes": [
+      {
+        "name": "feature_file",
+        "control": "path",
+        "defaultValue": "tools/query-historical-action-timeline/examples/video_001_features.npy",
+        "meaning": "Precomputed video features used by the timeline model or wrapper."
+      },
+      {
+        "name": "query_action",
+        "control": "text",
+        "meaning": "Action label or natural-language step to look up."
+      },
+      {
+        "name": "time_window",
+        "control": "text",
+        "defaultValue": "full",
+        "meaning": "Optional frame or timestamp range to constrain the query."
+      },
+      {
+        "name": "sample_rate",
+        "control": "number",
+        "defaultValue": "1",
+        "meaning": "Temporal sampling rate used when mapping model outputs back to frames."
+      }
+    ],
+    "outputNotes": [
+      {
+        "name": "found",
+        "meaning": "Boolean status indicating whether the action appears in the history."
+      },
+      {
+        "name": "occurrences",
+        "meaning": "Detected action spans with start and end frames."
+      },
+      {
+        "name": "timestamp",
+        "meaning": "Frame or time index for each matched action occurrence."
+      }
+    ],
+    "deploymentNotes": [
+      "Prepare video features or action timeline outputs under the tool examples folder.",
+      "Configure the action label set and sample rate used by the source segmentation model.",
+      "Run the query wrapper with a repository-relative feature path.",
+      "Save the resulting timeline JSON under tools/query-historical-action-timeline/runs/."
+    ],
+    "benchmarkDataset": "Not provided in the submitted spreadsheet.",
+    "benchmarkMetric": "No source-reported benchmark number was included for this local wrapper.",
+    "benchmarkLatency": "Interactive, according to the submitted spreadsheet.",
+    "benchmarkArtifacts": "Feature tensor shape, mock timeline output, and local deployment notes from the submitted spreadsheet.",
+    "license": "Not specified",
+    "owner": "Hu Yibo",
+    "version": "local wrapper"
+  },
+  {
+    "slug": "retrieve-past-visual-state-faiss",
+    "title": "retrieve_past_visual_state_faiss",
+    "category": "Cognition and State Modeling",
+    "task": "Visual memory retrieval",
+    "summary": "Retrieves similar past visual memories from an embedding index when current recognition is uncertain.",
+    "input": "Image embedding or cropped image",
+    "output": "Matched visual memories, memory ids, scores, snapshot paths",
+    "runtime": "Local / cloud wrapper",
+    "status": "Runnable",
+    "paperTitle": "FAISS-style visual memory retrieval",
+    "paperVenue": "Submitted tool sheet / local wrapper",
+    "paperContribution": "Uses vector search over stored visual embeddings to recover clear historical observations under occlusion or partial visibility.",
+    "paperLinks": [
+      {
+        "label": "FAISS GitHub",
+        "url": "https://github.com/facebookresearch/faiss"
+      }
+    ],
+    "apiExample": "python tools/retrieve-past-visual-state-faiss/run.py --query-feature tools/retrieve-past-visual-state-faiss/examples/query.npy --top-k 3 --output tools/retrieve-past-visual-state-faiss/runs/results.json",
+    "shortExplanation": "Search a visual memory bank for earlier snapshots that look similar to the current uncertain target.",
+    "presetExample": {
+      "title": "Retrieve similar visual memories",
+      "input": "tools/retrieve-past-visual-state-faiss/examples/query.npy",
+      "prompt": "top_k: 3",
+      "runLabel": "Search memory",
+      "expectedOutput": "Top-k memory ids with distances or similarity scores and snapshot references."
+    },
+    "parameterNotes": [
+      {
+        "name": "query_feature_path",
+        "control": "path",
+        "defaultValue": "tools/retrieve-past-visual-state-faiss/examples/query.npy",
+        "meaning": "Embedding file for the current crop or scene."
+      },
+      {
+        "name": "query_image",
+        "control": "file",
+        "meaning": "Optional image crop that can be embedded before FAISS search."
+      },
+      {
+        "name": "top_k",
+        "control": "number",
+        "defaultValue": "3",
+        "meaning": "Number of nearest memories to return."
+      },
+      {
+        "name": "feature_dim",
+        "control": "number",
+        "defaultValue": "512",
+        "meaning": "Embedding dimension expected by the index."
+      }
+    ],
+    "outputNotes": [
+      {
+        "name": "results",
+        "meaning": "Ranked visual memories returned by the FAISS search."
+      },
+      {
+        "name": "memory_id",
+        "meaning": "Identifier of a stored past observation."
+      },
+      {
+        "name": "score",
+        "meaning": "Distance or similarity score for the retrieved memory."
+      },
+      {
+        "name": "snapshot_path",
+        "meaning": "Path to the stored image or state snapshot, when available."
+      }
+    ],
+    "deploymentNotes": [
+      "Build or load a FAISS index over historical visual embeddings.",
+      "Prepare query embeddings or image crops under the examples folder.",
+      "Run the retrieval wrapper with a repository-relative query path and top-k value.",
+      "Save ranked memory results under tools/retrieve-past-visual-state-faiss/runs/."
+    ],
+    "benchmarkDataset": "Not provided in the submitted spreadsheet.",
+    "benchmarkMetric": "No source-reported benchmark number was included for this local wrapper.",
+    "benchmarkLatency": "Interactive, according to the submitted spreadsheet.",
+    "benchmarkArtifacts": "Query embedding example, top-k search result JSON, and local deployment notes from the submitted spreadsheet.",
+    "license": "Not specified",
+    "owner": "Hu Yibo",
+    "version": "local wrapper"
+  },
+  {
+    "slug": "stm",
+    "title": "STM",
+    "category": "Cognition and State Modeling",
+    "task": "Space-time visual memory",
+    "summary": "Maintains a space-time feature memory so a VLM can recover target appearance under deformation, blur, or lighting changes.",
+    "input": "Current frame features + memory bank query",
+    "output": "Memory readout, attention map, confidence score",
+    "runtime": "Local GPU",
+    "status": "Runnable",
+    "paperTitle": "Video Object Segmentation using Space-Time Memory Networks",
+    "paperVenue": "ICCV 2019",
+    "paperContribution": "Reads and writes a space-time memory bank so target features from earlier frames can guide later-frame segmentation and tracking.",
+    "paperLinks": [
+      {
+        "label": "GitHub",
+        "url": "https://github.com/seoungwugoh/STM"
+      }
+    ],
+    "apiExample": "python tools/stm/run.py --ref-img tools/stm/examples/mock_ref_img.png --ref-mask tools/stm/examples/mock_ref_mask.png --query-img tools/stm/examples/mock_query_img.png --weights tools/stm/weights/STM_weights.pth --output tools/stm/runs/prediction.json",
+    "shortExplanation": "Use STM when a target has changed appearance but earlier clean frames can still anchor the current prediction.",
+    "presetExample": {
+      "title": "Read target features from memory",
+      "input": "tools/stm/examples/mock_query_img.png",
+      "prompt": "target_object_id: selected object; memory: reference image and mask",
+      "runLabel": "Run STM",
+      "expectedOutput": "A predicted foreground region, bounding box, feature readout, attention weights, and confidence score."
+    },
+    "parameterNotes": [
+      {
+        "name": "ref_img",
+        "control": "file",
+        "defaultValue": "tools/stm/examples/mock_ref_img.png",
+        "meaning": "Reference frame where the target is clearly observed."
+      },
+      {
+        "name": "ref_mask",
+        "control": "file",
+        "defaultValue": "tools/stm/examples/mock_ref_mask.png",
+        "meaning": "Target mask associated with the reference frame."
+      },
+      {
+        "name": "query_img",
+        "control": "file",
+        "defaultValue": "tools/stm/examples/mock_query_img.png",
+        "meaning": "Current frame to segment or verify."
+      },
+      {
+        "name": "weights",
+        "control": "path",
+        "defaultValue": "tools/stm/weights/STM_weights.pth",
+        "meaning": "STM model weights used by the local backend."
+      }
+    ],
+    "outputNotes": [
+      {
+        "name": "retrieved_feature_map",
+        "meaning": "Memory-conditioned feature map used for the current frame."
+      },
+      {
+        "name": "visual_attention_weights",
+        "meaning": "Attention weights over stored space-time memory."
+      },
+      {
+        "name": "confidence_score",
+        "meaning": "Confidence of the current target prediction."
+      }
+    ],
+    "deploymentNotes": [
+      "Clone or download the official STM implementation.",
+      "Install the PyTorch dependencies and place weights under tools/stm/weights/.",
+      "Prepare reference images, masks, and query frames using repository-relative paths.",
+      "Run the wrapper and save masks, boxes, and attention outputs under tools/stm/runs/."
+    ],
+    "benchmarkDataset": "Not provided in the submitted spreadsheet.",
+    "benchmarkMetric": "No benchmark number was copied into the site because the submitted row did not provide one.",
+    "benchmarkLatency": "About 20 ms, according to the submitted spreadsheet.",
+    "benchmarkArtifacts": "Official repository link, weights path, mock input JSON, and local prediction output from the submitted spreadsheet.",
+    "license": "Not specified",
+    "owner": "Hu Yibo",
+    "version": "local wrapper"
+  },
+  {
+    "slug": "action-genome",
+    "title": "Action Genome",
+    "category": "Cognition and State Modeling",
+    "task": "Spatio-temporal scene graph state modeling",
+    "summary": "Uses spatio-temporal scene graph structure to infer object states and contact relations from short video clips.",
+    "input": "Short video clip + target object list",
+    "output": "State graph and temporal relations",
+    "runtime": "Local GPU",
+    "status": "Runnable",
+    "paperTitle": "Action Genome: Actions as Compositions of Spatio-temporal Scene Graphs",
+    "paperVenue": "CVPR 2020",
+    "paperContribution": "Represents actions as evolving object relations, reducing static-image guesses about physical state during manipulation tasks.",
+    "paperLinks": [
+      {
+        "label": "GitHub",
+        "url": "https://github.com/JingweiJ/ActionGenome"
+      }
+    ],
+    "apiExample": "python tools/action-genome/run.py --video tools/action-genome/examples/mock_video.mp4 --objects tools/action-genome/examples/objects.json --output tools/action-genome/runs/state_timeline.json",
+    "shortExplanation": "Use Action Genome-style state modeling when the planner needs a concrete physical state instead of a static-frame guess.",
+    "presetExample": {
+      "title": "Infer object state timeline",
+      "input": "tools/action-genome/examples/mock_video.mp4",
+      "prompt": "objects_of_interest: door, cup, person",
+      "runLabel": "Build state graph",
+      "expectedOutput": "Object state timelines and contact relations such as open, closed, empty, full, sitting, or standing."
+    },
+    "parameterNotes": [
+      {
+        "name": "temporal_video_buffer",
+        "control": "file",
+        "defaultValue": "tools/action-genome/examples/mock_video.mp4",
+        "meaning": "Short clip or buffered frames used for temporal state inference."
+      },
+      {
+        "name": "objects_of_interest",
+        "control": "text",
+        "meaning": "Object list whose states and relations should be tracked."
+      },
+      {
+        "name": "feature_tensor",
+        "control": "path",
+        "meaning": "Optional precomputed features for the scene graph model."
+      },
+      {
+        "name": "bbox_tensor",
+        "control": "path",
+        "meaning": "Optional detected object boxes aligned with the video frames."
+      }
+    ],
+    "outputNotes": [
+      {
+        "name": "object_states",
+        "meaning": "Frame spans labeled with object states."
+      },
+      {
+        "name": "contact_relations",
+        "meaning": "Temporal relations between objects and actors."
+      },
+      {
+        "name": "state_timeline",
+        "meaning": "Ordered state transitions that downstream planners can audit."
+      }
+    ],
+    "deploymentNotes": [
+      "Clone or download the official Action Genome resources.",
+      "Prepare video clips, object boxes, and model features in the expected format.",
+      "Run the state-graph wrapper with repository-relative video and object paths.",
+      "Save state timelines and relation graphs under tools/action-genome/runs/."
+    ],
+    "benchmarkDataset": "Not provided in the submitted spreadsheet.",
+    "benchmarkMetric": "No benchmark number was copied into the site because the submitted row did not provide one.",
+    "benchmarkLatency": "Interactive, according to the submitted spreadsheet.",
+    "benchmarkArtifacts": "Official repository link, mock video input, feature tensor shape, bbox tensor shape, and state timeline output from the submitted spreadsheet.",
+    "license": "Not specified",
+    "owner": "Hu Yibo",
+    "version": "local wrapper"
+  },
+  {
+    "slug": "language2ltl",
+    "title": "Language2LTL",
+    "category": "Reasoning and Planning",
+    "task": "Natural language to temporal-logic validation",
+    "summary": "Translates natural-language task constraints into LTL-style checks that reject unsafe, skipped, or out-of-order plans.",
+    "input": "VLM action plan + safety LTL formulas",
+    "output": "Validation result and violation feedback",
+    "runtime": "Local CPU",
+    "status": "Runnable",
+    "paperTitle": "Language2LTL: Translating Natural Language to Linear Temporal Logic for Robot Specification",
+    "paperVenue": "IROS 2023",
+    "paperContribution": "Grounds natural-language task rules into formal temporal constraints so robot plans can be checked before execution.",
+    "paperLinks": [
+      {
+        "label": "GitHub",
+        "url": "https://github.com/JasonXinyuLiu/Language2LTL"
+      }
+    ],
+    "apiExample": "python tools/language2ltl/run.py --plan tools/language2ltl/examples/proposed_plan.json --constraints tools/language2ltl/examples/constraints.json --output tools/language2ltl/runs/validation.json",
+    "shortExplanation": "Use Language2LTL before execution to make sure a VLM-produced plan respects safety rules and required step order.",
+    "presetExample": {
+      "title": "Reject an unsafe plan",
+      "input": "tools/language2ltl/examples/proposed_plan.json",
+      "prompt": "always(grab_chemical -> historically(wear_gloves))",
+      "runLabel": "Validate plan",
+      "expectedOutput": "A compliance flag and a human-readable violation reason when a prerequisite step is missing."
+    },
+    "parameterNotes": [
+      {
+        "name": "proposed_step_sequence",
+        "control": "path",
+        "defaultValue": "tools/language2ltl/examples/proposed_plan.json",
+        "meaning": "Ordered candidate steps produced by the planner."
+      },
+      {
+        "name": "active_ltl_constraints",
+        "control": "path",
+        "defaultValue": "tools/language2ltl/examples/constraints.json",
+        "meaning": "Temporal-logic constraints active for this task."
+      },
+      {
+        "name": "validator_mode",
+        "control": "select",
+        "defaultValue": "mock_rule_check_no_install",
+        "meaning": "Selects the installed Language2LTL backend or a local mock checker."
+      }
+    ],
+    "outputNotes": [
+      {
+        "name": "is_sop_compliant",
+        "meaning": "Whether the proposed sequence satisfies the active constraints."
+      },
+      {
+        "name": "violation_reason",
+        "meaning": "Explanation of the first detected safety or ordering violation."
+      },
+      {
+        "name": "validation_trace",
+        "meaning": "Optional trace of automaton or rule-checking states."
+      }
+    ],
+    "deploymentNotes": [
+      "Clone or download the official Language2LTL repository.",
+      "Install the parser, planner, and temporal-logic dependencies required by the source project.",
+      "Prepare a proposed step sequence and active constraint file under tools/language2ltl/examples/.",
+      "Run the validator and save compliance reports under tools/language2ltl/runs/."
+    ],
+    "benchmarkDataset": "Not provided in the submitted spreadsheet.",
+    "benchmarkMetric": "No benchmark number was copied into the site because the submitted row did not provide one.",
+    "benchmarkLatency": "Interactive, millisecond-level according to the submitted spreadsheet.",
+    "benchmarkArtifacts": "Official repository link, mock rule-check example, constraint JSON, and validation output from the submitted spreadsheet.",
+    "license": "Not specified",
+    "owner": "Hu Yibo",
+    "version": "local wrapper"
+  },
+  {
+    "slug": "monitor-dynamic-disturbance",
+    "title": "monitor_dynamic_disturbance",
+    "category": "Execution and Control",
+    "task": "Dynamic disturbance monitoring",
+    "summary": "Monitors tracked points or regions during execution and raises alerts when the target is moved, bumped, or shifted.",
+    "input": "Video stream + tracked points or ROI",
+    "output": "Point trajectories and disturbance alerts",
+    "runtime": "Local / edge monitor",
+    "status": "Runnable",
+    "paperTitle": "CoTracker-style dynamic disturbance monitor",
+    "paperVenue": "Submitted tool sheet / local wrapper",
+    "paperContribution": "Runs as an execution-time guard that detects target drift and produces recovery signals for closed-loop control.",
+    "paperLinks": [
+      {
+        "label": "CoTracker Reference",
+        "url": "https://github.com/facebookresearch/co-tracker"
+      }
+    ],
+    "apiExample": "python tools/monitor-dynamic-disturbance/run.py --video tools/monitor-dynamic-disturbance/examples/stream.mp4 --points tools/monitor-dynamic-disturbance/examples/roi_points.json --output tools/monitor-dynamic-disturbance/runs/alerts.json",
+    "shortExplanation": "Keep this monitor running during manipulation so the system can react if the scene changes under the robot.",
+    "presetExample": {
+      "title": "Detect target drift during execution",
+      "input": "tools/monitor-dynamic-disturbance/examples/stream.mp4",
+      "prompt": "roi_points: four tracked points around the target",
+      "runLabel": "Monitor disturbance",
+      "expectedOutput": "Tracked point trajectories, a disturbance flag, and severity score."
+    },
+    "parameterNotes": [
+      {
+        "name": "video_stream",
+        "control": "file",
+        "meaning": "Live stream or buffered video used for point tracking."
+      },
+      {
+        "name": "roi",
+        "control": "text",
+        "meaning": "Region of interest around the object being monitored."
+      },
+      {
+        "name": "points",
+        "control": "path",
+        "defaultValue": "tools/monitor-dynamic-disturbance/examples/roi_points.json",
+        "meaning": "Initial point coordinates to track across frames."
+      },
+      {
+        "name": "inference_mode",
+        "control": "select",
+        "defaultValue": "mock_no_weights_no_install",
+        "meaning": "Selects the installed tracker backend or mock mode."
+      }
+    ],
+    "outputNotes": [
+      {
+        "name": "point_tracks",
+        "meaning": "Tracked 2D point coordinates over time."
+      },
+      {
+        "name": "disturbance_detected",
+        "meaning": "Boolean event flag for target movement or shift."
+      },
+      {
+        "name": "severity",
+        "meaning": "Scalar score describing the magnitude of the detected disturbance."
+      }
+    ],
+    "deploymentNotes": [
+      "Install the selected point-tracking backend or keep the local mock fallback for wrapper testing.",
+      "Prepare a live stream, buffered clip, and initial ROI points under the examples folder.",
+      "Run the monitor in parallel with the robot execution loop.",
+      "Save point tracks and disturbance alerts under tools/monitor-dynamic-disturbance/runs/."
+    ],
+    "benchmarkDataset": "Not provided in the submitted spreadsheet.",
+    "benchmarkMetric": "No source-reported benchmark number was included for this local wrapper.",
+    "benchmarkLatency": "Real-time, according to the submitted spreadsheet.",
+    "benchmarkArtifacts": "ROI point example, mock stream shape, disturbance severity output, and local deployment notes from the submitted spreadsheet.",
+    "license": "Not specified",
+    "owner": "Hu Yibo",
+    "version": "local wrapper"
+  },
+  {
+    "slug": "tapir",
+    "title": "TAPIR",
+    "category": "Execution and Control",
+    "task": "Point tracking for visual servoing",
+    "summary": "Tracks arbitrary target points through a live video stream so closed-loop control can correct motion under disturbance.",
+    "input": "Query point + live video stream",
+    "output": "Tracked point, occlusion flag, confidence",
+    "runtime": "Local GPU",
+    "status": "Runnable",
+    "paperTitle": "TAPIR: Tracking Any Point with per-frame Initialization and temporal Refinement",
+    "paperVenue": "DeepMind 2023",
+    "paperContribution": "Tracks arbitrary points with per-frame initialization and temporal refinement, supporting visual feedback when objects move during execution.",
+    "paperLinks": [
+      {
+        "label": "GitHub",
+        "url": "https://github.com/google-deepmind/tapnet"
+      }
+    ],
+    "apiExample": "python tools/tapir/run.py --video tools/tapir/examples/stream.mp4 --initial-point 120,150 --output tools/tapir/runs/tracks.json",
+    "shortExplanation": "Use TAPIR-style tracking during the robot approach phase to keep a target pixel locked despite motion or camera shake.",
+    "presetExample": {
+      "title": "Track a target point",
+      "input": "tools/tapir/examples/stream.mp4",
+      "prompt": "initial_target_pixel: [120, 150]",
+      "runLabel": "Track point",
+      "expectedOutput": "Per-frame target coordinates, occlusion status, confidence, and total displacement."
+    },
+    "parameterNotes": [
+      {
+        "name": "initial_target_pixel",
+        "control": "text",
+        "defaultValue": "[120, 150]",
+        "meaning": "Initial 2D point selected on the target object."
+      },
+      {
+        "name": "camera_stream_frame",
+        "control": "file",
+        "meaning": "Live frame or buffered video sequence to track through."
+      },
+      {
+        "name": "inference_mode",
+        "control": "select",
+        "defaultValue": "mock_no_jax",
+        "meaning": "Selects the installed JAX/TAPIR backend or a mock tracking fallback."
+      }
+    ],
+    "outputNotes": [
+      {
+        "name": "current_tracked_pixel",
+        "meaning": "Current 2D target coordinate for closed-loop correction."
+      },
+      {
+        "name": "is_occluded",
+        "meaning": "Whether the point is estimated to be hidden."
+      },
+      {
+        "name": "confidence",
+        "meaning": "Tracking confidence for the current frame."
+      },
+      {
+        "name": "total_displacement",
+        "meaning": "Measured shift from the initial point over the tracked clip."
+      }
+    ],
+    "deploymentNotes": [
+      "Clone the official TAPNet repository and install the required JAX dependencies.",
+      "Prepare a live camera feed or video sequence and choose initial target pixels.",
+      "Run the tracker from a repository-relative path during the robot approach phase.",
+      "Save tracks and occlusion flags under tools/tapir/runs/ for controller inspection."
+    ],
+    "benchmarkDataset": "Not provided in the submitted spreadsheet.",
+    "benchmarkMetric": "No benchmark number was copied into the site because the submitted row did not provide one.",
+    "benchmarkLatency": "About 20 ms and 30-60 Hz output frequency, according to the submitted spreadsheet.",
+    "benchmarkArtifacts": "Official repository link, mock point-tracking input, trajectory output, occlusion flag, and confidence output from the submitted spreadsheet.",
+    "license": "Not specified",
+    "owner": "Hu Yibo",
+    "version": "local wrapper"
+  },
+  {
+    "slug": "r3m",
+    "title": "R3M",
+    "category": "Execution and Control",
+    "task": "Post-action success verification",
+    "summary": "Compares post-action visual observations with a goal instruction to decide whether a manipulation step physically succeeded.",
+    "input": "Post-action frame + goal instruction",
+    "output": "Verification score and completion flag",
+    "runtime": "Local GPU",
+    "status": "Runnable",
+    "paperTitle": "R3M: A Universal Visual Representation for Robot Manipulation",
+    "paperVenue": "CoRL 2022",
+    "paperContribution": "Provides a robot manipulation visual representation that can score whether an executed step matches the intended semantic goal.",
+    "paperLinks": [
+      {
+        "label": "GitHub",
+        "url": "https://github.com/facebookresearch/r3m"
+      }
+    ],
+    "apiExample": "python tools/r3m/run.py --start-image tools/r3m/examples/start.png --end-image tools/r3m/examples/end.png --instruction \"pick up the red cup\" --output tools/r3m/runs/verification.json",
+    "shortExplanation": "Use R3M after an action finishes to block false claims of completion and stop errors from accumulating.",
+    "presetExample": {
+      "title": "Verify action completion",
+      "input": "tools/r3m/examples/end.png",
+      "prompt": "pick up the red cup",
+      "runLabel": "Verify result",
+      "expectedOutput": "A task completion score and boolean success flag."
+    },
+    "parameterNotes": [
+      {
+        "name": "current_camera_view",
+        "control": "file",
+        "defaultValue": "tools/r3m/examples/end.png",
+        "meaning": "Post-action camera image."
+      },
+      {
+        "name": "semantic_task_text",
+        "control": "text",
+        "defaultValue": "pick up the red cup",
+        "meaning": "Natural-language goal or step that should be verified."
+      },
+      {
+        "name": "start_image",
+        "control": "file",
+        "meaning": "Optional pre-action image for comparing state change."
+      }
+    ],
+    "outputNotes": [
+      {
+        "name": "task_completion_score",
+        "meaning": "Score estimating how well the final visual state matches the instruction."
+      },
+      {
+        "name": "is_successful",
+        "meaning": "Boolean completion decision from the wrapper."
+      },
+      {
+        "name": "feature_extractor_mode",
+        "meaning": "Backend representation mode used for the score."
+      }
+    ],
+    "deploymentNotes": [
+      "Clone or download the official R3M repository.",
+      "Install the PyTorch dependencies and prepare the selected visual representation checkpoint.",
+      "Prepare start and end images plus a semantic task instruction under tools/r3m/examples/.",
+      "Run the verifier and save scores under tools/r3m/runs/."
+    ],
+    "benchmarkDataset": "Not provided in the submitted spreadsheet.",
+    "benchmarkMetric": "No benchmark number was copied into the site because the submitted row did not provide one.",
+    "benchmarkLatency": "About 50 ms, according to the submitted spreadsheet.",
+    "benchmarkArtifacts": "Official repository link, mock start/end image shape, task instruction, and verification output from the submitted spreadsheet.",
+    "license": "Not specified",
+    "owner": "Hu Yibo",
+    "version": "local wrapper"
+  },
+  {
+    "slug": "feature-squeezer",
+    "title": "Feature_Squeezer",
+    "category": "Perception and Grounding",
+    "task": "Adversarial example detection",
+    "summary": "Applies feature squeezing transformations such as bit-depth reduction or filtering to detect adversarial visual inputs.",
+    "input": "Image or feature tensor",
+    "output": "Adversarial prediction result and original model output",
+    "runtime": "Local safety preprocessing",
+    "status": "Docs Ready",
+    "paperTitle": "Feature Squeezing: Detecting Adversarial Examples in Deep Neural Networks",
+    "paperVenue": "NDSS 2018",
+    "paperContribution": "Reduces the input search space and compares model behavior before and after squeezing to expose adversarial perturbations.",
+    "paperLinks": [
+      {
+        "label": "Paper",
+        "url": "https://arxiv.org/abs/1704.01155"
+      }
+    ],
+    "apiExample": "python tools/feature-squeezer/run.py --input tools/feature-squeezer/examples/input.png --method bit_depth --output tools/feature-squeezer/runs/report.json",
+    "shortExplanation": "Use this preprocessing check when visual inputs may contain noise attacks, stickers, or abnormal perturbations.",
+    "presetExample": {
+      "title": "Detect a suspicious input",
+      "input": "tools/feature-squeezer/examples/input.png",
+      "prompt": "method: bit_depth; compare original and squeezed predictions",
+      "runLabel": "Run squeeze check",
+      "expectedOutput": "A report containing the original prediction, squeezed prediction, and adversarial yes/no decision."
+    },
+    "parameterNotes": [
+      {
+        "name": "input_image",
+        "control": "file",
+        "meaning": "Image or feature tensor to test."
+      },
+      {
+        "name": "method",
+        "control": "select",
+        "defaultValue": "bit_depth",
+        "meaning": "Squeezing operation such as bit-depth reduction or median filtering."
+      },
+      {
+        "name": "threshold",
+        "control": "slider",
+        "meaning": "Difference threshold for flagging a suspicious prediction change."
+      }
+    ],
+    "outputNotes": [
+      {
+        "name": "is_adversarial",
+        "meaning": "Whether the input is flagged as adversarial."
+      },
+      {
+        "name": "original_model_output",
+        "meaning": "Prediction before feature squeezing."
+      },
+      {
+        "name": "squeezed_model_output",
+        "meaning": "Prediction after the selected squeezing transform."
+      }
+    ],
+    "deploymentNotes": [
+      "Implement or install the feature squeezing transform required by the target model.",
+      "Prepare visual inputs under tools/feature-squeezer/examples/.",
+      "Run the detector with a repository-relative image path and selected squeeze method.",
+      "Save reports under tools/feature-squeezer/runs/ for safety logging."
+    ],
+    "benchmarkDataset": "Not provided in the submitted spreadsheet.",
+    "benchmarkMetric": "No benchmark number was copied into the site because the submitted row did not provide one.",
+    "benchmarkLatency": "Interactive, according to the submitted spreadsheet.",
+    "benchmarkArtifacts": "Paper reference and tool-sheet description from the submitted spreadsheet.",
+    "license": "Not specified",
+    "owner": "Hu Yibo",
+    "version": "recommended tool"
+  },
+  {
+    "slug": "clahe-filter",
+    "title": "CLAHE_Filter",
+    "category": "Perception and Grounding",
+    "task": "Local contrast enhancement",
+    "summary": "Enhances local image contrast with clipped adaptive histogram equalization for low-light, shadowed, or low-texture scenes.",
+    "input": "RGB / YUV / LAB image",
+    "output": "Contrast-enhanced image",
+    "runtime": "Local safety preprocessing",
+    "status": "Docs Ready",
+    "paperTitle": "Adaptive Histogram Equalization and Its Variations",
+    "paperVenue": "Computer Vision, Graphics, and Image Processing, 1987",
+    "paperContribution": "Applies local histogram equalization with clipping to improve contrast while limiting noise amplification.",
+    "paperLinks": [],
+    "apiExample": "python tools/clahe-filter/run.py --input tools/clahe-filter/examples/input.png --color-space lab --clip-limit 2.0 --output tools/clahe-filter/runs/enhanced.png",
+    "shortExplanation": "Use CLAHE as a lightweight visual robustness step when shadows, low dynamic range, or weak texture make perception unreliable.",
+    "presetExample": {
+      "title": "Enhance a low-contrast image",
+      "input": "tools/clahe-filter/examples/input.png",
+      "prompt": "color_space: lab; clip_limit: 2.0; tile_grid_size: 8x8",
+      "runLabel": "Enhance contrast",
+      "expectedOutput": "A locally contrast-enhanced image with clearer details and balanced brightness."
+    },
+    "parameterNotes": [
+      {
+        "name": "input_image",
+        "control": "file",
+        "meaning": "Original RGB, YUV, or LAB image."
+      },
+      {
+        "name": "color_space",
+        "control": "select",
+        "defaultValue": "lab",
+        "meaning": "Color space used before applying CLAHE."
+      },
+      {
+        "name": "clip_limit",
+        "control": "slider",
+        "defaultValue": "2.0",
+        "meaning": "Upper limit for local histogram clipping."
+      },
+      {
+        "name": "tile_grid_size",
+        "control": "text",
+        "defaultValue": "8x8",
+        "meaning": "Local grid size used for adaptive equalization."
+      }
+    ],
+    "outputNotes": [
+      {
+        "name": "enhanced_image",
+        "meaning": "Image after local contrast enhancement."
+      },
+      {
+        "name": "brightness_distribution",
+        "meaning": "More balanced local intensity distribution."
+      },
+      {
+        "name": "detail_visibility",
+        "meaning": "Improved visibility of cables, texture, edges, or shadowed objects."
+      }
+    ],
+    "deploymentNotes": [
+      "Use OpenCV or an equivalent image-processing backend with CLAHE support.",
+      "Prepare low-light or low-contrast inputs under tools/clahe-filter/examples/.",
+      "Run the filter with repository-relative image paths and tuned clipping parameters.",
+      "Save enhanced images under tools/clahe-filter/runs/ for downstream perception."
+    ],
+    "benchmarkDataset": "Not provided in the submitted spreadsheet.",
+    "benchmarkMetric": "No benchmark number was copied into the site because the submitted row did not provide one.",
+    "benchmarkLatency": "Interactive, according to the submitted spreadsheet.",
+    "benchmarkArtifacts": "Tool-sheet description and preprocessing parameters from the submitted spreadsheet.",
+    "license": "Not specified",
+    "owner": "Hu Yibo",
+    "version": "recommended tool"
+  },
+  {
     "slug": "tool-entry-template",
     "title": "Tool Entry Template",
     "category": "Perception and Grounding",
