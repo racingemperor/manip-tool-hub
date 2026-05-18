@@ -18,11 +18,6 @@ export default function HomePage() {
           <p>
             A standardized tool extension and management framework for embodied intelligence, by encapsulating heterogeneous perception, control and physical constraint modules, endows the visual language model (VLM) with high robustness, reliability and real-time closed-loop decision-making and execution capabilities in complex physical interactions.
           </p>
-          <div className="hero-actions">
-            <Link className="btn primary" href="/datasets">Browse Datasets</Link>
-            <Link className="btn" href="/leaderboard">View Leaderboard</Link>
-            <Link className="btn" href="/tools">Explore Tools</Link>
-          </div>
         </div>
 
         <div className="section">
