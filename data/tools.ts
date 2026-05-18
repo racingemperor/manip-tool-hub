@@ -1006,30 +1006,10 @@ export const tools: Tool[] = [
         "url": "https://github.com/xuankuzcr/Global-LVBA"
       }
     ],
-    "heroImage": "assets/tools/fast-livo2/demo-hqdefault.jpg",
+    "heroImage": "assets/tools/fast-livo2/demo-maxresdefault.jpg",
     "demos": [
       {
         "label": "Official demo video frame",
-        "image": "assets/tools/fast-livo2/demo-hqdefault.jpg",
-        "position": "center center"
-      },
-      {
-        "label": "Video thumbnail frame 1",
-        "image": "assets/tools/fast-livo2/demo-1.jpg",
-        "position": "center center"
-      },
-      {
-        "label": "Video thumbnail frame 2",
-        "image": "assets/tools/fast-livo2/demo-2.jpg",
-        "position": "center center"
-      },
-      {
-        "label": "Video thumbnail frame 3",
-        "image": "assets/tools/fast-livo2/demo-3.jpg",
-        "position": "center center"
-      },
-      {
-        "label": "High resolution demo thumbnail",
         "image": "assets/tools/fast-livo2/demo-maxresdefault.jpg",
         "position": "center center"
       }
@@ -1042,7 +1022,7 @@ export const tools: Tool[] = [
       "prompt": "mapping_avia.launch with calibrated sensor topics",
       "runLabel": "Launch odometry",
       "expectedOutput": "A pose trajectory, local map, reconstruction outputs, and ROS visualization streams.",
-      "image": "assets/tools/fast-livo2/demo-hqdefault.jpg"
+      "image": "assets/tools/fast-livo2/demo-maxresdefault.jpg"
     },
     "parameterNotes": [
       {
