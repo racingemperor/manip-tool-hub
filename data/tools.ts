@@ -90,7 +90,1120 @@ export const toolCategories: ToolCategory[] = [
   "Execution and Control"
 ];
 
+const round1ExecutionControlTools: Tool[] = [
+  {
+    "slug": "anygrasp-io-demo",
+    "title": "anygrasp_io_demo",
+    "category": "Execution and Control",
+    "task": "RGB-D grasp preprocessing",
+    "summary": "Prepares AnyGrasp RGB-D captures for execution by converting color, depth, camera intrinsics, and z-range settings into filtered point-cloud artifacts.",
+    "input": "RGB image + depth image + intrinsics + z range",
+    "output": "Point cloud readiness metrics and points.npy",
+    "runtime": "Python / AnyGrasp local wrapper",
+    "status": "Runnable",
+    "paperTitle": "AnyGrasp IO preprocessing benchmark wrapper",
+    "paperVenue": "Minimal Eval Round 1 / 2026-04-16",
+    "paperContribution": "Validates the execution-time preprocessing line that feeds RGB-D captures into AnyGrasp-style 6-DoF grasp perception.",
+    "paperLinks": [
+      {
+        "label": "AnyGrasp SDK",
+        "url": "https://github.com/graspnet/anygrasp_sdk"
+      },
+      {
+        "label": "AnyGrasp Paper",
+        "url": "https://arxiv.org/abs/2212.08333"
+      }
+    ],
+    "apiExample": "python evaluation/minimal_eval_round1/anygrasp_io_20/run_anygrasp_io_20.py",
+    "shortExplanation": "Run the wrapper on RGB-D cases to check whether enough valid 3D points are produced for downstream grasp execution.",
+    "parameterNotes": [
+      {
+        "name": "input_json",
+        "control": "path",
+        "defaultValue": "evaluation/minimal_eval_round1/anygrasp_io_20/cases/*.json",
+        "meaning": "Case file containing color path, depth path, camera intrinsics, z range, and output path."
+      },
+      {
+        "name": "z_range",
+        "control": "text",
+        "meaning": "Depth interval retained during point-cloud filtering."
+      },
+      {
+        "name": "out",
+        "control": "path",
+        "meaning": "Output path for the generated points.npy artifact."
+      }
+    ],
+    "outputNotes": [
+      {
+        "name": "readiness",
+        "meaning": "Boolean indicating whether the generated point cloud passes the local point-count and depth-validity thresholds."
+      },
+      {
+        "name": "point_count",
+        "meaning": "Number of filtered 3D points available for grasp processing."
+      },
+      {
+        "name": "valid_depth_ratio",
+        "meaning": "Fraction of depth pixels that survived the preprocessing range and validity checks."
+      }
+    ],
+    "deploymentNotes": [
+      "Install the AnyGrasp local environment used by the benchmark wrapper.",
+      "Prepare RGB-D case JSON files under evaluation/minimal_eval_round1/anygrasp_io_20/cases/.",
+      "Run the round-1 script and inspect aggregate_metrics.json and per-case result.json files.",
+      "Use the produced points.npy files as readiness artifacts for downstream grasp pose evaluation."
+    ],
+    "benchmarkRows": [
+      {
+        "dataset": "anygrasp_io_20, 20 RGB-D cases",
+        "metric": "ok_rate / readiness_rate / mean_point_count / mean_valid_depth_ratio",
+        "value": "ok 1.00; readiness 0.70; points 2314.6",
+        "source": "minimal_eval_round1 FINAL_14_TOOL_BENCHMARK_TABLE"
+      }
+    ],
+    "benchmarkDataset": "anygrasp_io_20, 20 RGB-D preprocessing cases.",
+    "benchmarkMetric": "ok_rate 1.00; readiness_rate 0.70; mean_point_count 2314.6; ToolScore 71.15.",
+    "benchmarkLatency": "Not reported in the local round-1 aggregate.",
+    "benchmarkArtifacts": "cases/*.json, results/*/points.npy, result.json, aggregate_metrics.json, aggregate_table.csv.",
+    "license": "Local evaluation wrapper",
+    "owner": "minimal_eval_round1",
+    "version": "round1-2026-04-16"
+  },
+  {
+    "slug": "anygrasp-6dof-pose-demo",
+    "title": "anygrasp_6dof_pose_demo",
+    "category": "Execution and Control",
+    "task": "6-DoF grasp pose proposal",
+    "summary": "Runs the local AnyGrasp 6-DoF pose wrapper on harder RGB-D captures and records grasp-count and top-1 pose quality signals for manipulation execution.",
+    "input": "RGB-D capture + intrinsics + gripper constraints",
+    "output": "Grasp proposals, top-1 score, and validity metrics",
+    "runtime": "Python / AnyGrasp local wrapper",
+    "status": "Runnable",
+    "paperTitle": "AnyGrasp 6-DoF pose evaluation wrapper",
+    "paperVenue": "Minimal Eval Round 1 / 2026-04-16",
+    "paperContribution": "Converts RGB-D cases into candidate 6-DoF grasps and exposes local validity metrics before robot execution.",
+    "paperLinks": [
+      {
+        "label": "AnyGrasp SDK",
+        "url": "https://github.com/graspnet/anygrasp_sdk"
+      },
+      {
+        "label": "AnyGrasp Paper",
+        "url": "https://arxiv.org/abs/2212.08333"
+      }
+    ],
+    "apiExample": "python evaluation/minimal_eval_round1/anygrasp_eval_hard20/run_anygrasp_eval_hard20.py",
+    "shortExplanation": "Use this wrapper to check whether a hard RGB-D capture yields executable grasp proposals and a usable top-ranked grasp.",
+    "parameterNotes": [
+      {
+        "name": "input_json",
+        "control": "path",
+        "defaultValue": "evaluation/minimal_eval_round1/anygrasp_eval_hard20/cases/*.json",
+        "meaning": "Case file containing RGB-D inputs, intrinsics, depth range, top_k, and gripper dimensions."
+      },
+      {
+        "name": "top_k",
+        "control": "number",
+        "meaning": "Maximum number of grasp candidates retained for scoring."
+      },
+      {
+        "name": "max_gripper_width_m",
+        "control": "number",
+        "meaning": "Maximum gripper width used to filter grasp poses."
+      }
+    ],
+    "outputNotes": [
+      {
+        "name": "valid_case_rate",
+        "meaning": "Fraction of cases with at least one grasp proposal."
+      },
+      {
+        "name": "grasp_count",
+        "meaning": "Number of grasp candidates returned by the local pose wrapper."
+      },
+      {
+        "name": "top1_score",
+        "meaning": "Score of the highest-ranked grasp candidate."
+      }
+    ],
+    "deploymentNotes": [
+      "Install the AnyGrasp local environment and local pose demo wrapper.",
+      "Prepare hard RGB-D captures and case JSON files under anygrasp_eval_hard20/cases/.",
+      "Run the benchmark script to produce per-case grasps.json and result.json files.",
+      "Review valid_case_rate and top-1 score before using the grasp pose in an execution pipeline."
+    ],
+    "benchmarkRows": [
+      {
+        "dataset": "anygrasp_eval_hard20, 20 hard RGB-D cases",
+        "metric": "valid_case_rate / mean_grasp_count / mean_top1_score",
+        "value": "valid 0.25; grasp_count 2.50; top1 0.959",
+        "source": "minimal_eval_round1 FINAL_14_TOOL_BENCHMARK_TABLE"
+      }
+    ],
+    "benchmarkDataset": "anygrasp_eval_hard20, 20 hard RGB-D grasp cases.",
+    "benchmarkMetric": "valid_case_rate 0.25; mean_grasp_count 2.50; mean_top1_score 0.959; ToolScore 42.73.",
+    "benchmarkLatency": "Not reported in the local round-1 aggregate.",
+    "benchmarkArtifacts": "io_input.json, pose_input.json, grasps.json, result.json, aggregate_metrics.json.",
+    "license": "Local evaluation wrapper",
+    "owner": "minimal_eval_round1",
+    "version": "round1-2026-04-16"
+  },
+  {
+    "slug": "anygrasp-official-detection-demo",
+    "title": "anygrasp_official_detection_demo",
+    "category": "Execution and Control",
+    "task": "Official AnyGrasp detection chain",
+    "summary": "Runs the official AnyGrasp detection-style local wrapper on constrained hard captures and records pre-NMS grasp counts and top-ranked grasp quality.",
+    "input": "RGB-D capture + intrinsics + workspace limits",
+    "output": "Top grasp candidates and official detection metrics",
+    "runtime": "Python / AnyGrasp official-style wrapper",
+    "status": "Runnable",
+    "paperTitle": "Official AnyGrasp detection benchmark wrapper",
+    "paperVenue": "Minimal Eval Round 1 / 2026-04-16",
+    "paperContribution": "Tests the official-style AnyGrasp detection path under tighter workspace limits before passing grasps to manipulation execution.",
+    "paperLinks": [
+      {
+        "label": "AnyGrasp SDK",
+        "url": "https://github.com/graspnet/anygrasp_sdk"
+      },
+      {
+        "label": "AnyGrasp Paper",
+        "url": "https://arxiv.org/abs/2212.08333"
+      }
+    ],
+    "apiExample": "python evaluation/minimal_eval_round1/official_anygrasp_hard20/run_official_anygrasp_hard20.py",
+    "shortExplanation": "Run the official-style detection wrapper to verify whether a constrained RGB-D scene still yields an executable best grasp.",
+    "parameterNotes": [
+      {
+        "name": "input_json",
+        "control": "path",
+        "defaultValue": "evaluation/minimal_eval_round1/official_anygrasp_hard20/cases/*.json",
+        "meaning": "Case file containing RGB-D inputs, intrinsics, workspace limits, GPU id, and top_k."
+      },
+      {
+        "name": "lims",
+        "control": "text",
+        "meaning": "Workspace bounds used by the official-style detector."
+      },
+      {
+        "name": "top_k",
+        "control": "number",
+        "defaultValue": "5",
+        "meaning": "Number of top grasps kept after filtering."
+      }
+    ],
+    "outputNotes": [
+      {
+        "name": "valid_case_rate",
+        "meaning": "Fraction of cases with a best grasp after detection and filtering."
+      },
+      {
+        "name": "grasp_count_before_nms",
+        "meaning": "Candidate count before non-maximum suppression."
+      },
+      {
+        "name": "top1_score",
+        "meaning": "Score of the selected best grasp."
+      }
+    ],
+    "deploymentNotes": [
+      "Install the AnyGrasp official-style local wrapper and required model assets.",
+      "Prepare hard case JSON files with RGB-D paths and workspace limits.",
+      "Run the official_anygrasp_hard20 script to write official_anygrasp_output.json per case.",
+      "Use valid_case_rate and top-1 depth/width diagnostics before executing the selected grasp."
+    ],
+    "benchmarkRows": [
+      {
+        "dataset": "official_anygrasp_hard20, 20 constrained RGB-D cases",
+        "metric": "valid_case_rate / mean_grasp_count_before_nms / mean_top1_score",
+        "value": "valid 0.40; grasp_before_nms 94.55; top1 0.104",
+        "source": "minimal_eval_round1 FINAL_14_TOOL_BENCHMARK_TABLE"
+      }
+    ],
+    "benchmarkDataset": "official_anygrasp_hard20, 20 constrained RGB-D cases.",
+    "benchmarkMetric": "valid_case_rate 0.40; mean_grasp_count_before_nms 94.55; mean_top1_score 0.104; ToolScore 44.85.",
+    "benchmarkLatency": "Not reported in the local round-1 aggregate.",
+    "benchmarkArtifacts": "official_anygrasp_input.json, official_anygrasp_output.json, result.json, aggregate_metrics.json.",
+    "license": "Local evaluation wrapper",
+    "owner": "minimal_eval_round1",
+    "version": "round1-2026-04-16"
+  },
+  {
+    "slug": "dense-object-nets-io-demo",
+    "title": "dense_object_nets_io_demo",
+    "category": "Execution and Control",
+    "task": "Dense correspondence for manipulation",
+    "summary": "Evaluates a Dense Object Nets style local wrapper that matches query pixels across transformed object views for point-specific manipulation cues.",
+    "input": "Image pair + query pixel + expected correspondence",
+    "output": "Best-match pixel, descriptor distance, and correspondence metrics",
+    "runtime": "Python / Dense Object Nets local wrapper",
+    "status": "Runnable",
+    "paperTitle": "Dense Object Nets: Learning Dense Visual Object Descriptors By and For Robotic Manipulation",
+    "paperAuthors": "Peter R. Florence, Lucas Manuelli, Russ Tedrake",
+    "paperVenue": "CoRL 2018 / Minimal Eval Round 1 wrapper",
+    "paperContribution": "Uses dense visual descriptors as a manipulation-facing representation for matching specific object points across views.",
+    "paperLinks": [
+      {
+        "label": "PMLR",
+        "url": "https://proceedings.mlr.press/v87/florence18a.html"
+      },
+      {
+        "label": "arXiv",
+        "url": "https://arxiv.org/abs/1806.08756"
+      }
+    ],
+    "apiExample": "python evaluation/minimal_eval_round1/dense_object_nets_20/run_dense_object_nets_20.py",
+    "shortExplanation": "Use this wrapper to test whether a dense descriptor model can recover the corresponding manipulation point in another view.",
+    "parameterNotes": [
+      {
+        "name": "input_json",
+        "control": "path",
+        "defaultValue": "evaluation/minimal_eval_round1/dense_object_nets_20/cases/*.json",
+        "meaning": "Case file containing the image pair, query pixel, and expected target pixel."
+      },
+      {
+        "name": "query_uv",
+        "control": "text",
+        "meaning": "Pixel coordinate in the source image."
+      },
+      {
+        "name": "expected_match_uv_in_b",
+        "control": "text",
+        "meaning": "Ground-truth target pixel used for local evaluation."
+      }
+    ],
+    "outputNotes": [
+      {
+        "name": "best_match_uv_in_b",
+        "meaning": "Predicted corresponding pixel in the target view."
+      },
+      {
+        "name": "pixel_error",
+        "meaning": "Euclidean pixel error against the expected correspondence."
+      },
+      {
+        "name": "best_match_l2_distance",
+        "meaning": "Descriptor-space distance for the selected match."
+      }
+    ],
+    "deploymentNotes": [
+      "Install the local Dense Object Nets wrapper environment.",
+      "Prepare synthetic or captured correspondence cases under dense_object_nets_20/cases/.",
+      "Run the benchmark script to produce per-case result.json files.",
+      "Treat the current random-weight demo numbers as workflow-level evidence, not final model quality."
+    ],
+    "benchmarkRows": [
+      {
+        "dataset": "dense_object_nets_20, 20 correspondence cases",
+        "metric": "success@20px / mean_pixel_error / mean_best_match_l2_distance",
+        "value": "success@20px 0.15; pixel_err 160.4; l2 0.0034",
+        "source": "minimal_eval_round1 FINAL_14_TOOL_BENCHMARK_TABLE"
+      }
+    ],
+    "benchmarkDataset": "dense_object_nets_20, 20 synthetic geometric and appearance transform cases.",
+    "benchmarkMetric": "success@20px 0.15; mean_pixel_error 160.4; mean_best_match_l2_distance 0.0034; ToolScore 50.24.",
+    "benchmarkLatency": "Not reported in the local round-1 aggregate.",
+    "benchmarkArtifacts": "cases/*.json, assets/* image pairs, result.json, aggregate_metrics.json.",
+    "license": "Local evaluation wrapper",
+    "owner": "minimal_eval_round1",
+    "version": "round1-2026-04-16"
+  },
+  {
+    "slug": "estimate-relative-depth-from-rgb-image",
+    "title": "estimate_relative_depth_from_rgb_image",
+    "category": "Execution and Control",
+    "task": "Relative depth cue for execution",
+    "summary": "Estimates a normalized relative depth map from an RGB image and compares ordering quality on harder Habitat-style captures.",
+    "input": "RGB image",
+    "output": "Relative depth map and ordering metrics",
+    "runtime": "Python / local Control_Tools wrapper",
+    "status": "Runnable",
+    "paperTitle": "Relative depth execution cue benchmark wrapper",
+    "paperVenue": "Minimal Eval Round 1 / 2026-04-16",
+    "paperContribution": "Provides a lightweight depth cue for execution-time decisions when metric depth is unavailable or treated as a local fallback.",
+    "paperLinks": [
+      {
+        "label": "MiDaS Reference",
+        "url": "https://github.com/isl-org/MiDaS"
+      }
+    ],
+    "apiExample": "python evaluation/minimal_eval_round1/relative_depth_hard20/run_relative_depth_hard20.py",
+    "shortExplanation": "Run the local wrapper on RGB captures to produce a relative depth cue and compare it against available depth supervision.",
+    "parameterNotes": [
+      {
+        "name": "rgb_image_path",
+        "control": "path",
+        "meaning": "RGB frame used for relative depth estimation."
+      },
+      {
+        "name": "blur_ksize",
+        "control": "number",
+        "defaultValue": "9",
+        "meaning": "Smoothing kernel used by the local wrapper."
+      },
+      {
+        "name": "invert",
+        "control": "toggle",
+        "defaultValue": "true",
+        "meaning": "Whether the local wrapper inverts the normalized depth ordering."
+      }
+    ],
+    "outputNotes": [
+      {
+        "name": "relative_depth",
+        "meaning": "Normalized depth-like map used for downstream ordering decisions."
+      },
+      {
+        "name": "tool_rmse",
+        "meaning": "RMSE against the normalized ground-truth relative depth map."
+      },
+      {
+        "name": "ordering_accuracy",
+        "meaning": "Pairwise depth-order agreement on sampled valid pixels."
+      }
+    ],
+    "deploymentNotes": [
+      "Keep RGB and reference depth assets under relative_depth_hard20/assets/.",
+      "Run the hard20 script to compare the local wrapper against the baseline setting.",
+      "Inspect aggregate_metrics.json for RMSE, Spearman correlation, ordering accuracy, and tool_better_count.",
+      "Use the relative depth output only as an execution cue, not as calibrated metric depth."
+    ],
+    "benchmarkRows": [
+      {
+        "dataset": "relative_depth_hard20, 20 hard RGB-D cases",
+        "metric": "mean_tool_rmse / mean_tool_spearman / mean_tool_ordering_accuracy",
+        "value": "rmse 0.304; rank 0.044; order 0.393",
+        "source": "minimal_eval_round1 FINAL_14_TOOL_BENCHMARK_TABLE"
+      }
+    ],
+    "benchmarkDataset": "relative_depth_hard20, 20 harder RGB-D captures.",
+    "benchmarkMetric": "mean_tool_rmse 0.304; mean_tool_spearman 0.044; mean_tool_ordering_accuracy 0.393; ToolScore 55.27.",
+    "benchmarkLatency": "Not reported in the local round-1 aggregate.",
+    "benchmarkArtifacts": "RGB/depth assets, cases/*.json, result.json, aggregate_metrics.json.",
+    "license": "Local evaluation wrapper",
+    "owner": "minimal_eval_round1",
+    "version": "round1-2026-04-16"
+  },
+  {
+    "slug": "build-query-3d-occupancy-map",
+    "title": "build_query_3d_occupancy_map",
+    "category": "Execution and Control",
+    "task": "3D occupancy query for execution",
+    "summary": "Builds a local 3D occupancy representation from occupied points and answers free, occupied, or unknown queries for execution-time planning checks.",
+    "input": "Occupied points + sensor origin + query points",
+    "output": "Occupancy labels, F1, exact-case success, and tree statistics",
+    "runtime": "Python / local Control_Tools wrapper",
+    "status": "Runnable",
+    "paperTitle": "3D occupancy query benchmark wrapper",
+    "paperVenue": "Minimal Eval Round 1 / 2026-04-16",
+    "paperContribution": "Provides a fast execution-time occupancy query interface for collision checks and planner gating.",
+    "paperLinks": [
+      {
+        "label": "OctoMap GitHub",
+        "url": "https://github.com/OctoMap/octomap"
+      },
+      {
+        "label": "OctoMap Docs",
+        "url": "https://octomap.github.io/octomap/doc/"
+      }
+    ],
+    "apiExample": "python evaluation/minimal_eval_round1/occupancy_hard20/run_occupancy_hard20.py",
+    "shortExplanation": "Use this wrapper to turn point observations into occupancy labels that downstream planners can query before moving.",
+    "parameterNotes": [
+      {
+        "name": "occupied_points_path",
+        "control": "path",
+        "meaning": "JSON file containing observed occupied 3D points."
+      },
+      {
+        "name": "query_points",
+        "control": "text",
+        "meaning": "3D points to classify as free, occupied, or unknown."
+      },
+      {
+        "name": "resolution",
+        "control": "number",
+        "meaning": "Voxel or tree resolution used by the local occupancy wrapper."
+      }
+    ],
+    "outputNotes": [
+      {
+        "name": "query_results",
+        "meaning": "Per-query occupancy labels."
+      },
+      {
+        "name": "occupied_f1",
+        "meaning": "F1 score for occupied-label recovery."
+      },
+      {
+        "name": "exact_case_success",
+        "meaning": "Whether every query in a case matched the ground truth label."
+      }
+    ],
+    "deploymentNotes": [
+      "Prepare point-observation and query case files under occupancy_hard20/cases/.",
+      "Run the local hard20 script to create per-case occupancy results.",
+      "Check query accuracy, occupied F1, unknown ratio, tree size, and exact-case success.",
+      "Feed the query labels into planning or execution filters that need local collision evidence."
+    ],
+    "benchmarkRows": [
+      {
+        "dataset": "occupancy_hard20, 20 mixed occupancy-query cases",
+        "metric": "mean_query_accuracy / mean_occupied_f1 / exact_case_success_rate",
+        "value": "query_acc 0.996; F1 0.995; exact 0.95",
+        "source": "minimal_eval_round1 FINAL_14_TOOL_BENCHMARK_TABLE"
+      }
+    ],
+    "benchmarkDataset": "occupancy_hard20, 20 mixed surface, free-ray, unknown, and tangent-perturbation queries.",
+    "benchmarkMetric": "mean_query_accuracy 0.995833; mean_occupied_f1 0.995455; exact_case_success_rate 0.95; ToolScore 98.65.",
+    "benchmarkLatency": "Not reported in the local round-1 aggregate.",
+    "benchmarkArtifacts": "occupied point files, cases/*.json, result.json, aggregate_metrics.json.",
+    "license": "Local evaluation wrapper",
+    "owner": "minimal_eval_round1",
+    "version": "round1-2026-04-16"
+  },
+  {
+    "slug": "moma-io-demo",
+    "title": "moma_io_demo",
+    "category": "Execution and Control",
+    "task": "Mobile manipulation transform consistency",
+    "summary": "Checks mobile-manipulation frame transforms by round-tripping base, tool, and world coordinates on hard translation and near-pi rotation cases.",
+    "input": "T_world_base + T_base_tool + point_tool",
+    "output": "World point, round-trip error, and consistency success",
+    "runtime": "Python / MOMA local wrapper",
+    "status": "Runnable",
+    "paperTitle": "Active-Perceptive Motion Generation for Mobile Manipulation",
+    "paperVenue": "CoRL 2023 / Minimal Eval Round 1 wrapper",
+    "paperContribution": "Uses a local MOMA transform line to verify coordinate consistency before active mobile manipulation execution.",
+    "paperLinks": [
+      {
+        "label": "ActPerMoMa GitHub",
+        "url": "https://github.com/iROSA-lab/ActPerMoMa"
+      },
+      {
+        "label": "Paper",
+        "url": "https://arxiv.org/abs/2310.00433"
+      }
+    ],
+    "apiExample": "python evaluation/minimal_eval_round1/moma_hard20/run_moma_hard20.py",
+    "shortExplanation": "Use this wrapper to make sure frame transforms stay numerically consistent before sending mobile-manipulator poses to execution.",
+    "parameterNotes": [
+      {
+        "name": "T_world_base",
+        "control": "text",
+        "meaning": "Homogeneous transform from robot base into world coordinates."
+      },
+      {
+        "name": "T_base_tool",
+        "control": "text",
+        "meaning": "Homogeneous transform from tool frame into base coordinates."
+      },
+      {
+        "name": "point_tool",
+        "control": "text",
+        "meaning": "Tool-frame point to transform into the world frame."
+      }
+    ],
+    "outputNotes": [
+      {
+        "name": "point_world",
+        "meaning": "Tool point expressed in world coordinates."
+      },
+      {
+        "name": "roundtrip_position_error",
+        "meaning": "Numerical error after applying forward and inverse transforms."
+      },
+      {
+        "name": "consistency_success",
+        "meaning": "Whether the local tolerance checks passed for the case."
+      }
+    ],
+    "deploymentNotes": [
+      "Install the local MOMA wrapper environment.",
+      "Prepare hard transform cases under moma_hard20/cases/.",
+      "Run the hard20 script to generate result.json and aggregate_metrics.json.",
+      "Use the consistency result to gate downstream active perception or manipulation commands."
+    ],
+    "benchmarkRows": [
+      {
+        "dataset": "moma_hard20, 20 transform cases",
+        "metric": "consistency_success_rate / mean_roundtrip_position_error / mean_point_world_error",
+        "value": "consistency 1.00; roundtrip 2.40e-16; point_err 4.20e-16",
+        "source": "minimal_eval_round1 FINAL_14_TOOL_BENCHMARK_TABLE"
+      }
+    ],
+    "benchmarkDataset": "moma_hard20, 20 large-translation and near-pi-rotation transform cases.",
+    "benchmarkMetric": "consistency_success_rate 1.00; mean_roundtrip_position_error 2.40e-16; mean_point_world_error 4.20e-16; ToolScore 100.00.",
+    "benchmarkLatency": "Not reported in the local round-1 aggregate.",
+    "benchmarkArtifacts": "moma_input.json, result.json, aggregate_metrics.json, aggregate_table.csv.",
+    "license": "Local evaluation wrapper",
+    "owner": "minimal_eval_round1",
+    "version": "round1-2026-04-16"
+  },
+  {
+    "slug": "ros2-nav2-advanced-demo-a",
+    "title": "ros2_nav2_advanced_demo_a",
+    "category": "Execution and Control",
+    "task": "ROS 2 Nav2 goal navigation",
+    "summary": "Runs a ROS 2 Nav2 goal-pose pipeline on Habitat-style projected obstacle maps and compares planning success, path length, and detour ratio.",
+    "input": "Map YAML + start pose + goal pose",
+    "output": "Nav2 path, planning status, path length, and detour metrics",
+    "runtime": "ROS 2 / Nav2 local wrapper",
+    "status": "Runnable",
+    "paperTitle": "ROS 2 Nav2 goal navigation benchmark wrapper",
+    "paperVenue": "Minimal Eval Round 1 / 2026-04-16",
+    "paperContribution": "Connects projected Habitat obstacle maps to Nav2 goal navigation and records planner-level execution readiness.",
+    "paperLinks": [
+      {
+        "label": "Nav2 Docs",
+        "url": "https://nav2.org/"
+      },
+      {
+        "label": "Navigation2 GitHub",
+        "url": "https://github.com/ros-navigation/navigation2"
+      }
+    ],
+    "apiExample": "python evaluation/minimal_eval_round1/habitat_nav2_20/run_nav2_20.py",
+    "shortExplanation": "Use this wrapper to send a start and goal into Nav2 on a generated map and evaluate whether the planner returns a usable path.",
+    "parameterNotes": [
+      {
+        "name": "map_yaml",
+        "control": "path",
+        "meaning": "Nav2 map YAML generated from the Habitat-style obstacle projection."
+      },
+      {
+        "name": "start",
+        "control": "text",
+        "meaning": "Start x, y, and yaw for the navigation case."
+      },
+      {
+        "name": "goal",
+        "control": "text",
+        "meaning": "Goal x and y coordinates for the navigation case."
+      }
+    ],
+    "outputNotes": [
+      {
+        "name": "planning_succeeded",
+        "meaning": "Whether Nav2 accepted and solved the goal-pose planning request."
+      },
+      {
+        "name": "path_length_m",
+        "meaning": "Length of the returned path in meters."
+      },
+      {
+        "name": "detour_ratio",
+        "meaning": "Returned path length divided by straight-line start-to-goal distance."
+      }
+    ],
+    "deploymentNotes": [
+      "Install the ROS 2 and Nav2 environment used by nav2_advanced_demo_a.",
+      "Prepare Habitat-style obstacle cases under habitat_nav2_20/cases/.",
+      "Run the benchmark script to generate baseline and projected-map navigation results.",
+      "Inspect full_path.json, path overlays, and aggregate detour metrics."
+    ],
+    "benchmarkRows": [
+      {
+        "dataset": "habitat_nav2_20, 20 navigation cases",
+        "metric": "ours_success_rate / mean_ours_path_length_m / mean_ours_detour_ratio",
+        "value": "success 1.00; path 6.602 m; detour 1.088",
+        "source": "minimal_eval_round1 FINAL_14_TOOL_BENCHMARK_TABLE"
+      }
+    ],
+    "benchmarkDataset": "habitat_nav2_20, 20 open-space, obstacle, double-obstacle, and narrow-passage cases.",
+    "benchmarkMetric": "ours_success_rate 1.00; mean_ours_path_length_m 6.602; mean_ours_detour_ratio 1.088; ToolScore 96.38.",
+    "benchmarkLatency": "Local planner-level run time recorded per case, but no aggregate latency was reported in the final table.",
+    "benchmarkArtifacts": "baseline_input.json, ours_input.json, full_path.json, path overlays, aggregate_metrics.json.",
+    "license": "Local evaluation wrapper",
+    "owner": "minimal_eval_round1",
+    "version": "round1-2026-04-16"
+  },
+  {
+    "slug": "habitat-to-nav2-map-demo",
+    "title": "habitat_to_nav2_map_demo",
+    "category": "Execution and Control",
+    "task": "Habitat to Nav2 map bridge",
+    "summary": "Projects a Habitat-style scene into a Nav2 occupancy map and verifies projection validity, planning success, and map consistency.",
+    "input": "Habitat scene parameters + start and goal",
+    "output": "Projected Nav2 map, planning result, and consistency score",
+    "runtime": "Python / Habitat + Nav2 bridge",
+    "status": "Runnable",
+    "paperTitle": "Habitat to Nav2 map bridge benchmark wrapper",
+    "paperVenue": "Minimal Eval Round 1 / 2026-04-16",
+    "paperContribution": "Bridges embodied simulation geometry into a ROS 2 Nav2 planning map for execution-level navigation testing.",
+    "paperLinks": [
+      {
+        "label": "Habitat-Sim GitHub",
+        "url": "https://github.com/facebookresearch/habitat-sim"
+      },
+      {
+        "label": "Nav2 Docs",
+        "url": "https://nav2.org/"
+      }
+    ],
+    "apiExample": "python evaluation/minimal_eval_round1/habitat_nav2_bridge_20/run_habitat_nav2_bridge_20.py",
+    "shortExplanation": "Use this bridge to convert generated Habitat scene geometry into a Nav2 map and verify that Nav2 can plan through it.",
+    "parameterNotes": [
+      {
+        "name": "map_size_m",
+        "control": "number",
+        "meaning": "Square map size in meters."
+      },
+      {
+        "name": "resolution",
+        "control": "number",
+        "meaning": "Meters per map cell used for Nav2 projection."
+      },
+      {
+        "name": "cube_center",
+        "control": "text",
+        "meaning": "Obstacle center used when generating the Habitat-to-map projection."
+      }
+    ],
+    "outputNotes": [
+      {
+        "name": "projection_validity",
+        "meaning": "Whether the generated occupied area matches the expected scene obstacle footprint."
+      },
+      {
+        "name": "planning_success",
+        "meaning": "Whether Nav2 can plan on the projected map."
+      },
+      {
+        "name": "consistency_score",
+        "meaning": "Area-ratio score comparing projected and expected obstacle geometry."
+      }
+    ],
+    "deploymentNotes": [
+      "Install the local Habitat environment and Nav2 bridge script.",
+      "Prepare scene-parameter case JSON files under habitat_nav2_bridge_20/cases/.",
+      "Run the bridge benchmark to produce projected maps and per-case summaries.",
+      "Use projection_validity and planning_success to validate simulator-to-robot map transfer."
+    ],
+    "benchmarkRows": [
+      {
+        "dataset": "habitat_nav2_bridge_20, 20 bridge cases",
+        "metric": "projection_validity_rate / planning_success_rate / mean_consistency_score",
+        "value": "projection 1.00; planning 1.00; consistency 1.00",
+        "source": "minimal_eval_round1 FINAL_14_TOOL_BENCHMARK_TABLE"
+      }
+    ],
+    "benchmarkDataset": "habitat_nav2_bridge_20, 20 Habitat-to-Nav2 projection cases.",
+    "benchmarkMetric": "projection_validity_rate 1.00; planning_success_rate 1.00; mean_consistency_score 1.00; ToolScore 99.50.",
+    "benchmarkLatency": "Not reported in the local round-1 aggregate.",
+    "benchmarkArtifacts": "projected map PGM/YAML, scene_meta.json, summary.json, result.json, aggregate_metrics.json.",
+    "license": "Local evaluation wrapper",
+    "owner": "minimal_eval_round1",
+    "version": "round1-2026-04-16"
+  },
+  {
+    "slug": "solve-inverse-kinematics-with-pinocchio",
+    "title": "solve_inverse_kinematics_with_pinocchio",
+    "category": "Execution and Control",
+    "task": "Inverse kinematics solving",
+    "summary": "Solves 6-DoF and 7-DoF inverse kinematics cases with a Pinocchio-backed local wrapper and reports pose error and convergence metrics.",
+    "input": "Robot model parameters + target pose + initial joint state",
+    "output": "Joint solution, success flag, iterations, and pose error",
+    "runtime": "Python / Pinocchio local wrapper",
+    "status": "Runnable",
+    "paperTitle": "Pinocchio inverse kinematics benchmark wrapper",
+    "paperVenue": "Minimal Eval Round 1 / 2026-04-16",
+    "paperContribution": "Provides an execution-ready IK wrapper for converting desired end-effector poses into joint configurations.",
+    "paperLinks": [
+      {
+        "label": "Pinocchio GitHub",
+        "url": "https://github.com/stack-of-tasks/pinocchio"
+      },
+      {
+        "label": "Pinocchio Docs",
+        "url": "https://stack-of-tasks.github.io/pinocchio/"
+      }
+    ],
+    "apiExample": "python evaluation/minimal_eval_round1/ik_20/run_ik_20.py",
+    "shortExplanation": "Use this wrapper to solve IK for 6-DoF and redundant 7-DoF cases before sending a joint target to a controller.",
+    "parameterNotes": [
+      {
+        "name": "robot_dof",
+        "control": "select",
+        "meaning": "Robot degree-of-freedom group for the case."
+      },
+      {
+        "name": "target_pose",
+        "control": "text",
+        "meaning": "Desired end-effector position and orientation."
+      },
+      {
+        "name": "initial_q",
+        "control": "text",
+        "meaning": "Initial joint configuration used by the solver."
+      }
+    ],
+    "outputNotes": [
+      {
+        "name": "success",
+        "meaning": "Whether the IK solver converged under the local thresholds."
+      },
+      {
+        "name": "position_error_norm",
+        "meaning": "End-effector position error norm."
+      },
+      {
+        "name": "orientation_error_norm",
+        "meaning": "End-effector orientation error norm."
+      }
+    ],
+    "deploymentNotes": [
+      "Install Pinocchio and the local Control_Tools IK wrapper.",
+      "Prepare 6-DoF and 7-DoF case JSON files under ik_20/cases/.",
+      "Run the benchmark script to produce per-case result.json files.",
+      "Use success rate and pose errors to decide whether the joint solution is ready for execution."
+    ],
+    "benchmarkRows": [
+      {
+        "dataset": "ik_20, 20 IK cases",
+        "metric": "overall_success_rate / mean_position_error_norm / mean_orientation_error_norm",
+        "value": "success 0.90; pos_err 9.74e-04; ori_err 0.069",
+        "source": "minimal_eval_round1 FINAL_14_TOOL_BENCHMARK_TABLE"
+      }
+    ],
+    "benchmarkDataset": "ik_20, 10 6-DoF and 10 7-DoF inverse-kinematics cases.",
+    "benchmarkMetric": "overall_success_rate 0.90; mean_position_error_norm 9.74e-04; mean_orientation_error_norm 0.069; ToolScore 82.24.",
+    "benchmarkLatency": "mean_solve_time_sec is recorded in aggregate_metrics.json; the final table did not report a latency value.",
+    "benchmarkArtifacts": "cases/*.json, result.json, aggregate_metrics.json, aggregate_table.csv.",
+    "license": "Local evaluation wrapper",
+    "owner": "minimal_eval_round1",
+    "version": "round1-2026-04-16"
+  },
+  {
+    "slug": "compute-inverse-dynamics-with-pinocchio",
+    "title": "compute_inverse_dynamics_with_pinocchio",
+    "category": "Execution and Control",
+    "task": "Inverse dynamics torque computation",
+    "summary": "Computes inverse dynamics torques with a Pinocchio-backed local wrapper and checks finite outputs plus RNEA consistency across acceleration variants.",
+    "input": "Robot state, velocity, acceleration, and model parameters",
+    "output": "Joint torque vector and consistency metrics",
+    "runtime": "Python / Pinocchio local wrapper",
+    "status": "Runnable",
+    "paperTitle": "Pinocchio inverse dynamics benchmark wrapper",
+    "paperVenue": "Minimal Eval Round 1 / 2026-04-16",
+    "paperContribution": "Provides a torque-computation wrapper for controller feed-forward terms and verifies numerical consistency across grouped cases.",
+    "paperLinks": [
+      {
+        "label": "Pinocchio GitHub",
+        "url": "https://github.com/stack-of-tasks/pinocchio"
+      },
+      {
+        "label": "Pinocchio Docs",
+        "url": "https://stack-of-tasks.github.io/pinocchio/"
+      }
+    ],
+    "apiExample": "python evaluation/minimal_eval_round1/inverse_dynamics_20/run_inverse_dynamics_20.py",
+    "shortExplanation": "Use this wrapper to compute finite torque vectors and verify symmetric/scaled acceleration behavior before control execution.",
+    "parameterNotes": [
+      {
+        "name": "q",
+        "control": "text",
+        "meaning": "Joint positions for inverse dynamics."
+      },
+      {
+        "name": "v",
+        "control": "text",
+        "meaning": "Joint velocities for inverse dynamics."
+      },
+      {
+        "name": "a",
+        "control": "text",
+        "meaning": "Joint accelerations for the RNEA computation."
+      }
+    ],
+    "outputNotes": [
+      {
+        "name": "tau",
+        "meaning": "Computed joint torque vector."
+      },
+      {
+        "name": "finite_ok",
+        "meaning": "Whether every torque component is finite."
+      },
+      {
+        "name": "symmetry_residual",
+        "meaning": "Grouped consistency check for plus/minus acceleration variants."
+      }
+    ],
+    "deploymentNotes": [
+      "Install Pinocchio and the local Control_Tools inverse dynamics wrapper.",
+      "Prepare grouped zero, plus, minus, and double acceleration cases under inverse_dynamics_20/cases/.",
+      "Run the benchmark script to generate torque outputs and group metrics.",
+      "Use finite_rate and residual metrics before feeding torques into a controller."
+    ],
+    "benchmarkRows": [
+      {
+        "dataset": "inverse_dynamics_20, 20 RNEA consistency cases",
+        "metric": "finite_rate / mean_symmetry_residual / mean_scaling_residual",
+        "value": "finite 1.00; sym 5.74e-16; scale 9.01e-16",
+        "source": "minimal_eval_round1 FINAL_14_TOOL_BENCHMARK_TABLE"
+      }
+    ],
+    "benchmarkDataset": "inverse_dynamics_20, 20 grouped RNEA consistency cases.",
+    "benchmarkMetric": "finite_rate 1.00; mean_symmetry_residual 5.74e-16; mean_scaling_residual 9.01e-16; ToolScore 100.00.",
+    "benchmarkLatency": "Not reported in the local round-1 aggregate.",
+    "benchmarkArtifacts": "cases/*.json, result.json, aggregate_metrics.json, group_metrics.",
+    "license": "Local evaluation wrapper",
+    "owner": "minimal_eval_round1",
+    "version": "round1-2026-04-16"
+  },
+  {
+    "slug": "retime-trajectory-with-ruckig",
+    "title": "retime_trajectory_with_ruckig",
+    "category": "Execution and Control",
+    "task": "Jerk-limited trajectory retiming",
+    "summary": "Retimes joint trajectories with Ruckig under velocity, acceleration, and jerk limits, then verifies final-state error and constraint violations.",
+    "input": "Current state + target state + kinematic limits",
+    "output": "Retimed trajectory samples, duration, and constraint metrics",
+    "runtime": "Python / Ruckig local wrapper",
+    "status": "Runnable",
+    "paperTitle": "Jerk-limited Real-time Trajectory Generation with Arbitrary Target States",
+    "paperAuthors": "Pantor, Beul, et al.",
+    "paperVenue": "RSS 2021 / Minimal Eval Round 1 wrapper",
+    "paperContribution": "Uses Ruckig-style online trajectory generation to produce time-parameterized commands for execution under third-order constraints.",
+    "paperLinks": [
+      {
+        "label": "Ruckig GitHub",
+        "url": "https://github.com/pantor/ruckig"
+      },
+      {
+        "label": "Ruckig Docs",
+        "url": "https://docs.ruckig.com/"
+      },
+      {
+        "label": "Paper",
+        "url": "https://arxiv.org/abs/2105.04830"
+      }
+    ],
+    "apiExample": "python evaluation/minimal_eval_round1/ruckig_20/run_ruckig_20.py",
+    "shortExplanation": "Use this wrapper to turn start and target joint states into a smooth trajectory that respects velocity, acceleration, and jerk limits.",
+    "parameterNotes": [
+      {
+        "name": "current_position",
+        "control": "text",
+        "meaning": "Initial joint positions."
+      },
+      {
+        "name": "target_position",
+        "control": "text",
+        "meaning": "Target joint positions."
+      },
+      {
+        "name": "max_velocity",
+        "control": "text",
+        "meaning": "Per-joint velocity limits used during retiming."
+      },
+      {
+        "name": "max_jerk",
+        "control": "text",
+        "meaning": "Per-joint jerk limits used during trajectory generation."
+      }
+    ],
+    "outputNotes": [
+      {
+        "name": "duration_sec",
+        "meaning": "Generated trajectory duration."
+      },
+      {
+        "name": "position_error",
+        "meaning": "Final position error against the target state."
+      },
+      {
+        "name": "duration_efficiency",
+        "meaning": "Lower-bound duration divided by generated duration."
+      }
+    ],
+    "deploymentNotes": [
+      "Install the Ruckig Python package and the local retiming wrapper.",
+      "Prepare kinematic limit cases under ruckig_20/cases/.",
+      "Run the benchmark script to simulate full trajectories and write per-case result.json files.",
+      "Use constraint and final-state metrics before sending trajectory samples to a robot controller."
+    ],
+    "benchmarkRows": [
+      {
+        "dataset": "ruckig_20, 20 trajectory retiming cases",
+        "metric": "success_rate / mean_position_error / mean_duration_efficiency",
+        "value": "success 1.00; pos_err 3.73e-14; eff 0.393",
+        "source": "minimal_eval_round1 FINAL_14_TOOL_BENCHMARK_TABLE"
+      }
+    ],
+    "benchmarkDataset": "ruckig_20, 20 jerk-limited trajectory retiming cases.",
+    "benchmarkMetric": "success_rate 1.00; mean_position_error 3.73e-14; mean_duration_efficiency 0.393; ToolScore 93.93.",
+    "benchmarkLatency": "Not reported in the local round-1 aggregate.",
+    "benchmarkArtifacts": "cases/*.json, result.json, aggregate_metrics.json, aggregate_table.csv.",
+    "license": "Local evaluation wrapper",
+    "owner": "minimal_eval_round1",
+    "version": "round1-2026-04-16"
+  },
+  {
+    "slug": "plan-collision-free-manipulation",
+    "title": "plan_collision_free_manipulation",
+    "category": "Execution and Control",
+    "task": "Collision-free arm planning",
+    "summary": "Plans collision-free 2-link manipulation paths with a local sampling-style planner and compares against direct interpolation baselines.",
+    "input": "Start joints + goal joints + obstacle set + planner parameters",
+    "output": "Joint path, success flag, path length, and clearance metrics",
+    "runtime": "Python / local Control_Tools planner",
+    "status": "Runnable",
+    "paperTitle": "Collision-free manipulation planning benchmark wrapper",
+    "paperVenue": "Minimal Eval Round 1 / 2026-04-16",
+    "paperContribution": "Tests whether a local manipulation planner can find executable joint paths around obstacles instead of relying on direct interpolation.",
+    "paperLinks": [
+      {
+        "label": "OMPL GitHub",
+        "url": "https://github.com/ompl/ompl"
+      }
+    ],
+    "apiExample": "python evaluation/minimal_eval_round1/plan_collision_free_manipulation_20/run_plan_collision_free_manipulation_20.py",
+    "shortExplanation": "Use this wrapper to plan a joint-space path and verify basic collision-free clearance before execution.",
+    "parameterNotes": [
+      {
+        "name": "start_q",
+        "control": "text",
+        "meaning": "Initial joint configuration."
+      },
+      {
+        "name": "goal_q",
+        "control": "text",
+        "meaning": "Target joint configuration."
+      },
+      {
+        "name": "obstacles",
+        "control": "text",
+        "meaning": "Obstacle geometry used by the local planner collision checks."
+      },
+      {
+        "name": "max_iter",
+        "control": "number",
+        "meaning": "Planner iteration budget."
+      }
+    ],
+    "outputNotes": [
+      {
+        "name": "success",
+        "meaning": "Whether the local planner found a path."
+      },
+      {
+        "name": "joint_path",
+        "meaning": "Sequence of joint configurations from start to goal."
+      },
+      {
+        "name": "min_clearance",
+        "meaning": "Minimum obstacle clearance measured along the planned path."
+      }
+    ],
+    "deploymentNotes": [
+      "Prepare joint-space obstacle cases under plan_collision_free_manipulation_20/cases/.",
+      "Run the local benchmark script to execute the planner and direct interpolation baseline.",
+      "Inspect result.json for planner output, baseline_success, path length, and clearance.",
+      "Treat low success rates as failure-analysis evidence for planner configuration and scenario difficulty."
+    ],
+    "benchmarkRows": [
+      {
+        "dataset": "plan_collision_free_manipulation_20, 20 manipulation planning cases",
+        "metric": "success_rate / baseline_success_rate / tool_better_rate / mean_min_clearance_success",
+        "value": "success 0.30; baseline 0.25; better 0.05",
+        "source": "minimal_eval_round1 FINAL_14_TOOL_BENCHMARK_TABLE"
+      }
+    ],
+    "benchmarkDataset": "plan_collision_free_manipulation_20, 20 obstacle-aware joint-planning cases.",
+    "benchmarkMetric": "success_rate 0.30; baseline_success_rate 0.25; tool_better_rate 0.05; mean_min_clearance_success 0.2009; ToolScore 39.76.",
+    "benchmarkLatency": "Per-case timeout was 8 seconds in the benchmark runner.",
+    "benchmarkArtifacts": "input.json, result.json, aggregate_metrics.json, aggregate_table.csv.",
+    "license": "Local evaluation wrapper",
+    "owner": "minimal_eval_round1",
+    "version": "round1-2026-04-16"
+  },
+  {
+    "slug": "habitat-to-collision-free-manipulation-demo",
+    "title": "habitat_to_collision_free_manipulation_demo",
+    "category": "Execution and Control",
+    "task": "Habitat to manipulation planning bridge",
+    "summary": "Converts Habitat-style scene cases into manipulation-planner inputs and evaluates capture, conversion, planning, and end-to-end success.",
+    "input": "Habitat scene case + manipulation target",
+    "output": "Planner input, joint path, end-to-end success, and goal error",
+    "runtime": "Python / Habitat + local planner bridge",
+    "status": "Runnable",
+    "paperTitle": "Habitat to collision-free manipulation bridge benchmark wrapper",
+    "paperVenue": "Minimal Eval Round 1 / 2026-04-16",
+    "paperContribution": "Bridges simulated scene capture into collision-free manipulation planning for end-to-end execution-readiness checks.",
+    "paperLinks": [
+      {
+        "label": "Habitat-Sim GitHub",
+        "url": "https://github.com/facebookresearch/habitat-sim"
+      },
+      {
+        "label": "OMPL GitHub",
+        "url": "https://github.com/ompl/ompl"
+      }
+    ],
+    "apiExample": "python evaluation/minimal_eval_round1/habitat_collision_free_manipulation_20/run_habitat_collision_free_manipulation_20.py",
+    "shortExplanation": "Use this bridge to turn a Habitat scene into a manipulation planning problem and check whether the resulting path reaches the goal.",
+    "parameterNotes": [
+      {
+        "name": "input_json",
+        "control": "path",
+        "defaultValue": "evaluation/minimal_eval_round1/habitat_collision_free_manipulation_20/cases/*.json",
+        "meaning": "Habitat-style scene and manipulation target case file."
+      },
+      {
+        "name": "output_dir",
+        "control": "path",
+        "meaning": "Directory receiving captures, planner inputs, summaries, and per-case results."
+      },
+      {
+        "name": "timeout",
+        "control": "number",
+        "defaultValue": "15",
+        "meaning": "Per-case bridge timeout in seconds."
+      }
+    ],
+    "outputNotes": [
+      {
+        "name": "capture_ok",
+        "meaning": "Whether the simulated capture stage completed."
+      },
+      {
+        "name": "planner_success",
+        "meaning": "Whether the converted planner input yielded a path."
+      },
+      {
+        "name": "end_to_end_success",
+        "meaning": "Whether capture, conversion, planning, and end-effector goal checks all passed."
+      }
+    ],
+    "deploymentNotes": [
+      "Install the local Habitat environment and collision-free manipulation bridge.",
+      "Prepare bridge cases under habitat_collision_free_manipulation_20/cases/.",
+      "Run the benchmark script to create captures, planner inputs, summary.json, and result.json files.",
+      "Inspect timeouts and end_to_end_success before relying on the bridge for execution."
+    ],
+    "benchmarkRows": [
+      {
+        "dataset": "habitat_collision_free_manipulation_20, 20 bridge cases",
+        "metric": "planning_success_rate / end_to_end_success_rate / mean_ee_goal_error_m_success",
+        "value": "planning 0.30; e2e 0.30; ee_err 1.13e-16",
+        "source": "minimal_eval_round1 FINAL_14_TOOL_BENCHMARK_TABLE"
+      }
+    ],
+    "benchmarkDataset": "habitat_collision_free_manipulation_20, 20 Habitat-to-manipulation bridge cases.",
+    "benchmarkMetric": "planning_success_rate 0.30; end_to_end_success_rate 0.30; mean_ee_goal_error_m_success 1.13e-16; ToolScore 38.00.",
+    "benchmarkLatency": "Per-case timeout was 15 seconds in the benchmark runner.",
+    "benchmarkArtifacts": "captures, planner_input_json, summary.json, result.json, aggregate_metrics.json.",
+    "license": "Local evaluation wrapper",
+    "owner": "minimal_eval_round1",
+    "version": "round1-2026-04-16"
+  }
+];
+
 export const tools: Tool[] = [
+  ...round1ExecutionControlTools,
   {
     "slug": "yolo-world",
     "title": "YOLO-World",
