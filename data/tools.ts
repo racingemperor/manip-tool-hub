@@ -1418,7 +1418,33 @@ export const tools: Tool[] = [
     "paperTitle": "SceneGraphFusion-style queryable memory tool",
     "paperVenue": "Submitted tool sheet / local wrapper",
     "paperContribution": "Turns historical 3D scene graph observations into a query interface for objects that are no longer visible.",
-    "paperLinks": [],
+    "paperLinks": [
+      {
+        "label": "SceneGraphFusion Paper",
+        "url": "https://arxiv.org/abs/2010.05273"
+      },
+      {
+        "label": "3DSSG GitHub",
+        "url": "https://github.com/ShunChengWu/3DSSG"
+      },
+      {
+        "label": "3RScan Dataset",
+        "url": "https://waldjohannau.github.io/RIO/"
+      }
+    ],
+    "heroImage": "assets/tools/query-3d-scene-graph/cover.svg",
+    "demos": [
+      {
+        "label": "Scene graph query flow",
+        "image": "assets/tools/query-3d-scene-graph/demo-1.svg",
+        "position": "center center"
+      },
+      {
+        "label": "Structured graph result preview",
+        "image": "assets/tools/query-3d-scene-graph/demo-2.svg",
+        "position": "center center"
+      }
+    ],
     "apiExample": "python tools/query-3d-scene-graph/run.py --request tools/query-3d-scene-graph/examples/request.json --output tools/query-3d-scene-graph/runs/result.json",
     "shortExplanation": "Use this tool when the current view cannot see an object but the robot may have observed it earlier in the mapped scene.",
     "presetExample": {
@@ -1426,7 +1452,8 @@ export const tools: Tool[] = [
       "input": "tools/query-3d-scene-graph/examples/request.json",
       "prompt": "object_query: table; relation_query: nearby chairs",
       "runLabel": "Query scene graph",
-      "expectedOutput": "Matched nodes with 3D centers, bounding boxes, relation edges, and confidence values."
+      "expectedOutput": "Matched nodes with 3D centers, bounding boxes, relation edges, and confidence values.",
+      "image": "assets/tools/query-3d-scene-graph/demo-1.svg"
     },
     "parameterNotes": [
       {
@@ -1495,8 +1522,25 @@ export const tools: Tool[] = [
     "paperContribution": "Exposes temporal action segmentation outputs as a memory query interface for SOP and multi-step tasks.",
     "paperLinks": [
       {
-        "label": "MS-TCN Reference",
+        "label": "GitHub",
         "url": "https://github.com/yabufarha/ms-tcn"
+      },
+      {
+        "label": "Paper",
+        "url": "https://arxiv.org/abs/1903.01945"
+      }
+    ],
+    "heroImage": "assets/tools/query-historical-action-timeline/cover.svg",
+    "demos": [
+      {
+        "label": "Action timeline query flow",
+        "image": "assets/tools/query-historical-action-timeline/demo-1.svg",
+        "position": "center center"
+      },
+      {
+        "label": "Timeline result preview",
+        "image": "assets/tools/query-historical-action-timeline/demo-2.svg",
+        "position": "center center"
       }
     ],
     "apiExample": "python tools/query-historical-action-timeline/run.py --features tools/query-historical-action-timeline/examples/video_001_features.npy --query-action pour --output tools/query-historical-action-timeline/runs/timeline.json",
@@ -1506,7 +1550,8 @@ export const tools: Tool[] = [
       "input": "tools/query-historical-action-timeline/examples/video_001_features.npy",
       "prompt": "query_action: pour; time_window: full video",
       "runLabel": "Query timeline",
-      "expectedOutput": "A list of start and end frames for matching action segments."
+      "expectedOutput": "A list of start and end frames for matching action segments.",
+      "image": "assets/tools/query-historical-action-timeline/demo-1.svg"
     },
     "parameterNotes": [
       {
@@ -1578,6 +1623,27 @@ export const tools: Tool[] = [
       {
         "label": "FAISS GitHub",
         "url": "https://github.com/facebookresearch/faiss"
+      },
+      {
+        "label": "FAISS Docs",
+        "url": "https://faiss.ai/"
+      },
+      {
+        "label": "FAISS Paper",
+        "url": "https://arxiv.org/abs/2401.08281"
+      }
+    ],
+    "heroImage": "assets/tools/retrieve-past-visual-state-faiss/cover.svg",
+    "demos": [
+      {
+        "label": "Visual memory retrieval flow",
+        "image": "assets/tools/retrieve-past-visual-state-faiss/demo-1.svg",
+        "position": "center center"
+      },
+      {
+        "label": "Top-k result preview",
+        "image": "assets/tools/retrieve-past-visual-state-faiss/demo-2.svg",
+        "position": "center center"
       }
     ],
     "apiExample": "python tools/retrieve-past-visual-state-faiss/run.py --query-feature tools/retrieve-past-visual-state-faiss/examples/query.npy --top-k 3 --output tools/retrieve-past-visual-state-faiss/runs/results.json",
@@ -1587,7 +1653,8 @@ export const tools: Tool[] = [
       "input": "tools/retrieve-past-visual-state-faiss/examples/query.npy",
       "prompt": "top_k: 3",
       "runLabel": "Search memory",
-      "expectedOutput": "Top-k memory ids with distances or similarity scores and snapshot references."
+      "expectedOutput": "Top-k memory ids with distances or similarity scores and snapshot references.",
+      "image": "assets/tools/retrieve-past-visual-state-faiss/demo-1.svg"
     },
     "parameterNotes": [
       {
@@ -1663,6 +1730,27 @@ export const tools: Tool[] = [
       {
         "label": "GitHub",
         "url": "https://github.com/seoungwugoh/STM"
+      },
+      {
+        "label": "Paper",
+        "url": "https://arxiv.org/abs/1904.00607"
+      },
+      {
+        "label": "Project Page",
+        "url": "https://seoungwugoh.github.io/STM/"
+      }
+    ],
+    "heroImage": "assets/tools/stm/cover.svg",
+    "demos": [
+      {
+        "label": "Space-time memory flow",
+        "image": "assets/tools/stm/demo-1.svg",
+        "position": "center center"
+      },
+      {
+        "label": "Memory readout preview",
+        "image": "assets/tools/stm/demo-2.svg",
+        "position": "center center"
       }
     ],
     "apiExample": "python tools/stm/run.py --ref-img tools/stm/examples/mock_ref_img.png --ref-mask tools/stm/examples/mock_ref_mask.png --query-img tools/stm/examples/mock_query_img.png --weights tools/stm/weights/STM_weights.pth --output tools/stm/runs/prediction.json",
@@ -1672,7 +1760,8 @@ export const tools: Tool[] = [
       "input": "tools/stm/examples/mock_query_img.png",
       "prompt": "target_object_id: selected object; memory: reference image and mask",
       "runLabel": "Run STM",
-      "expectedOutput": "A predicted foreground region, bounding box, feature readout, attention weights, and confidence score."
+      "expectedOutput": "A predicted foreground region, bounding box, feature readout, attention weights, and confidence score.",
+      "image": "assets/tools/stm/demo-1.svg"
     },
     "parameterNotes": [
       {
@@ -1745,6 +1834,27 @@ export const tools: Tool[] = [
       {
         "label": "GitHub",
         "url": "https://github.com/JingweiJ/ActionGenome"
+      },
+      {
+        "label": "Project Page",
+        "url": "https://www.actiongenome.org/"
+      },
+      {
+        "label": "Paper",
+        "url": "https://arxiv.org/abs/1912.06992"
+      }
+    ],
+    "heroImage": "assets/tools/action-genome/cover.svg",
+    "demos": [
+      {
+        "label": "Action graph inference flow",
+        "image": "assets/tools/action-genome/demo-1.svg",
+        "position": "center center"
+      },
+      {
+        "label": "State timeline result preview",
+        "image": "assets/tools/action-genome/demo-2.svg",
+        "position": "center center"
       }
     ],
     "apiExample": "python tools/action-genome/run.py --video tools/action-genome/examples/mock_video.mp4 --objects tools/action-genome/examples/objects.json --output tools/action-genome/runs/state_timeline.json",
@@ -1754,7 +1864,8 @@ export const tools: Tool[] = [
       "input": "tools/action-genome/examples/mock_video.mp4",
       "prompt": "objects_of_interest: door, cup, person",
       "runLabel": "Build state graph",
-      "expectedOutput": "Object state timelines and contact relations such as open, closed, empty, full, sitting, or standing."
+      "expectedOutput": "Object state timelines and contact relations such as open, closed, empty, full, sitting, or standing.",
+      "image": "assets/tools/action-genome/demo-1.svg"
     },
     "parameterNotes": [
       {
@@ -1824,6 +1935,23 @@ export const tools: Tool[] = [
       {
         "label": "GitHub",
         "url": "https://github.com/JasonXinyuLiu/Language2LTL"
+      },
+      {
+        "label": "Paper",
+        "url": "https://arxiv.org/abs/2305.07766"
+      }
+    ],
+    "heroImage": "assets/tools/language2ltl/cover.svg",
+    "demos": [
+      {
+        "label": "Plan validation flow",
+        "image": "assets/tools/language2ltl/demo-1.svg",
+        "position": "center center"
+      },
+      {
+        "label": "Violation report preview",
+        "image": "assets/tools/language2ltl/demo-2.svg",
+        "position": "center center"
       }
     ],
     "apiExample": "python tools/language2ltl/run.py --plan tools/language2ltl/examples/proposed_plan.json --constraints tools/language2ltl/examples/constraints.json --output tools/language2ltl/runs/validation.json",
@@ -1833,7 +1961,8 @@ export const tools: Tool[] = [
       "input": "tools/language2ltl/examples/proposed_plan.json",
       "prompt": "always(grab_chemical -> historically(wear_gloves))",
       "runLabel": "Validate plan",
-      "expectedOutput": "A compliance flag and a human-readable violation reason when a prerequisite step is missing."
+      "expectedOutput": "A compliance flag and a human-readable violation reason when a prerequisite step is missing.",
+      "image": "assets/tools/language2ltl/demo-1.svg"
     },
     "parameterNotes": [
       {
@@ -1898,8 +2027,29 @@ export const tools: Tool[] = [
     "paperContribution": "Runs as an execution-time guard that detects target drift and produces recovery signals for closed-loop control.",
     "paperLinks": [
       {
-        "label": "CoTracker Reference",
+        "label": "CoTracker GitHub",
         "url": "https://github.com/facebookresearch/co-tracker"
+      },
+      {
+        "label": "Paper",
+        "url": "https://arxiv.org/abs/2307.07635"
+      },
+      {
+        "label": "Demo",
+        "url": "https://huggingface.co/spaces/facebook/cotracker"
+      }
+    ],
+    "heroImage": "assets/tools/monitor-dynamic-disturbance/cover.svg",
+    "demos": [
+      {
+        "label": "Disturbance monitor flow",
+        "image": "assets/tools/monitor-dynamic-disturbance/demo-1.svg",
+        "position": "center center"
+      },
+      {
+        "label": "Alert result preview",
+        "image": "assets/tools/monitor-dynamic-disturbance/demo-2.svg",
+        "position": "center center"
       }
     ],
     "apiExample": "python tools/monitor-dynamic-disturbance/run.py --video tools/monitor-dynamic-disturbance/examples/stream.mp4 --points tools/monitor-dynamic-disturbance/examples/roi_points.json --output tools/monitor-dynamic-disturbance/runs/alerts.json",
@@ -1909,7 +2059,8 @@ export const tools: Tool[] = [
       "input": "tools/monitor-dynamic-disturbance/examples/stream.mp4",
       "prompt": "roi_points: four tracked points around the target",
       "runLabel": "Monitor disturbance",
-      "expectedOutput": "Tracked point trajectories, a disturbance flag, and severity score."
+      "expectedOutput": "Tracked point trajectories, a disturbance flag, and severity score.",
+      "image": "assets/tools/monitor-dynamic-disturbance/demo-1.svg"
     },
     "parameterNotes": [
       {
@@ -1980,6 +2131,27 @@ export const tools: Tool[] = [
       {
         "label": "GitHub",
         "url": "https://github.com/google-deepmind/tapnet"
+      },
+      {
+        "label": "Paper",
+        "url": "https://arxiv.org/abs/2306.08637"
+      },
+      {
+        "label": "Project Page",
+        "url": "https://deepmind-tapir.github.io/"
+      }
+    ],
+    "heroImage": "assets/tools/tapir/cover.svg",
+    "demos": [
+      {
+        "label": "Point tracking flow",
+        "image": "assets/tools/tapir/demo-1.svg",
+        "position": "center center"
+      },
+      {
+        "label": "Tracked point result preview",
+        "image": "assets/tools/tapir/demo-2.svg",
+        "position": "center center"
       }
     ],
     "apiExample": "python tools/tapir/run.py --video tools/tapir/examples/stream.mp4 --initial-point 120,150 --output tools/tapir/runs/tracks.json",
@@ -1989,7 +2161,8 @@ export const tools: Tool[] = [
       "input": "tools/tapir/examples/stream.mp4",
       "prompt": "initial_target_pixel: [120, 150]",
       "runLabel": "Track point",
-      "expectedOutput": "Per-frame target coordinates, occlusion status, confidence, and total displacement."
+      "expectedOutput": "Per-frame target coordinates, occlusion status, confidence, and total displacement.",
+      "image": "assets/tools/tapir/demo-1.svg"
     },
     "parameterNotes": [
       {
@@ -2059,6 +2232,27 @@ export const tools: Tool[] = [
       {
         "label": "GitHub",
         "url": "https://github.com/facebookresearch/r3m"
+      },
+      {
+        "label": "Paper",
+        "url": "https://arxiv.org/abs/2203.12601"
+      },
+      {
+        "label": "Project Page",
+        "url": "https://sites.google.com/view/robot-r3m/"
+      }
+    ],
+    "heroImage": "assets/tools/r3m/cover.svg",
+    "demos": [
+      {
+        "label": "Post-action verification flow",
+        "image": "assets/tools/r3m/demo-1.svg",
+        "position": "center center"
+      },
+      {
+        "label": "Completion score result preview",
+        "image": "assets/tools/r3m/demo-2.svg",
+        "position": "center center"
       }
     ],
     "apiExample": "python tools/r3m/run.py --start-image tools/r3m/examples/start.png --end-image tools/r3m/examples/end.png --instruction \"pick up the red cup\" --output tools/r3m/runs/verification.json",
@@ -2068,7 +2262,8 @@ export const tools: Tool[] = [
       "input": "tools/r3m/examples/end.png",
       "prompt": "pick up the red cup",
       "runLabel": "Verify result",
-      "expectedOutput": "A task completion score and boolean success flag."
+      "expectedOutput": "A task completion score and boolean success flag.",
+      "image": "assets/tools/r3m/demo-1.svg"
     },
     "parameterNotes": [
       {
@@ -2134,6 +2329,27 @@ export const tools: Tool[] = [
       {
         "label": "Paper",
         "url": "https://arxiv.org/abs/1704.01155"
+      },
+      {
+        "label": "IBM ART GitHub",
+        "url": "https://github.com/Trusted-AI/adversarial-robustness-toolbox"
+      },
+      {
+        "label": "ART Docs",
+        "url": "https://adversarial-robustness-toolbox.readthedocs.io/"
+      }
+    ],
+    "heroImage": "assets/tools/feature-squeezer/cover.svg",
+    "demos": [
+      {
+        "label": "Feature squeezing check flow",
+        "image": "assets/tools/feature-squeezer/demo-1.svg",
+        "position": "center center"
+      },
+      {
+        "label": "Adversarial report preview",
+        "image": "assets/tools/feature-squeezer/demo-2.svg",
+        "position": "center center"
       }
     ],
     "apiExample": "python tools/feature-squeezer/run.py --input tools/feature-squeezer/examples/input.png --method bit_depth --output tools/feature-squeezer/runs/report.json",
@@ -2143,7 +2359,8 @@ export const tools: Tool[] = [
       "input": "tools/feature-squeezer/examples/input.png",
       "prompt": "method: bit_depth; compare original and squeezed predictions",
       "runLabel": "Run squeeze check",
-      "expectedOutput": "A report containing the original prediction, squeezed prediction, and adversarial yes/no decision."
+      "expectedOutput": "A report containing the original prediction, squeezed prediction, and adversarial yes/no decision.",
+      "image": "assets/tools/feature-squeezer/demo-1.svg"
     },
     "parameterNotes": [
       {
@@ -2204,7 +2421,33 @@ export const tools: Tool[] = [
     "paperTitle": "Adaptive Histogram Equalization and Its Variations",
     "paperVenue": "Computer Vision, Graphics, and Image Processing, 1987",
     "paperContribution": "Applies local histogram equalization with clipping to improve contrast while limiting noise amplification.",
-    "paperLinks": [],
+    "paperLinks": [
+      {
+        "label": "OpenCV CLAHE Docs",
+        "url": "https://docs.opencv.org/4.x/d6/db6/classcv_1_1CLAHE.html"
+      },
+      {
+        "label": "OpenCV GitHub",
+        "url": "https://github.com/opencv/opencv"
+      },
+      {
+        "label": "Original Paper DOI",
+        "url": "https://doi.org/10.1016/S0734-189X(87)80186-X"
+      }
+    ],
+    "heroImage": "assets/tools/clahe-filter/cover.svg",
+    "demos": [
+      {
+        "label": "CLAHE enhancement flow",
+        "image": "assets/tools/clahe-filter/demo-1.svg",
+        "position": "center center"
+      },
+      {
+        "label": "Enhanced output preview",
+        "image": "assets/tools/clahe-filter/demo-2.svg",
+        "position": "center center"
+      }
+    ],
     "apiExample": "python tools/clahe-filter/run.py --input tools/clahe-filter/examples/input.png --color-space lab --clip-limit 2.0 --output tools/clahe-filter/runs/enhanced.png",
     "shortExplanation": "Use CLAHE as a lightweight visual robustness step when shadows, low dynamic range, or weak texture make perception unreliable.",
     "presetExample": {
@@ -2212,7 +2455,8 @@ export const tools: Tool[] = [
       "input": "tools/clahe-filter/examples/input.png",
       "prompt": "color_space: lab; clip_limit: 2.0; tile_grid_size: 8x8",
       "runLabel": "Enhance contrast",
-      "expectedOutput": "A locally contrast-enhanced image with clearer details and balanced brightness."
+      "expectedOutput": "A locally contrast-enhanced image with clearer details and balanced brightness.",
+      "image": "assets/tools/clahe-filter/demo-1.svg"
     },
     "parameterNotes": [
       {
