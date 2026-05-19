@@ -4598,54 +4598,6 @@ export const tools: Tool[] = [
     "license": "Apache-2.0",
     "owner": "protectai",
     "version": "main"
-  },
-  {
-    "slug": "tool-entry-template",
-    "title": "Tool Entry Template",
-    "category": "Perception and Grounding",
-    "task": "Perception",
-    "summary": "Template for visual recognition, localization, scene grounding, and perception-facing tool entries.",
-    "input": "Images / text / state",
-    "output": "Grounding result",
-    "runtime": "Template",
-    "status": "Draft",
-    "paperLinks": []
-  },
-  {
-    "slug": "paper-backed-tool-template",
-    "title": "Paper-backed Tool Template",
-    "category": "Cognition and State Modeling",
-    "task": "State",
-    "summary": "Template for tools derived from papers, with space for method diagrams, citations, artifacts, and implementation notes.",
-    "input": "Paper / method notes",
-    "output": "State model artifact",
-    "runtime": "Template",
-    "status": "Draft",
-    "paperLinks": []
-  },
-  {
-    "slug": "api-tool-template",
-    "title": "Code Tool Template",
-    "category": "Reasoning and Planning",
-    "task": "Planning",
-    "summary": "Template for tools with local entry paths, parameters, response schema, examples, and integration notes.",
-    "input": "Relative path / request JSON",
-    "output": "Plan / response schema",
-    "runtime": "Code template",
-    "status": "Draft",
-    "paperLinks": []
-  },
-  {
-    "slug": "execution-tool-template",
-    "title": "Execution Tool Template",
-    "category": "Execution and Control",
-    "task": "Control",
-    "summary": "Template for policies, controllers, runtime wrappers, rollouts, videos, traces, and benchmark artifacts.",
-    "input": "State / action request",
-    "output": "Action trace",
-    "runtime": "Runtime template",
-    "status": "Draft",
-    "paperLinks": []
   }
 ];
 

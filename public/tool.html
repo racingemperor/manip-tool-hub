@@ -6,9 +6,9 @@
     <title>Redirecting to tool detail</title>
     <script>
       const params = new URLSearchParams(window.location.search);
-      const slug = params.get("tool") || "api-tool-template";
+      const slug = params.get("tool");
       const base = window.location.pathname.replace(/\/tool\.html$/, "");
-      window.location.replace(`${base}/tools/${slug}/`);
+      window.location.replace(slug ? `${base}/tools/${slug}/` : `${base}/tools/`);
     </script>
   </head>
   <body>
