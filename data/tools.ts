@@ -308,21 +308,21 @@ const round1ExecutionControlTools: Tool[] = [
         "url": "https://arxiv.org/abs/2212.08333"
       }
     ],
-    "heroImage": "assets/tools/anygrasp-official-detection-demo/tool-effect-preview.png",
+    "heroImage": "assets/tools/anygrasp-official-detection-demo/broken.gif",
     "demos": [
       {
-        "label": "Official detection preview",
-        "image": "assets/tools/anygrasp-official-detection-demo/tool-effect-preview.png",
+        "label": "AnyGrasp official detection demo",
+        "image": "assets/tools/anygrasp-official-detection-demo/broken.gif",
         "position": "center center"
       },
       {
-        "label": "Habitat RGB capture",
-        "image": "assets/tools/anygrasp-official-detection-demo/habitat-color.png",
+        "label": "AnyGrasp cluttered-scene demo",
+        "image": "assets/tools/anygrasp-official-detection-demo/anygrasp-fish.gif",
         "position": "center center"
       },
       {
-        "label": "Habitat depth capture",
-        "image": "assets/tools/anygrasp-official-detection-demo/habitat-depth.png",
+        "label": "AnyGrasp bin-picking demo",
+        "image": "assets/tools/anygrasp-official-detection-demo/anygrasp-1-small.gif",
         "position": "center center"
       }
     ],
@@ -407,21 +407,21 @@ const round1ExecutionControlTools: Tool[] = [
         "url": "https://arxiv.org/abs/1806.08756"
       }
     ],
-    "heroImage": "assets/tools/dense-object-nets-io-demo/tool-effect-preview.png",
+    "heroImage": "assets/tools/dense-object-nets-io-demo/don-figure1.png",
     "demos": [
       {
-        "label": "Dense correspondence preview",
-        "image": "assets/tools/dense-object-nets-io-demo/tool-effect-preview.png",
+        "label": "Dense Object Nets overview",
+        "image": "assets/tools/dense-object-nets-io-demo/don-figure1.png",
         "position": "center center"
       },
       {
-        "label": "Source view",
-        "image": "assets/tools/dense-object-nets-io-demo/view-a.png",
+        "label": "Descriptor learning pipeline",
+        "image": "assets/tools/dense-object-nets-io-demo/don-figure2.png",
         "position": "center center"
       },
       {
-        "label": "Target view",
-        "image": "assets/tools/dense-object-nets-io-demo/view-b.png",
+        "label": "Dense descriptor correspondence",
+        "image": "assets/tools/dense-object-nets-io-demo/don-figure3.png",
         "position": "center center"
       }
     ],
@@ -508,13 +508,8 @@ const round1ExecutionControlTools: Tool[] = [
         "position": "center center"
       },
       {
-        "label": "Round1 RGB input",
-        "image": "assets/tools/estimate-relative-depth-from-rgb-image/round1-rgb.png",
-        "position": "center center"
-      },
-      {
-        "label": "Round1 depth reference",
-        "image": "assets/tools/estimate-relative-depth-from-rgb-image/round1-gt-depth.png",
+        "label": "MiDaS model quality and speed",
+        "image": "assets/tools/estimate-relative-depth-from-rgb-image/midas-improvement.png",
         "position": "center center"
       }
     ],
@@ -598,21 +593,16 @@ const round1ExecutionControlTools: Tool[] = [
         "url": "https://octomap.github.io/octomap/doc/"
       }
     ],
-    "heroImage": "assets/tools/build-query-3d-occupancy-map/octomap-demo-1.jpg",
+    "heroImage": "assets/tools/build-query-3d-occupancy-map/octomap-freiburg-079.png",
     "demos": [
       {
-        "label": "OctoMap demo thumbnail",
-        "image": "assets/tools/build-query-3d-occupancy-map/octomap-demo-1.jpg",
+        "label": "OctoMap indoor 3D map",
+        "image": "assets/tools/build-query-3d-occupancy-map/octomap-freiburg-079.png",
         "position": "center center"
       },
       {
-        "label": "Habitat color capture",
-        "image": "assets/tools/build-query-3d-occupancy-map/habitat-color.png",
-        "position": "center center"
-      },
-      {
-        "label": "Habitat depth capture",
-        "image": "assets/tools/build-query-3d-occupancy-map/habitat-depth.png",
+        "label": "OctoMap outdoor 3D map",
+        "image": "assets/tools/build-query-3d-occupancy-map/octomap-freiburg-outdoor.png",
         "position": "center center"
       }
     ],
@@ -700,16 +690,6 @@ const round1ExecutionControlTools: Tool[] = [
         "label": "ActPerMoMa project demo",
         "image": "assets/tools/moma-io-demo/actpermoma.gif",
         "position": "center center"
-      },
-      {
-        "label": "Habitat MOMA scene",
-        "image": "assets/tools/moma-io-demo/habitat-view.png",
-        "position": "center center"
-      },
-      {
-        "label": "Transform effect preview",
-        "image": "assets/tools/moma-io-demo/tool-effect-preview.png",
-        "position": "center center"
       }
     ],
     "apiExample": "python evaluation/minimal_eval_round1/moma_hard20/run_moma_hard20.py",
@@ -790,16 +770,26 @@ const round1ExecutionControlTools: Tool[] = [
         "url": "https://github.com/ros-navigation/navigation2"
       }
     ],
-    "heroImage": "assets/tools/ros2-nav2-advanced-demo-a/projected-map-preview.png",
+    "heroImage": "assets/tools/ros2-nav2-advanced-demo-a/nav2-map-rviz.png",
     "demos": [
       {
-        "label": "Projected obstacle map",
-        "image": "assets/tools/ros2-nav2-advanced-demo-a/projected-map-preview.png",
+        "label": "Nav2 map in RViz",
+        "image": "assets/tools/ros2-nav2-advanced-demo-a/nav2-map-rviz.png",
         "position": "center center"
       },
       {
-        "label": "Narrow-passage map",
-        "image": "assets/tools/ros2-nav2-advanced-demo-a/narrow-map-preview.png",
+        "label": "Nav2 global costmap",
+        "image": "assets/tools/ros2-nav2-advanced-demo-a/nav2-global-costmap.png",
+        "position": "center center"
+      },
+      {
+        "label": "Nav2 local costmap",
+        "image": "assets/tools/ros2-nav2-advanced-demo-a/nav2-local-costmap.png",
+        "position": "center center"
+      },
+      {
+        "label": "Nav2 voxel layer",
+        "image": "assets/tools/ros2-nav2-advanced-demo-a/nav2-voxel-layer.png",
         "position": "center center"
       }
     ],
@@ -881,21 +871,21 @@ const round1ExecutionControlTools: Tool[] = [
         "url": "https://nav2.org/"
       }
     ],
-    "heroImage": "assets/tools/habitat-to-nav2-map-demo/tool-effect-preview.png",
+    "heroImage": "assets/tools/habitat-to-nav2-map-demo/habitat-apt0-topdown.png",
     "demos": [
       {
-        "label": "Habitat to Nav2 bridge preview",
-        "image": "assets/tools/habitat-to-nav2-map-demo/tool-effect-preview.png",
+        "label": "Habitat top-down navigation view",
+        "image": "assets/tools/habitat-to-nav2-map-demo/habitat-apt0-topdown.png",
         "position": "center center"
       },
       {
-        "label": "Habitat top-down scene",
-        "image": "assets/tools/habitat-to-nav2-map-demo/habitat-topdown-rgb.png",
+        "label": "Habitat RGB, semantic, and depth extraction",
+        "image": "assets/tools/habitat-to-nav2-map-demo/habitat-extractor-output.png",
         "position": "center center"
       },
       {
-        "label": "Projected Nav2 map",
-        "image": "assets/tools/habitat-to-nav2-map-demo/habitat-nav2-map-preview.png",
+        "label": "Nav2 global costmap reference",
+        "image": "assets/tools/habitat-to-nav2-map-demo/nav2-global-costmap.png",
         "position": "center center"
       }
     ],
@@ -1352,16 +1342,16 @@ const round1ExecutionControlTools: Tool[] = [
         "url": "https://github.com/ompl/ompl"
       }
     ],
-    "heroImage": "assets/tools/habitat-to-collision-free-manipulation-demo/tool-effect-preview.png",
+    "heroImage": "assets/tools/habitat-to-collision-free-manipulation-demo/habitat-extractor-output.png",
     "demos": [
       {
-        "label": "Habitat manipulation bridge preview",
-        "image": "assets/tools/habitat-to-collision-free-manipulation-demo/tool-effect-preview.png",
+        "label": "Habitat RGB, semantic, and depth extraction",
+        "image": "assets/tools/habitat-to-collision-free-manipulation-demo/habitat-extractor-output.png",
         "position": "center center"
       },
       {
-        "label": "Habitat top-down scene",
-        "image": "assets/tools/habitat-to-collision-free-manipulation-demo/habitat-topdown-rgb.png",
+        "label": "Habitat sampled scene views",
+        "image": "assets/tools/habitat-to-collision-free-manipulation-demo/habitat-random-images.png",
         "position": "center center"
       },
       {
