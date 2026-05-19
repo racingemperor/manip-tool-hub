@@ -1,0 +1,2 @@
+Images are cropped/rasterized from official source PDF or official docs.
+https://arxiv.org/pdf/2010.05273

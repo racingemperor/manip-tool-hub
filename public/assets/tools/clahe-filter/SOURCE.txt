@@ -1,0 +1,2 @@
+Images are rasterized/cropped from official OpenCV CLAHE documentation content.
+https://docs.opencv.org/4.x/d6/db6/classcv_1_1CLAHE.html

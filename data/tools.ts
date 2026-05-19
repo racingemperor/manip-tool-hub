@@ -1432,16 +1432,16 @@ export const tools: Tool[] = [
         "url": "https://waldjohannau.github.io/RIO/"
       }
     ],
-    "heroImage": "assets/tools/query-3d-scene-graph/cover.svg",
+    "heroImage": "assets/tools/query-3d-scene-graph/cover.jpg",
     "demos": [
       {
         "label": "Scene graph query flow",
-        "image": "assets/tools/query-3d-scene-graph/demo-1.svg",
+        "image": "assets/tools/query-3d-scene-graph/demo-1.jpg",
         "position": "center center"
       },
       {
         "label": "Structured graph result preview",
-        "image": "assets/tools/query-3d-scene-graph/demo-2.svg",
+        "image": "assets/tools/query-3d-scene-graph/demo-2.jpg",
         "position": "center center"
       }
     ],
@@ -1453,7 +1453,7 @@ export const tools: Tool[] = [
       "prompt": "object_query: table; relation_query: nearby chairs",
       "runLabel": "Query scene graph",
       "expectedOutput": "Matched nodes with 3D centers, bounding boxes, relation edges, and confidence values.",
-      "image": "assets/tools/query-3d-scene-graph/demo-1.svg"
+      "image": "assets/tools/query-3d-scene-graph/demo-1.jpg"
     },
     "parameterNotes": [
       {
@@ -1530,16 +1530,16 @@ export const tools: Tool[] = [
         "url": "https://arxiv.org/abs/1903.01945"
       }
     ],
-    "heroImage": "assets/tools/query-historical-action-timeline/cover.svg",
+    "heroImage": "assets/tools/query-historical-action-timeline/cover.jpg",
     "demos": [
       {
         "label": "Action timeline query flow",
-        "image": "assets/tools/query-historical-action-timeline/demo-1.svg",
+        "image": "assets/tools/query-historical-action-timeline/demo-1.jpg",
         "position": "center center"
       },
       {
         "label": "Timeline result preview",
-        "image": "assets/tools/query-historical-action-timeline/demo-2.svg",
+        "image": "assets/tools/query-historical-action-timeline/demo-2.jpg",
         "position": "center center"
       }
     ],
@@ -1551,7 +1551,7 @@ export const tools: Tool[] = [
       "prompt": "query_action: pour; time_window: full video",
       "runLabel": "Query timeline",
       "expectedOutput": "A list of start and end frames for matching action segments.",
-      "image": "assets/tools/query-historical-action-timeline/demo-1.svg"
+      "image": "assets/tools/query-historical-action-timeline/demo-1.jpg"
     },
     "parameterNotes": [
       {
@@ -1633,16 +1633,16 @@ export const tools: Tool[] = [
         "url": "https://arxiv.org/abs/2401.08281"
       }
     ],
-    "heroImage": "assets/tools/retrieve-past-visual-state-faiss/cover.svg",
+    "heroImage": "assets/tools/retrieve-past-visual-state-faiss/cover.jpg",
     "demos": [
       {
         "label": "Visual memory retrieval flow",
-        "image": "assets/tools/retrieve-past-visual-state-faiss/demo-1.svg",
+        "image": "assets/tools/retrieve-past-visual-state-faiss/demo-1.jpg",
         "position": "center center"
       },
       {
         "label": "Top-k result preview",
-        "image": "assets/tools/retrieve-past-visual-state-faiss/demo-2.svg",
+        "image": "assets/tools/retrieve-past-visual-state-faiss/demo-2.jpg",
         "position": "center center"
       }
     ],
@@ -1654,7 +1654,7 @@ export const tools: Tool[] = [
       "prompt": "top_k: 3",
       "runLabel": "Search memory",
       "expectedOutput": "Top-k memory ids with distances or similarity scores and snapshot references.",
-      "image": "assets/tools/retrieve-past-visual-state-faiss/demo-1.svg"
+      "image": "assets/tools/retrieve-past-visual-state-faiss/demo-1.jpg"
     },
     "parameterNotes": [
       {
@@ -1740,16 +1740,16 @@ export const tools: Tool[] = [
         "url": "https://seoungwugoh.github.io/STM/"
       }
     ],
-    "heroImage": "assets/tools/stm/cover.svg",
+    "heroImage": "assets/tools/stm/cover.jpg",
     "demos": [
       {
         "label": "Space-time memory flow",
-        "image": "assets/tools/stm/demo-1.svg",
+        "image": "assets/tools/stm/demo-1.jpg",
         "position": "center center"
       },
       {
         "label": "Memory readout preview",
-        "image": "assets/tools/stm/demo-2.svg",
+        "image": "assets/tools/stm/demo-2.jpg",
         "position": "center center"
       }
     ],
@@ -1761,7 +1761,7 @@ export const tools: Tool[] = [
       "prompt": "target_object_id: selected object; memory: reference image and mask",
       "runLabel": "Run STM",
       "expectedOutput": "A predicted foreground region, bounding box, feature readout, attention weights, and confidence score.",
-      "image": "assets/tools/stm/demo-1.svg"
+      "image": "assets/tools/stm/demo-1.jpg"
     },
     "parameterNotes": [
       {
@@ -1844,16 +1844,16 @@ export const tools: Tool[] = [
         "url": "https://arxiv.org/abs/1912.06992"
       }
     ],
-    "heroImage": "assets/tools/action-genome/cover.svg",
+    "heroImage": "assets/tools/action-genome/cover.jpg",
     "demos": [
       {
         "label": "Action graph inference flow",
-        "image": "assets/tools/action-genome/demo-1.svg",
+        "image": "assets/tools/action-genome/demo-1.jpg",
         "position": "center center"
       },
       {
         "label": "State timeline result preview",
-        "image": "assets/tools/action-genome/demo-2.svg",
+        "image": "assets/tools/action-genome/demo-2.jpg",
         "position": "center center"
       }
     ],
@@ -1865,7 +1865,7 @@ export const tools: Tool[] = [
       "prompt": "objects_of_interest: door, cup, person",
       "runLabel": "Build state graph",
       "expectedOutput": "Object state timelines and contact relations such as open, closed, empty, full, sitting, or standing.",
-      "image": "assets/tools/action-genome/demo-1.svg"
+      "image": "assets/tools/action-genome/demo-1.jpg"
     },
     "parameterNotes": [
       {
@@ -1941,16 +1941,16 @@ export const tools: Tool[] = [
         "url": "https://arxiv.org/abs/2305.07766"
       }
     ],
-    "heroImage": "assets/tools/language2ltl/cover.svg",
+    "heroImage": "assets/tools/language2ltl/cover.jpg",
     "demos": [
       {
         "label": "Plan validation flow",
-        "image": "assets/tools/language2ltl/demo-1.svg",
+        "image": "assets/tools/language2ltl/demo-1.jpg",
         "position": "center center"
       },
       {
         "label": "Violation report preview",
-        "image": "assets/tools/language2ltl/demo-2.svg",
+        "image": "assets/tools/language2ltl/demo-2.jpg",
         "position": "center center"
       }
     ],
@@ -1962,7 +1962,7 @@ export const tools: Tool[] = [
       "prompt": "always(grab_chemical -> historically(wear_gloves))",
       "runLabel": "Validate plan",
       "expectedOutput": "A compliance flag and a human-readable violation reason when a prerequisite step is missing.",
-      "image": "assets/tools/language2ltl/demo-1.svg"
+      "image": "assets/tools/language2ltl/demo-1.jpg"
     },
     "parameterNotes": [
       {
@@ -2039,16 +2039,16 @@ export const tools: Tool[] = [
         "url": "https://huggingface.co/spaces/facebook/cotracker"
       }
     ],
-    "heroImage": "assets/tools/monitor-dynamic-disturbance/cover.svg",
+    "heroImage": "assets/tools/monitor-dynamic-disturbance/cover.jpg",
     "demos": [
       {
         "label": "Disturbance monitor flow",
-        "image": "assets/tools/monitor-dynamic-disturbance/demo-1.svg",
+        "image": "assets/tools/monitor-dynamic-disturbance/demo-1.jpg",
         "position": "center center"
       },
       {
         "label": "Alert result preview",
-        "image": "assets/tools/monitor-dynamic-disturbance/demo-2.svg",
+        "image": "assets/tools/monitor-dynamic-disturbance/demo-2.jpg",
         "position": "center center"
       }
     ],
@@ -2060,7 +2060,7 @@ export const tools: Tool[] = [
       "prompt": "roi_points: four tracked points around the target",
       "runLabel": "Monitor disturbance",
       "expectedOutput": "Tracked point trajectories, a disturbance flag, and severity score.",
-      "image": "assets/tools/monitor-dynamic-disturbance/demo-1.svg"
+      "image": "assets/tools/monitor-dynamic-disturbance/demo-1.jpg"
     },
     "parameterNotes": [
       {
@@ -2141,16 +2141,16 @@ export const tools: Tool[] = [
         "url": "https://deepmind-tapir.github.io/"
       }
     ],
-    "heroImage": "assets/tools/tapir/cover.svg",
+    "heroImage": "assets/tools/tapir/cover.jpg",
     "demos": [
       {
         "label": "Point tracking flow",
-        "image": "assets/tools/tapir/demo-1.svg",
+        "image": "assets/tools/tapir/demo-1.jpg",
         "position": "center center"
       },
       {
         "label": "Tracked point result preview",
-        "image": "assets/tools/tapir/demo-2.svg",
+        "image": "assets/tools/tapir/demo-2.jpg",
         "position": "center center"
       }
     ],
@@ -2162,7 +2162,7 @@ export const tools: Tool[] = [
       "prompt": "initial_target_pixel: [120, 150]",
       "runLabel": "Track point",
       "expectedOutput": "Per-frame target coordinates, occlusion status, confidence, and total displacement.",
-      "image": "assets/tools/tapir/demo-1.svg"
+      "image": "assets/tools/tapir/demo-1.jpg"
     },
     "parameterNotes": [
       {
@@ -2242,16 +2242,16 @@ export const tools: Tool[] = [
         "url": "https://sites.google.com/view/robot-r3m/"
       }
     ],
-    "heroImage": "assets/tools/r3m/cover.svg",
+    "heroImage": "assets/tools/r3m/cover.jpg",
     "demos": [
       {
         "label": "Post-action verification flow",
-        "image": "assets/tools/r3m/demo-1.svg",
+        "image": "assets/tools/r3m/demo-1.jpg",
         "position": "center center"
       },
       {
         "label": "Completion score result preview",
-        "image": "assets/tools/r3m/demo-2.svg",
+        "image": "assets/tools/r3m/demo-2.jpg",
         "position": "center center"
       }
     ],
@@ -2263,7 +2263,7 @@ export const tools: Tool[] = [
       "prompt": "pick up the red cup",
       "runLabel": "Verify result",
       "expectedOutput": "A task completion score and boolean success flag.",
-      "image": "assets/tools/r3m/demo-1.svg"
+      "image": "assets/tools/r3m/demo-1.jpg"
     },
     "parameterNotes": [
       {
@@ -2339,16 +2339,16 @@ export const tools: Tool[] = [
         "url": "https://adversarial-robustness-toolbox.readthedocs.io/"
       }
     ],
-    "heroImage": "assets/tools/feature-squeezer/cover.svg",
+    "heroImage": "assets/tools/feature-squeezer/cover.jpg",
     "demos": [
       {
         "label": "Feature squeezing check flow",
-        "image": "assets/tools/feature-squeezer/demo-1.svg",
+        "image": "assets/tools/feature-squeezer/demo-1.jpg",
         "position": "center center"
       },
       {
         "label": "Adversarial report preview",
-        "image": "assets/tools/feature-squeezer/demo-2.svg",
+        "image": "assets/tools/feature-squeezer/demo-2.jpg",
         "position": "center center"
       }
     ],
@@ -2360,7 +2360,7 @@ export const tools: Tool[] = [
       "prompt": "method: bit_depth; compare original and squeezed predictions",
       "runLabel": "Run squeeze check",
       "expectedOutput": "A report containing the original prediction, squeezed prediction, and adversarial yes/no decision.",
-      "image": "assets/tools/feature-squeezer/demo-1.svg"
+      "image": "assets/tools/feature-squeezer/demo-1.jpg"
     },
     "parameterNotes": [
       {
@@ -2435,16 +2435,16 @@ export const tools: Tool[] = [
         "url": "https://doi.org/10.1016/S0734-189X(87)80186-X"
       }
     ],
-    "heroImage": "assets/tools/clahe-filter/cover.svg",
+    "heroImage": "assets/tools/clahe-filter/cover.jpg",
     "demos": [
       {
         "label": "CLAHE enhancement flow",
-        "image": "assets/tools/clahe-filter/demo-1.svg",
+        "image": "assets/tools/clahe-filter/demo-1.jpg",
         "position": "center center"
       },
       {
         "label": "Enhanced output preview",
-        "image": "assets/tools/clahe-filter/demo-2.svg",
+        "image": "assets/tools/clahe-filter/demo-2.jpg",
         "position": "center center"
       }
     ],
@@ -2456,7 +2456,7 @@ export const tools: Tool[] = [
       "prompt": "color_space: lab; clip_limit: 2.0; tile_grid_size: 8x8",
       "runLabel": "Enhance contrast",
       "expectedOutput": "A locally contrast-enhanced image with clearer details and balanced brightness.",
-      "image": "assets/tools/clahe-filter/demo-1.svg"
+      "image": "assets/tools/clahe-filter/demo-1.jpg"
     },
     "parameterNotes": [
       {

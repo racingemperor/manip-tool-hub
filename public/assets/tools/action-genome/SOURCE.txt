@@ -1,0 +1,2 @@
+Images extracted from embedded figures in official source PDF.
+E:\manip-tool-hub-work\.tool_image_cache\action-genome.pdf
