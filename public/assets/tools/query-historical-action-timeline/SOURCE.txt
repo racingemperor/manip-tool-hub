@@ -1,2 +1,2 @@
-Images are cropped/rasterized from official source PDF or official docs.
-https://arxiv.org/pdf/1903.01945
+Image from official MS-TCN GitHub README qualitative result.
+https://camo.githubusercontent.com/4ba2de74b60e234eefd939775d461250dac2b65f136e173f9e4d897dee9c0af2/68747470733a2f2f696d672e796f75747562652e636f6d2f76692f39587068574239773770382f302e6a7067

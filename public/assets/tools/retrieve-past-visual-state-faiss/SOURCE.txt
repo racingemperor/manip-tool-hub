@@ -1,2 +1,3 @@
-Images are cropped/rasterized from official source PDF or official docs.
-https://arxiv.org/pdf/2401.08281
+Images from official Meta Engineering FAISS article.
+https://engineering.fb.com/wp-content/uploads/2017/03/GOcmDQEFmV52jukHAAAAAAAqO6pvbj0JAAAB.jpg
+https://engineering.fb.com/wp-content/uploads/2017/03/GBY6BQFv2uwynrIBAAAAAABF5_JEbj0JAAAB.jpg

@@ -1438,11 +1438,6 @@ export const tools: Tool[] = [
         "label": "Scene graph query flow",
         "image": "assets/tools/query-3d-scene-graph/demo-1.jpg",
         "position": "center center"
-      },
-      {
-        "label": "Structured graph result preview",
-        "image": "assets/tools/query-3d-scene-graph/demo-2.jpg",
-        "position": "center center"
       }
     ],
     "apiExample": "python tools/query-3d-scene-graph/run.py --request tools/query-3d-scene-graph/examples/request.json --output tools/query-3d-scene-graph/runs/result.json",
@@ -1535,11 +1530,6 @@ export const tools: Tool[] = [
       {
         "label": "Action timeline query flow",
         "image": "assets/tools/query-historical-action-timeline/demo-1.jpg",
-        "position": "center center"
-      },
-      {
-        "label": "Timeline result preview",
-        "image": "assets/tools/query-historical-action-timeline/demo-2.jpg",
         "position": "center center"
       }
     ],
@@ -1946,11 +1936,6 @@ export const tools: Tool[] = [
       {
         "label": "Plan validation flow",
         "image": "assets/tools/language2ltl/demo-1.jpg",
-        "position": "center center"
-      },
-      {
-        "label": "Violation report preview",
-        "image": "assets/tools/language2ltl/demo-2.jpg",
         "position": "center center"
       }
     ],

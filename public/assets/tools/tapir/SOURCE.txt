@@ -1,2 +1,3 @@
-Images are cropped/rasterized from official source PDF or official docs.
-https://arxiv.org/pdf/2306.08637
+Images from official TAPIR project page/gallery.
+https://deepmind-tapir.github.io/static/images/tapir_figure_simplified.png
+https://storage.googleapis.com/dm-tapnet/tapir-blogpost/videos/animation/image_35.png
