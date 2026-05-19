@@ -114,6 +114,24 @@ const round1ExecutionControlTools: Tool[] = [
         "url": "https://arxiv.org/abs/2212.08333"
       }
     ],
+    "heroImage": "assets/tools/anygrasp-io-demo/cover.png",
+    "demos": [
+      {
+        "label": "AnyGrasp SDK overview",
+        "image": "assets/tools/anygrasp-io-demo/cover.png",
+        "position": "center center"
+      },
+      {
+        "label": "RGB input example",
+        "image": "assets/tools/anygrasp-io-demo/example-color.png",
+        "position": "center center"
+      },
+      {
+        "label": "Depth input example",
+        "image": "assets/tools/anygrasp-io-demo/example-depth.png",
+        "position": "center center"
+      }
+    ],
     "apiExample": "python evaluation/minimal_eval_round1/anygrasp_io_20/run_anygrasp_io_20.py",
     "shortExplanation": "Run the wrapper on RGB-D cases to check whether enough valid 3D points are produced for downstream grasp execution.",
     "parameterNotes": [
@@ -193,6 +211,24 @@ const round1ExecutionControlTools: Tool[] = [
         "url": "https://arxiv.org/abs/2212.08333"
       }
     ],
+    "heroImage": "assets/tools/anygrasp-6dof-pose-demo/grasppose.gif",
+    "demos": [
+      {
+        "label": "6-DoF grasp pose demo",
+        "image": "assets/tools/anygrasp-6dof-pose-demo/grasppose.gif",
+        "position": "center center"
+      },
+      {
+        "label": "AnyGrasp bin picking demo",
+        "image": "assets/tools/anygrasp-6dof-pose-demo/anygrasp-1-small.gif",
+        "position": "center center"
+      },
+      {
+        "label": "Human-scene grasping demo",
+        "image": "assets/tools/anygrasp-6dof-pose-demo/vshuman.gif",
+        "position": "center center"
+      }
+    ],
     "apiExample": "python evaluation/minimal_eval_round1/anygrasp_eval_hard20/run_anygrasp_eval_hard20.py",
     "shortExplanation": "Use this wrapper to check whether a hard RGB-D capture yields executable grasp proposals and a usable top-ranked grasp.",
     "parameterNotes": [
@@ -270,6 +306,24 @@ const round1ExecutionControlTools: Tool[] = [
       {
         "label": "AnyGrasp Paper",
         "url": "https://arxiv.org/abs/2212.08333"
+      }
+    ],
+    "heroImage": "assets/tools/anygrasp-official-detection-demo/tool-effect-preview.png",
+    "demos": [
+      {
+        "label": "Official detection preview",
+        "image": "assets/tools/anygrasp-official-detection-demo/tool-effect-preview.png",
+        "position": "center center"
+      },
+      {
+        "label": "Habitat RGB capture",
+        "image": "assets/tools/anygrasp-official-detection-demo/habitat-color.png",
+        "position": "center center"
+      },
+      {
+        "label": "Habitat depth capture",
+        "image": "assets/tools/anygrasp-official-detection-demo/habitat-depth.png",
+        "position": "center center"
       }
     ],
     "apiExample": "python evaluation/minimal_eval_round1/official_anygrasp_hard20/run_official_anygrasp_hard20.py",
@@ -353,6 +407,24 @@ const round1ExecutionControlTools: Tool[] = [
         "url": "https://arxiv.org/abs/1806.08756"
       }
     ],
+    "heroImage": "assets/tools/dense-object-nets-io-demo/tool-effect-preview.png",
+    "demos": [
+      {
+        "label": "Dense correspondence preview",
+        "image": "assets/tools/dense-object-nets-io-demo/tool-effect-preview.png",
+        "position": "center center"
+      },
+      {
+        "label": "Source view",
+        "image": "assets/tools/dense-object-nets-io-demo/view-a.png",
+        "position": "center center"
+      },
+      {
+        "label": "Target view",
+        "image": "assets/tools/dense-object-nets-io-demo/view-b.png",
+        "position": "center center"
+      }
+    ],
     "apiExample": "python evaluation/minimal_eval_round1/dense_object_nets_20/run_dense_object_nets_20.py",
     "shortExplanation": "Use this wrapper to test whether a dense descriptor model can recover the corresponding manipulation point in another view.",
     "parameterNotes": [
@@ -426,6 +498,24 @@ const round1ExecutionControlTools: Tool[] = [
       {
         "label": "MiDaS Reference",
         "url": "https://github.com/isl-org/MiDaS"
+      }
+    ],
+    "heroImage": "assets/tools/estimate-relative-depth-from-rgb-image/cover.png",
+    "demos": [
+      {
+        "label": "MiDaS qualitative comparison",
+        "image": "assets/tools/estimate-relative-depth-from-rgb-image/cover.png",
+        "position": "center center"
+      },
+      {
+        "label": "Round1 RGB input",
+        "image": "assets/tools/estimate-relative-depth-from-rgb-image/round1-rgb.png",
+        "position": "center center"
+      },
+      {
+        "label": "Round1 depth reference",
+        "image": "assets/tools/estimate-relative-depth-from-rgb-image/round1-gt-depth.png",
+        "position": "center center"
       }
     ],
     "apiExample": "python evaluation/minimal_eval_round1/relative_depth_hard20/run_relative_depth_hard20.py",
@@ -508,6 +598,24 @@ const round1ExecutionControlTools: Tool[] = [
         "url": "https://octomap.github.io/octomap/doc/"
       }
     ],
+    "heroImage": "assets/tools/build-query-3d-occupancy-map/octomap-demo-1.jpg",
+    "demos": [
+      {
+        "label": "OctoMap demo thumbnail",
+        "image": "assets/tools/build-query-3d-occupancy-map/octomap-demo-1.jpg",
+        "position": "center center"
+      },
+      {
+        "label": "Habitat color capture",
+        "image": "assets/tools/build-query-3d-occupancy-map/habitat-color.png",
+        "position": "center center"
+      },
+      {
+        "label": "Habitat depth capture",
+        "image": "assets/tools/build-query-3d-occupancy-map/habitat-depth.png",
+        "position": "center center"
+      }
+    ],
     "apiExample": "python evaluation/minimal_eval_round1/occupancy_hard20/run_occupancy_hard20.py",
     "shortExplanation": "Use this wrapper to turn point observations into occupancy labels that downstream planners can query before moving.",
     "parameterNotes": [
@@ -584,6 +692,24 @@ const round1ExecutionControlTools: Tool[] = [
       {
         "label": "Paper",
         "url": "https://arxiv.org/abs/2310.00433"
+      }
+    ],
+    "heroImage": "assets/tools/moma-io-demo/actpermoma.gif",
+    "demos": [
+      {
+        "label": "ActPerMoMa project demo",
+        "image": "assets/tools/moma-io-demo/actpermoma.gif",
+        "position": "center center"
+      },
+      {
+        "label": "Habitat MOMA scene",
+        "image": "assets/tools/moma-io-demo/habitat-view.png",
+        "position": "center center"
+      },
+      {
+        "label": "Transform effect preview",
+        "image": "assets/tools/moma-io-demo/tool-effect-preview.png",
+        "position": "center center"
       }
     ],
     "apiExample": "python evaluation/minimal_eval_round1/moma_hard20/run_moma_hard20.py",
@@ -664,6 +790,19 @@ const round1ExecutionControlTools: Tool[] = [
         "url": "https://github.com/ros-navigation/navigation2"
       }
     ],
+    "heroImage": "assets/tools/ros2-nav2-advanced-demo-a/projected-map-preview.png",
+    "demos": [
+      {
+        "label": "Projected obstacle map",
+        "image": "assets/tools/ros2-nav2-advanced-demo-a/projected-map-preview.png",
+        "position": "center center"
+      },
+      {
+        "label": "Narrow-passage map",
+        "image": "assets/tools/ros2-nav2-advanced-demo-a/narrow-map-preview.png",
+        "position": "center center"
+      }
+    ],
     "apiExample": "python evaluation/minimal_eval_round1/habitat_nav2_20/run_nav2_20.py",
     "shortExplanation": "Use this wrapper to send a start and goal into Nav2 on a generated map and evaluate whether the planner returns a usable path.",
     "parameterNotes": [
@@ -740,6 +879,24 @@ const round1ExecutionControlTools: Tool[] = [
       {
         "label": "Nav2 Docs",
         "url": "https://nav2.org/"
+      }
+    ],
+    "heroImage": "assets/tools/habitat-to-nav2-map-demo/tool-effect-preview.png",
+    "demos": [
+      {
+        "label": "Habitat to Nav2 bridge preview",
+        "image": "assets/tools/habitat-to-nav2-map-demo/tool-effect-preview.png",
+        "position": "center center"
+      },
+      {
+        "label": "Habitat top-down scene",
+        "image": "assets/tools/habitat-to-nav2-map-demo/habitat-topdown-rgb.png",
+        "position": "center center"
+      },
+      {
+        "label": "Projected Nav2 map",
+        "image": "assets/tools/habitat-to-nav2-map-demo/habitat-nav2-map-preview.png",
+        "position": "center center"
       }
     ],
     "apiExample": "python evaluation/minimal_eval_round1/habitat_nav2_bridge_20/run_habitat_nav2_bridge_20.py",
@@ -820,6 +977,19 @@ const round1ExecutionControlTools: Tool[] = [
         "url": "https://stack-of-tasks.github.io/pinocchio/"
       }
     ],
+    "heroImage": "assets/tools/solve-inverse-kinematics-with-pinocchio/pinocchio-logo.png",
+    "demos": [
+      {
+        "label": "Pinocchio project identity",
+        "image": "assets/tools/solve-inverse-kinematics-with-pinocchio/pinocchio-logo.png",
+        "position": "center center"
+      },
+      {
+        "label": "Pinocchio performance figure",
+        "image": "assets/tools/solve-inverse-kinematics-with-pinocchio/pinocchio-performances.png",
+        "position": "center center"
+      }
+    ],
     "apiExample": "python evaluation/minimal_eval_round1/ik_20/run_ik_20.py",
     "shortExplanation": "Use this wrapper to solve IK for 6-DoF and redundant 7-DoF cases before sending a joint target to a controller.",
     "parameterNotes": [
@@ -896,6 +1066,19 @@ const round1ExecutionControlTools: Tool[] = [
       {
         "label": "Pinocchio Docs",
         "url": "https://stack-of-tasks.github.io/pinocchio/"
+      }
+    ],
+    "heroImage": "assets/tools/compute-inverse-dynamics-with-pinocchio/pinocchio-logo.png",
+    "demos": [
+      {
+        "label": "Pinocchio project identity",
+        "image": "assets/tools/compute-inverse-dynamics-with-pinocchio/pinocchio-logo.png",
+        "position": "center center"
+      },
+      {
+        "label": "Pinocchio performance figure",
+        "image": "assets/tools/compute-inverse-dynamics-with-pinocchio/pinocchio-performances.png",
+        "position": "center center"
       }
     ],
     "apiExample": "python evaluation/minimal_eval_round1/inverse_dynamics_20/run_inverse_dynamics_20.py",
@@ -981,6 +1164,19 @@ const round1ExecutionControlTools: Tool[] = [
         "url": "https://arxiv.org/abs/2105.04830"
       }
     ],
+    "heroImage": "assets/tools/retime-trajectory-with-ruckig/example-profile.png",
+    "demos": [
+      {
+        "label": "Ruckig trajectory profile",
+        "image": "assets/tools/retime-trajectory-with-ruckig/example-profile.png",
+        "position": "center center"
+      },
+      {
+        "label": "Ruckig benchmark figure",
+        "image": "assets/tools/retime-trajectory-with-ruckig/benchmark.png",
+        "position": "center center"
+      }
+    ],
     "apiExample": "python evaluation/minimal_eval_round1/ruckig_20/run_ruckig_20.py",
     "shortExplanation": "Use this wrapper to turn start and target joint states into a smooth trajectory that respects velocity, acceleration, and jerk limits.",
     "parameterNotes": [
@@ -1058,6 +1254,19 @@ const round1ExecutionControlTools: Tool[] = [
       {
         "label": "OMPL GitHub",
         "url": "https://github.com/ompl/ompl"
+      }
+    ],
+    "heroImage": "assets/tools/plan-collision-free-manipulation/ompl-r2-path.jpg",
+    "demos": [
+      {
+        "label": "OMPL rigid-body planning example",
+        "image": "assets/tools/plan-collision-free-manipulation/ompl-r2-path.jpg",
+        "position": "center center"
+      },
+      {
+        "label": "OMPL mobile manipulation example",
+        "image": "assets/tools/plan-collision-free-manipulation/ompl-fetch-mmp.png",
+        "position": "center center"
       }
     ],
     "apiExample": "python evaluation/minimal_eval_round1/plan_collision_free_manipulation_20/run_plan_collision_free_manipulation_20.py",
@@ -1141,6 +1350,24 @@ const round1ExecutionControlTools: Tool[] = [
       {
         "label": "OMPL GitHub",
         "url": "https://github.com/ompl/ompl"
+      }
+    ],
+    "heroImage": "assets/tools/habitat-to-collision-free-manipulation-demo/tool-effect-preview.png",
+    "demos": [
+      {
+        "label": "Habitat manipulation bridge preview",
+        "image": "assets/tools/habitat-to-collision-free-manipulation-demo/tool-effect-preview.png",
+        "position": "center center"
+      },
+      {
+        "label": "Habitat top-down scene",
+        "image": "assets/tools/habitat-to-collision-free-manipulation-demo/habitat-topdown-rgb.png",
+        "position": "center center"
+      },
+      {
+        "label": "OMPL rigid-body planning example",
+        "image": "assets/tools/habitat-to-collision-free-manipulation-demo/ompl-r2-path.jpg",
+        "position": "center center"
       }
     ],
     "apiExample": "python evaluation/minimal_eval_round1/habitat_collision_free_manipulation_20/run_habitat_collision_free_manipulation_20.py",
