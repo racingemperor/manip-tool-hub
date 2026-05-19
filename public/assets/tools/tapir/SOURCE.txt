@@ -1,3 +1,2 @@
-Images from official TAPIR project page/gallery.
-https://deepmind-tapir.github.io/static/images/tapir_figure_simplified.png
-https://storage.googleapis.com/dm-tapnet/tapir-blogpost/videos/animation/image_35.png
+Images cropped from the official TAPIR paper figures/tables showing qualitative and benchmark comparisons.
+https://arxiv.org/pdf/2306.08637

@@ -1,2 +1,2 @@
-Images extracted from embedded figures in official source PDF.
-E:\manip-tool-hub-work\.tool_image_cache\action-genome.pdf
+Images cropped from official CVPR 2020 Action Genome paper figures showing qualitative comparison and spatio-temporal graph annotations.
+https://openaccess.thecvf.com/content_CVPR_2020/papers/Ji_Action_Genome_Actions_As_Compositions_of_Spatio-Temporal_Scene_Graphs_CVPR_2020_paper.pdf
