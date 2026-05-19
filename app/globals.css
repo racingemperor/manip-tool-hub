@@ -3056,6 +3056,22 @@ tr:last-child td {
 
   .main {
     padding: 14px;
+    overflow-x: hidden;
+  }
+
+  .content > section,
+  .hero,
+  .module-strip,
+  .module-tile,
+  .home-overview,
+  .home-spotlight-grid,
+  .home-tool-card,
+  .home-benchmark-panel,
+  .home-category-map,
+  .home-category-card {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
   }
 
   .topbar,
@@ -3123,14 +3139,17 @@ tr:last-child td {
 
   .hero {
     min-height: 0;
-    padding: 22px;
+    padding: 20px 16px;
     align-content: start;
+    max-width: 100%;
   }
 
   h1 {
-    font-size: 28px;
-    line-height: 1.12;
+    max-width: 100%;
+    font-size: 24px;
+    line-height: 1.16;
     overflow-wrap: anywhere;
+    word-break: break-word;
   }
 
   .hero p {
@@ -3138,8 +3157,19 @@ tr:last-child td {
     line-height: 1.55;
     display: -webkit-box;
     overflow: hidden;
+    overflow-wrap: anywhere;
+    word-break: break-word;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 8;
+  }
+
+  .section-head p,
+  .module-tile p,
+  .home-tool-card p,
+  .home-category-card p,
+  .home-benchmark-panel p {
+    overflow-wrap: anywhere;
+    word-break: break-word;
   }
 
   .home-benchmark-panel {
@@ -3173,9 +3203,15 @@ tr:last-child td {
 
   .home-tool-card,
   .home-tool-card.large {
-    grid-column: auto;
+    width: 100%;
+    max-width: 100%;
+    grid-column: 1 / -1;
     grid-row: auto;
     min-height: 190px;
+  }
+
+  .home-spotlight-grid .home-tool-card:nth-child(4) {
+    grid-column: 1 / -1;
   }
 
   .home-tool-card.large strong,
@@ -3609,11 +3645,13 @@ tr:last-child td {
   }
 
   .hero {
-    padding: 20px;
+    padding: 18px 14px;
   }
 
   .hero p {
-    font-size: 15px;
+    font-size: 13px;
+    line-height: 1.5;
+    -webkit-line-clamp: 7;
   }
 
   .demo-empty-grid {
