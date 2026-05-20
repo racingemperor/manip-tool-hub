@@ -32,6 +32,12 @@ export function venueLabel(tool: Tool) {
   return tool.paperVenue.split("/")[0].split(";")[0].trim();
 }
 
+export function toolHeroPosition(tool: Tool) {
+  if (tool.heroPosition) return tool.heroPosition;
+  if (tool.demos?.[0]?.position) return tool.demos[0].position;
+  return "center center";
+}
+
 export function searchHaystack(tool: Tool) {
   return [
     tool.slug,

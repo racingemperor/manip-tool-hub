@@ -10,6 +10,7 @@ import { ToolDetailSearch, type ToolDetailSearchEntry } from "@/components/ToolD
 import { ToolEngagement } from "@/components/ToolEngagement";
 import { realTools, tools, type Tool, type ToolLink } from "@/data/tools";
 import { assetPath } from "@/lib/assets";
+import { toolHeroPosition } from "@/lib/tools";
 import { buildReturnSchema, inferParameters } from "@/lib/toolDocs";
 
 export const dynamicParams = false;
@@ -84,6 +85,7 @@ export default async function ToolDetailPage({ params }: { params: Promise<{ slu
   const heroBackground = tool.heroImage
     ? `linear-gradient(135deg, rgba(17, 24, 39, 0.9), rgba(53, 98, 255, 0.44)), url('${assetPath(tool.heroImage)}')`
     : undefined;
+  const heroBackgroundPosition = toolHeroPosition(tool);
   const demos = tool.demos?.length ? tool.demos : [
     { label: "Input image / scene" },
     { label: "Output overlay" },
@@ -214,7 +216,7 @@ export default async function ToolDetailPage({ params }: { params: Promise<{ slu
         <section className="tool-hero" id="introduction">
           <div
             className={`hero-media ${tool.heroImage ? "with-image" : ""}`}
-            style={heroBackground ? { backgroundImage: heroBackground } : undefined}
+            style={heroBackground ? { backgroundImage: heroBackground, backgroundPosition: heroBackgroundPosition } : undefined}
           >
             <div className="eyebrow">{tool.category}</div>
             <h1>{tool.title}</h1>
@@ -381,7 +383,7 @@ export default async function ToolDetailPage({ params }: { params: Promise<{ slu
                 <article className="paper-summary">
                   <div
                     className={`paper-cover ${tool.heroImage ? "demo-slot image" : ""}`}
-                    style={tool.heroImage ? { backgroundImage: `linear-gradient(135deg, rgba(16, 24, 40, 0.2), rgba(53, 98, 255, 0.08)), url('${assetPath(tool.heroImage)}')` } : undefined}
+                    style={tool.heroImage ? { backgroundImage: `linear-gradient(135deg, rgba(16, 24, 40, 0.2), rgba(53, 98, 255, 0.08)), url('${assetPath(tool.heroImage)}')`, backgroundPosition: heroBackgroundPosition } : undefined}
                   >
                     <span>Paper figure</span>
                   </div>

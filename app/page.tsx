@@ -3,7 +3,7 @@ import { SiteShell } from "@/components/SiteShell";
 import { leaderboardRows } from "@/data/leaderboard";
 import { realTools, toolCategories } from "@/data/tools";
 import { assetPath } from "@/lib/assets";
-import { categoryShortLabel } from "@/lib/tools";
+import { categoryShortLabel, toolHeroPosition } from "@/lib/tools";
 
 const modules = [
   { href: "/datasets", number: "1", title: "Dataset Library", text: "Dataset entries and download links." },
@@ -70,12 +70,13 @@ export default function HomePage() {
                 const backgroundImage = tool.heroImage
                   ? `linear-gradient(135deg, rgba(17, 24, 39, 0.76), rgba(53, 98, 255, 0.22)), url('${assetPath(tool.heroImage)}')`
                   : undefined;
+                const backgroundPosition = toolHeroPosition(tool);
                 return (
                   <Link
                     className={`home-tool-card ${index === 0 ? "large" : ""}`}
                     href={`/tools/${tool.slug}`}
                     key={tool.slug}
-                    style={backgroundImage ? { backgroundImage } : undefined}
+                    style={backgroundImage ? { backgroundImage, backgroundPosition } : undefined}
                   >
                     <span className="badge">{categoryShortLabel(tool.category, tool.task)}</span>
                     <div>

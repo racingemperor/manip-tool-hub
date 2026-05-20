@@ -1,20 +1,21 @@
 import Link from "next/link";
 import type { Tool } from "@/data/tools";
 import { assetPath } from "@/lib/assets";
-import { categoryShortLabel, venueLabel } from "@/lib/tools";
+import { categoryShortLabel, toolHeroPosition, venueLabel } from "@/lib/tools";
 import { ToolEngagement } from "./ToolEngagement";
 
 export function ToolCard({ tool }: { tool: Tool }) {
   const backgroundImage = tool.heroImage
     ? `linear-gradient(135deg, rgba(16, 24, 40, 0.38), rgba(53, 98, 255, 0.18)), url('${assetPath(tool.heroImage)}')`
     : undefined;
+  const backgroundPosition = toolHeroPosition(tool);
 
   return (
     <article className="card tool-card">
       <Link className="tool-card-main" href={`/tools/${tool.slug}`} aria-label={`Open ${tool.title} detail`}>
         <div
           className={`tool-thumb ${tool.heroImage ? "image" : ""}`}
-          style={backgroundImage ? { backgroundImage } : undefined}
+          style={backgroundImage ? { backgroundImage, backgroundPosition } : undefined}
         >
           <span>{tool.task}</span>
         </div>

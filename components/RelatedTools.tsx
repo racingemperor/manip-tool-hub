@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import type { Tool } from "@/data/tools";
 import { assetPath } from "@/lib/assets";
-import { categoryShortLabel } from "@/lib/tools";
+import { categoryShortLabel, toolHeroPosition } from "@/lib/tools";
 
 function pickRandom(items: Tool[], count: number) {
   return [...items].sort(() => Math.random() - 0.5).slice(0, count);
@@ -35,12 +35,13 @@ export function RelatedTools({ current, candidates }: { current: Tool; candidate
         const backgroundImage = tool.heroImage
           ? `linear-gradient(135deg, rgba(17, 24, 39, 0.76), rgba(53, 98, 255, 0.36)), url('${assetPath(tool.heroImage)}')`
           : undefined;
+        const backgroundPosition = toolHeroPosition(tool);
         return (
           <Link
             className={`related-card ${tool.heroImage ? "" : "placeholder"}`}
             href={`/tools/${tool.slug}`}
             key={tool.slug}
-            style={backgroundImage ? { backgroundImage } : undefined}
+            style={backgroundImage ? { backgroundImage, backgroundPosition } : undefined}
           >
             <div className="related-content">
               <span className="badge">{categoryShortLabel(tool.category, tool.task)}</span>

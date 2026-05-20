@@ -59,6 +59,7 @@ export type Tool = {
   paperContribution?: string;
   paperLinks?: ToolLink[];
   heroImage?: string;
+  heroPosition?: string;
   demos?: ToolDemo[];
   apiExample?: string;
   shortExplanation?: string;
@@ -644,6 +645,7 @@ export const tools: Tool[] = [
       }
     ],
     "heroImage": "assets/tools/yolo-world/vis-lvis.png",
+    "heroPosition": "left top",
     "demos": [
       {
         "label": "LVIS indoor objects",
@@ -1962,6 +1964,7 @@ export const tools: Tool[] = [
       }
     ],
     "heroImage": "assets/tools/lingo_space/hero-pipeline.jpg",
+    "heroPosition": "center top",
     "demos": [
       {
         "label": "Official pipeline figure",
@@ -2084,6 +2087,7 @@ export const tools: Tool[] = [
       }
     ],
     "heroImage": "assets/tools/physvlm_avr/initial-environment.png",
+    "heroPosition": "center top",
     "demos": [
       {
         "label": "Initial environment image",
@@ -2326,6 +2330,7 @@ export const tools: Tool[] = [
       }
     ],
     "heroImage": "assets/tools/scan_materialize_simulate/teaser.png",
+    "heroPosition": "center top",
     "demos": [
       {
         "label": "Bundled Genesis teaser",
@@ -2533,6 +2538,7 @@ export const tools: Tool[] = [
       }
     ],
     "heroImage": "assets/tools/query-3d-scene-graph/cover.jpg",
+    "heroPosition": "center top",
     "demos": [
       {
         "label": "Scene graph query flow",
@@ -2631,6 +2637,7 @@ export const tools: Tool[] = [
       }
     ],
     "heroImage": "assets/tools/query-historical-action-timeline/cover.jpg",
+    "heroPosition": "center top",
     "demos": [
       {
         "label": "Action timeline query flow",
@@ -2734,6 +2741,7 @@ export const tools: Tool[] = [
       }
     ],
     "heroImage": "assets/tools/retrieve-past-visual-state-faiss/cover.jpg",
+    "heroPosition": "right center",
     "demos": [
       {
         "label": "Visual memory retrieval flow",
