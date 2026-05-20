@@ -1332,10 +1332,23 @@ tr:last-child td {
   align-items: start;
   gap: 8px;
   margin-bottom: 7px;
+  justify-content: flex-start;
+  flex-wrap: wrap;
 }
 
 .tool-card .card-title > span:first-child {
   min-width: 0;
+  flex: 1 1 200px;
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-height: 1.2;
+}
+
+.tool-card .card-title .badge {
+  flex: 0 0 auto;
+  max-width: 100%;
 }
 
 .tool-pagination {
