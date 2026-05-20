@@ -5,7 +5,6 @@ export type ToolStatus = "Draft" | "Docs Ready" | "Code Linked" | "Runnable" | "
 export type ToolDemo = {
   label: string;
   image?: string;
-  video?: string;
   position?: string;
 };
 
@@ -120,21 +119,26 @@ export const tools: Tool[] = [
         "url": "https://huggingface.co/spaces/stevengrove/YOLO-World"
       }
     ],
+    "heroImage": "assets/tools/yolo-world/vis-lvis.png",
     "demos": [
       {
         "label": "LVIS indoor objects",
+        "image": "assets/tools/yolo-world/vis-lvis.png",
         "position": "left top"
       },
       {
         "label": "User vocabulary: people",
+        "image": "assets/tools/yolo-world/user-vocab.png",
         "position": "left center"
       },
       {
         "label": "Referring detection: people",
+        "image": "assets/tools/yolo-world/vis-referring.png",
         "position": "left top"
       },
       {
         "label": "Speed / accuracy benchmark",
+        "image": "assets/tools/yolo-world/speed-acc.png",
         "position": "center center"
       }
     ],
@@ -146,6 +150,7 @@ export const tools: Tool[] = [
       "prompt": "person,bus,car",
       "runLabel": "Run detection",
       "expectedOutput": "An annotated image plus JSON-style detections containing boxes, labels, and scores.",
+      "image": "assets/tools/yolo-world/user-vocab.png"
     },
     "parameterNotes": [
       {
@@ -258,9 +263,11 @@ export const tools: Tool[] = [
         "url": "https://github.com/MIT-SPARK/Hydra?tab=readme-ov-file#installation"
       }
     ],
+    "heroImage": "assets/tools/hydra/hydra.gif",
     "demos": [
       {
         "label": "Online 3D scene graph playback",
+        "image": "assets/tools/hydra/hydra.gif",
         "position": "center center"
       }
     ],
@@ -272,6 +279,7 @@ export const tools: Tool[] = [
       "prompt": "Use the default indoor mapping configuration",
       "runLabel": "Build scene graph",
       "expectedOutput": "A dynamic scene graph with geometry, semantic objects, places, room nodes, and optimized graph artifacts.",
+      "image": "assets/tools/hydra/hydra.gif"
     },
     "parameterNotes": [
       {
@@ -383,37 +391,46 @@ export const tools: Tool[] = [
         "url": "https://graspnet.net/datasets.html"
       }
     ],
+    "heroImage": "assets/tools/anygrasp/anygrasp-1-small.gif",
     "demos": [
       {
         "label": "Cluttered scene grasping",
+        "image": "assets/tools/anygrasp/anygrasp-1-small.gif",
         "position": "center center"
       },
       {
         "label": "Fish catching demo",
+        "image": "assets/tools/anygrasp/anygrasp-fish.gif",
         "position": "center center"
       },
       {
         "label": "Broken pot fragments",
+        "image": "assets/tools/anygrasp/broken.gif",
         "position": "center center"
       },
       {
         "label": "Human comparison sequence",
+        "image": "assets/tools/anygrasp/vshuman.gif",
         "position": "center center"
       },
       {
         "label": "Grasp pose visualization",
+        "image": "assets/tools/anygrasp/grasppose.gif",
         "position": "center center"
       },
       {
         "label": "Prediction variance view",
+        "image": "assets/tools/anygrasp/variance.gif",
         "position": "center center"
       },
       {
         "label": "RGB-D demo color input",
+        "image": "assets/tools/anygrasp/example-color.png",
         "position": "center center"
       },
       {
         "label": "Depth input example",
+        "image": "assets/tools/anygrasp/example-depth.png",
         "position": "center center"
       }
     ],
@@ -425,6 +442,7 @@ export const tools: Tool[] = [
       "prompt": "Find stable grasps within the gripper width limit",
       "runLabel": "Predict grasps",
       "expectedOutput": "Ranked 6-DoF grasp poses with visualization, score, width, and optional temporal tracking output.",
+      "image": "assets/tools/anygrasp/grasppose.gif"
     },
     "parameterNotes": [
       {
@@ -536,9 +554,11 @@ export const tools: Tool[] = [
         "url": "https://colab.research.google.com/github/isl-org/ZoeDepth"
       }
     ],
+    "heroImage": "assets/tools/zoedepth/zoedepth-teaser.png",
     "demos": [
       {
         "label": "Teaser: RGB to metric depth",
+        "image": "assets/tools/zoedepth/zoedepth-teaser.png",
         "position": "center center"
       }
     ],
@@ -550,6 +570,7 @@ export const tools: Tool[] = [
       "prompt": "Use ZoeD_N for general RGB depth estimation",
       "runLabel": "Estimate depth",
       "expectedOutput": "A metric depth map and optional colored depth visualization saved in the run folder.",
+      "image": "assets/tools/zoedepth/zoedepth-teaser.png"
     },
     "parameterNotes": [
       {
@@ -661,37 +682,46 @@ export const tools: Tool[] = [
         "url": "https://replicate.com/casia-iva-lab/fastsam"
       }
     ],
+    "heroImage": "assets/tools/fastsam/eightpic.png",
     "demos": [
       {
         "label": "Segmentation result set",
+        "image": "assets/tools/fastsam/eightpic.png",
         "position": "center center"
       },
       {
         "label": "Everything mode UI",
+        "image": "assets/tools/fastsam/hf-everything-mode.png",
         "position": "center center"
       },
       {
         "label": "Point prompt UI",
+        "image": "assets/tools/fastsam/hf-points-mode.png",
         "position": "center center"
       },
       {
         "label": "Replicate example 1",
+        "image": "assets/tools/fastsam/replicate-1.png",
         "position": "center center"
       },
       {
         "label": "Replicate example 2",
+        "image": "assets/tools/fastsam/replicate-2.png",
         "position": "center center"
       },
       {
         "label": "Dog prompt input",
+        "image": "assets/tools/fastsam/dogs.jpg",
         "position": "center center"
       },
       {
         "label": "Cat image prompt input",
+        "image": "assets/tools/fastsam/cat.jpg",
         "position": "center center"
       },
       {
         "label": "Building segmentation",
+        "image": "assets/tools/fastsam/building.png",
         "position": "center center"
       }
     ],
@@ -703,6 +733,7 @@ export const tools: Tool[] = [
       "prompt": "the yellow dog",
       "runLabel": "Segment object",
       "expectedOutput": "A mask overlay and mask files for the selected object or all objects in the image.",
+      "image": "assets/tools/fastsam/hf-points-mode.png"
     },
     "parameterNotes": [
       {
@@ -813,37 +844,46 @@ export const tools: Tool[] = [
         "url": "https://colab.research.google.com/drive/1yo43XTbjxuWA7XgCUO9qxAi7wBI6HzvP?usp=sharing"
       }
     ],
+    "heroImage": "assets/tools/cutie/bike-00000.jpg",
     "demos": [
       {
         "label": "Bike frame 0",
+        "image": "assets/tools/cutie/bike-00000.jpg",
         "position": "center center"
       },
       {
         "label": "Bike frame 1",
+        "image": "assets/tools/cutie/bike-00001.jpg",
         "position": "center center"
       },
       {
         "label": "Bike frame 2",
+        "image": "assets/tools/cutie/bike-00002.jpg",
         "position": "center center"
       },
       {
         "label": "Bike frame 3",
+        "image": "assets/tools/cutie/bike-00003.jpg",
         "position": "center center"
       },
       {
         "label": "Bike first mask",
+        "image": "assets/tools/cutie/mask-bike-00000.png",
         "position": "center center"
       },
       {
         "label": "Judo frame 0",
+        "image": "assets/tools/cutie/judo-00000.jpg",
         "position": "center center"
       },
       {
         "label": "Judo frame 8",
+        "image": "assets/tools/cutie/judo-00008.jpg",
         "position": "center center"
       },
       {
         "label": "Judo frame 15",
+        "image": "assets/tools/cutie/judo-00015.jpg",
         "position": "center center"
       }
     ],
@@ -855,6 +895,7 @@ export const tools: Tool[] = [
       "prompt": "Track the selected foreground object through the sequence",
       "runLabel": "Track mask",
       "expectedOutput": "A folder of per-frame masks and overlay previews for the tracked object.",
+      "image": "assets/tools/cutie/bike-00000.jpg"
     },
     "parameterNotes": [
       {
@@ -965,9 +1006,11 @@ export const tools: Tool[] = [
         "url": "https://github.com/xuankuzcr/Global-LVBA"
       }
     ],
+    "heroImage": "assets/tools/fast-livo2/demo-maxresdefault.jpg",
     "demos": [
       {
         "label": "Official demo video frame",
+        "image": "assets/tools/fast-livo2/demo-maxresdefault.jpg",
         "position": "center center"
       }
     ],
@@ -979,6 +1022,7 @@ export const tools: Tool[] = [
       "prompt": "mapping_avia.launch with calibrated sensor topics",
       "runLabel": "Launch odometry",
       "expectedOutput": "A pose trajectory, local map, reconstruction outputs, and ROS visualization streams.",
+      "image": "assets/tools/fast-livo2/demo-maxresdefault.jpg"
     },
     "parameterNotes": [
       {
@@ -1091,37 +1135,46 @@ export const tools: Tool[] = [
         "url": "https://youtu.be/j5fT8NE5fdg"
       }
     ],
+    "heroImage": "assets/tools/r3live/cover-half.jpg",
     "demos": [
       {
         "label": "RGB map reconstruction",
+        "image": "assets/tools/r3live/cover-half.jpg",
         "position": "center center"
       },
       {
         "label": "HKU campus sequence",
+        "image": "assets/tools/r3live/hku-campus-seq-01.png",
         "position": "center center"
       },
       {
         "label": "HKU park sequence",
+        "image": "assets/tools/r3live/hku-park-01.jpg",
         "position": "center center"
       },
       {
         "label": "Degenerate scene",
+        "image": "assets/tools/r3live/degenerate-01-pic.png",
         "position": "center center"
       },
       {
         "label": "Realtime demo GIF",
+        "image": "assets/tools/r3live/hku-demo.gif",
         "position": "center center"
       },
       {
         "label": "HKUST demo GIF",
+        "image": "assets/tools/r3live/hkust-demo.gif",
         "position": "center center"
       },
       {
         "label": "Mesh reconstruction",
+        "image": "assets/tools/r3live/mesh.png",
         "position": "center center"
       },
       {
         "label": "UE application view",
+        "image": "assets/tools/r3live/ue-applications.png",
         "position": "center center"
       }
     ],
@@ -1133,6 +1186,7 @@ export const tools: Tool[] = [
       "prompt": "Run r3live_bag.launch and visualize the colored map",
       "runLabel": "Build RGB map",
       "expectedOutput": "A state trajectory, RGB-colored point map, and optional mesh reconstruction.",
+      "image": "assets/tools/r3live/hku-demo.gif"
     },
     "parameterNotes": [
       {
@@ -1244,17 +1298,21 @@ export const tools: Tool[] = [
         "url": "https://huggingface.co/spaces/naver/DUSt3R"
       }
     ],
+    "heroImage": "assets/tools/dust3r/matching.jpg",
     "demos": [
       {
         "label": "Interactive demo result",
+        "image": "assets/tools/dust3r/demo.jpg",
         "position": "center center"
       },
       {
         "label": "Pair reconstruction",
+        "image": "assets/tools/dust3r/pipeline1.jpg",
         "position": "center center"
       },
       {
         "label": "Image matching",
+        "image": "assets/tools/dust3r/matching.jpg",
         "position": "center center"
       }
     ],
@@ -1266,6 +1324,7 @@ export const tools: Tool[] = [
       "prompt": "Use 512px ViT-Large checkpoint and global alignment",
       "runLabel": "Reconstruct scene",
       "expectedOutput": "Aligned 3D point cloud, pair confidence maps, and camera pose estimates.",
+      "image": "assets/tools/dust3r/demo.jpg"
     },
     "parameterNotes": [
       {
@@ -1373,13 +1432,16 @@ export const tools: Tool[] = [
         "url": "https://waldjohannau.github.io/RIO/"
       }
     ],
+    "heroImage": "assets/tools/query-3d-scene-graph/cover.svg",
     "demos": [
       {
         "label": "Scene graph query flow",
+        "image": "assets/tools/query-3d-scene-graph/demo-1.svg",
         "position": "center center"
       },
       {
         "label": "Structured graph result preview",
+        "image": "assets/tools/query-3d-scene-graph/demo-2.svg",
         "position": "center center"
       }
     ],
@@ -1391,6 +1453,7 @@ export const tools: Tool[] = [
       "prompt": "object_query: table; relation_query: nearby chairs",
       "runLabel": "Query scene graph",
       "expectedOutput": "Matched nodes with 3D centers, bounding boxes, relation edges, and confidence values.",
+      "image": "assets/tools/query-3d-scene-graph/demo-1.svg"
     },
     "parameterNotes": [
       {
@@ -1467,13 +1530,16 @@ export const tools: Tool[] = [
         "url": "https://arxiv.org/abs/1903.01945"
       }
     ],
+    "heroImage": "assets/tools/query-historical-action-timeline/cover.svg",
     "demos": [
       {
         "label": "Action timeline query flow",
+        "image": "assets/tools/query-historical-action-timeline/demo-1.svg",
         "position": "center center"
       },
       {
         "label": "Timeline result preview",
+        "image": "assets/tools/query-historical-action-timeline/demo-2.svg",
         "position": "center center"
       }
     ],
@@ -1485,6 +1551,7 @@ export const tools: Tool[] = [
       "prompt": "query_action: pour; time_window: full video",
       "runLabel": "Query timeline",
       "expectedOutput": "A list of start and end frames for matching action segments.",
+      "image": "assets/tools/query-historical-action-timeline/demo-1.svg"
     },
     "parameterNotes": [
       {
@@ -1566,13 +1633,16 @@ export const tools: Tool[] = [
         "url": "https://arxiv.org/abs/2401.08281"
       }
     ],
+    "heroImage": "assets/tools/retrieve-past-visual-state-faiss/cover.svg",
     "demos": [
       {
         "label": "Visual memory retrieval flow",
+        "image": "assets/tools/retrieve-past-visual-state-faiss/demo-1.svg",
         "position": "center center"
       },
       {
         "label": "Top-k result preview",
+        "image": "assets/tools/retrieve-past-visual-state-faiss/demo-2.svg",
         "position": "center center"
       }
     ],
@@ -1584,6 +1654,7 @@ export const tools: Tool[] = [
       "prompt": "top_k: 3",
       "runLabel": "Search memory",
       "expectedOutput": "Top-k memory ids with distances or similarity scores and snapshot references.",
+      "image": "assets/tools/retrieve-past-visual-state-faiss/demo-1.svg"
     },
     "parameterNotes": [
       {
@@ -1669,13 +1740,16 @@ export const tools: Tool[] = [
         "url": "https://seoungwugoh.github.io/STM/"
       }
     ],
+    "heroImage": "assets/tools/stm/cover.svg",
     "demos": [
       {
         "label": "Space-time memory flow",
+        "image": "assets/tools/stm/demo-1.svg",
         "position": "center center"
       },
       {
         "label": "Memory readout preview",
+        "image": "assets/tools/stm/demo-2.svg",
         "position": "center center"
       }
     ],
@@ -1687,6 +1761,7 @@ export const tools: Tool[] = [
       "prompt": "target_object_id: selected object; memory: reference image and mask",
       "runLabel": "Run STM",
       "expectedOutput": "A predicted foreground region, bounding box, feature readout, attention weights, and confidence score.",
+      "image": "assets/tools/stm/demo-1.svg"
     },
     "parameterNotes": [
       {
@@ -1769,13 +1844,16 @@ export const tools: Tool[] = [
         "url": "https://arxiv.org/abs/1912.06992"
       }
     ],
+    "heroImage": "assets/tools/action-genome/cover.svg",
     "demos": [
       {
         "label": "Action graph inference flow",
+        "image": "assets/tools/action-genome/demo-1.svg",
         "position": "center center"
       },
       {
         "label": "State timeline result preview",
+        "image": "assets/tools/action-genome/demo-2.svg",
         "position": "center center"
       }
     ],
@@ -1787,6 +1865,7 @@ export const tools: Tool[] = [
       "prompt": "objects_of_interest: door, cup, person",
       "runLabel": "Build state graph",
       "expectedOutput": "Object state timelines and contact relations such as open, closed, empty, full, sitting, or standing.",
+      "image": "assets/tools/action-genome/demo-1.svg"
     },
     "parameterNotes": [
       {
@@ -1862,13 +1941,16 @@ export const tools: Tool[] = [
         "url": "https://arxiv.org/abs/2305.07766"
       }
     ],
+    "heroImage": "assets/tools/language2ltl/cover.svg",
     "demos": [
       {
         "label": "Plan validation flow",
+        "image": "assets/tools/language2ltl/demo-1.svg",
         "position": "center center"
       },
       {
         "label": "Violation report preview",
+        "image": "assets/tools/language2ltl/demo-2.svg",
         "position": "center center"
       }
     ],
@@ -1880,6 +1962,7 @@ export const tools: Tool[] = [
       "prompt": "always(grab_chemical -> historically(wear_gloves))",
       "runLabel": "Validate plan",
       "expectedOutput": "A compliance flag and a human-readable violation reason when a prerequisite step is missing.",
+      "image": "assets/tools/language2ltl/demo-1.svg"
     },
     "parameterNotes": [
       {
@@ -1956,13 +2039,16 @@ export const tools: Tool[] = [
         "url": "https://huggingface.co/spaces/facebook/cotracker"
       }
     ],
+    "heroImage": "assets/tools/monitor-dynamic-disturbance/cover.svg",
     "demos": [
       {
         "label": "Disturbance monitor flow",
+        "image": "assets/tools/monitor-dynamic-disturbance/demo-1.svg",
         "position": "center center"
       },
       {
         "label": "Alert result preview",
+        "image": "assets/tools/monitor-dynamic-disturbance/demo-2.svg",
         "position": "center center"
       }
     ],
@@ -1974,6 +2060,7 @@ export const tools: Tool[] = [
       "prompt": "roi_points: four tracked points around the target",
       "runLabel": "Monitor disturbance",
       "expectedOutput": "Tracked point trajectories, a disturbance flag, and severity score.",
+      "image": "assets/tools/monitor-dynamic-disturbance/demo-1.svg"
     },
     "parameterNotes": [
       {
@@ -2054,13 +2141,16 @@ export const tools: Tool[] = [
         "url": "https://deepmind-tapir.github.io/"
       }
     ],
+    "heroImage": "assets/tools/tapir/cover.svg",
     "demos": [
       {
         "label": "Point tracking flow",
+        "image": "assets/tools/tapir/demo-1.svg",
         "position": "center center"
       },
       {
         "label": "Tracked point result preview",
+        "image": "assets/tools/tapir/demo-2.svg",
         "position": "center center"
       }
     ],
@@ -2072,6 +2162,7 @@ export const tools: Tool[] = [
       "prompt": "initial_target_pixel: [120, 150]",
       "runLabel": "Track point",
       "expectedOutput": "Per-frame target coordinates, occlusion status, confidence, and total displacement.",
+      "image": "assets/tools/tapir/demo-1.svg"
     },
     "parameterNotes": [
       {
@@ -2151,13 +2242,16 @@ export const tools: Tool[] = [
         "url": "https://sites.google.com/view/robot-r3m/"
       }
     ],
+    "heroImage": "assets/tools/r3m/cover.svg",
     "demos": [
       {
         "label": "Post-action verification flow",
+        "image": "assets/tools/r3m/demo-1.svg",
         "position": "center center"
       },
       {
         "label": "Completion score result preview",
+        "image": "assets/tools/r3m/demo-2.svg",
         "position": "center center"
       }
     ],
@@ -2169,6 +2263,7 @@ export const tools: Tool[] = [
       "prompt": "pick up the red cup",
       "runLabel": "Verify result",
       "expectedOutput": "A task completion score and boolean success flag.",
+      "image": "assets/tools/r3m/demo-1.svg"
     },
     "parameterNotes": [
       {
@@ -2244,13 +2339,16 @@ export const tools: Tool[] = [
         "url": "https://adversarial-robustness-toolbox.readthedocs.io/"
       }
     ],
+    "heroImage": "assets/tools/feature-squeezer/cover.svg",
     "demos": [
       {
         "label": "Feature squeezing check flow",
+        "image": "assets/tools/feature-squeezer/demo-1.svg",
         "position": "center center"
       },
       {
         "label": "Adversarial report preview",
+        "image": "assets/tools/feature-squeezer/demo-2.svg",
         "position": "center center"
       }
     ],
@@ -2262,6 +2360,7 @@ export const tools: Tool[] = [
       "prompt": "method: bit_depth; compare original and squeezed predictions",
       "runLabel": "Run squeeze check",
       "expectedOutput": "A report containing the original prediction, squeezed prediction, and adversarial yes/no decision.",
+      "image": "assets/tools/feature-squeezer/demo-1.svg"
     },
     "parameterNotes": [
       {
@@ -2336,13 +2435,16 @@ export const tools: Tool[] = [
         "url": "https://doi.org/10.1016/S0734-189X(87)80186-X"
       }
     ],
+    "heroImage": "assets/tools/clahe-filter/cover.svg",
     "demos": [
       {
         "label": "CLAHE enhancement flow",
+        "image": "assets/tools/clahe-filter/demo-1.svg",
         "position": "center center"
       },
       {
         "label": "Enhanced output preview",
+        "image": "assets/tools/clahe-filter/demo-2.svg",
         "position": "center center"
       }
     ],
@@ -2354,6 +2456,7 @@ export const tools: Tool[] = [
       "prompt": "color_space: lab; clip_limit: 2.0; tile_grid_size: 8x8",
       "runLabel": "Enhance contrast",
       "expectedOutput": "A locally contrast-enhanced image with clearer details and balanced brightness.",
+      "image": "assets/tools/clahe-filter/demo-1.svg"
     },
     "parameterNotes": [
       {
@@ -2432,31 +2535,16 @@ export const tools: Tool[] = [
         "url": "https://arxiv.org/abs/1908.03826"
       }
     ],
-    "heroImage": "assets/tools/deblurganv2/restore_visual.png",
+    "heroImage": "assets/tools/deblurganv2/paper-demo-1.png",
     "demos": [
       {
-        "label": "Restoration qualitative results",
-        "image": "assets/tools/deblurganv2/restore_visual.png",
+        "label": "Paper qualitative result 1",
+        "image": "assets/tools/deblurganv2/paper-demo-1.png",
         "position": "center center"
       },
       {
-        "label": "Kohler benchmark visual",
-        "image": "assets/tools/deblurganv2/kohler_visual.png",
-        "position": "center center"
-      },
-      {
-        "label": "Model pipeline",
-        "image": "assets/tools/deblurganv2/pipeline.jpg",
-        "position": "center center"
-      },
-      {
-        "label": "Interpolation comparison",
-        "image": "assets/tools/deblurganv2/interp_compare.png",
-        "position": "center center"
-      },
-      {
-        "label": "SSIM and FLOPs tradeoff",
-        "image": "assets/tools/deblurganv2/ssim_flops_plot.png",
+        "label": "Paper qualitative result 2",
+        "image": "assets/tools/deblurganv2/paper-demo-2.png",
         "position": "center center"
       }
     ],
@@ -2468,7 +2556,7 @@ export const tools: Tool[] = [
       "prompt": "model_name: fpn_inception",
       "runLabel": "Run deblur",
       "expectedOutput": "A restored image file with reduced motion blur.",
-      "image": "assets/tools/deblurganv2/restore_visual.png"
+      "image": "assets/tools/deblurganv2/paper-demo-1.png"
     },
     "parameterNotes": [
       {
@@ -2557,46 +2645,16 @@ export const tools: Tool[] = [
         "url": "https://arxiv.org/abs/2401.10891"
       }
     ],
-    "heroImage": "assets/tools/depth-anything/teaser.png",
+    "heroImage": "assets/tools/depth-anything/paper-demo-1.png",
     "demos": [
       {
-        "label": "Depth Anything teaser",
-        "image": "assets/tools/depth-anything/teaser.png",
+        "label": "Paper demo 1",
+        "image": "assets/tools/depth-anything/paper-demo-1.png",
         "position": "center center"
       },
       {
-        "label": "ControlNet depth demo 1",
-        "image": "assets/tools/depth-anything/controlnet_demo1.png",
-        "position": "center center"
-      },
-      {
-        "label": "ControlNet depth demo 2",
-        "image": "assets/tools/depth-anything/controlnet_demo2.png",
-        "position": "center center"
-      },
-      {
-        "label": "Dolphins video depth demo",
-        "video": "assets/tools/depth-anything/demo1.mov",
-        "position": "center center"
-      },
-      {
-        "label": "Rollercoaster video depth demo",
-        "video": "assets/tools/depth-anything/demo2.mov",
-        "position": "center center"
-      },
-      {
-        "label": "Outdoor video depth demo",
-        "video": "assets/tools/depth-anything/demo3.mov",
-        "position": "center center"
-      },
-      {
-        "label": "Indoor video depth demo",
-        "video": "assets/tools/depth-anything/demo4.mov",
-        "position": "center center"
-      },
-      {
-        "label": "Driving video depth demo",
-        "video": "assets/tools/depth-anything/demo5.mov",
+        "label": "Paper demo 2",
+        "image": "assets/tools/depth-anything/paper-demo-2.png",
         "position": "center center"
       }
     ],
@@ -2608,7 +2666,7 @@ export const tools: Tool[] = [
       "prompt": "encoder: vitl",
       "runLabel": "Run depth",
       "expectedOutput": "A normalized depth map image aligned with the input frame.",
-      "image": "assets/tools/depth-anything/teaser.png"
+      "image": "assets/tools/depth-anything/paper-demo-1.png"
     },
     "parameterNotes": [
       {
@@ -2682,16 +2740,16 @@ export const tools: Tool[] = [
         "url": "https://arxiv.org/abs/1907.01341"
       }
     ],
-    "heroImage": "assets/tools/midas/Comparison.png",
+    "heroImage": "assets/tools/midas/paper-demo-1.png",
     "demos": [
       {
         "label": "Paper benchmark figure",
-        "image": "assets/tools/midas/Comparison.png",
+        "image": "assets/tools/midas/paper-demo-1.png",
         "position": "center center"
       },
       {
         "label": "Accuracy-speed figure",
-        "image": "assets/tools/midas/Improvement_vs_FPS.png",
+        "image": "assets/tools/midas/paper-demo-2.png",
         "position": "center center"
       }
     ],
@@ -2703,7 +2761,7 @@ export const tools: Tool[] = [
       "prompt": "model_type: dpt_beit_large_512",
       "runLabel": "Run MiDaS",
       "expectedOutput": "A depth map file exported to the output directory.",
-      "image": "assets/tools/midas/Comparison.png"
+      "image": "assets/tools/midas/paper-demo-1.png"
     },
     "parameterNotes": [
       {
@@ -2777,30 +2835,15 @@ export const tools: Tool[] = [
         "url": "https://arxiv.org/abs/1908.10084"
       }
     ],
-    "heroImage": "assets/tools/sentence-transformers/SBERT_Architecture.png",
+    "heroImage": "assets/tools/sentence-transformers/paper-demo-1.jpg",
     "demos": [
       {
-        "label": "SBERT architecture",
-        "image": "assets/tools/sentence-transformers/SBERT_Architecture.png",
-        "position": "center center"
-      },
-      {
-        "label": "SBERT softmax training architecture",
-        "image": "assets/tools/sentence-transformers/SBERT_SoftmaxLoss.png",
-        "position": "center center"
-      },
-      {
-        "label": "SBERT siamese inference architecture",
-        "image": "assets/tools/sentence-transformers/SBERT_Siamese_Network.png",
-        "position": "center center"
-      },
-      {
-        "label": "Semantic clustering example",
+        "label": "Image-text example 1",
         "image": "assets/tools/sentence-transformers/paper-demo-1.jpg",
         "position": "center center"
       },
       {
-        "label": "Topic embedding example",
+        "label": "Image-text example 2",
         "image": "assets/tools/sentence-transformers/paper-demo-2.jpg",
         "position": "center center"
       }
@@ -2813,7 +2856,7 @@ export const tools: Tool[] = [
       "prompt": "model: all-MiniLM-L6-v2",
       "runLabel": "Encode text",
       "expectedOutput": "Embedding matrix and optional similarity scores.",
-      "image": "assets/tools/sentence-transformers/SBERT_Architecture.png"
+      "image": "assets/tools/sentence-transformers/paper-demo-1.jpg"
     },
     "parameterNotes": [
       {
@@ -2888,56 +2931,16 @@ export const tools: Tool[] = [
         "url": "https://arxiv.org/abs/2303.05499"
       }
     ],
-    "heroImage": "assets/tools/grounding-dino/grounded_sam_2_intro.jpg",
+    "heroImage": "assets/tools/grounding-dino/paper-demo-1.png",
     "demos": [
       {
-        "label": "Grounded SAM 2 intro",
-        "image": "assets/tools/grounding-dino/grounded_sam_2_intro.jpg",
+        "label": "Paper overview figure",
+        "image": "assets/tools/grounding-dino/paper-demo-1.png",
         "position": "center center"
       },
       {
-        "label": "Detection and mask result",
-        "image": "assets/tools/grounding-dino/grounded_sam2_annotated_image_with_mask.jpg",
-        "position": "center center"
-      },
-      {
-        "label": "Slice inference result",
-        "image": "assets/tools/grounding-dino/grounded_sam2_annotated_image_with_mask_with_slice_inference.jpg",
-        "position": "center center"
-      },
-      {
-        "label": "Tracking pipeline",
-        "image": "assets/tools/grounding-dino/g_sam2_tracking_pipeline_vis.png",
-        "position": "center center"
-      },
-      {
-        "label": "Video pipeline",
-        "image": "assets/tools/grounding-dino/g_sam2_video_pipeline_v2.png",
-        "position": "center center"
-      },
-      {
-        "label": "Model diagram",
-        "image": "assets/tools/grounding-dino/model_diagram.png",
-        "position": "center center"
-      },
-      {
-        "label": "Dense people grounding",
-        "image": "assets/tools/grounding-dino/dense people.png",
-        "position": "center center"
-      },
-      {
-        "label": "Hippopotamus segmentation",
-        "image": "assets/tools/grounding-dino/hippopotamus_seg.jpg",
-        "position": "center center"
-      },
-      {
-        "label": "SA-V dataset example",
-        "image": "assets/tools/grounding-dino/sa_v_dataset.jpg",
-        "position": "center center"
-      },
-      {
-        "label": "Hippopotamus video segmentation",
-        "video": "assets/tools/grounding-dino/hippopotamus.mp4",
+        "label": "COCO qualitative figure",
+        "image": "assets/tools/grounding-dino/paper-demo-2.png",
         "position": "center center"
       }
     ],
@@ -2949,7 +2952,7 @@ export const tools: Tool[] = [
       "prompt": "mug . cup . bottle",
       "runLabel": "Run grounding",
       "expectedOutput": "Annotated image and box/label/score predictions.",
-      "image": "assets/tools/grounding-dino/grounded_sam2_annotated_image_with_mask.jpg"
+      "image": "assets/tools/grounding-dino/paper-demo-1.png"
     },
     "parameterNotes": [
       {
@@ -3034,50 +3037,15 @@ export const tools: Tool[] = [
         "url": "https://arxiv.org/abs/2111.09881"
       }
     ],
-    "heroImage": "assets/tools/restormer/network-architecture.png",
+    "heroImage": "assets/tools/restormer/paper-demo-1.jpg",
     "demos": [
       {
-        "label": "Network architecture",
-        "image": "assets/tools/restormer/network-architecture.png",
-        "position": "center center"
-      },
-      {
-        "label": "Defocus deblurring results",
-        "image": "assets/tools/restormer/defocus-deblurring.png",
-        "position": "center center"
-      },
-      {
-        "label": "Motion deblurring results",
-        "image": "assets/tools/restormer/single-image-motion-deblurring.png",
-        "position": "center center"
-      },
-      {
-        "label": "Image deraining results",
-        "image": "assets/tools/restormer/image-deraining.png",
-        "position": "center center"
-      },
-      {
-        "label": "Real image denoising",
-        "image": "assets/tools/restormer/real-image-denoising.png",
-        "position": "center center"
-      },
-      {
-        "label": "Color Gaussian denoising",
-        "image": "assets/tools/restormer/gaussian-image-denoising-color.png",
-        "position": "center center"
-      },
-      {
-        "label": "Grayscale Gaussian denoising",
-        "image": "assets/tools/restormer/gaussian-image-denoising-grayscale.png",
-        "position": "center center"
-      },
-      {
-        "label": "Degraded sample 1",
+        "label": "Degraded input example",
         "image": "assets/tools/restormer/paper-demo-1.jpg",
         "position": "center center"
       },
       {
-        "label": "Degraded sample 2",
+        "label": "Second demo sample",
         "image": "assets/tools/restormer/paper-demo-2.jpg",
         "position": "center center"
       }
@@ -3090,7 +3058,7 @@ export const tools: Tool[] = [
       "prompt": "task: Motion_Deblurring",
       "runLabel": "Run restoration",
       "expectedOutput": "A restored image saved to the result directory.",
-      "image": "assets/tools/restormer/image-deraining.png"
+      "image": "assets/tools/restormer/paper-demo-1.jpg"
     },
     "parameterNotes": [
       {
@@ -3156,57 +3124,15 @@ export const tools: Tool[] = [
         "url": "https://github.com/Li-Chongyi/Zero-DCE"
       },
       {
-        "label": "Project Page",
-        "url": "https://li-chongyi.github.io/Proj_Zero-DCE.html"
-      },
-      {
         "label": "arXiv",
         "url": "https://arxiv.org/abs/2001.06826"
-      },
-      {
-        "label": "Video: Real Low-light Enhancement",
-        "url": "https://www.youtube.com/embed/NO7Evfra-Tk"
-      },
-      {
-        "label": "Video: Self-training Enhancement",
-        "url": "https://www.youtube.com/embed/Z-cRayugi6g"
       }
     ],
-    "heroImage": "assets/tools/zero-dce/results.png",
+    "heroImage": "assets/tools/zero-dce/paper-demo-1.png",
     "demos": [
       {
-        "label": "Visual comparisons",
-        "image": "assets/tools/zero-dce/results.png",
-        "position": "center center"
-      },
-      {
-        "label": "Pipeline",
-        "image": "assets/tools/zero-dce/framework.png",
-        "position": "center center"
-      },
-      {
-        "label": "Face detection results",
-        "image": "assets/tools/zero-dce/face.png",
-        "position": "center center"
-      },
-      {
-        "label": "Loss ablation",
-        "image": "assets/tools/zero-dce/loss.png",
-        "position": "center center"
-      },
-      {
-        "label": "Parameter settings",
-        "image": "assets/tools/zero-dce/parameter.png",
-        "position": "center center"
-      },
-      {
-        "label": "Training data impact",
-        "image": "assets/tools/zero-dce/training.png",
-        "position": "center center"
-      },
-      {
-        "label": "Three-channel adjustment",
-        "image": "assets/tools/zero-dce/channel.png",
+        "label": "Paper result figure",
+        "image": "assets/tools/zero-dce/paper-demo-1.png",
         "position": "center center"
       }
     ],
@@ -3218,7 +3144,7 @@ export const tools: Tool[] = [
       "prompt": "default enhancement pipeline",
       "runLabel": "Run enhancement",
       "expectedOutput": "Enhanced image with improved brightness and contrast.",
-      "image": "assets/tools/zero-dce/results.png"
+      "image": "assets/tools/zero-dce/paper-demo-1.png"
     },
     "parameterNotes": [
       {
@@ -3277,16 +3203,16 @@ export const tools: Tool[] = [
         "url": "https://github.com/protectai/rebuff"
       }
     ],
-    "heroImage": "assets/tools/rebuff/logo.png",
+    "heroImage": "assets/tools/rebuff/paper-demo-1.png",
     "demos": [
       {
-        "label": "Rebuff Logo",
-        "image": "assets/tools/rebuff/logo.png",
+        "label": "Project image 1",
+        "image": "assets/tools/rebuff/paper-demo-1.png",
         "position": "center center"
       },
       {
-        "label": "Rebuff mascot",
-        "image": "assets/tools/rebuff/mascot.png",
+        "label": "Project image 2",
+        "image": "assets/tools/rebuff/paper-demo-2.png",
         "position": "center center"
       }
     ],
@@ -3298,7 +3224,7 @@ export const tools: Tool[] = [
       "prompt": "policy: block_high_risk",
       "runLabel": "Run guardrail",
       "expectedOutput": "Risk score and allow-or-block decision JSON.",
-      "image": "assets/tools/rebuff/logo.png"
+      "image": "assets/tools/rebuff/paper-demo-1.png"
     },
     "parameterNotes": [
       {
