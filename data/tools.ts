@@ -1924,6 +1924,582 @@ export const tools: Tool[] = [
     "version": "main branch"
   },
   {
+    "slug": "lingo_space",
+    "title": "LINGO-Space",
+    "category": "Cognition and State Modeling",
+    "task": "Language-conditioned spatial grounding",
+    "summary": "LINGO-Space incrementally grounds relational language into a probabilistic spatial distribution, letting a robot localize placement targets from instructions such as between, left of, or near.",
+    "input": "RGB image + spatial instruction",
+    "output": "Grounded target point, detections, heatmap, scene relations",
+    "runtime": "Python / PyTorch / GroundingDINO",
+    "status": "Code Linked",
+    "paperTitle": "LINGO-Space: Language-Conditioned Incremental Grounding for Space",
+    "paperAuthors": "Dohyun Kim, Nayoung Oh, Deokmin Hwang, Daehyung Park",
+    "paperVenue": "AAAI 2024",
+    "paperContribution": "Models spatial language as an incrementally updated probabilistic grounding distribution so robots can resolve compositional placement expressions over tabletop scenes.",
+    "paperLinks": [
+      {
+        "label": "GitHub",
+        "url": "https://github.com/rirolab/LINGO-Space"
+      },
+      {
+        "label": "Paper",
+        "url": "https://arxiv.org/abs/2402.01183"
+      },
+      {
+        "label": "Project Page",
+        "url": "https://lingo-space.github.io"
+      },
+      {
+        "label": "Colab Demo",
+        "url": "https://colab.research.google.com/drive/14Nl0sozJ3JpfwxkfwGk_0s8k8DOqTEVN?usp=sharing"
+      }
+    ],
+    "heroImage": "assets/tools/lingo_space/hero-pipeline.jpg",
+    "demos": [
+      {
+        "label": "Official pipeline figure",
+        "image": "assets/tools/lingo_space/hero-pipeline.jpg",
+        "position": "center center"
+      },
+      {
+        "label": "Grounded output overlay",
+        "image": "assets/tools/lingo_space/output-overlay.png",
+        "position": "center center"
+      },
+      {
+        "label": "Spatial probability heatmap",
+        "image": "assets/tools/lingo_space/output-heatmap.png",
+        "position": "center center"
+      },
+      {
+        "label": "Detection debug view",
+        "image": "assets/tools/lingo_space/detection-debug.png",
+        "position": "center center"
+      }
+    ],
+    "apiExample": "# Relative-path local entry for the LINGO-Space deployment\ncd tools/lingo_space/LINGO-Space\npython run_inference.py   --image tools/lingo_space/example/input_image.jpg   --instruction \"把红方块放到蓝色长方块和蓝色箱子之间\"   --output-dir tools/lingo_space/example   --device cpu\n\n# This page documents the path. The static page does not execute LINGO-Space.",
+    "shortExplanation": "Provide one scene image and a spatial instruction, and LINGO-Space returns the referred region as a probabilistic distribution plus a target point.",
+    "presetExample": {
+      "title": "Ground a tabletop placement instruction",
+      "input": "tools/lingo_space/example/input_image.jpg",
+      "prompt": "把红方块放到蓝色长方块和蓝色箱子之间",
+      "runLabel": "Run spatial grounding",
+      "expectedOutput": "A grounded target point, detected reference objects, a probability heatmap, and an overlay showing the inferred placement region.",
+      "image": "assets/tools/lingo_space/output-overlay.png"
+    },
+    "parameterNotes": [
+      {
+        "name": "image",
+        "control": "file",
+        "meaning": "Single RGB tabletop image used for spatial grounding."
+      },
+      {
+        "name": "instruction",
+        "control": "text",
+        "meaning": "Natural-language spatial command describing the source object and its intended relation to references."
+      },
+      {
+        "name": "output_dir",
+        "control": "path",
+        "defaultValue": "tools/lingo_space/example",
+        "meaning": "Directory where result JSON, heatmaps, overlays, and logs are written."
+      },
+      {
+        "name": "device",
+        "control": "select",
+        "defaultValue": "cpu",
+        "meaning": "Inference device for the local wrapper."
+      }
+    ],
+    "outputNotes": [
+      {
+        "name": "predicted_point_pixel",
+        "meaning": "Final target location in image coordinates."
+      },
+      {
+        "name": "detections",
+        "meaning": "Detected source and reference objects with labels, boxes, and scores."
+      },
+      {
+        "name": "confidence_summary",
+        "meaning": "Peak and mass statistics for the grounded spatial distribution."
+      },
+      {
+        "name": "scene_graph",
+        "meaning": "Lightweight relational graph built from the detected objects during local inference."
+      }
+    ],
+    "deploymentNotes": [
+      "Clone the official repository with submodules and create the `lingo_space` Conda environment with Python 3.8.",
+      "Install PyTorch, PyG, CLIP, the listed Python dependencies, and editable GroundingDINO from the bundled submodule.",
+      "Download the published composite checkpoint and the GroundingDINO weights into the repository-relative folders described in the deployment README.",
+      "Run `run_inference.py` with a local image, instruction string, and output directory to export heatmaps, overlays, and result JSON."
+    ],
+    "modelLinks": [
+      {
+        "label": "Composite Checkpoint",
+        "url": "https://github.com/rirolab/LINGO-Space/releases/download/v0.1.0-alpha/composite.pt"
+      },
+      {
+        "label": "GroundingDINO Weights",
+        "url": "https://github.com/IDEA-Research/GroundingDINO/releases/download/v0.1.0-alpha/groundingdino_swint_ogc.pth"
+      }
+    ],
+    "benchmarkDataset": "The bundled deployment materials do not include source-reported benchmark numbers; the local example demonstrates single-image tabletop grounding with a custom wrapper.",
+    "benchmarkMetric": "No quantitative benchmark value was copied into the deployment notes.",
+    "benchmarkLatency": "CPU inference is supported in the local wrapper; exact source-reported latency is not listed in the deployment notes.",
+    "benchmarkArtifacts": "Official pipeline figure, deployment README, local result JSON, heatmap, overlay, debug image, and run log.",
+    "license": "MIT",
+    "owner": "rirolab",
+    "version": "main branch"
+  },
+  {
+    "slug": "physvlm_avr",
+    "title": "PhysVLM-AVR",
+    "category": "Cognition and State Modeling",
+    "task": "Active visual reasoning",
+    "summary": "PhysVLM-AVR is a multimodal reasoning model for partially observable environments that plans actions, integrates observations over time, and answers questions about physical scenes.",
+    "input": "Scene image(s) + question or interaction state",
+    "output": "Answer, reasoning trace, confidence, server response JSON",
+    "runtime": "Python / FastAPI / multimodal transformer server",
+    "status": "Code Linked",
+    "paperTitle": "PhysVLM-AVR",
+    "paperVenue": "OpenReview / arXiv preprint, 2025",
+    "paperContribution": "Introduces an active visual reasoning MLLM that combines sequential observation, action-conditioned information gathering, and chain-of-thought reasoning for embodied tasks in partially observable worlds.",
+    "paperLinks": [
+      {
+        "label": "GitHub",
+        "url": "https://github.com/jetteezhou/PhysVLM-AVR"
+      },
+      {
+        "label": "Paper",
+        "url": "https://openreview.net/forum?id=kUN2R6X4jS"
+      }
+    ],
+    "heroImage": "assets/tools/physvlm_avr/initial-environment.png",
+    "demos": [
+      {
+        "label": "Initial environment image",
+        "image": "assets/tools/physvlm_avr/initial-environment.png",
+        "position": "center center"
+      },
+      {
+        "label": "Final environment image",
+        "image": "assets/tools/physvlm_avr/final-environment.png",
+        "position": "center center"
+      },
+      {
+        "label": "Top camera frame",
+        "image": "assets/tools/physvlm_avr/camera-top-step-0.png",
+        "position": "center center"
+      },
+      {
+        "label": "Side camera frame",
+        "image": "assets/tools/physvlm_avr/camera-side-step-0.png",
+        "position": "center center"
+      }
+    ],
+    "apiExample": "# Relative-path local entry for the PhysVLM-AVR deployment\ncd tools/physvlm_avr\n./run_example.sh\n\n# Direct Python entry:\nconda run -n physvlm-avr python run_physvlm_example.py\n\n# Server-only entry:\ncd tools/physvlm_avr/repo/physvlm-avr\nconda run -n physvlm-avr env PHYSVLM_PORT=8000 PHYSVLM_DEVICE=cpu python start_physvlm_server.py",
+    "shortExplanation": "Use PhysVLM-AVR when the agent must reason over an evolving scene instead of answering from one static fully observed image.",
+    "presetExample": {
+      "title": "Ask about the current scene",
+      "input": "tools/physvlm_avr/example/initial_environment.png",
+      "prompt": "What is the color of the object in front of you?",
+      "runLabel": "Query AVR server",
+      "expectedOutput": "A structured answer JSON with the answer text, reasoning, confidence, and health or fallback mode metadata.",
+      "image": "assets/tools/physvlm_avr/final-environment.png"
+    },
+    "parameterNotes": [
+      {
+        "name": "image_paths",
+        "control": "path",
+        "meaning": "One or more scene images passed to the inference server."
+      },
+      {
+        "name": "query",
+        "control": "text",
+        "meaning": "Question about the scene or interaction outcome."
+      },
+      {
+        "name": "device",
+        "control": "select",
+        "defaultValue": "cpu",
+        "meaning": "Local inference device used by the server entrypoint."
+      },
+      {
+        "name": "checkpoint_dir",
+        "control": "path",
+        "defaultValue": "tools/physvlm_avr/repo/physvlm-avr/checkpoints/physvlm-qwen2-3B-avr-stage3-avr-core-v3",
+        "meaning": "Repository-relative checkpoint path required for real model inference."
+      }
+    ],
+    "outputNotes": [
+      {
+        "name": "answer",
+        "meaning": "Natural-language answer returned by the model or fallback path."
+      },
+      {
+        "name": "reasoning",
+        "meaning": "Reasoning text describing how the answer was reached."
+      },
+      {
+        "name": "confidence",
+        "meaning": "Confidence score returned by the server."
+      },
+      {
+        "name": "mode",
+        "meaning": "Execution mode such as real-model inference or mock fallback."
+      }
+    ],
+    "deploymentNotes": [
+      "Create or refresh the `physvlm-avr` Conda environment with the setup script, then install the runtime packages listed in the deployment README.",
+      "Place the expected PhysVLM checkpoint under the repository-relative `checkpoints/physvlm-qwen2-3B-avr-stage3-avr-core-v3` folder if real inference is required.",
+      "Run `run_example.sh` to generate a scene, start the server, send the example question, and export JSON plus image artifacts to `tools/physvlm_avr/example/`.",
+      "If the checkpoint is absent, the deployment falls back to deterministic mock inference while preserving the same API surface."
+    ],
+    "modelLinks": [
+      {
+        "label": "Checkpoint Folder README",
+        "url": "https://github.com/jetteezhou/PhysVLM-AVR"
+      }
+    ],
+    "benchmarkRows": [
+      {
+        "dataset": "CLEVR-AVR",
+        "metric": "Accuracy",
+        "value": "84.2%",
+        "runtime": "Source paper result",
+        "source": "OpenReview paper"
+      },
+      {
+        "dataset": "RoboVQA",
+        "metric": "Accuracy",
+        "value": "78.0%",
+        "runtime": "Source paper result",
+        "source": "OpenReview paper"
+      }
+    ],
+    "benchmarkDataset": "CLEVR-AVR, OpenEQA, RoboVQA, GeoMath, and Geometry30K are listed as the official evaluation benchmarks in the repository README.",
+    "benchmarkMetric": "OpenReview reports 84.2% accuracy on CLEVR-AVR and 78.0% accuracy on RoboVQA for the PhysVLM-AVR model.",
+    "benchmarkLatency": "The local deployment README does not provide a source-reported latency number; the bundled example runs through a FastAPI server and can fall back to mock mode on CPU.",
+    "benchmarkArtifacts": "Official repository README, OpenReview paper page, deployment scripts, example input/output JSON, generated scene images, and server logs.",
+    "license": "MIT",
+    "owner": "jetteezhou",
+    "version": "main branch"
+  },
+  // Source deployment materials for reMap bundle public ROS2 packages and runtime notes, but do not include an official paper PDF, official screenshots, or a single monorepo-level benchmark table.
+  {
+    "slug": "reMap",
+    "title": "reMap",
+    "category": "Cognition and State Modeling",
+    "task": "Queryable semantic mapping",
+    "summary": "reMap exposes a ROS-based semantic mapping stack that fuses 3D region maps, robot state, and symbolic queries so robots can ask where entities are and publish query results back into the runtime.",
+    "input": "ROS scene state + symbolic query patterns + optional dynamic query settings",
+    "output": "JSON query results, result topics, TF frames, semantic map updates",
+    "runtime": "ROS 2 Humble / C++ / OpenVDB / Conda build mirror",
+    "status": "Code Linked",
+    "paperTitle": "reMap: Spatially-Grounded and Queryable Semantics for Interactive Robots",
+    "paperVenue": "LNCS / ERL@HRI 2025",
+    "paperContribution": "Connects spatially grounded semantic maps with symbolic querying so interactive robots can recover entity locations and relations through a unified ROS service interface.",
+    "paperLinks": [
+      {
+        "label": "GitHub",
+        "url": "https://github.com/RepresentationMaps/remap_plugin_query"
+      },
+      {
+        "label": "RepresentationMaps Organization",
+        "url": "https://github.com/RepresentationMaps"
+      },
+      {
+        "label": "Package Docs",
+        "url": "https://github.com/RepresentationMaps/remap_plugin_query#readme"
+      }
+    ],
+    "apiExample": "# Relative-path local entry for the reMap deployment\nsource /opt/ros/humble/setup.bash\nsource ~/anaconda3/etc/profile.d/conda.sh\nconda activate vdb_env\nsource /home/lyd/remap_linux_build/ros2_ws/install/setup.bash\n\nros2 service call /remap/query remap_msgs/srv/Query \"{\n  patterns: ['tiago_pro isIn ?room'],\n  vars: [],\n  models: [],\n  dynamic: false,\n  duration: {sec: 0, nanosec: 0},\n  frequency: {sec: 1, nanosec: 0},\n  publish_tf: true,\n  id: 'presence_query'\n}\"",
+    "shortExplanation": "Run reMap when a robot needs a persistent semantic scene model that can answer symbolic spatial questions over mapped entities.",
+    "presetExample": {
+      "title": "Query where the robot is",
+      "input": "tools/reMap/ros2_ws demo scene",
+      "prompt": "patterns: ['tiago_pro isIn ?room']",
+      "runLabel": "Call /remap/query",
+      "expectedOutput": "A successful query response such as `[{\"room\":\"kitchen\"}]` plus a published result topic and optional TF frame."
+    },
+    "parameterNotes": [
+      {
+        "name": "patterns",
+        "control": "text",
+        "meaning": "SPARQL-inspired symbolic patterns used to query the semantic map."
+      },
+      {
+        "name": "dynamic",
+        "control": "toggle",
+        "defaultValue": "false",
+        "meaning": "Whether the query should remain active and publish updates over time."
+      },
+      {
+        "name": "frequency",
+        "control": "text",
+        "defaultValue": "{sec: 1, nanosec: 0}",
+        "meaning": "Polling frequency for dynamic queries."
+      },
+      {
+        "name": "publish_tf",
+        "control": "toggle",
+        "defaultValue": "true",
+        "meaning": "Whether result entities should also be exposed as TF frames."
+      }
+    ],
+    "outputNotes": [
+      {
+        "name": "json",
+        "meaning": "Structured query answers returned by the ROS service."
+      },
+      {
+        "name": "success",
+        "meaning": "Boolean status for the query call."
+      },
+      {
+        "name": "result_topics",
+        "meaning": "Published point-cloud or query result topics under `/remap/query/results/...`."
+      },
+      {
+        "name": "tf_frames",
+        "meaning": "Optional TF frames representing queried entities."
+      }
+    ],
+    "deploymentNotes": [
+      "Install ROS 2 Humble, OpenVDB, Conda, and the additional dependencies listed in the deployment README.",
+      "Mirror the `ros2_ws` source tree onto the Linux filesystem before building because direct DrvFS builds under WSL were reported to hang.",
+      "Build the public packages together with the local `remap_runtime` replacement runtime and source the generated workspace before calling the services.",
+      "Call `/kb/query`, `/kb/revise`, `/remap/query`, or `/remap/remove_query` to drive the verified public deployment."
+    ],
+    "modelLinks": [
+      {
+        "label": "remap_map_handler",
+        "url": "https://github.com/RepresentationMaps/remap_map_handler"
+      },
+      {
+        "label": "remap_runtime Local Package Notes",
+        "url": "https://github.com/RepresentationMaps/remap_plugin_query"
+      }
+    ],
+    "benchmarkDataset": "The bundled deployment README verifies service-level functionality on a demo scene, but it does not provide a source benchmark dataset or paper-reported numeric evaluation table.",
+    "benchmarkMetric": "No official benchmark value was bundled with the deployment materials.",
+    "benchmarkLatency": "Interactive ROS service calls are shown in the deployment notes, but no source-reported latency number is given.",
+    "benchmarkArtifacts": "Public ROS2 package READMEs, build logs, verified service calls, and runtime notes from the deployment README.",
+    "license": "Apache-2.0",
+    "owner": "RepresentationMaps / PAL Robotics contributors",
+    "version": "0.1.1 plugin_query + local remap_runtime"
+  },
+  // The deployment tree explicitly says no official public SMS package was found; the fields below are inferred from the local wrapper, the SMS framework README, and the bundled Genesis upstream repository.
+  {
+    "slug": "scan_materialize_simulate",
+    "title": "Scan, Materialize, Simulate",
+    "category": "Cognition and State Modeling",
+    "task": "Physically grounded scene materialization",
+    "summary": "Scan, Materialize, Simulate turns RGB-D observations into a reconstructed scene, infers geometry and material properties, and runs Genesis-based simulation to optimize physically grounded robot actions.",
+    "input": "RGB-D frames or single scene image + experiment config",
+    "output": "Reconstructed scene state, inferred materials, optimized action parameters, experiment JSON",
+    "runtime": "Python / Genesis / OpenAI-assisted material inference",
+    "status": "Code Linked",
+    "paperTitle": "Scan, Materialize, Simulate: A Generalizable Framework for Physically Grounded Robot Planning",
+    "paperContribution": "Composes scanning, material inference, and physics simulation into one planning loop so robot actions can be optimized against a physically grounded scene model.",
+    "paperLinks": [
+      {
+        "label": "Paper",
+        "url": "https://arxiv.org/abs/2503.05757"
+      },
+      {
+        "label": "Genesis GitHub",
+        "url": "https://github.com/Genesis-Embodied-AI/Genesis"
+      },
+      {
+        "label": "Genesis Project Page",
+        "url": "https://genesis-embodied-ai.github.io/"
+      }
+    ],
+    "heroImage": "assets/tools/scan_materialize_simulate/teaser.png",
+    "demos": [
+      {
+        "label": "Bundled Genesis teaser",
+        "image": "assets/tools/scan_materialize_simulate/teaser.png",
+        "position": "center center"
+      },
+      {
+        "label": "Genesis logo",
+        "image": "assets/tools/scan_materialize_simulate/logo-with-text.png",
+        "position": "center center"
+      },
+      {
+        "label": "Genesis text mark",
+        "image": "assets/tools/scan_materialize_simulate/big-text.png",
+        "position": "center center"
+      }
+    ],
+    "apiExample": "# Relative-path local entry for the SMS framework deployment\ncd tools/scan_materialize_simulate\n./setup.sh sms_env\npython -m sms_framework.main --experiment billiards --preset lite --output tools/scan_materialize_simulate/outputs/billiards_result.json\npython -m sms_framework.main --experiment quadrotor --preset lite --scene_id 0 --start_positions 4 --output tools/scan_materialize_simulate/outputs/quadrotor_result.json",
+    "shortExplanation": "Use SMS when the robot must plan through latent physical properties such as shape, contact, or material instead of relying on purely geometric state.",
+    "presetExample": {
+      "title": "Run a physically grounded billiards plan",
+      "input": "tools/scan_materialize_simulate scene observation or generated experiment scene",
+      "prompt": "experiment: billiards; preset: lite",
+      "runLabel": "Run SMS",
+      "expectedOutput": "A serialized experiment result with reconstructed geometry, inferred materials, optimized action parameters, and simulation-derived objective values.",
+      "image": "assets/tools/scan_materialize_simulate/teaser.png"
+    },
+    "parameterNotes": [
+      {
+        "name": "experiment",
+        "control": "select",
+        "defaultValue": "billiards",
+        "meaning": "Selects the experiment pipeline, such as billiards or quadrotor."
+      },
+      {
+        "name": "preset",
+        "control": "select",
+        "defaultValue": "lite",
+        "meaning": "Controls simulation scale, optimization loops, and rendering fidelity."
+      },
+      {
+        "name": "output",
+        "control": "path",
+        "meaning": "Destination JSON path for experiment artifacts and metrics."
+      },
+      {
+        "name": "rgb_d_frames",
+        "control": "path",
+        "meaning": "Optional RGB-D observations used by the scan and reconstruction stage."
+      }
+    ],
+    "outputNotes": [
+      {
+        "name": "scene_representation",
+        "meaning": "Reconstructed geometry or scene handle used for downstream simulation."
+      },
+      {
+        "name": "material_estimates",
+        "meaning": "Inferred material attributes used in the physics model."
+      },
+      {
+        "name": "action_parameters",
+        "meaning": "Optimized control or interaction parameters produced by the solver."
+      },
+      {
+        "name": "objective_value",
+        "meaning": "Simulation-derived score used to select or compare candidate actions."
+      }
+    ],
+    "deploymentNotes": [
+      "Run `./setup.sh sms_env` to install the SMS framework dependencies and the bundled Genesis simulator.",
+      "Use `python -m sms_framework.main` with an experiment name, preset, and output path to execute the end-to-end pipeline.",
+      "The local framework keeps lightweight fallbacks for segmentation, material inference, and scene handling so tests can run even when heavyweight assets are absent.",
+      "Use `pytest tests -q` to validate the reconstructed engineering pipeline after installation."
+    ],
+    "modelLinks": [
+      {
+        "label": "Genesis Benchmarks",
+        "url": "https://github.com/zhouxian/genesis-speed-benchmark"
+      }
+    ],
+    "benchmarkDataset": "The local deployment bundles runnable billiards and quadrotor experiments, but it does not include an official source benchmark table for the SMS wrapper itself.",
+    "benchmarkMetric": "No paper-authenticated benchmark number was bundled with the deployment materials used here.",
+    "benchmarkLatency": "The README recommends the `lite` preset to reduce resolution, frame count, optimization rounds, and simulation cost on local machines.",
+    "benchmarkArtifacts": "Wrapper source, SMS framework README, bundled Genesis assets, test suite, and experiment entrypoints.",
+    "license": "Apache-2.0",
+    "owner": "Genesis-Embodied-AI + local SMS wrapper",
+    "version": "main branch + local framework"
+  },
+  // The bundled VIRF README contains placeholder repository URLs; the official git remote in the deployment checkout resolves to Sn0wm1an/VIRF, so that remote is used here.
+  {
+    "slug": "virf",
+    "title": "VIRF",
+    "category": "Cognition and State Modeling",
+    "task": "Safety-verified task reasoning",
+    "summary": "VIRF combines scene knowledge graphs, ontology-based safety rules, and iterative plan verification so embodied agents can generate safer task plans in household environments.",
+    "input": "User task + scene knowledge base",
+    "output": "Safety status, verified plan, knowledge-base updates",
+    "runtime": "Python / JSON knowledge base / optional ontology backend",
+    "status": "Code Linked",
+    "paperTitle": "Grounding Generative Planners in Verifiable Logic: A Hybrid Architecture for Trustworthy Embodied AI",
+    "paperAuthors": "Feiyu Wu, Xu Zheng, Yue Qu, Zhuocheng Wang, Zicheng Feng, Hui Li",
+    "paperVenue": "ICLR 2026",
+    "paperContribution": "Grounds generative planners in verifiable logic so unsafe plans can be filtered or revised before execution in embodied tasks.",
+    "paperLinks": [
+      {
+        "label": "GitHub",
+        "url": "https://github.com/Sn0wm1an/VIRF"
+      },
+      {
+        "label": "Paper",
+        "url": "https://arxiv.org/abs/2502.09038"
+      }
+    ],
+    "apiExample": "# Relative-path local entry for the VIRF deployment\ncd tools/virf\npython main.py\n\n# The bundled demo reads tools/virf/examples/test_input.json and writes tools/virf/results/output.json.",
+    "shortExplanation": "Use VIRF when a plan must satisfy explicit safety rules instead of relying on unconstrained generative reasoning alone.",
+    "presetExample": {
+      "title": "Verify a soup-heating task",
+      "input": "tools/virf/examples/test_input.json",
+      "prompt": "Cusr: Heat the soup in the pot",
+      "runLabel": "Run VIRF",
+      "expectedOutput": "A SAFE or unsafe status plus a revised multi-step plan that respects the rules encoded in the knowledge base."
+    },
+    "parameterNotes": [
+      {
+        "name": "Cusr",
+        "control": "text",
+        "meaning": "User task description to plan and verify."
+      },
+      {
+        "name": "K",
+        "control": "path",
+        "defaultValue": "tools/virf/examples/test_input.json",
+        "meaning": "Knowledge base payload containing ABox entities and TBox safety rules."
+      },
+      {
+        "name": "max_attempts",
+        "control": "number",
+        "defaultValue": "3",
+        "meaning": "Maximum number of refinement attempts used by the main verification loop."
+      }
+    ],
+    "outputNotes": [
+      {
+        "name": "status",
+        "meaning": "Safety result such as SAFE."
+      },
+      {
+        "name": "safe_plan",
+        "meaning": "Verified task plan that satisfies the available rules."
+      },
+      {
+        "name": "knowledge_graph",
+        "meaning": "Structured world state consumed by the verifier."
+      }
+    ],
+    "deploymentNotes": [
+      "Clone the official VIRF repository and install the Python dependencies required by the KG, ontology creator, and agent bench modules.",
+      "Prepare an input JSON containing the user command plus the scene knowledge base under `tools/virf/examples/`.",
+      "Run `python main.py` to execute the simplified bundled demo or call the agent bench modules for fuller evaluation.",
+      "Use the resulting `output.json` to inspect whether VIRF marked the plan safe and how it revised the action sequence."
+    ],
+    "benchmarkRows": [
+      {
+        "dataset": "SafeAgentBench",
+        "metric": "HAR / GCR / Avg correction iterations",
+        "value": "0.0% / 77.3% / 1.1",
+        "runtime": "Source paper result",
+        "source": "ICLR 2026 paper"
+      }
+    ],
+    "benchmarkDataset": "The official paper reports VIRF results on SafeAgentBench household-task safety evaluation.",
+    "benchmarkMetric": "The paper reports 0.0% harmful action rate, 77.3% goal completion rate, and 1.1 average correction iterations on SafeAgentBench.",
+    "benchmarkLatency": "The deployment README and local demo do not provide a source-reported latency number.",
+    "benchmarkArtifacts": "Official paper, repository README, bundled example JSON, simplified main loop, and output plan JSON.",
+    "license": "MIT",
+    "owner": "Sn0wm1an / Xidian University",
+    "version": "master branch"
+  },
+  {
     "slug": "query-3d-scene-graph",
     "title": "query_3d_scene_graph",
     "category": "Cognition and State Modeling",

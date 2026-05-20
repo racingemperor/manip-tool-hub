@@ -245,5 +245,49 @@ export const leaderboardRows: LeaderboardRow[] = [
     "speedRank": 4,
     "sizeRank": 5,
     "href": "/tools/hydra"
+  },
+  {
+    "slug": "physvlm_avr",
+    "name": "PhysVLM-AVR",
+    "category": "Cognition and State Modeling",
+    "task": "Active visual reasoning",
+    "dataset": "CLEVR-AVR and RoboVQA",
+    "metric": "CLEVR-AVR accuracy 84.2%; RoboVQA accuracy 78.0%",
+    "scoreLabel": "84.2% acc",
+    "speed": "Local deployment uses an interactive FastAPI server; source paper accuracy is reported without a bundled latency table in this workspace",
+    "size": "3B multimodal model trained with AVR-152k (152k samples)",
+    "artifacts": [
+      "Paper",
+      "Repo",
+      "Demo",
+      "JSON"
+    ],
+    "rankOrder": 5,
+    "completeness": 4,
+    "speedRank": 5,
+    "sizeRank": 3,
+    "href": "/tools/physvlm_avr"
+  },
+  {
+    "slug": "virf",
+    "name": "VIRF",
+    "category": "Cognition and State Modeling",
+    "task": "Safety-verified task reasoning",
+    "dataset": "SafeAgentBench",
+    "metric": "Harmful action rate 0.0%; goal completion rate 77.3%; average correction iterations 1.1",
+    "scoreLabel": "77.3% GCR",
+    "speed": "Average correction iterations 1.1; the bundled local demo does not include a source-reported wall-clock latency table",
+    "size": "Hybrid planner-verifier stack with scene KG and ontology rules",
+    "artifacts": [
+      "Paper",
+      "Repo",
+      "Rules",
+      "JSON"
+    ],
+    "rankOrder": 6,
+    "completeness": 4,
+    "speedRank": 6,
+    "sizeRank": 6,
+    "href": "/tools/virf"
   }
 ];
