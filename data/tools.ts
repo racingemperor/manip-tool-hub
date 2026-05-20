@@ -3206,10 +3206,26 @@ export const tools: Tool[] = [
       "Run the monitor in parallel with the robot execution loop.",
       "Save point tracks and disturbance alerts under tools/monitor-dynamic-disturbance/runs/."
     ],
-    "benchmarkDataset": "Not provided in the submitted spreadsheet.",
-    "benchmarkMetric": "No source-reported benchmark number was included for this local wrapper.",
-    "benchmarkLatency": "Real-time, according to the submitted spreadsheet.",
-    "benchmarkArtifacts": "ROI point example, mock stream shape, disturbance severity output, and local deployment notes from the submitted spreadsheet.",
+    "benchmarkRows": [
+      {
+        "dataset": "TAP-Vid / RoboTAP official evaluation",
+        "metric": "delta_avg^vis",
+        "value": "68.3 / 76.7 / 78.8 / 82.7 on Kinetics / DAVIS / RoboTAP / RGB-S",
+        "runtime": "CoTracker3 online",
+        "source": "Official CoTracker README"
+      },
+      {
+        "dataset": "TAP-Vid / RoboTAP official evaluation",
+        "metric": "delta_avg^vis",
+        "value": "67.8 / 76.9 / 78.0 / 85.0 on Kinetics / DAVIS / RoboTAP / RGB-S",
+        "runtime": "CoTracker3 offline",
+        "source": "Official CoTracker README"
+      }
+    ],
+    "benchmarkDataset": "This local monitor wrapper is backed by point-tracking benchmarks from the official CoTracker3 evaluation on TAP-Vid, RoboTAP, and RGB-S.",
+    "benchmarkMetric": "CoTracker3 online reports delta_avg^vis of 68.3 on Kinetics, 76.7 on DAVIS, 78.8 on RoboTAP, and 82.7 on RGB-S. CoTracker3 offline reports 67.8 / 76.9 / 78.0 / 85.0 on the same benchmarks.",
+    "benchmarkLatency": "The submitted spreadsheet describes the wrapper as real-time; the benchmark numbers above come from the official CoTracker3 evaluation rather than a separate wrapper-specific timing run.",
+    "benchmarkArtifacts": "Official CoTracker3 evaluation table, ROI point example, disturbance severity output, and local deployment notes.",
     "license": "Not specified",
     "owner": "Hu Yibo",
     "version": "local wrapper"
@@ -3307,10 +3323,26 @@ export const tools: Tool[] = [
       "Run the tracker from a repository-relative path during the robot approach phase.",
       "Save tracks and occlusion flags under tools/tapir/runs/ for controller inspection."
     ],
-    "benchmarkDataset": "Not provided in the submitted spreadsheet.",
-    "benchmarkMetric": "No benchmark number was copied into the site because the submitted row did not provide one.",
-    "benchmarkLatency": "About 20 ms and 30-60 Hz output frequency, according to the submitted spreadsheet.",
-    "benchmarkArtifacts": "Official repository link, mock point-tracking input, trajectory output, occlusion flag, and confidence output from the submitted spreadsheet.",
+    "benchmarkRows": [
+      {
+        "dataset": "TAP-Vid benchmark",
+        "metric": "Average Jaccard (AJ)",
+        "value": "60.2 / 62.9 / 88.3 / 73.3 on Kinetics / DAVIS / Kubric / RGB-Stacking",
+        "runtime": "TAPIR",
+        "source": "Official TAPIR project page"
+      },
+      {
+        "dataset": "TAP-Vid baseline comparison",
+        "metric": "Average Jaccard (AJ)",
+        "value": "46.6 / 38.4 / 65.4 / 59.9 for TAP-Net; 35.3 / 42.0 / 59.1 / 37.3 for PIPs",
+        "runtime": "Official comparison table",
+        "source": "Official TAPIR project page"
+      }
+    ],
+    "benchmarkDataset": "Official TAPIR results are reported on TAP-Vid subsets including Kinetics, DAVIS, Kubric, and RGB-Stacking.",
+    "benchmarkMetric": "TAPIR reports Average Jaccard of 60.2 on Kinetics, 62.9 on DAVIS, 88.3 on Kubric, and 73.3 on RGB-Stacking, clearly ahead of TAP-Net and PIPs in the official comparison.",
+    "benchmarkLatency": "The official project page reports about 40 FPS when tracking 256 points on a 256x256 video in online mode; the submitted spreadsheet also describes about 20 ms and 30-60 Hz output frequency.",
+    "benchmarkArtifacts": "Official TAPIR project benchmark table, mock point-tracking input, trajectory output, occlusion flag, and confidence output.",
     "license": "Not specified",
     "owner": "Hu Yibo",
     "version": "local wrapper"
@@ -3723,15 +3755,22 @@ export const tools: Tool[] = [
       {
         "dataset": "GoPro test",
         "metric": "PSNR / SSIM",
-        "value": "Paper-reported deblurring quality metrics",
-        "runtime": "Fast inference with FPN backbone",
-        "source": "ICCV 2019 paper"
+        "value": "29.55 / 0.934 for InceptionResNet-v2",
+        "runtime": "fpn_inception.h5",
+        "source": "Official pretrained-model table"
+      },
+      {
+        "dataset": "GoPro test",
+        "metric": "PSNR / SSIM",
+        "value": "28.17 / 0.925 for MobileNet; 28.03 / 0.922 for MobileNet-DSC",
+        "runtime": "fpn_mobilenet.h5 and MobileNet-DSC",
+        "source": "Official pretrained-model table"
       }
     ],
-    "benchmarkDataset": "GoPro and HIDE are reported in the official paper.",
-    "benchmarkMetric": "Use paper-reported PSNR and SSIM for model comparison; this wrapper does not add new evaluation numbers.",
-    "benchmarkLatency": "Inference speed depends on GPU and model variant; DeblurGANv2 focuses on faster restoration than prior GAN baselines.",
-    "benchmarkArtifacts": "Official paper tables, pretrained checkpoints, and predict.py inference script.",
+    "benchmarkDataset": "The official pretrained-model table reports GoPro test results, and the paper also evaluates on GoPro and HIDE.",
+    "benchmarkMetric": "Official pretrained models report GoPro PSNR / SSIM of 29.55 / 0.934 for the InceptionResNet-v2 model, 28.17 / 0.925 for MobileNet, and 28.03 / 0.922 for MobileNet-DSC.",
+    "benchmarkLatency": "The project emphasizes faster deblurring with FPN-based backbones, but the README benchmark table mainly exposes concrete GoPro quality numbers rather than a single universal latency figure.",
+    "benchmarkArtifacts": "Official pretrained-model table, pretrained checkpoints, ICCV 2019 paper, and predict.py inference script.",
     "license": "BSD-3-Clause",
     "owner": "KupynOrest",
     "version": "master"
@@ -3853,10 +3892,26 @@ export const tools: Tool[] = [
         "url": "https://github.com/LiheYoung/Depth-Anything#pre-trained-models"
       }
     ],
-    "benchmarkDataset": "Paper reports NYUv2, KITTI, and zero-shot transfer benchmarks.",
-    "benchmarkMetric": "Use paper-reported delta/REL/RMSE metrics for comparison; this deployment entry focuses on runnable integration.",
-    "benchmarkLatency": "Latency depends on encoder size and image resolution.",
-    "benchmarkArtifacts": "Official checkpoints, run script, and CVPR 2024 benchmark tables.",
+    "benchmarkRows": [
+      {
+        "dataset": "KITTI zero-shot benchmark",
+        "metric": "AbsRel / delta1",
+        "value": "0.076 / 0.947 for Depth Anything-L; 0.080 / 0.939 for Depth Anything-B",
+        "runtime": "Large and Base encoders",
+        "source": "Official README"
+      },
+      {
+        "dataset": "NYUv2 zero-shot benchmark",
+        "metric": "AbsRel / delta1",
+        "value": "0.043 / 0.981 for Depth Anything-L; 0.046 / 0.979 for Depth Anything-B",
+        "runtime": "Large and Base encoders",
+        "source": "Official README"
+      }
+    ],
+    "benchmarkDataset": "The official README reports zero-shot transfer results on KITTI, NYUv2, Sintel, DDAD, ETH3D, and DIODE.",
+    "benchmarkMetric": "Depth Anything-L reports KITTI AbsRel 0.076 with delta1 0.947 and NYUv2 AbsRel 0.043 with delta1 0.981. Depth Anything-B reports KITTI 0.080 / 0.939 and NYUv2 0.046 / 0.979.",
+    "benchmarkLatency": "The official README reports inference time on V100 / A100 / RTX4090 TensorRT as 12 / 8 / 3 ms for Small, 13 / 9 / 6 ms for Base, and 20 / 13 / 12 ms for Large.",
+    "benchmarkArtifacts": "Official checkpoints, run script, and zero-shot benchmark tables from the README.",
     "license": "Apache-2.0",
     "owner": "LiheYoung",
     "version": "main"
@@ -3948,10 +4003,26 @@ export const tools: Tool[] = [
         "url": "https://github.com/isl-org/MiDaS#accuracy"
       }
     ],
-    "benchmarkDataset": "Paper and repository report multi-dataset zero-shot evaluations.",
-    "benchmarkMetric": "Use official zero-shot depth metrics reported by MiDaS for fair comparison.",
-    "benchmarkLatency": "Runtime depends on selected DPT/BEiT/Swin model and input resolution.",
-    "benchmarkArtifacts": "Official model table, checkpoints, and run.py inference entry.",
+    "benchmarkRows": [
+      {
+        "dataset": "6-dataset zero-shot benchmark",
+        "metric": "DIW WHDR / ETH3D AbsRel / Sintel AbsRel / TUM / KITTI / NYUv2 zero-shot error",
+        "value": "0.1137 / 0.0659 / 0.2366 / 6.13 / 11.56 / 1.86 for MiDaS v3.1 BEiT-L-512",
+        "runtime": "345M params, 5.7 FPS on RTX 3090",
+        "source": "Official README"
+      },
+      {
+        "dataset": "6-dataset zero-shot benchmark",
+        "metric": "DIW WHDR / ETH3D AbsRel / Sintel AbsRel / TUM / KITTI / NYUv2 zero-shot error",
+        "value": "0.1031 / 0.0954 / 0.2295 / 9.21 / 6.89 / 3.47 for MiDaS v3.1 Next-ViT-L-384",
+        "runtime": "72M params, 30 FPS on RTX 3090",
+        "source": "Official README"
+      }
+    ],
+    "benchmarkDataset": "The official MiDaS model table reports zero-shot transfer results across DIW, ETH3D, Sintel, TUM, KITTI, and NYUv2.",
+    "benchmarkMetric": "MiDaS v3.1 BEiT-L-512 reports DIW WHDR 0.1137, ETH3D AbsRel 0.0659, Sintel AbsRel 0.2366, TUM 6.13, KITTI 11.56, and NYUv2 1.86. MiDaS v3.1 Next-ViT-L-384 reports 0.1031 / 0.0954 / 0.2295 / 9.21 / 6.89 / 3.47 on the same benchmarks.",
+    "benchmarkLatency": "The official README reports 5.7 FPS for BEiT-L-512 on RTX 3090 with 345M parameters, and 30 FPS for Next-ViT-L-384 with 72M parameters.",
+    "benchmarkArtifacts": "Official model table, checkpoints, accuracy-speed figure, and run.py inference entry.",
     "license": "MIT",
     "owner": "isl-org",
     "version": "master"
@@ -4205,10 +4276,26 @@ export const tools: Tool[] = [
         "url": "https://github.com/IDEA-Research/GroundingDINO#weights"
       }
     ],
-    "benchmarkDataset": "Paper reports COCO zero-shot AP and ODinW transfer benchmarks.",
-    "benchmarkMetric": "Use official zero-shot AP metrics from the paper for comparison.",
-    "benchmarkLatency": "Latency depends on backbone and resolution; Swin-T is lighter than larger variants.",
-    "benchmarkArtifacts": "Official config files, pretrained weights, and demo outputs.",
+    "benchmarkRows": [
+      {
+        "dataset": "COCO zero-shot evaluation",
+        "metric": "box AP",
+        "value": "48.5 expected from the official evaluation script; 48.4 zero-shot / 57.2 fine-tune for GroundingDINO-T",
+        "runtime": "Swin-T checkpoint",
+        "source": "Official README and model table"
+      },
+      {
+        "dataset": "COCO object detection checkpoints",
+        "metric": "box AP",
+        "value": "56.7 for GroundingDINO-B",
+        "runtime": "Swin-B checkpoint",
+        "source": "Official model table"
+      }
+    ],
+    "benchmarkDataset": "The official repository reports COCO zero-shot AP, fine-tuned COCO AP, and ODinW transfer results for Grounding DINO checkpoints.",
+    "benchmarkMetric": "GroundingDINO-T is reported at 48.4 zero-shot AP on COCO, with the official evaluation script expected to reproduce 48.5 AP. GroundingDINO-B is listed at 56.7 box AP.",
+    "benchmarkLatency": "The repository exposes lighter Swin-T and stronger Swin-B checkpoints; the benchmark section highlights explicit AP numbers rather than a single official latency figure.",
+    "benchmarkArtifacts": "Official config files, pretrained weights, benchmark table, and demo outputs.",
     "license": "Apache-2.0",
     "owner": "IDEA-Research",
     "version": "main"
