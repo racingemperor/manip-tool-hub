@@ -5,6 +5,7 @@ export type ToolStatus = "Draft" | "Docs Ready" | "Code Linked" | "Runnable" | "
 export type ToolDemo = {
   label: string;
   image?: string;
+  video?: string;
   position?: string;
 };
 
@@ -115,7 +116,6 @@ const executionControlTools: Tool[] = [
         "url": "https://arxiv.org/abs/1806.08756"
       }
     ],
-    "heroImage": "assets/tools/dense-object-nets/don-figure1.png",
     "demos": [
       {
         "label": "Dense Object Nets overview",
@@ -198,7 +198,6 @@ const executionControlTools: Tool[] = [
         "url": "https://www.arminhornung.de/Research/pub/hornung13auro.pdf"
       }
     ],
-    "heroImage": "assets/tools/octomap/freiburg-079.png",
     "demos": [
       {
         "label": "Indoor 3D occupancy map",
@@ -331,7 +330,6 @@ const executionControlTools: Tool[] = [
         "url": "https://github.com/ros-navigation/navigation2"
       }
     ],
-    "heroImage": "assets/tools/nav2/map-rviz.png",
     "demos": [
       {
         "label": "Map in RViz",
@@ -412,7 +410,6 @@ const executionControlTools: Tool[] = [
         "url": "https://stack-of-tasks.github.io/pinocchio/"
       }
     ],
-    "heroImage": "assets/tools/pinocchio/pinocchio-logo.png",
     "demos": [
       {
         "label": "Pinocchio project identity",
@@ -488,7 +485,6 @@ const executionControlTools: Tool[] = [
         "url": "https://arxiv.org/abs/2105.04830"
       }
     ],
-    "heroImage": "assets/tools/ruckig/example-profile.png",
     "demos": [
       {
         "label": "Trajectory profile",
@@ -560,7 +556,6 @@ const executionControlTools: Tool[] = [
         "url": "https://github.com/ompl/ompl"
       }
     ],
-    "heroImage": "assets/tools/ompl/r2-path.jpg",
     "demos": [
       {
         "label": "Rigid-body planning example",
@@ -3058,16 +3053,31 @@ export const tools: Tool[] = [
         "url": "https://arxiv.org/abs/1908.03826"
       }
     ],
-    "heroImage": "assets/tools/deblurganv2/paper-demo-1.png",
+    "heroImage": "assets/tools/deblurganv2/restore_visual.png",
     "demos": [
       {
-        "label": "Paper qualitative result 1",
-        "image": "assets/tools/deblurganv2/paper-demo-1.png",
+        "label": "Restoration qualitative results",
+        "image": "assets/tools/deblurganv2/restore_visual.png",
         "position": "center center"
       },
       {
-        "label": "Paper qualitative result 2",
-        "image": "assets/tools/deblurganv2/paper-demo-2.png",
+        "label": "Kohler benchmark visual",
+        "image": "assets/tools/deblurganv2/kohler_visual.png",
+        "position": "center center"
+      },
+      {
+        "label": "Model pipeline",
+        "image": "assets/tools/deblurganv2/pipeline.jpg",
+        "position": "center center"
+      },
+      {
+        "label": "Interpolation comparison",
+        "image": "assets/tools/deblurganv2/interp_compare.png",
+        "position": "center center"
+      },
+      {
+        "label": "SSIM and FLOPs tradeoff",
+        "image": "assets/tools/deblurganv2/ssim_flops_plot.png",
         "position": "center center"
       }
     ],
@@ -3079,7 +3089,7 @@ export const tools: Tool[] = [
       "prompt": "model_name: fpn_inception",
       "runLabel": "Run deblur",
       "expectedOutput": "A restored image file with reduced motion blur.",
-      "image": "assets/tools/deblurganv2/paper-demo-1.png"
+      "image": "assets/tools/deblurganv2/restore_visual.png"
     },
     "parameterNotes": [
       {
@@ -3168,16 +3178,46 @@ export const tools: Tool[] = [
         "url": "https://arxiv.org/abs/2401.10891"
       }
     ],
-    "heroImage": "assets/tools/depth-anything/paper-demo-1.png",
+    "heroImage": "assets/tools/depth-anything/teaser.png",
     "demos": [
       {
-        "label": "Paper demo 1",
-        "image": "assets/tools/depth-anything/paper-demo-1.png",
+        "label": "Depth Anything teaser",
+        "image": "assets/tools/depth-anything/teaser.png",
         "position": "center center"
       },
       {
-        "label": "Paper demo 2",
-        "image": "assets/tools/depth-anything/paper-demo-2.png",
+        "label": "ControlNet depth demo 1",
+        "image": "assets/tools/depth-anything/controlnet_demo1.png",
+        "position": "center center"
+      },
+      {
+        "label": "ControlNet depth demo 2",
+        "image": "assets/tools/depth-anything/controlnet_demo2.png",
+        "position": "center center"
+      },
+      {
+        "label": "Dolphins video depth demo",
+        "video": "assets/tools/depth-anything/demo1.mov",
+        "position": "center center"
+      },
+      {
+        "label": "Rollercoaster video depth demo",
+        "video": "assets/tools/depth-anything/demo2.mov",
+        "position": "center center"
+      },
+      {
+        "label": "Outdoor video depth demo",
+        "video": "assets/tools/depth-anything/demo3.mov",
+        "position": "center center"
+      },
+      {
+        "label": "Indoor video depth demo",
+        "video": "assets/tools/depth-anything/demo4.mov",
+        "position": "center center"
+      },
+      {
+        "label": "Driving video depth demo",
+        "video": "assets/tools/depth-anything/demo5.mov",
         "position": "center center"
       }
     ],
@@ -3189,7 +3229,7 @@ export const tools: Tool[] = [
       "prompt": "encoder: vitl",
       "runLabel": "Run depth",
       "expectedOutput": "A normalized depth map image aligned with the input frame.",
-      "image": "assets/tools/depth-anything/paper-demo-1.png"
+      "image": "assets/tools/depth-anything/teaser.png"
     },
     "parameterNotes": [
       {
@@ -3263,16 +3303,16 @@ export const tools: Tool[] = [
         "url": "https://arxiv.org/abs/1907.01341"
       }
     ],
-    "heroImage": "assets/tools/midas/paper-demo-1.png",
+    "heroImage": "assets/tools/midas/Comparison.png",
     "demos": [
       {
         "label": "Paper benchmark figure",
-        "image": "assets/tools/midas/paper-demo-1.png",
+        "image": "assets/tools/midas/Comparison.png",
         "position": "center center"
       },
       {
         "label": "Accuracy-speed figure",
-        "image": "assets/tools/midas/paper-demo-2.png",
+        "image": "assets/tools/midas/Improvement_vs_FPS.png",
         "position": "center center"
       }
     ],
@@ -3284,7 +3324,7 @@ export const tools: Tool[] = [
       "prompt": "model_type: dpt_beit_large_512",
       "runLabel": "Run MiDaS",
       "expectedOutput": "A depth map file exported to the output directory.",
-      "image": "assets/tools/midas/paper-demo-1.png"
+      "image": "assets/tools/midas/Comparison.png"
     },
     "parameterNotes": [
       {
@@ -3358,15 +3398,30 @@ export const tools: Tool[] = [
         "url": "https://arxiv.org/abs/1908.10084"
       }
     ],
-    "heroImage": "assets/tools/sentence-transformers/paper-demo-1.jpg",
+    "heroImage": "assets/tools/sentence-transformers/SBERT_Architecture.png",
     "demos": [
       {
-        "label": "Image-text example 1",
+        "label": "SBERT architecture",
+        "image": "assets/tools/sentence-transformers/SBERT_Architecture.png",
+        "position": "center center"
+      },
+      {
+        "label": "SBERT softmax training architecture",
+        "image": "assets/tools/sentence-transformers/SBERT_SoftmaxLoss.png",
+        "position": "center center"
+      },
+      {
+        "label": "SBERT siamese inference architecture",
+        "image": "assets/tools/sentence-transformers/SBERT_Siamese_Network.png",
+        "position": "center center"
+      },
+      {
+        "label": "Semantic clustering example",
         "image": "assets/tools/sentence-transformers/paper-demo-1.jpg",
         "position": "center center"
       },
       {
-        "label": "Image-text example 2",
+        "label": "Topic embedding example",
         "image": "assets/tools/sentence-transformers/paper-demo-2.jpg",
         "position": "center center"
       }
@@ -3379,7 +3434,7 @@ export const tools: Tool[] = [
       "prompt": "model: all-MiniLM-L6-v2",
       "runLabel": "Encode text",
       "expectedOutput": "Embedding matrix and optional similarity scores.",
-      "image": "assets/tools/sentence-transformers/paper-demo-1.jpg"
+      "image": "assets/tools/sentence-transformers/SBERT_Architecture.png"
     },
     "parameterNotes": [
       {
@@ -3454,16 +3509,56 @@ export const tools: Tool[] = [
         "url": "https://arxiv.org/abs/2303.05499"
       }
     ],
-    "heroImage": "assets/tools/grounding-dino/paper-demo-1.png",
+    "heroImage": "assets/tools/grounding-dino/grounded_sam_2_intro.jpg",
     "demos": [
       {
-        "label": "Paper overview figure",
-        "image": "assets/tools/grounding-dino/paper-demo-1.png",
+        "label": "Grounded SAM 2 intro",
+        "image": "assets/tools/grounding-dino/grounded_sam_2_intro.jpg",
         "position": "center center"
       },
       {
-        "label": "COCO qualitative figure",
-        "image": "assets/tools/grounding-dino/paper-demo-2.png",
+        "label": "Detection and mask result",
+        "image": "assets/tools/grounding-dino/grounded_sam2_annotated_image_with_mask.jpg",
+        "position": "center center"
+      },
+      {
+        "label": "Slice inference result",
+        "image": "assets/tools/grounding-dino/grounded_sam2_annotated_image_with_mask_with_slice_inference.jpg",
+        "position": "center center"
+      },
+      {
+        "label": "Tracking pipeline",
+        "image": "assets/tools/grounding-dino/g_sam2_tracking_pipeline_vis.png",
+        "position": "center center"
+      },
+      {
+        "label": "Video pipeline",
+        "image": "assets/tools/grounding-dino/g_sam2_video_pipeline_v2.png",
+        "position": "center center"
+      },
+      {
+        "label": "Model diagram",
+        "image": "assets/tools/grounding-dino/model_diagram.png",
+        "position": "center center"
+      },
+      {
+        "label": "Dense people grounding",
+        "image": "assets/tools/grounding-dino/dense people.png",
+        "position": "center center"
+      },
+      {
+        "label": "Hippopotamus segmentation",
+        "image": "assets/tools/grounding-dino/hippopotamus_seg.jpg",
+        "position": "center center"
+      },
+      {
+        "label": "SA-V dataset example",
+        "image": "assets/tools/grounding-dino/sa_v_dataset.jpg",
+        "position": "center center"
+      },
+      {
+        "label": "Hippopotamus video segmentation",
+        "video": "assets/tools/grounding-dino/hippopotamus.mp4",
         "position": "center center"
       }
     ],
@@ -3475,7 +3570,7 @@ export const tools: Tool[] = [
       "prompt": "mug . cup . bottle",
       "runLabel": "Run grounding",
       "expectedOutput": "Annotated image and box/label/score predictions.",
-      "image": "assets/tools/grounding-dino/paper-demo-1.png"
+      "image": "assets/tools/grounding-dino/grounded_sam2_annotated_image_with_mask.jpg"
     },
     "parameterNotes": [
       {
@@ -3560,15 +3655,50 @@ export const tools: Tool[] = [
         "url": "https://arxiv.org/abs/2111.09881"
       }
     ],
-    "heroImage": "assets/tools/restormer/paper-demo-1.jpg",
+    "heroImage": "assets/tools/restormer/network-architecture.png",
     "demos": [
       {
-        "label": "Degraded input example",
+        "label": "Network architecture",
+        "image": "assets/tools/restormer/network-architecture.png",
+        "position": "center center"
+      },
+      {
+        "label": "Defocus deblurring results",
+        "image": "assets/tools/restormer/defocus-deblurring.png",
+        "position": "center center"
+      },
+      {
+        "label": "Motion deblurring results",
+        "image": "assets/tools/restormer/single-image-motion-deblurring.png",
+        "position": "center center"
+      },
+      {
+        "label": "Image deraining results",
+        "image": "assets/tools/restormer/image-deraining.png",
+        "position": "center center"
+      },
+      {
+        "label": "Real image denoising",
+        "image": "assets/tools/restormer/real-image-denoising.png",
+        "position": "center center"
+      },
+      {
+        "label": "Color Gaussian denoising",
+        "image": "assets/tools/restormer/gaussian-image-denoising-color.png",
+        "position": "center center"
+      },
+      {
+        "label": "Grayscale Gaussian denoising",
+        "image": "assets/tools/restormer/gaussian-image-denoising-grayscale.png",
+        "position": "center center"
+      },
+      {
+        "label": "Degraded sample 1",
         "image": "assets/tools/restormer/paper-demo-1.jpg",
         "position": "center center"
       },
       {
-        "label": "Second demo sample",
+        "label": "Degraded sample 2",
         "image": "assets/tools/restormer/paper-demo-2.jpg",
         "position": "center center"
       }
@@ -3581,7 +3711,7 @@ export const tools: Tool[] = [
       "prompt": "task: Motion_Deblurring",
       "runLabel": "Run restoration",
       "expectedOutput": "A restored image saved to the result directory.",
-      "image": "assets/tools/restormer/paper-demo-1.jpg"
+      "image": "assets/tools/restormer/image-deraining.png"
     },
     "parameterNotes": [
       {
@@ -3651,11 +3781,41 @@ export const tools: Tool[] = [
         "url": "https://arxiv.org/abs/2001.06826"
       }
     ],
-    "heroImage": "assets/tools/zero-dce/paper-demo-1.png",
+    "heroImage": "assets/tools/zero-dce/results.png",
     "demos": [
       {
-        "label": "Paper result figure",
-        "image": "assets/tools/zero-dce/paper-demo-1.png",
+        "label": "Visual comparisons",
+        "image": "assets/tools/zero-dce/results.png",
+        "position": "center center"
+      },
+      {
+        "label": "Pipeline",
+        "image": "assets/tools/zero-dce/framework.png",
+        "position": "center center"
+      },
+      {
+        "label": "Face detection results",
+        "image": "assets/tools/zero-dce/face.png",
+        "position": "center center"
+      },
+      {
+        "label": "Loss ablation",
+        "image": "assets/tools/zero-dce/loss.png",
+        "position": "center center"
+      },
+      {
+        "label": "Parameter settings",
+        "image": "assets/tools/zero-dce/parameter.png",
+        "position": "center center"
+      },
+      {
+        "label": "Training data impact",
+        "image": "assets/tools/zero-dce/training.png",
+        "position": "center center"
+      },
+      {
+        "label": "Three-channel adjustment",
+        "image": "assets/tools/zero-dce/channel.png",
         "position": "center center"
       }
     ],
@@ -3667,7 +3827,7 @@ export const tools: Tool[] = [
       "prompt": "default enhancement pipeline",
       "runLabel": "Run enhancement",
       "expectedOutput": "Enhanced image with improved brightness and contrast.",
-      "image": "assets/tools/zero-dce/paper-demo-1.png"
+      "image": "assets/tools/zero-dce/results.png"
     },
     "parameterNotes": [
       {
@@ -3726,16 +3886,16 @@ export const tools: Tool[] = [
         "url": "https://github.com/protectai/rebuff"
       }
     ],
-    "heroImage": "assets/tools/rebuff/paper-demo-1.png",
+    "heroImage": "assets/tools/rebuff/logo.png",
     "demos": [
       {
-        "label": "Project image 1",
-        "image": "assets/tools/rebuff/paper-demo-1.png",
+        "label": "Rebuff Logo",
+        "image": "assets/tools/rebuff/logo.png",
         "position": "center center"
       },
       {
-        "label": "Project image 2",
-        "image": "assets/tools/rebuff/paper-demo-2.png",
+        "label": "Rebuff mascot",
+        "image": "assets/tools/rebuff/mascot.png",
         "position": "center center"
       }
     ],
@@ -3747,7 +3907,7 @@ export const tools: Tool[] = [
       "prompt": "policy: block_high_risk",
       "runLabel": "Run guardrail",
       "expectedOutput": "Risk score and allow-or-block decision JSON.",
-      "image": "assets/tools/rebuff/paper-demo-1.png"
+      "image": "assets/tools/rebuff/logo.png"
     },
     "parameterNotes": [
       {
