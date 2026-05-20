@@ -5,6 +5,7 @@ export type ToolStatus = "Draft" | "Docs Ready" | "Code Linked" | "Runnable" | "
 export type ToolDemo = {
   label: string;
   image?: string;
+  video?: string;
   position?: string;
 };
 
@@ -90,530 +91,7 @@ export const toolCategories: ToolCategory[] = [
   "Execution and Control"
 ];
 
-const executionControlTools: Tool[] = [
-  {
-    "slug": "dense-object-nets",
-    "title": "Dense Object Nets",
-    "category": "Execution and Control",
-    "task": "Dense visual correspondence for manipulation",
-    "summary": "Dense Object Nets learn pixel-level object descriptors that let a robot identify corresponding points across views and use them as manipulation targets.",
-    "input": "RGB images + query pixels or object views",
-    "output": "Dense descriptors and point correspondences",
-    "runtime": "Python / PyTorch research code",
-    "status": "Code Linked",
-    "paperTitle": "Dense Object Nets: Learning Dense Visual Object Descriptors By and For Robotic Manipulation",
-    "paperAuthors": "Peter R. Florence, Lucas Manuelli, Russ Tedrake",
-    "paperVenue": "CoRL 2018",
-    "paperContribution": "Shows that self-supervised dense descriptors can provide object-centric correspondence signals for robotic manipulation policies.",
-    "paperLinks": [
-      {
-        "label": "PMLR",
-        "url": "https://proceedings.mlr.press/v87/florence18a.html"
-      },
-      {
-        "label": "arXiv",
-        "url": "https://arxiv.org/abs/1806.08756"
-      }
-    ],
-    "heroImage": "assets/tools/dense-object-nets/don-figure1.png",
-    "demos": [
-      {
-        "label": "Dense Object Nets overview",
-        "image": "assets/tools/dense-object-nets/don-figure1.png",
-        "position": "center center"
-      },
-      {
-        "label": "Descriptor learning pipeline",
-        "image": "assets/tools/dense-object-nets/don-figure2.png",
-        "position": "center center"
-      },
-      {
-        "label": "Dense descriptor correspondence",
-        "image": "assets/tools/dense-object-nets/don-figure3.png",
-        "position": "center center"
-      }
-    ],
-    "apiExample": "# Follow the official Dense Object Nets repository and paper setup.\n# Typical use: train descriptors on object views, then query descriptor matches for manipulation points.",
-    "shortExplanation": "Use Dense Object Nets when a manipulation system needs to track or re-identify a specific point on an object across camera views.",
-    "parameterNotes": [
-      {
-        "name": "source_image",
-        "control": "file",
-        "meaning": "Image containing the point or object part to match."
-      },
-      {
-        "name": "query_pixel",
-        "control": "text",
-        "meaning": "Pixel coordinate whose descriptor should be matched in another view."
-      },
-      {
-        "name": "target_image",
-        "control": "file",
-        "meaning": "Image where the corresponding object point should be found."
-      }
-    ],
-    "outputNotes": [
-      {
-        "name": "descriptor_map",
-        "meaning": "Dense per-pixel visual descriptor representation."
-      },
-      {
-        "name": "matched_pixel",
-        "meaning": "Predicted corresponding point in the target image."
-      }
-    ],
-    "deploymentNotes": [
-      "Prepare multi-view object images or robot-collected observations.",
-      "Train or load the descriptor model following the official project instructions.",
-      "Use nearest-neighbor descriptor matches to recover manipulation-relevant object points."
-    ],
-    "benchmarkDataset": "The paper evaluates dense correspondence and manipulation tasks with robot-collected object views.",
-    "benchmarkArtifacts": "Paper figures, descriptor visualizations, correspondence examples, and manipulation demonstrations."
-  },
-  {
-    "slug": "octomap",
-    "title": "OctoMap",
-    "category": "Execution and Control",
-    "task": "3D occupancy mapping",
-    "summary": "OctoMap is a probabilistic 3D occupancy mapping framework based on octrees, commonly used for collision checking, navigation, and planning around observed space.",
-    "input": "Point clouds or range measurements",
-    "output": "Probabilistic 3D occupancy map",
-    "runtime": "C++ / ROS integration",
-    "status": "Code Linked",
-    "paperTitle": "OctoMap: An Efficient Probabilistic 3D Mapping Framework Based on Octrees",
-    "paperAuthors": "Armin Hornung, Kai M. Wurm, Maren Bennewitz, Cyrill Stachniss, Wolfram Burgard",
-    "paperVenue": "Autonomous Robots 2013",
-    "paperContribution": "Represents occupied, free, and unknown space compactly in an octree so robots can query 3D geometry for navigation and manipulation safety.",
-    "paperLinks": [
-      {
-        "label": "Website",
-        "url": "https://octomap.github.io/"
-      },
-      {
-        "label": "GitHub",
-        "url": "https://github.com/OctoMap/octomap"
-      },
-      {
-        "label": "Paper",
-        "url": "https://www.arminhornung.de/Research/pub/hornung13auro.pdf"
-      }
-    ],
-    "heroImage": "assets/tools/octomap/freiburg-079.png",
-    "demos": [
-      {
-        "label": "Indoor 3D occupancy map",
-        "image": "assets/tools/octomap/freiburg-079.png",
-        "position": "center center"
-      },
-      {
-        "label": "Outdoor 3D occupancy map",
-        "image": "assets/tools/octomap/freiburg-outdoor.png",
-        "position": "center center"
-      }
-    ],
-    "apiExample": "# ROS users typically publish point clouds and consume octomap_server outputs.\nros2 run octomap_server octomap_server_node",
-    "shortExplanation": "Use OctoMap when execution needs a compact 3D map for free-space, obstacle, and unknown-space queries.",
-    "parameterNotes": [
-      {
-        "name": "resolution",
-        "control": "number",
-        "meaning": "Voxel size of the octree map."
-      },
-      {
-        "name": "point_cloud",
-        "control": "file",
-        "meaning": "3D measurements used to update occupancy probabilities."
-      }
-    ],
-    "outputNotes": [
-      {
-        "name": "occupancy_tree",
-        "meaning": "Octree storing occupied, free, and unknown cells."
-      },
-      {
-        "name": "query_result",
-        "meaning": "Occupancy state for a requested 3D location or region."
-      }
-    ],
-    "deploymentNotes": [
-      "Install OctoMap directly or through the ROS integration packages.",
-      "Feed depth, LiDAR, or fused point-cloud observations into the map updater.",
-      "Query the resulting map before planning motions through partially observed scenes."
-    ],
-    "license": "BSD-3-Clause",
-    "owner": "OctoMap"
-  },
-  {
-    "slug": "actpermoma",
-    "title": "ActPerMoMa",
-    "category": "Execution and Control",
-    "task": "Active perception for mobile manipulation",
-    "summary": "ActPerMoMa chooses informative base and camera motions so a mobile manipulator can improve object perception before acting.",
-    "input": "Scene belief + robot state + manipulation target",
-    "output": "Active perception or manipulation action",
-    "runtime": "Python / Isaac Sim research code",
-    "status": "Code Linked",
-    "paperTitle": "ActPerMoMa: Active Perception for Mobile Manipulation",
-    "paperVenue": "CoRL 2023",
-    "paperContribution": "Couples active perception with mobile manipulation so the robot can move to better viewpoints before executing a task.",
-    "paperLinks": [
-      {
-        "label": "GitHub",
-        "url": "https://github.com/pearl-robot-lab/ActPerMoMa"
-      },
-      {
-        "label": "Paper",
-        "url": "https://arxiv.org/abs/2310.00433"
-      }
-    ],
-    "heroImage": "assets/tools/actpermoma/actpermoma.gif",
-    "demos": [
-      {
-        "label": "Active perception demo",
-        "image": "assets/tools/actpermoma/actpermoma.gif",
-        "position": "center center"
-      }
-    ],
-    "apiExample": "# Follow the official ActPerMoMa environment setup, then run the provided policy/evaluation scripts in Isaac Sim.",
-    "shortExplanation": "Use ActPerMoMa when a robot should actively move to reduce uncertainty before grasping or manipulating an object.",
-    "parameterNotes": [
-      {
-        "name": "scene_state",
-        "control": "path",
-        "meaning": "Current perception state or simulator observation."
-      },
-      {
-        "name": "target_object",
-        "control": "text",
-        "meaning": "Object or goal that drives the active perception objective."
-      }
-    ],
-    "outputNotes": [
-      {
-        "name": "viewpoint_action",
-        "meaning": "Motion selected to improve perception of the target."
-      },
-      {
-        "name": "manipulation_action",
-        "meaning": "Action proposed after the perception state is sufficiently informative."
-      }
-    ],
-    "deploymentNotes": [
-      "Set up the official simulation environment and assets.",
-      "Provide the robot state, scene observation, and manipulation target.",
-      "Run the active perception policy before issuing final manipulation actions."
-    ],
-    "owner": "PEARL Robot Lab"
-  },
-  {
-    "slug": "nav2",
-    "title": "Nav2",
-    "category": "Execution and Control",
-    "task": "ROS 2 navigation",
-    "summary": "Nav2 is the ROS 2 navigation stack for planning, controlling, recovering, and executing autonomous robot navigation tasks.",
-    "input": "Map, localization, costmaps, start and goal poses",
-    "output": "Path, velocity commands, behavior-tree execution state",
-    "runtime": "ROS 2 / C++ / Python launch files",
-    "status": "Code Linked",
-    "paperTitle": "Navigation2: A ROS 2 Navigation Framework",
-    "paperContribution": "Provides modular planners, controllers, costmaps, recoveries, and behavior-tree orchestration for robot navigation.",
-    "paperLinks": [
-      {
-        "label": "Website",
-        "url": "https://nav2.org/"
-      },
-      {
-        "label": "Docs",
-        "url": "https://docs.nav2.org/"
-      },
-      {
-        "label": "GitHub",
-        "url": "https://github.com/ros-navigation/navigation2"
-      }
-    ],
-    "heroImage": "assets/tools/nav2/map-rviz.png",
-    "demos": [
-      {
-        "label": "Map in RViz",
-        "image": "assets/tools/nav2/map-rviz.png",
-        "position": "center center"
-      },
-      {
-        "label": "Global costmap",
-        "image": "assets/tools/nav2/global-costmap.png",
-        "position": "center center"
-      },
-      {
-        "label": "Local costmap",
-        "image": "assets/tools/nav2/local-costmap.png",
-        "position": "center center"
-      }
-    ],
-    "apiExample": "ros2 launch nav2_bringup navigation_launch.py\nros2 action send_goal /navigate_to_pose nav2_msgs/action/NavigateToPose '{pose: ...}'",
-    "shortExplanation": "Use Nav2 to send a mobile robot from its current pose to a goal while handling planning, control, and recovery behaviors.",
-    "parameterNotes": [
-      {
-        "name": "map",
-        "control": "path",
-        "meaning": "Occupancy map and metadata used by global planning."
-      },
-      {
-        "name": "goal_pose",
-        "control": "text",
-        "meaning": "Target x, y, and orientation for navigation."
-      },
-      {
-        "name": "behavior_tree",
-        "control": "path",
-        "meaning": "Behavior tree that coordinates planning, control, and recovery."
-      }
-    ],
-    "outputNotes": [
-      {
-        "name": "planned_path",
-        "meaning": "Path returned by the selected global planner."
-      },
-      {
-        "name": "cmd_vel",
-        "meaning": "Velocity commands produced by the controller."
-      },
-      {
-        "name": "navigation_result",
-        "meaning": "Action status and recovery outcome for the navigation request."
-      }
-    ],
-    "deploymentNotes": [
-      "Install the Nav2 packages matching the target ROS 2 distribution.",
-      "Configure maps, localization, planners, controllers, costmaps, and behavior trees.",
-      "Use RViz and action feedback to inspect paths, costmaps, and execution status."
-    ],
-    "license": "Apache-2.0",
-    "owner": "ros-navigation"
-  },
-  {
-    "slug": "pinocchio",
-    "title": "Pinocchio",
-    "category": "Execution and Control",
-    "task": "Rigid-body dynamics and kinematics",
-    "summary": "Pinocchio is a fast rigid-body dynamics library used for robot kinematics, inverse dynamics, Jacobians, and model-based control computations.",
-    "input": "Robot model, joint state, target pose, velocities or accelerations",
-    "output": "Kinematic quantities, dynamics terms, torques, Jacobians",
-    "runtime": "C++ / Python bindings",
-    "status": "Code Linked",
-    "paperTitle": "Pinocchio: Fast Forward and Inverse Dynamics for Poly-Articulated Systems",
-    "paperContribution": "Provides efficient algorithms and bindings for model-based robot control, planning, and dynamics computations.",
-    "paperLinks": [
-      {
-        "label": "GitHub",
-        "url": "https://github.com/stack-of-tasks/pinocchio"
-      },
-      {
-        "label": "Docs",
-        "url": "https://stack-of-tasks.github.io/pinocchio/"
-      }
-    ],
-    "heroImage": "assets/tools/pinocchio/pinocchio-logo.png",
-    "demos": [
-      {
-        "label": "Pinocchio project identity",
-        "image": "assets/tools/pinocchio/pinocchio-logo.png",
-        "position": "center center"
-      },
-      {
-        "label": "Performance figure",
-        "image": "assets/tools/pinocchio/pinocchio-performances.png",
-        "position": "center center"
-      }
-    ],
-    "apiExample": "import pinocchio as pin\nmodel = pin.buildModelFromUrdf('robot.urdf')\ndata = model.createData()\npin.forwardKinematics(model, data, q)",
-    "shortExplanation": "Use Pinocchio when execution code needs fast kinematics, inverse dynamics, or model-based control terms.",
-    "parameterNotes": [
-      {
-        "name": "robot_model",
-        "control": "path",
-        "meaning": "URDF or model description loaded into Pinocchio."
-      },
-      {
-        "name": "q",
-        "control": "text",
-        "meaning": "Robot joint configuration."
-      },
-      {
-        "name": "v_or_a",
-        "control": "text",
-        "meaning": "Joint velocity or acceleration vector depending on the requested algorithm."
-      }
-    ],
-    "outputNotes": [
-      {
-        "name": "kinematics",
-        "meaning": "Frame placements, Jacobians, and related kinematic quantities."
-      },
-      {
-        "name": "dynamics",
-        "meaning": "Mass matrix, Coriolis, gravity, or inverse-dynamics torque terms."
-      }
-    ],
-    "deploymentNotes": [
-      "Install Pinocchio from conda, robotpkg, source, or the official package route for the target platform.",
-      "Load the robot model and create data structures once per control process.",
-      "Call the required kinematics or dynamics routines inside the planner or controller."
-    ],
-    "owner": "stack-of-tasks"
-  },
-  {
-    "slug": "ruckig",
-    "title": "Ruckig",
-    "category": "Execution and Control",
-    "task": "Jerk-limited trajectory generation",
-    "summary": "Ruckig generates time-optimal trajectories under velocity, acceleration, and jerk limits for smooth robot motion commands.",
-    "input": "Current state, target state, velocity/acceleration/jerk limits",
-    "output": "Time-parameterized trajectory samples",
-    "runtime": "C++ / Python package",
-    "status": "Code Linked",
-    "paperTitle": "Jerk-limited Real-time Trajectory Generation with Arbitrary Target States",
-    "paperVenue": "RSS 2021",
-    "paperContribution": "Computes online, jerk-limited motion profiles that can be used directly in robot controllers.",
-    "paperLinks": [
-      {
-        "label": "GitHub",
-        "url": "https://github.com/pantor/ruckig"
-      },
-      {
-        "label": "Docs",
-        "url": "https://docs.ruckig.com/"
-      },
-      {
-        "label": "Paper",
-        "url": "https://arxiv.org/abs/2105.04830"
-      }
-    ],
-    "heroImage": "assets/tools/ruckig/example-profile.png",
-    "demos": [
-      {
-        "label": "Trajectory profile",
-        "image": "assets/tools/ruckig/example-profile.png",
-        "position": "center center"
-      },
-      {
-        "label": "Benchmark figure",
-        "image": "assets/tools/ruckig/benchmark.png",
-        "position": "center center"
-      }
-    ],
-    "apiExample": "from ruckig import Ruckig, InputParameter, OutputParameter\notg = Ruckig(6, 0.001)\n# Fill current state, target state, and limits, then call update in the control loop.",
-    "shortExplanation": "Use Ruckig to retime robot joint or Cartesian commands into smooth jerk-limited trajectories before execution.",
-    "parameterNotes": [
-      {
-        "name": "current_state",
-        "control": "text",
-        "meaning": "Current positions, velocities, and accelerations."
-      },
-      {
-        "name": "target_state",
-        "control": "text",
-        "meaning": "Desired target positions, velocities, and accelerations."
-      },
-      {
-        "name": "limits",
-        "control": "text",
-        "meaning": "Velocity, acceleration, and jerk limits for each degree of freedom."
-      }
-    ],
-    "outputNotes": [
-      {
-        "name": "trajectory",
-        "meaning": "Smooth trajectory samples or online control states."
-      },
-      {
-        "name": "duration",
-        "meaning": "Total trajectory duration under the configured limits."
-      }
-    ],
-    "deploymentNotes": [
-      "Install the C++ library or Python package.",
-      "Set per-axis limits according to the robot controller and safety constraints.",
-      "Call Ruckig online in the servo loop or offline for trajectory retiming."
-    ],
-    "owner": "pantor"
-  },
-  {
-    "slug": "ompl",
-    "title": "OMPL",
-    "category": "Execution and Control",
-    "task": "Motion planning",
-    "summary": "The Open Motion Planning Library provides sampling-based motion planners for robots, vehicles, and high-dimensional configuration spaces.",
-    "input": "State space, validity checker, start and goal states",
-    "output": "Collision-free path or planning failure",
-    "runtime": "C++ / Python bindings / MoveIt integration",
-    "status": "Code Linked",
-    "paperTitle": "The Open Motion Planning Library",
-    "paperVenue": "IEEE Robotics & Automation Magazine 2012",
-    "paperContribution": "Provides a reusable library of sampling-based planners and state-space abstractions for robot motion planning.",
-    "paperLinks": [
-      {
-        "label": "Website",
-        "url": "https://ompl.kavrakilab.org/"
-      },
-      {
-        "label": "GitHub",
-        "url": "https://github.com/ompl/ompl"
-      }
-    ],
-    "heroImage": "assets/tools/ompl/r2-path.jpg",
-    "demos": [
-      {
-        "label": "Rigid-body planning example",
-        "image": "assets/tools/ompl/r2-path.jpg",
-        "position": "center center"
-      },
-      {
-        "label": "Mobile manipulation example",
-        "image": "assets/tools/ompl/fetch-mmp.png",
-        "position": "center center"
-      }
-    ],
-    "apiExample": "# Define an OMPL state space, state validity checker, start and goal states, then solve with a planner such as RRTConnect or PRM.",
-    "shortExplanation": "Use OMPL when execution needs a collision-free motion plan through a robot configuration space.",
-    "parameterNotes": [
-      {
-        "name": "state_space",
-        "control": "select",
-        "meaning": "Configuration-space representation used by the planner."
-      },
-      {
-        "name": "validity_checker",
-        "control": "path",
-        "meaning": "Function that rejects states in collision or outside constraints."
-      },
-      {
-        "name": "start_goal",
-        "control": "text",
-        "meaning": "Initial and target states for the planning problem."
-      }
-    ],
-    "outputNotes": [
-      {
-        "name": "solution_path",
-        "meaning": "Collision-free path returned by the planner."
-      },
-      {
-        "name": "planner_status",
-        "meaning": "Solved, approximate, timeout, or failure status."
-      }
-    ],
-    "deploymentNotes": [
-      "Install OMPL directly or through robotics frameworks such as MoveIt.",
-      "Define the state space and collision/validity checker for the robot and scene.",
-      "Choose a planner and solve within the allotted planning time."
-    ],
-    "license": "BSD-3-Clause",
-    "owner": "Kavraki Lab"
-  }
-];
-
 export const tools: Tool[] = [
-  ...executionControlTools,
   {
     "slug": "yolo-world",
     "title": "YOLO-World",
@@ -642,26 +120,21 @@ export const tools: Tool[] = [
         "url": "https://huggingface.co/spaces/stevengrove/YOLO-World"
       }
     ],
-    "heroImage": "assets/tools/yolo-world/vis-lvis.png",
     "demos": [
       {
         "label": "LVIS indoor objects",
-        "image": "assets/tools/yolo-world/vis-lvis.png",
         "position": "left top"
       },
       {
         "label": "User vocabulary: people",
-        "image": "assets/tools/yolo-world/user-vocab.png",
         "position": "left center"
       },
       {
         "label": "Referring detection: people",
-        "image": "assets/tools/yolo-world/vis-referring.png",
         "position": "left top"
       },
       {
         "label": "Speed / accuracy benchmark",
-        "image": "assets/tools/yolo-world/speed-acc.png",
         "position": "center center"
       }
     ],
@@ -673,7 +146,6 @@ export const tools: Tool[] = [
       "prompt": "person,bus,car",
       "runLabel": "Run detection",
       "expectedOutput": "An annotated image plus JSON-style detections containing boxes, labels, and scores.",
-      "image": "assets/tools/yolo-world/user-vocab.png"
     },
     "parameterNotes": [
       {
@@ -786,11 +258,9 @@ export const tools: Tool[] = [
         "url": "https://github.com/MIT-SPARK/Hydra?tab=readme-ov-file#installation"
       }
     ],
-    "heroImage": "assets/tools/hydra/hydra.gif",
     "demos": [
       {
         "label": "Online 3D scene graph playback",
-        "image": "assets/tools/hydra/hydra.gif",
         "position": "center center"
       }
     ],
@@ -802,7 +272,6 @@ export const tools: Tool[] = [
       "prompt": "Use the default indoor mapping configuration",
       "runLabel": "Build scene graph",
       "expectedOutput": "A dynamic scene graph with geometry, semantic objects, places, room nodes, and optimized graph artifacts.",
-      "image": "assets/tools/hydra/hydra.gif"
     },
     "parameterNotes": [
       {
@@ -914,46 +383,37 @@ export const tools: Tool[] = [
         "url": "https://graspnet.net/datasets.html"
       }
     ],
-    "heroImage": "assets/tools/anygrasp/anygrasp-1-small.gif",
     "demos": [
       {
         "label": "Cluttered scene grasping",
-        "image": "assets/tools/anygrasp/anygrasp-1-small.gif",
         "position": "center center"
       },
       {
         "label": "Fish catching demo",
-        "image": "assets/tools/anygrasp/anygrasp-fish.gif",
         "position": "center center"
       },
       {
         "label": "Broken pot fragments",
-        "image": "assets/tools/anygrasp/broken.gif",
         "position": "center center"
       },
       {
         "label": "Human comparison sequence",
-        "image": "assets/tools/anygrasp/vshuman.gif",
         "position": "center center"
       },
       {
         "label": "Grasp pose visualization",
-        "image": "assets/tools/anygrasp/grasppose.gif",
         "position": "center center"
       },
       {
         "label": "Prediction variance view",
-        "image": "assets/tools/anygrasp/variance.gif",
         "position": "center center"
       },
       {
         "label": "RGB-D demo color input",
-        "image": "assets/tools/anygrasp/example-color.png",
         "position": "center center"
       },
       {
         "label": "Depth input example",
-        "image": "assets/tools/anygrasp/example-depth.png",
         "position": "center center"
       }
     ],
@@ -965,7 +425,6 @@ export const tools: Tool[] = [
       "prompt": "Find stable grasps within the gripper width limit",
       "runLabel": "Predict grasps",
       "expectedOutput": "Ranked 6-DoF grasp poses with visualization, score, width, and optional temporal tracking output.",
-      "image": "assets/tools/anygrasp/grasppose.gif"
     },
     "parameterNotes": [
       {
@@ -1077,11 +536,9 @@ export const tools: Tool[] = [
         "url": "https://colab.research.google.com/github/isl-org/ZoeDepth"
       }
     ],
-    "heroImage": "assets/tools/zoedepth/zoedepth-teaser.png",
     "demos": [
       {
         "label": "Teaser: RGB to metric depth",
-        "image": "assets/tools/zoedepth/zoedepth-teaser.png",
         "position": "center center"
       }
     ],
@@ -1093,7 +550,6 @@ export const tools: Tool[] = [
       "prompt": "Use ZoeD_N for general RGB depth estimation",
       "runLabel": "Estimate depth",
       "expectedOutput": "A metric depth map and optional colored depth visualization saved in the run folder.",
-      "image": "assets/tools/zoedepth/zoedepth-teaser.png"
     },
     "parameterNotes": [
       {
@@ -1205,46 +661,37 @@ export const tools: Tool[] = [
         "url": "https://replicate.com/casia-iva-lab/fastsam"
       }
     ],
-    "heroImage": "assets/tools/fastsam/eightpic.png",
     "demos": [
       {
         "label": "Segmentation result set",
-        "image": "assets/tools/fastsam/eightpic.png",
         "position": "center center"
       },
       {
         "label": "Everything mode UI",
-        "image": "assets/tools/fastsam/hf-everything-mode.png",
         "position": "center center"
       },
       {
         "label": "Point prompt UI",
-        "image": "assets/tools/fastsam/hf-points-mode.png",
         "position": "center center"
       },
       {
         "label": "Replicate example 1",
-        "image": "assets/tools/fastsam/replicate-1.png",
         "position": "center center"
       },
       {
         "label": "Replicate example 2",
-        "image": "assets/tools/fastsam/replicate-2.png",
         "position": "center center"
       },
       {
         "label": "Dog prompt input",
-        "image": "assets/tools/fastsam/dogs.jpg",
         "position": "center center"
       },
       {
         "label": "Cat image prompt input",
-        "image": "assets/tools/fastsam/cat.jpg",
         "position": "center center"
       },
       {
         "label": "Building segmentation",
-        "image": "assets/tools/fastsam/building.png",
         "position": "center center"
       }
     ],
@@ -1256,7 +703,6 @@ export const tools: Tool[] = [
       "prompt": "the yellow dog",
       "runLabel": "Segment object",
       "expectedOutput": "A mask overlay and mask files for the selected object or all objects in the image.",
-      "image": "assets/tools/fastsam/hf-points-mode.png"
     },
     "parameterNotes": [
       {
@@ -1367,46 +813,37 @@ export const tools: Tool[] = [
         "url": "https://colab.research.google.com/drive/1yo43XTbjxuWA7XgCUO9qxAi7wBI6HzvP?usp=sharing"
       }
     ],
-    "heroImage": "assets/tools/cutie/bike-00000.jpg",
     "demos": [
       {
         "label": "Bike frame 0",
-        "image": "assets/tools/cutie/bike-00000.jpg",
         "position": "center center"
       },
       {
         "label": "Bike frame 1",
-        "image": "assets/tools/cutie/bike-00001.jpg",
         "position": "center center"
       },
       {
         "label": "Bike frame 2",
-        "image": "assets/tools/cutie/bike-00002.jpg",
         "position": "center center"
       },
       {
         "label": "Bike frame 3",
-        "image": "assets/tools/cutie/bike-00003.jpg",
         "position": "center center"
       },
       {
         "label": "Bike first mask",
-        "image": "assets/tools/cutie/mask-bike-00000.png",
         "position": "center center"
       },
       {
         "label": "Judo frame 0",
-        "image": "assets/tools/cutie/judo-00000.jpg",
         "position": "center center"
       },
       {
         "label": "Judo frame 8",
-        "image": "assets/tools/cutie/judo-00008.jpg",
         "position": "center center"
       },
       {
         "label": "Judo frame 15",
-        "image": "assets/tools/cutie/judo-00015.jpg",
         "position": "center center"
       }
     ],
@@ -1418,7 +855,6 @@ export const tools: Tool[] = [
       "prompt": "Track the selected foreground object through the sequence",
       "runLabel": "Track mask",
       "expectedOutput": "A folder of per-frame masks and overlay previews for the tracked object.",
-      "image": "assets/tools/cutie/bike-00000.jpg"
     },
     "parameterNotes": [
       {
@@ -1529,11 +965,9 @@ export const tools: Tool[] = [
         "url": "https://github.com/xuankuzcr/Global-LVBA"
       }
     ],
-    "heroImage": "assets/tools/fast-livo2/demo-maxresdefault.jpg",
     "demos": [
       {
         "label": "Official demo video frame",
-        "image": "assets/tools/fast-livo2/demo-maxresdefault.jpg",
         "position": "center center"
       }
     ],
@@ -1545,7 +979,6 @@ export const tools: Tool[] = [
       "prompt": "mapping_avia.launch with calibrated sensor topics",
       "runLabel": "Launch odometry",
       "expectedOutput": "A pose trajectory, local map, reconstruction outputs, and ROS visualization streams.",
-      "image": "assets/tools/fast-livo2/demo-maxresdefault.jpg"
     },
     "parameterNotes": [
       {
@@ -1658,46 +1091,37 @@ export const tools: Tool[] = [
         "url": "https://youtu.be/j5fT8NE5fdg"
       }
     ],
-    "heroImage": "assets/tools/r3live/cover-half.jpg",
     "demos": [
       {
         "label": "RGB map reconstruction",
-        "image": "assets/tools/r3live/cover-half.jpg",
         "position": "center center"
       },
       {
         "label": "HKU campus sequence",
-        "image": "assets/tools/r3live/hku-campus-seq-01.png",
         "position": "center center"
       },
       {
         "label": "HKU park sequence",
-        "image": "assets/tools/r3live/hku-park-01.jpg",
         "position": "center center"
       },
       {
         "label": "Degenerate scene",
-        "image": "assets/tools/r3live/degenerate-01-pic.png",
         "position": "center center"
       },
       {
         "label": "Realtime demo GIF",
-        "image": "assets/tools/r3live/hku-demo.gif",
         "position": "center center"
       },
       {
         "label": "HKUST demo GIF",
-        "image": "assets/tools/r3live/hkust-demo.gif",
         "position": "center center"
       },
       {
         "label": "Mesh reconstruction",
-        "image": "assets/tools/r3live/mesh.png",
         "position": "center center"
       },
       {
         "label": "UE application view",
-        "image": "assets/tools/r3live/ue-applications.png",
         "position": "center center"
       }
     ],
@@ -1709,7 +1133,6 @@ export const tools: Tool[] = [
       "prompt": "Run r3live_bag.launch and visualize the colored map",
       "runLabel": "Build RGB map",
       "expectedOutput": "A state trajectory, RGB-colored point map, and optional mesh reconstruction.",
-      "image": "assets/tools/r3live/hku-demo.gif"
     },
     "parameterNotes": [
       {
@@ -1821,21 +1244,17 @@ export const tools: Tool[] = [
         "url": "https://huggingface.co/spaces/naver/DUSt3R"
       }
     ],
-    "heroImage": "assets/tools/dust3r/matching.jpg",
     "demos": [
       {
         "label": "Interactive demo result",
-        "image": "assets/tools/dust3r/demo.jpg",
         "position": "center center"
       },
       {
         "label": "Pair reconstruction",
-        "image": "assets/tools/dust3r/pipeline1.jpg",
         "position": "center center"
       },
       {
         "label": "Image matching",
-        "image": "assets/tools/dust3r/matching.jpg",
         "position": "center center"
       }
     ],
@@ -1847,7 +1266,6 @@ export const tools: Tool[] = [
       "prompt": "Use 512px ViT-Large checkpoint and global alignment",
       "runLabel": "Reconstruct scene",
       "expectedOutput": "Aligned 3D point cloud, pair confidence maps, and camera pose estimates.",
-      "image": "assets/tools/dust3r/demo.jpg"
     },
     "parameterNotes": [
       {
@@ -1955,16 +1373,13 @@ export const tools: Tool[] = [
         "url": "https://waldjohannau.github.io/RIO/"
       }
     ],
-    "heroImage": "assets/tools/query-3d-scene-graph/cover.jpg",
     "demos": [
       {
         "label": "Scene graph query flow",
-        "image": "assets/tools/query-3d-scene-graph/demo-1.jpg",
         "position": "center center"
       },
       {
         "label": "Structured graph result preview",
-        "image": "assets/tools/query-3d-scene-graph/cover.jpg",
         "position": "center center"
       }
     ],
@@ -1976,7 +1391,6 @@ export const tools: Tool[] = [
       "prompt": "object_query: table; relation_query: nearby chairs",
       "runLabel": "Query scene graph",
       "expectedOutput": "Matched nodes with 3D centers, bounding boxes, relation edges, and confidence values.",
-      "image": "assets/tools/query-3d-scene-graph/demo-1.jpg"
     },
     "parameterNotes": [
       {
@@ -2053,16 +1467,13 @@ export const tools: Tool[] = [
         "url": "https://arxiv.org/abs/1903.01945"
       }
     ],
-    "heroImage": "assets/tools/query-historical-action-timeline/cover.jpg",
     "demos": [
       {
         "label": "Action timeline query flow",
-        "image": "assets/tools/query-historical-action-timeline/demo-1.jpg",
         "position": "center center"
       },
       {
         "label": "Timeline result preview",
-        "image": "assets/tools/query-historical-action-timeline/cover.jpg",
         "position": "center center"
       }
     ],
@@ -2074,7 +1485,6 @@ export const tools: Tool[] = [
       "prompt": "query_action: pour; time_window: full video",
       "runLabel": "Query timeline",
       "expectedOutput": "A list of start and end frames for matching action segments.",
-      "image": "assets/tools/query-historical-action-timeline/demo-1.jpg"
     },
     "parameterNotes": [
       {
@@ -2156,16 +1566,13 @@ export const tools: Tool[] = [
         "url": "https://arxiv.org/abs/2401.08281"
       }
     ],
-    "heroImage": "assets/tools/retrieve-past-visual-state-faiss/cover.jpg",
     "demos": [
       {
         "label": "Visual memory retrieval flow",
-        "image": "assets/tools/retrieve-past-visual-state-faiss/demo-1.jpg",
         "position": "center center"
       },
       {
         "label": "Top-k result preview",
-        "image": "assets/tools/retrieve-past-visual-state-faiss/demo-2.jpg",
         "position": "center center"
       }
     ],
@@ -2177,7 +1584,6 @@ export const tools: Tool[] = [
       "prompt": "top_k: 3",
       "runLabel": "Search memory",
       "expectedOutput": "Top-k memory ids with distances or similarity scores and snapshot references.",
-      "image": "assets/tools/retrieve-past-visual-state-faiss/demo-1.jpg"
     },
     "parameterNotes": [
       {
@@ -2263,16 +1669,13 @@ export const tools: Tool[] = [
         "url": "https://seoungwugoh.github.io/STM/"
       }
     ],
-    "heroImage": "assets/tools/stm/cover.jpg",
     "demos": [
       {
         "label": "Space-time memory flow",
-        "image": "assets/tools/stm/demo-1.jpg",
         "position": "center center"
       },
       {
         "label": "Memory readout preview",
-        "image": "assets/tools/stm/demo-2.jpg",
         "position": "center center"
       }
     ],
@@ -2284,7 +1687,6 @@ export const tools: Tool[] = [
       "prompt": "target_object_id: selected object; memory: reference image and mask",
       "runLabel": "Run STM",
       "expectedOutput": "A predicted foreground region, bounding box, feature readout, attention weights, and confidence score.",
-      "image": "assets/tools/stm/demo-1.jpg"
     },
     "parameterNotes": [
       {
@@ -2367,16 +1769,13 @@ export const tools: Tool[] = [
         "url": "https://arxiv.org/abs/1912.06992"
       }
     ],
-    "heroImage": "assets/tools/action-genome/cover.jpg",
     "demos": [
       {
         "label": "Action graph inference flow",
-        "image": "assets/tools/action-genome/demo-1.jpg",
         "position": "center center"
       },
       {
         "label": "State timeline result preview",
-        "image": "assets/tools/action-genome/demo-2.jpg",
         "position": "center center"
       }
     ],
@@ -2388,7 +1787,6 @@ export const tools: Tool[] = [
       "prompt": "objects_of_interest: door, cup, person",
       "runLabel": "Build state graph",
       "expectedOutput": "Object state timelines and contact relations such as open, closed, empty, full, sitting, or standing.",
-      "image": "assets/tools/action-genome/demo-1.jpg"
     },
     "parameterNotes": [
       {
@@ -2464,16 +1862,13 @@ export const tools: Tool[] = [
         "url": "https://arxiv.org/abs/2305.07766"
       }
     ],
-    "heroImage": "assets/tools/language2ltl/cover.jpg",
     "demos": [
       {
         "label": "Plan validation flow",
-        "image": "assets/tools/language2ltl/demo-1.jpg",
         "position": "center center"
       },
       {
         "label": "Violation report preview",
-        "image": "assets/tools/language2ltl/cover.jpg",
         "position": "center center"
       }
     ],
@@ -2485,7 +1880,6 @@ export const tools: Tool[] = [
       "prompt": "always(grab_chemical -> historically(wear_gloves))",
       "runLabel": "Validate plan",
       "expectedOutput": "A compliance flag and a human-readable violation reason when a prerequisite step is missing.",
-      "image": "assets/tools/language2ltl/demo-1.jpg"
     },
     "parameterNotes": [
       {
@@ -2562,16 +1956,13 @@ export const tools: Tool[] = [
         "url": "https://huggingface.co/spaces/facebook/cotracker"
       }
     ],
-    "heroImage": "assets/tools/monitor-dynamic-disturbance/cover.jpg",
     "demos": [
       {
         "label": "Disturbance monitor flow",
-        "image": "assets/tools/monitor-dynamic-disturbance/demo-1.jpg",
         "position": "center center"
       },
       {
         "label": "Alert result preview",
-        "image": "assets/tools/monitor-dynamic-disturbance/demo-2.jpg",
         "position": "center center"
       }
     ],
@@ -2583,7 +1974,6 @@ export const tools: Tool[] = [
       "prompt": "roi_points: four tracked points around the target",
       "runLabel": "Monitor disturbance",
       "expectedOutput": "Tracked point trajectories, a disturbance flag, and severity score.",
-      "image": "assets/tools/monitor-dynamic-disturbance/demo-1.jpg"
     },
     "parameterNotes": [
       {
@@ -2664,16 +2054,13 @@ export const tools: Tool[] = [
         "url": "https://deepmind-tapir.github.io/"
       }
     ],
-    "heroImage": "assets/tools/tapir/cover.jpg",
     "demos": [
       {
         "label": "Point tracking flow",
-        "image": "assets/tools/tapir/demo-1.jpg",
         "position": "center center"
       },
       {
         "label": "Tracked point result preview",
-        "image": "assets/tools/tapir/demo-2.jpg",
         "position": "center center"
       }
     ],
@@ -2685,7 +2072,6 @@ export const tools: Tool[] = [
       "prompt": "initial_target_pixel: [120, 150]",
       "runLabel": "Track point",
       "expectedOutput": "Per-frame target coordinates, occlusion status, confidence, and total displacement.",
-      "image": "assets/tools/tapir/demo-1.jpg"
     },
     "parameterNotes": [
       {
@@ -2765,16 +2151,13 @@ export const tools: Tool[] = [
         "url": "https://sites.google.com/view/robot-r3m/"
       }
     ],
-    "heroImage": "assets/tools/r3m/cover.jpg",
     "demos": [
       {
         "label": "Post-action verification flow",
-        "image": "assets/tools/r3m/demo-1.jpg",
         "position": "center center"
       },
       {
         "label": "Completion score result preview",
-        "image": "assets/tools/r3m/demo-2.jpg",
         "position": "center center"
       }
     ],
@@ -2786,7 +2169,6 @@ export const tools: Tool[] = [
       "prompt": "pick up the red cup",
       "runLabel": "Verify result",
       "expectedOutput": "A task completion score and boolean success flag.",
-      "image": "assets/tools/r3m/demo-1.jpg"
     },
     "parameterNotes": [
       {
@@ -2862,16 +2244,13 @@ export const tools: Tool[] = [
         "url": "https://adversarial-robustness-toolbox.readthedocs.io/"
       }
     ],
-    "heroImage": "assets/tools/feature-squeezer/cover.jpg",
     "demos": [
       {
         "label": "Feature squeezing check flow",
-        "image": "assets/tools/feature-squeezer/demo-1.jpg",
         "position": "center center"
       },
       {
         "label": "Adversarial report preview",
-        "image": "assets/tools/feature-squeezer/demo-2.jpg",
         "position": "center center"
       }
     ],
@@ -2883,7 +2262,6 @@ export const tools: Tool[] = [
       "prompt": "method: bit_depth; compare original and squeezed predictions",
       "runLabel": "Run squeeze check",
       "expectedOutput": "A report containing the original prediction, squeezed prediction, and adversarial yes/no decision.",
-      "image": "assets/tools/feature-squeezer/demo-1.jpg"
     },
     "parameterNotes": [
       {
@@ -2958,16 +2336,13 @@ export const tools: Tool[] = [
         "url": "https://doi.org/10.1016/S0734-189X(87)80186-X"
       }
     ],
-    "heroImage": "assets/tools/clahe-filter/cover.jpg",
     "demos": [
       {
         "label": "CLAHE enhancement flow",
-        "image": "assets/tools/clahe-filter/demo-1.jpg",
         "position": "center center"
       },
       {
         "label": "Enhanced output preview",
-        "image": "assets/tools/clahe-filter/demo-2.jpg",
         "position": "center center"
       }
     ],
@@ -2979,7 +2354,6 @@ export const tools: Tool[] = [
       "prompt": "color_space: lab; clip_limit: 2.0; tile_grid_size: 8x8",
       "runLabel": "Enhance contrast",
       "expectedOutput": "A locally contrast-enhanced image with clearer details and balanced brightness.",
-      "image": "assets/tools/clahe-filter/demo-1.jpg"
     },
     "parameterNotes": [
       {
@@ -3058,16 +2432,31 @@ export const tools: Tool[] = [
         "url": "https://arxiv.org/abs/1908.03826"
       }
     ],
-    "heroImage": "assets/tools/deblurganv2/paper-demo-1.png",
+    "heroImage": "assets/tools/deblurganv2/restore_visual.png",
     "demos": [
       {
-        "label": "Paper qualitative result 1",
-        "image": "assets/tools/deblurganv2/paper-demo-1.png",
+        "label": "Restoration qualitative results",
+        "image": "assets/tools/deblurganv2/restore_visual.png",
         "position": "center center"
       },
       {
-        "label": "Paper qualitative result 2",
-        "image": "assets/tools/deblurganv2/paper-demo-2.png",
+        "label": "Kohler benchmark visual",
+        "image": "assets/tools/deblurganv2/kohler_visual.png",
+        "position": "center center"
+      },
+      {
+        "label": "Model pipeline",
+        "image": "assets/tools/deblurganv2/pipeline.jpg",
+        "position": "center center"
+      },
+      {
+        "label": "Interpolation comparison",
+        "image": "assets/tools/deblurganv2/interp_compare.png",
+        "position": "center center"
+      },
+      {
+        "label": "SSIM and FLOPs tradeoff",
+        "image": "assets/tools/deblurganv2/ssim_flops_plot.png",
         "position": "center center"
       }
     ],
@@ -3079,7 +2468,7 @@ export const tools: Tool[] = [
       "prompt": "model_name: fpn_inception",
       "runLabel": "Run deblur",
       "expectedOutput": "A restored image file with reduced motion blur.",
-      "image": "assets/tools/deblurganv2/paper-demo-1.png"
+      "image": "assets/tools/deblurganv2/restore_visual.png"
     },
     "parameterNotes": [
       {
@@ -3168,16 +2557,46 @@ export const tools: Tool[] = [
         "url": "https://arxiv.org/abs/2401.10891"
       }
     ],
-    "heroImage": "assets/tools/depth-anything/paper-demo-1.png",
+    "heroImage": "assets/tools/depth-anything/teaser.png",
     "demos": [
       {
-        "label": "Paper demo 1",
-        "image": "assets/tools/depth-anything/paper-demo-1.png",
+        "label": "Depth Anything teaser",
+        "image": "assets/tools/depth-anything/teaser.png",
         "position": "center center"
       },
       {
-        "label": "Paper demo 2",
-        "image": "assets/tools/depth-anything/paper-demo-2.png",
+        "label": "ControlNet depth demo 1",
+        "image": "assets/tools/depth-anything/controlnet_demo1.png",
+        "position": "center center"
+      },
+      {
+        "label": "ControlNet depth demo 2",
+        "image": "assets/tools/depth-anything/controlnet_demo2.png",
+        "position": "center center"
+      },
+      {
+        "label": "Dolphins video depth demo",
+        "video": "assets/tools/depth-anything/demo1.mov",
+        "position": "center center"
+      },
+      {
+        "label": "Rollercoaster video depth demo",
+        "video": "assets/tools/depth-anything/demo2.mov",
+        "position": "center center"
+      },
+      {
+        "label": "Outdoor video depth demo",
+        "video": "assets/tools/depth-anything/demo3.mov",
+        "position": "center center"
+      },
+      {
+        "label": "Indoor video depth demo",
+        "video": "assets/tools/depth-anything/demo4.mov",
+        "position": "center center"
+      },
+      {
+        "label": "Driving video depth demo",
+        "video": "assets/tools/depth-anything/demo5.mov",
         "position": "center center"
       }
     ],
@@ -3189,7 +2608,7 @@ export const tools: Tool[] = [
       "prompt": "encoder: vitl",
       "runLabel": "Run depth",
       "expectedOutput": "A normalized depth map image aligned with the input frame.",
-      "image": "assets/tools/depth-anything/paper-demo-1.png"
+      "image": "assets/tools/depth-anything/teaser.png"
     },
     "parameterNotes": [
       {
@@ -3263,16 +2682,16 @@ export const tools: Tool[] = [
         "url": "https://arxiv.org/abs/1907.01341"
       }
     ],
-    "heroImage": "assets/tools/midas/paper-demo-1.png",
+    "heroImage": "assets/tools/midas/Comparison.png",
     "demos": [
       {
         "label": "Paper benchmark figure",
-        "image": "assets/tools/midas/paper-demo-1.png",
+        "image": "assets/tools/midas/Comparison.png",
         "position": "center center"
       },
       {
         "label": "Accuracy-speed figure",
-        "image": "assets/tools/midas/paper-demo-2.png",
+        "image": "assets/tools/midas/Improvement_vs_FPS.png",
         "position": "center center"
       }
     ],
@@ -3284,7 +2703,7 @@ export const tools: Tool[] = [
       "prompt": "model_type: dpt_beit_large_512",
       "runLabel": "Run MiDaS",
       "expectedOutput": "A depth map file exported to the output directory.",
-      "image": "assets/tools/midas/paper-demo-1.png"
+      "image": "assets/tools/midas/Comparison.png"
     },
     "parameterNotes": [
       {
@@ -3358,15 +2777,30 @@ export const tools: Tool[] = [
         "url": "https://arxiv.org/abs/1908.10084"
       }
     ],
-    "heroImage": "assets/tools/sentence-transformers/paper-demo-1.jpg",
+    "heroImage": "assets/tools/sentence-transformers/SBERT_Architecture.png",
     "demos": [
       {
-        "label": "Image-text example 1",
+        "label": "SBERT architecture",
+        "image": "assets/tools/sentence-transformers/SBERT_Architecture.png",
+        "position": "center center"
+      },
+      {
+        "label": "SBERT softmax training architecture",
+        "image": "assets/tools/sentence-transformers/SBERT_SoftmaxLoss.png",
+        "position": "center center"
+      },
+      {
+        "label": "SBERT siamese inference architecture",
+        "image": "assets/tools/sentence-transformers/SBERT_Siamese_Network.png",
+        "position": "center center"
+      },
+      {
+        "label": "Semantic clustering example",
         "image": "assets/tools/sentence-transformers/paper-demo-1.jpg",
         "position": "center center"
       },
       {
-        "label": "Image-text example 2",
+        "label": "Topic embedding example",
         "image": "assets/tools/sentence-transformers/paper-demo-2.jpg",
         "position": "center center"
       }
@@ -3379,7 +2813,7 @@ export const tools: Tool[] = [
       "prompt": "model: all-MiniLM-L6-v2",
       "runLabel": "Encode text",
       "expectedOutput": "Embedding matrix and optional similarity scores.",
-      "image": "assets/tools/sentence-transformers/paper-demo-1.jpg"
+      "image": "assets/tools/sentence-transformers/SBERT_Architecture.png"
     },
     "parameterNotes": [
       {
@@ -3454,16 +2888,56 @@ export const tools: Tool[] = [
         "url": "https://arxiv.org/abs/2303.05499"
       }
     ],
-    "heroImage": "assets/tools/grounding-dino/paper-demo-1.png",
+    "heroImage": "assets/tools/grounding-dino/grounded_sam_2_intro.jpg",
     "demos": [
       {
-        "label": "Paper overview figure",
-        "image": "assets/tools/grounding-dino/paper-demo-1.png",
+        "label": "Grounded SAM 2 intro",
+        "image": "assets/tools/grounding-dino/grounded_sam_2_intro.jpg",
         "position": "center center"
       },
       {
-        "label": "COCO qualitative figure",
-        "image": "assets/tools/grounding-dino/paper-demo-2.png",
+        "label": "Detection and mask result",
+        "image": "assets/tools/grounding-dino/grounded_sam2_annotated_image_with_mask.jpg",
+        "position": "center center"
+      },
+      {
+        "label": "Slice inference result",
+        "image": "assets/tools/grounding-dino/grounded_sam2_annotated_image_with_mask_with_slice_inference.jpg",
+        "position": "center center"
+      },
+      {
+        "label": "Tracking pipeline",
+        "image": "assets/tools/grounding-dino/g_sam2_tracking_pipeline_vis.png",
+        "position": "center center"
+      },
+      {
+        "label": "Video pipeline",
+        "image": "assets/tools/grounding-dino/g_sam2_video_pipeline_v2.png",
+        "position": "center center"
+      },
+      {
+        "label": "Model diagram",
+        "image": "assets/tools/grounding-dino/model_diagram.png",
+        "position": "center center"
+      },
+      {
+        "label": "Dense people grounding",
+        "image": "assets/tools/grounding-dino/dense people.png",
+        "position": "center center"
+      },
+      {
+        "label": "Hippopotamus segmentation",
+        "image": "assets/tools/grounding-dino/hippopotamus_seg.jpg",
+        "position": "center center"
+      },
+      {
+        "label": "SA-V dataset example",
+        "image": "assets/tools/grounding-dino/sa_v_dataset.jpg",
+        "position": "center center"
+      },
+      {
+        "label": "Hippopotamus video segmentation",
+        "video": "assets/tools/grounding-dino/hippopotamus.mp4",
         "position": "center center"
       }
     ],
@@ -3475,7 +2949,7 @@ export const tools: Tool[] = [
       "prompt": "mug . cup . bottle",
       "runLabel": "Run grounding",
       "expectedOutput": "Annotated image and box/label/score predictions.",
-      "image": "assets/tools/grounding-dino/paper-demo-1.png"
+      "image": "assets/tools/grounding-dino/grounded_sam2_annotated_image_with_mask.jpg"
     },
     "parameterNotes": [
       {
@@ -3560,15 +3034,50 @@ export const tools: Tool[] = [
         "url": "https://arxiv.org/abs/2111.09881"
       }
     ],
-    "heroImage": "assets/tools/restormer/paper-demo-1.jpg",
+    "heroImage": "assets/tools/restormer/network-architecture.png",
     "demos": [
       {
-        "label": "Degraded input example",
+        "label": "Network architecture",
+        "image": "assets/tools/restormer/network-architecture.png",
+        "position": "center center"
+      },
+      {
+        "label": "Defocus deblurring results",
+        "image": "assets/tools/restormer/defocus-deblurring.png",
+        "position": "center center"
+      },
+      {
+        "label": "Motion deblurring results",
+        "image": "assets/tools/restormer/single-image-motion-deblurring.png",
+        "position": "center center"
+      },
+      {
+        "label": "Image deraining results",
+        "image": "assets/tools/restormer/image-deraining.png",
+        "position": "center center"
+      },
+      {
+        "label": "Real image denoising",
+        "image": "assets/tools/restormer/real-image-denoising.png",
+        "position": "center center"
+      },
+      {
+        "label": "Color Gaussian denoising",
+        "image": "assets/tools/restormer/gaussian-image-denoising-color.png",
+        "position": "center center"
+      },
+      {
+        "label": "Grayscale Gaussian denoising",
+        "image": "assets/tools/restormer/gaussian-image-denoising-grayscale.png",
+        "position": "center center"
+      },
+      {
+        "label": "Degraded sample 1",
         "image": "assets/tools/restormer/paper-demo-1.jpg",
         "position": "center center"
       },
       {
-        "label": "Second demo sample",
+        "label": "Degraded sample 2",
         "image": "assets/tools/restormer/paper-demo-2.jpg",
         "position": "center center"
       }
@@ -3581,7 +3090,7 @@ export const tools: Tool[] = [
       "prompt": "task: Motion_Deblurring",
       "runLabel": "Run restoration",
       "expectedOutput": "A restored image saved to the result directory.",
-      "image": "assets/tools/restormer/paper-demo-1.jpg"
+      "image": "assets/tools/restormer/image-deraining.png"
     },
     "parameterNotes": [
       {
@@ -3647,15 +3156,57 @@ export const tools: Tool[] = [
         "url": "https://github.com/Li-Chongyi/Zero-DCE"
       },
       {
+        "label": "Project Page",
+        "url": "https://li-chongyi.github.io/Proj_Zero-DCE.html"
+      },
+      {
         "label": "arXiv",
         "url": "https://arxiv.org/abs/2001.06826"
+      },
+      {
+        "label": "Video: Real Low-light Enhancement",
+        "url": "https://www.youtube.com/embed/NO7Evfra-Tk"
+      },
+      {
+        "label": "Video: Self-training Enhancement",
+        "url": "https://www.youtube.com/embed/Z-cRayugi6g"
       }
     ],
-    "heroImage": "assets/tools/zero-dce/paper-demo-1.png",
+    "heroImage": "assets/tools/zero-dce/results.png",
     "demos": [
       {
-        "label": "Paper result figure",
-        "image": "assets/tools/zero-dce/paper-demo-1.png",
+        "label": "Visual comparisons",
+        "image": "assets/tools/zero-dce/results.png",
+        "position": "center center"
+      },
+      {
+        "label": "Pipeline",
+        "image": "assets/tools/zero-dce/framework.png",
+        "position": "center center"
+      },
+      {
+        "label": "Face detection results",
+        "image": "assets/tools/zero-dce/face.png",
+        "position": "center center"
+      },
+      {
+        "label": "Loss ablation",
+        "image": "assets/tools/zero-dce/loss.png",
+        "position": "center center"
+      },
+      {
+        "label": "Parameter settings",
+        "image": "assets/tools/zero-dce/parameter.png",
+        "position": "center center"
+      },
+      {
+        "label": "Training data impact",
+        "image": "assets/tools/zero-dce/training.png",
+        "position": "center center"
+      },
+      {
+        "label": "Three-channel adjustment",
+        "image": "assets/tools/zero-dce/channel.png",
         "position": "center center"
       }
     ],
@@ -3667,7 +3218,7 @@ export const tools: Tool[] = [
       "prompt": "default enhancement pipeline",
       "runLabel": "Run enhancement",
       "expectedOutput": "Enhanced image with improved brightness and contrast.",
-      "image": "assets/tools/zero-dce/paper-demo-1.png"
+      "image": "assets/tools/zero-dce/results.png"
     },
     "parameterNotes": [
       {
@@ -3726,16 +3277,16 @@ export const tools: Tool[] = [
         "url": "https://github.com/protectai/rebuff"
       }
     ],
-    "heroImage": "assets/tools/rebuff/paper-demo-1.png",
+    "heroImage": "assets/tools/rebuff/logo.png",
     "demos": [
       {
-        "label": "Project image 1",
-        "image": "assets/tools/rebuff/paper-demo-1.png",
+        "label": "Rebuff Logo",
+        "image": "assets/tools/rebuff/logo.png",
         "position": "center center"
       },
       {
-        "label": "Project image 2",
-        "image": "assets/tools/rebuff/paper-demo-2.png",
+        "label": "Rebuff mascot",
+        "image": "assets/tools/rebuff/mascot.png",
         "position": "center center"
       }
     ],
@@ -3747,7 +3298,7 @@ export const tools: Tool[] = [
       "prompt": "policy: block_high_risk",
       "runLabel": "Run guardrail",
       "expectedOutput": "Risk score and allow-or-block decision JSON.",
-      "image": "assets/tools/rebuff/paper-demo-1.png"
+      "image": "assets/tools/rebuff/logo.png"
     },
     "parameterNotes": [
       {
@@ -3791,6 +3342,54 @@ export const tools: Tool[] = [
     "license": "Apache-2.0",
     "owner": "protectai",
     "version": "main"
+  },
+  {
+    "slug": "tool-entry-template",
+    "title": "Tool Entry Template",
+    "category": "Perception and Grounding",
+    "task": "Perception",
+    "summary": "Template for visual recognition, localization, scene grounding, and perception-facing tool entries.",
+    "input": "Images / text / state",
+    "output": "Grounding result",
+    "runtime": "Template",
+    "status": "Draft",
+    "paperLinks": []
+  },
+  {
+    "slug": "paper-backed-tool-template",
+    "title": "Paper-backed Tool Template",
+    "category": "Cognition and State Modeling",
+    "task": "State",
+    "summary": "Template for tools derived from papers, with space for method diagrams, citations, artifacts, and implementation notes.",
+    "input": "Paper / method notes",
+    "output": "State model artifact",
+    "runtime": "Template",
+    "status": "Draft",
+    "paperLinks": []
+  },
+  {
+    "slug": "api-tool-template",
+    "title": "Code Tool Template",
+    "category": "Reasoning and Planning",
+    "task": "Planning",
+    "summary": "Template for tools with local entry paths, parameters, response schema, examples, and integration notes.",
+    "input": "Relative path / request JSON",
+    "output": "Plan / response schema",
+    "runtime": "Code template",
+    "status": "Draft",
+    "paperLinks": []
+  },
+  {
+    "slug": "execution-tool-template",
+    "title": "Execution Tool Template",
+    "category": "Execution and Control",
+    "task": "Control",
+    "summary": "Template for policies, controllers, runtime wrappers, rollouts, videos, traces, and benchmark artifacts.",
+    "input": "State / action request",
+    "output": "Action trace",
+    "runtime": "Runtime template",
+    "status": "Draft",
+    "paperLinks": []
   }
 ];
 
