@@ -116,6 +116,7 @@ const executionControlTools: Tool[] = [
         "url": "https://arxiv.org/abs/1806.08756"
       }
     ],
+    "heroImage": "assets/tools/dense-object-nets/don-figure1.png",
     "demos": [
       {
         "label": "Dense Object Nets overview",
@@ -198,6 +199,7 @@ const executionControlTools: Tool[] = [
         "url": "https://www.arminhornung.de/Research/pub/hornung13auro.pdf"
       }
     ],
+    "heroImage": "assets/tools/octomap/freiburg-079.png",
     "demos": [
       {
         "label": "Indoor 3D occupancy map",
@@ -330,6 +332,7 @@ const executionControlTools: Tool[] = [
         "url": "https://github.com/ros-navigation/navigation2"
       }
     ],
+    "heroImage": "assets/tools/nav2/map-rviz.png",
     "demos": [
       {
         "label": "Map in RViz",
@@ -410,6 +413,7 @@ const executionControlTools: Tool[] = [
         "url": "https://stack-of-tasks.github.io/pinocchio/"
       }
     ],
+    "heroImage": "assets/tools/pinocchio/pinocchio-logo.png",
     "demos": [
       {
         "label": "Pinocchio project identity",
@@ -485,6 +489,7 @@ const executionControlTools: Tool[] = [
         "url": "https://arxiv.org/abs/2105.04830"
       }
     ],
+    "heroImage": "assets/tools/ruckig/example-profile.png",
     "demos": [
       {
         "label": "Trajectory profile",
@@ -556,6 +561,7 @@ const executionControlTools: Tool[] = [
         "url": "https://github.com/ompl/ompl"
       }
     ],
+    "heroImage": "assets/tools/ompl/r2-path.jpg",
     "demos": [
       {
         "label": "Rigid-body planning example",
