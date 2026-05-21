@@ -1,20 +1,34 @@
 import type { Tool } from "@/data/tools";
 
 export function categoryShortLabel(category: Tool["category"], task?: string) {
+  const normalizedTask = task?.toLowerCase() || "";
+
   if (category === "Perception and Grounding") {
-    if (task?.toLowerCase().includes("grasp")) return "Grasping";
-    if (task?.toLowerCase().includes("depth")) return "Depth";
-    if (task?.toLowerCase().includes("segment")) return "Segmentation";
-    if (task?.toLowerCase().includes("video")) return "VOS";
+    if (normalizedTask.includes("depth")) return "Depth";
+    if (normalizedTask.includes("segment")) return "Segmentation";
+    if (normalizedTask.includes("video")) return "VOS";
+    if (normalizedTask.includes("spatial")) return "Spatial Grounding";
     return "Grounding";
   }
   if (category === "Cognition and State Modeling") {
-    if (task?.toLowerCase().includes("odometry")) return "Odometry";
-    if (task?.toLowerCase().includes("mapping")) return "Mapping";
-    if (task?.toLowerCase().includes("reconstruction")) return "3D Reconstruction";
+    if (normalizedTask.includes("odometry")) return "Odometry";
+    if (normalizedTask.includes("mapping")) return "Mapping";
+    if (normalizedTask.includes("reconstruction")) return "3D Reconstruction";
+    if (normalizedTask.includes("memory")) return "Memory";
+    if (normalizedTask.includes("scene graph")) return "Scene Graph";
     return "State Modeling";
   }
-  if (category === "Reasoning and Planning") return "Planning";
+  if (category === "Reasoning and Planning") {
+    if (normalizedTask.includes("motion")) return "Motion Planning";
+    if (normalizedTask.includes("verification") || normalizedTask.includes("validation")) return "Verification";
+    if (normalizedTask.includes("reasoning")) return "Reasoning";
+    return "Planning";
+  }
+  if (normalizedTask.includes("grasp")) return "Grasping";
+  if (normalizedTask.includes("trajectory")) return "Trajectory";
+  if (normalizedTask.includes("monitor")) return "Monitoring";
+  if (normalizedTask.includes("tracking")) return "Tracking";
+  if (normalizedTask.includes("navigation")) return "Navigation";
   return "Control";
 }
 

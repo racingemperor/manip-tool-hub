@@ -28,22 +28,22 @@ export const leaderboardCategories: LeaderboardCategory[] = [
   {
     "name": "Perception and Grounding",
     "primary": "Task-specific perception metric",
-    "note": "Detection, depth, segmentation, video masks, and grasp perception are ranked only within their comparable task scope."
+    "note": "Detection, depth, segmentation, video masks, and spatial grounding are ranked only within their comparable task scope."
   },
   {
     "name": "Cognition and State Modeling",
-    "primary": "State quality / reconstruction / trajectory metric",
-    "note": "Spatial state tools use accuracy, map quality, reconstruction quality, and robustness as primary evidence."
+    "primary": "State quality / reconstruction / memory metric",
+    "note": "State tools use map quality, reconstruction quality, trajectory accuracy, memory retrieval, and relation modeling as primary evidence."
   },
   {
     "name": "Reasoning and Planning",
     "primary": "Task success / plan quality",
-    "note": "Ready for planning tools once real entries replace the draft template."
+    "note": "Reasoning tools are compared by task success, plan quality, safety validation, and action-selection evidence."
   },
   {
     "name": "Execution and Control",
-    "primary": "Success rate / rollout quality",
-    "note": "Ready for controllers and execution policies once real entries replace the draft template."
+    "primary": "Success rate / control quality",
+    "note": "Execution tools are compared by grasp success, trajectory feasibility, control stability, runtime, and monitoring quality."
   }
 ];
 
@@ -117,7 +117,7 @@ export const leaderboardRows: LeaderboardRow[] = [
   {
     "slug": "anygrasp",
     "name": "AnyGrasp",
-    "category": "Perception and Grounding",
+    "category": "Execution and Control",
     "task": "6-DoF grasp perception",
     "dataset": "Real bin-picking test with 300+ unseen objects",
     "metric": "Attempt-centric success 93.3%; object-centric completion 99.8%",
@@ -249,7 +249,7 @@ export const leaderboardRows: LeaderboardRow[] = [
   {
     "slug": "physvlm_avr",
     "name": "PhysVLM-AVR",
-    "category": "Cognition and State Modeling",
+    "category": "Reasoning and Planning",
     "task": "Active visual reasoning",
     "dataset": "CLEVR-AVR and RoboVQA",
     "metric": "CLEVR-AVR accuracy 84.2%; RoboVQA accuracy 78.0%",
@@ -262,7 +262,7 @@ export const leaderboardRows: LeaderboardRow[] = [
       "Demo",
       "JSON"
     ],
-    "rankOrder": 5,
+    "rankOrder": 1,
     "completeness": 4,
     "speedRank": 5,
     "sizeRank": 3,
@@ -271,7 +271,7 @@ export const leaderboardRows: LeaderboardRow[] = [
   {
     "slug": "virf",
     "name": "VIRF",
-    "category": "Cognition and State Modeling",
+    "category": "Reasoning and Planning",
     "task": "Safety-verified task reasoning",
     "dataset": "SafeAgentBench",
     "metric": "Harmful action rate 0.0%; goal completion rate 77.3%; average correction iterations 1.1",
@@ -284,7 +284,7 @@ export const leaderboardRows: LeaderboardRow[] = [
       "Rules",
       "JSON"
     ],
-    "rankOrder": 6,
+    "rankOrder": 2,
     "completeness": 4,
     "speedRank": 6,
     "sizeRank": 6,

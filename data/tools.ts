@@ -96,7 +96,7 @@ const executionControlTools: Tool[] = [
   {
     "slug": "dense-object-nets",
     "title": "Dense Object Nets",
-    "category": "Execution and Control",
+    "category": "Perception and Grounding",
     "task": "Dense visual correspondence for manipulation",
     "summary": "Dense Object Nets learn pixel-level object descriptors that let a robot identify corresponding points across views and use them as manipulation targets.",
     "input": "RGB images + query pixels or object views",
@@ -175,7 +175,7 @@ const executionControlTools: Tool[] = [
   {
     "slug": "octomap",
     "title": "OctoMap",
-    "category": "Execution and Control",
+    "category": "Cognition and State Modeling",
     "task": "3D occupancy mapping",
     "summary": "OctoMap is a probabilistic 3D occupancy mapping framework based on octrees, commonly used for collision checking, navigation, and planning around observed space.",
     "input": "Point clouds or range measurements",
@@ -248,7 +248,7 @@ const executionControlTools: Tool[] = [
   {
     "slug": "actpermoma",
     "title": "ActPerMoMa",
-    "category": "Execution and Control",
+    "category": "Reasoning and Planning",
     "task": "Active perception for mobile manipulation",
     "summary": "ActPerMoMa chooses informative base and camera motions so a mobile manipulator can improve object perception before acting.",
     "input": "Scene belief + robot state + manipulation target",
@@ -542,7 +542,7 @@ const executionControlTools: Tool[] = [
   {
     "slug": "ompl",
     "title": "OMPL",
-    "category": "Execution and Control",
+    "category": "Reasoning and Planning",
     "task": "Motion planning",
     "summary": "The Open Motion Planning Library provides sampling-based motion planners for robots, vehicles, and high-dimensional configuration spaces.",
     "input": "State space, validity checker, start and goal states",
@@ -888,7 +888,7 @@ export const tools: Tool[] = [
   {
     "slug": "anygrasp",
     "title": "AnyGrasp",
-    "category": "Perception and Grounding",
+    "category": "Execution and Control",
     "task": "6-DoF grasp perception",
     "summary": "AnyGrasp is a robust grasp perception tool for predicting and tracking 6-DoF robotic grasps from RGB-D observations and point clouds.",
     "input": "RGB-D image / point cloud",
@@ -1934,7 +1934,7 @@ export const tools: Tool[] = [
   {
     "slug": "lingo_space",
     "title": "LINGO-Space",
-    "category": "Cognition and State Modeling",
+    "category": "Perception and Grounding",
     "task": "Language-conditioned spatial grounding",
     "summary": "LINGO-Space incrementally grounds relational language into a probabilistic spatial distribution, letting a robot localize placement targets from instructions such as between, left of, or near.",
     "input": "RGB image + spatial instruction",
@@ -2066,7 +2066,7 @@ export const tools: Tool[] = [
   {
     "slug": "physvlm_avr",
     "title": "PhysVLM-AVR",
-    "category": "Cognition and State Modeling",
+    "category": "Reasoning and Planning",
     "task": "Active visual reasoning",
     "summary": "PhysVLM-AVR is a multimodal reasoning model for partially observable environments that plans actions, integrates observations over time, and answers questions about physical scenes.",
     "input": "Scene image(s) + question or interaction state",
@@ -2335,7 +2335,7 @@ export const tools: Tool[] = [
   {
     "slug": "scan_materialize_simulate",
     "title": "Scan, Materialize, Simulate",
-    "category": "Cognition and State Modeling",
+    "category": "Reasoning and Planning",
     "task": "Physically grounded scene materialization",
     "summary": "Scan, Materialize, Simulate turns RGB-D observations into a reconstructed scene, infers geometry and material properties, and runs Genesis-based simulation to optimize physically grounded robot actions.",
     "input": "RGB-D frames or single scene image + experiment config",
@@ -2453,7 +2453,7 @@ export const tools: Tool[] = [
   {
     "slug": "virf",
     "title": "VIRF",
-    "category": "Cognition and State Modeling",
+    "category": "Reasoning and Planning",
     "task": "Safety-verified task reasoning",
     "summary": "VIRF combines scene knowledge graphs, ontology-based safety rules, and iterative plan verification so embodied agents can generate safer task plans in household environments.",
     "input": "User task + scene knowledge base",

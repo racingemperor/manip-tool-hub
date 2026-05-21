@@ -4,20 +4,20 @@ import { realTools, toolCategories, tools } from "@/data/tools";
 
 const categoryCopy = {
   "Perception and Grounding": {
-    text: "Detection, segmentation, depth, masks, and grasp perception.",
-    chips: ["YOLO-World", "AnyGrasp"]
+    text: "Detection, segmentation, depth, spatial localization, and language-vision grounding.",
+    chips: ["YOLO-World", "LINGO-Space"]
   },
   "Cognition and State Modeling": {
-    text: "Scene graphs, odometry, RGB mapping, and 3D reconstruction.",
-    chips: ["FAST-LIVO2", "DUSt3R"]
+    text: "Scene graphs, odometry, mapping, memory, relations, and internal state.",
+    chips: ["Hydra", "FAST-LIVO2"]
   },
   "Reasoning and Planning": {
-    text: "Planning and long-horizon reasoning templates.",
-    chips: ["Planning"]
+    text: "Goal reasoning, motion planning, action selection, verification, and replanning.",
+    chips: ["OMPL", "VIRF"]
   },
   "Execution and Control": {
-    text: "Control and manipulation execution templates.",
-    chips: ["Control"]
+    text: "Grasp planning, navigation control, trajectory generation, monitoring, and actuation.",
+    chips: ["AnyGrasp", "Ruckig"]
   }
 } as const;
 
