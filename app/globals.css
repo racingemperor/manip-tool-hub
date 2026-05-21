@@ -1173,9 +1173,9 @@ tr:last-child td {
 
 .tool-card p {
   color: var(--muted);
-  font-size: 11.5px;
-  line-height: 1.3;
-  min-height: 16px;
+  font-size: 11px;
+  line-height: 1.22;
+  min-height: 14px;
   display: -webkit-box;
   overflow: hidden;
   -webkit-box-orient: vertical;
@@ -1320,9 +1320,8 @@ tr:last-child td {
 .tool-card .meta-row {
   gap: 6px;
   margin-top: 6px;
-  min-height: 22px;
-  max-height: 48px;
-  overflow: hidden;
+  min-height: 0;
+  max-height: 40px;
 }
 
 .tool-card .badge {
@@ -1356,10 +1355,6 @@ tr:last-child td {
 .tool-card .card-title .badge {
   flex: 0 0 auto;
   max-width: 46%;
-}
-
-.tool-card .meta-row {
-  display: none;
 }
 
 .tool-pagination {
@@ -1481,8 +1476,8 @@ tr:last-child td {
   }
 
   .tool-card p {
-    font-size: 11.5px;
-    line-height: 1.32;
+    font-size: 11px;
+    line-height: 1.24;
   }
 
   .tool-meta strong {
@@ -3308,8 +3303,8 @@ tr:last-child td {
   }
 
   .tool-card p {
-    font-size: 11.5px;
-    min-height: 15px;
+    font-size: 11px;
+    min-height: 14px;
   }
 
   .tool-card .card-title {
@@ -3323,10 +3318,6 @@ tr:last-child td {
   .tool-card .badge {
     font-size: 11px;
     min-height: 20px;
-  }
-
-  .tool-card .meta-row {
-    display: none;
   }
 
   .tool-open-row {

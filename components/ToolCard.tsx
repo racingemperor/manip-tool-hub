@@ -9,6 +9,7 @@ export function ToolCard({ tool }: { tool: Tool }) {
     ? `linear-gradient(135deg, rgba(16, 24, 40, 0.38), rgba(53, 98, 255, 0.18)), url('${assetPath(tool.heroImage)}')`
     : undefined;
   const backgroundPosition = toolHeroPosition(tool);
+  const cardSummary = tool.shortExplanation || tool.summary;
 
   return (
     <article className="card tool-card">
@@ -24,7 +25,7 @@ export function ToolCard({ tool }: { tool: Tool }) {
             <span>{tool.title}</span>
             <span className="badge blue">{categoryShortLabel(tool.category, tool.task)}</span>
           </div>
-          <p>{tool.summary}</p>
+          <p>{cardSummary}</p>
           <div className="meta-row">
             <span className="badge">{venueLabel(tool)}</span>
             <span className="badge green">{tool.status}</span>
