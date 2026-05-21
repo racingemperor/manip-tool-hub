@@ -2226,6 +2226,34 @@ export const tools: Tool[] = [
         "url": "https://github.com/RepresentationMaps/remap_plugin_query#readme"
       }
     ],
+    "heroImage": "assets/tools/reMap/hospital-corridor.png",
+    "demos": [
+      {
+        "label": "Semantic map generation",
+        "image": "assets/tools/reMap/semantic-map-1.png",
+        "position": "center center"
+      },
+      {
+        "label": "Semantic map detail",
+        "image": "assets/tools/reMap/semantic-map-2.png",
+        "position": "center center"
+      },
+      {
+        "label": "Semantic map variant",
+        "image": "assets/tools/reMap/semantic-map-3.png",
+        "position": "center center"
+      },
+      {
+        "label": "Semantic map variant 2",
+        "image": "assets/tools/reMap/semantic-map-4.png",
+        "position": "center center"
+      },
+      {
+        "label": "Query result",
+        "image": "assets/tools/reMap/query-results-right.png",
+        "position": "center center"
+      }
+    ],
     "apiExample": "# Relative-path local entry for the reMap deployment\nsource /opt/ros/humble/setup.bash\nsource ~/anaconda3/etc/profile.d/conda.sh\nconda activate vdb_env\nsource /home/lyd/remap_linux_build/ros2_ws/install/setup.bash\n\nros2 service call /remap/query remap_msgs/srv/Query \"{\n  patterns: ['tiago_pro isIn ?room'],\n  vars: [],\n  models: [],\n  dynamic: false,\n  duration: {sec: 0, nanosec: 0},\n  frequency: {sec: 1, nanosec: 0},\n  publish_tf: true,\n  id: 'presence_query'\n}\"",
     "shortExplanation": "Run reMap when a robot needs a persistent semantic scene model that can answer symbolic spatial questions over mapped entities.",
     "presetExample": {
@@ -2233,7 +2261,8 @@ export const tools: Tool[] = [
       "input": "tools/reMap/ros2_ws demo scene",
       "prompt": "patterns: ['tiago_pro isIn ?room']",
       "runLabel": "Call /remap/query",
-      "expectedOutput": "A successful query response such as `[{\"room\":\"kitchen\"}]` plus a published result topic and optional TF frame."
+      "expectedOutput": "A successful query response such as `[{\"room\":\"kitchen\"}]` plus a published result topic and optional TF frame.",
+      "image": "assets/tools/reMap/query-results-right.png"
     },
     "parameterNotes": [
       {
@@ -2442,7 +2471,25 @@ export const tools: Tool[] = [
       },
       {
         "label": "Paper",
-        "url": "https://arxiv.org/abs/2502.09038"
+        "url": "https://arxiv.org/abs/2602.08373"
+      }
+    ],
+    "heroImage": "assets/tools/virf/chemical-mixture-hazard.png",
+    "demos": [
+      {
+        "label": "Chemical mixture hazard",
+        "image": "assets/tools/virf/chemical-mixture-hazard.png",
+        "position": "center center"
+      },
+      {
+        "label": "Child safety hazard",
+        "image": "assets/tools/virf/child-safety-hazard.png",
+        "position": "center center"
+      },
+      {
+        "label": "Hot oil splatter hazard",
+        "image": "assets/tools/virf/hot-oil-splatter-hazard.png",
+        "position": "center center"
       }
     ],
     "apiExample": "# Relative-path local entry for the VIRF deployment\ncd tools/virf\npython main.py\n\n# The bundled demo reads tools/virf/examples/test_input.json and writes tools/virf/results/output.json.",
@@ -2452,7 +2499,8 @@ export const tools: Tool[] = [
       "input": "tools/virf/examples/test_input.json",
       "prompt": "Cusr: Heat the soup in the pot",
       "runLabel": "Run VIRF",
-      "expectedOutput": "A SAFE or unsafe status plus a revised multi-step plan that respects the rules encoded in the knowledge base."
+      "expectedOutput": "A SAFE or unsafe status plus a revised multi-step plan that respects the rules encoded in the knowledge base.",
+      "image": "assets/tools/virf/plan-loop-c.png"
     },
     "parameterNotes": [
       {

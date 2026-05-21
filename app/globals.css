@@ -1098,7 +1098,7 @@ tr:last-child td {
   cursor: pointer;
   position: relative;
   display: grid;
-  grid-template-rows: 1fr auto;
+  grid-template-rows: minmax(0, 1fr) auto;
   color: inherit;
   height: 240px;
   transition: border-color 0.16s ease, box-shadow 0.16s ease, transform 0.16s ease;
@@ -1110,16 +1110,20 @@ tr:last-child td {
 }
 
 .tool-card-main {
-  display: block;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
   color: inherit;
   min-height: 0;
+  overflow: hidden;
 }
 
 .tool-card-body {
-  height: 112px;
-  padding: 10px;
+  min-height: 0;
+  padding: 8px 10px 6px;
   display: grid;
-  grid-template-rows: auto auto auto 1fr;
+  grid-template-rows: auto auto auto;
+  align-content: start;
+  overflow: hidden;
 }
 
 .tool-thumb {
@@ -1169,13 +1173,13 @@ tr:last-child td {
 
 .tool-card p {
   color: var(--muted);
-  font-size: 12px;
-  line-height: 1.35;
-  min-height: 32px;
+  font-size: 11.5px;
+  line-height: 1.3;
+  min-height: 16px;
   display: -webkit-box;
   overflow: hidden;
   -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2;
+  -webkit-line-clamp: 1;
 }
 
 .tool-open-row {
@@ -1184,12 +1188,12 @@ tr:last-child td {
   align-items: center;
   justify-content: space-between;
   gap: 8px;
-  padding: 0 10px 8px;
+  padding: 0 8px 6px;
 }
 
 .tool-open-link {
   color: var(--accent);
-  font-size: 12px;
+  font-size: 11.5px;
   font-weight: 800;
   flex: 0 0 auto;
 }
@@ -1315,13 +1319,15 @@ tr:last-child td {
 
 .tool-card .meta-row {
   gap: 6px;
-  margin-top: 9px;
-  min-height: 24px;
-  max-height: 54px;
+  margin-top: 6px;
+  min-height: 22px;
+  max-height: 48px;
   overflow: hidden;
 }
 
 .tool-card .badge {
+  padding: 1px 6px;
+  font-size: 11px;
   max-width: 100%;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -1330,25 +1336,30 @@ tr:last-child td {
 
 .tool-card .card-title {
   align-items: start;
-  gap: 8px;
-  margin-bottom: 7px;
-  justify-content: flex-start;
-  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 5px;
+  justify-content: space-between;
+  flex-wrap: nowrap;
+  font-size: 14px;
 }
 
 .tool-card .card-title > span:first-child {
   min-width: 0;
-  flex: 1 1 200px;
+  flex: 1 1 auto;
   display: -webkit-box;
   overflow: hidden;
   -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2;
+  -webkit-line-clamp: 1;
   line-height: 1.2;
 }
 
 .tool-card .card-title .badge {
   flex: 0 0 auto;
-  max-width: 100%;
+  max-width: 46%;
+}
+
+.tool-card .meta-row {
+  display: none;
 }
 
 .tool-pagination {
@@ -1466,7 +1477,7 @@ tr:last-child td {
   }
 
   .tool-card-body {
-    height: calc(100% - 84px);
+    min-height: 0;
   }
 
   .tool-card p {
@@ -3293,17 +3304,20 @@ tr:last-child td {
   }
 
   .tool-card-body {
-    height: 108px;
     padding: 8px;
   }
 
   .tool-card p {
     font-size: 11.5px;
-    min-height: 30px;
+    min-height: 15px;
   }
 
   .tool-card .card-title {
-    font-size: 14px;
+    font-size: 13px;
+  }
+
+  .tool-card .card-title > span:first-child {
+    -webkit-line-clamp: 1;
   }
 
   .tool-card .badge {
@@ -3644,7 +3658,15 @@ tr:last-child td {
   }
 
   .tool-card-body {
-    height: 106px;
+    min-height: 0;
+  }
+
+  .tool-card .card-title {
+    font-size: 13px;
+  }
+
+  .tool-card .card-title > span:first-child {
+    -webkit-line-clamp: 1;
   }
 
   .tool-open-row {
