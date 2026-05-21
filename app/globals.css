@@ -1317,11 +1317,14 @@ tr:last-child td {
   height: 16px;
 }
 
-.tool-card .meta-row {
+.tool-card-tags {
+  display: flex;
+  flex-wrap: wrap;
   gap: 6px;
   margin-top: 6px;
   min-height: 0;
   max-height: 40px;
+  overflow: hidden;
 }
 
 .tool-card .badge {

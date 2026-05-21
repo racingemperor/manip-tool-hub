@@ -26,7 +26,7 @@ export function ToolCard({ tool }: { tool: Tool }) {
             <span className="badge blue">{categoryShortLabel(tool.category, tool.task)}</span>
           </div>
           <p>{cardSummary}</p>
-          <div className="meta-row">
+          <div className="tool-card-tags">
             <span className="badge">{venueLabel(tool)}</span>
             <span className="badge green">{tool.status}</span>
           </div>
