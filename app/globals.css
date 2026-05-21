@@ -1119,7 +1119,7 @@ tr:last-child td {
 
 .tool-card-body {
   min-height: 0;
-  padding: 8px 10px 6px;
+  padding: 8px 12px 6px;
   display: grid;
   grid-template-rows: auto auto auto;
   align-content: start;
@@ -1320,16 +1320,16 @@ tr:last-child td {
 .tool-card-tags {
   display: flex;
   flex-wrap: wrap;
-  gap: 6px;
-  margin-top: 6px;
+  gap: 5px;
+  margin-top: 7px;
   min-height: 0;
-  max-height: 40px;
+  max-height: 38px;
   overflow: hidden;
 }
 
 .tool-card .badge {
-  padding: 1px 6px;
-  font-size: 11px;
+  padding: 1px 7px;
+  font-size: 10.5px;
   max-width: 100%;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -1342,7 +1342,7 @@ tr:last-child td {
   margin-bottom: 5px;
   justify-content: space-between;
   flex-wrap: nowrap;
-  font-size: 14px;
+  font-size: 13.5px;
 }
 
 .tool-card .card-title > span:first-child {
@@ -1356,8 +1356,13 @@ tr:last-child td {
 }
 
 .tool-card .card-title .badge {
-  flex: 0 0 auto;
-  max-width: 46%;
+  flex: 0 1 auto;
+  max-width: 38%;
+  min-width: 0;
+}
+
+.tool-card-tags .badge {
+  max-width: calc(100% - 2px);
 }
 
 .tool-pagination {
@@ -3302,7 +3307,7 @@ tr:last-child td {
   }
 
   .tool-card-body {
-    padding: 8px;
+    padding: 8px 12px 6px;
   }
 
   .tool-card p {
@@ -3319,7 +3324,7 @@ tr:last-child td {
   }
 
   .tool-card .badge {
-    font-size: 11px;
+    font-size: 10.5px;
     min-height: 20px;
   }
 
