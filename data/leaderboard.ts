@@ -1,4 +1,4 @@
-import type { ToolCategory } from "./tools";
+import { realTools, type Tool, type ToolBenchmarkRow, type ToolCategory } from "./tools";
 
 export type LeaderboardCategory = {
   name: ToolCategory;
@@ -47,247 +47,158 @@ export const leaderboardCategories: LeaderboardCategory[] = [
   }
 ];
 
-export const leaderboardRows: LeaderboardRow[] = [
-  {
-    "slug": "yolo-world",
-    "name": "YOLO-World",
-    "category": "Perception and Grounding",
-    "task": "Open-vocabulary detection",
-    "dataset": "LVIS minival zero-shot, 1,203 categories",
-    "metric": "Fixed AP 35.4; AP_r 27.6 / AP_c 34.1 / AP_f 38.0",
-    "scoreLabel": "35.4 AP",
-    "speed": "52.0 FPS on one NVIDIA V100 without TensorRT",
-    "size": "YOLOv8-L: 48M re-parameterized params; 110M original",
-    "artifacts": [
-      "Paper",
-      "Demo",
-      "ONNX",
-      "Weights"
-    ],
-    "rankOrder": 1,
-    "completeness": 4,
-    "speedRank": 1,
-    "sizeRank": 2,
-    "href": "/tools/yolo-world"
-  },
-  {
-    "slug": "fastsam",
-    "name": "FastSAM",
-    "category": "Perception and Grounding",
-    "task": "Promptable segmentation",
-    "dataset": "COCO object proposals + LVIS v1 zero-shot proposals",
-    "metric": "COCO box AR@1000 63.7; LVIS bbox AR@1000 57.1",
-    "scoreLabel": "63.7 AR@1000",
-    "speed": "40 ms on RTX 3090; 50x faster than SAM-H 32x32 prompt setting",
-    "size": "68M parameters",
-    "artifacts": [
-      "Paper",
-      "Demo",
-      "Gradio",
-      "Replicate"
-    ],
-    "rankOrder": 4,
-    "completeness": 4,
-    "speedRank": 2,
-    "sizeRank": 3,
-    "href": "/tools/fastsam"
-  },
-  {
-    "slug": "cutie",
-    "name": "Cutie",
-    "category": "Perception and Grounding",
-    "task": "Video object segmentation",
-    "dataset": "MOSE val + DAVIS-17 + YouTubeVOS-2019",
-    "metric": "MOSE J&F 68.3; DAVIS-17 val J&F 88.8; YT-VOS G 86.5",
-    "scoreLabel": "68.3 J&F",
-    "speed": "36.4 FPS on V100 for Cutie-base with MOSE training",
-    "size": "Cutie-small reports 45.5 FPS; base reports 36.4 FPS",
-    "artifacts": [
-      "Paper",
-      "GUI",
-      "Demo",
-      "Masks"
-    ],
-    "rankOrder": 3,
-    "completeness": 4,
-    "speedRank": 4,
-    "sizeRank": 4,
-    "href": "/tools/cutie"
-  },
-  {
-    "slug": "anygrasp",
-    "name": "AnyGrasp",
-    "category": "Execution and Control",
-    "task": "6-DoF grasp perception",
-    "dataset": "Real bin-picking test with 300+ unseen objects",
-    "metric": "Attempt-centric success 93.3%; object-centric completion 99.8%",
-    "scoreLabel": "93.3% success",
-    "speed": "100 ms grasp prediction; <200 ms decision; 900+ MPPH single UR5 arm",
-    "size": "7-DoF grasp perception SDK; trained with 144 real objects / 268 scenes",
-    "artifacts": [
-      "Paper",
-      "Demo",
-      "RGB-D",
-      "SDK"
-    ],
-    "rankOrder": 2,
-    "completeness": 4,
-    "speedRank": 5,
-    "sizeRank": 5,
-    "href": "/tools/anygrasp"
-  },
-  {
-    "slug": "zoedepth",
-    "name": "ZoeDepth",
-    "category": "Perception and Grounding",
-    "task": "Metric depth estimation",
-    "dataset": "NYU Depth V2 / KITTI Eigen splits",
-    "metric": "NYU ZoeD-M12-N: REL 0.075, RMSE 0.270, delta1 0.955",
-    "scoreLabel": "0.075 REL",
-    "speed": "Model-dependent PyTorch inference; official paper reports 42M-345M params by backbone",
-    "size": "BEiT-L ZoeDepth 345M params; Swin2-T variant 42M params",
-    "artifacts": [
-      "Paper",
-      "Torch Hub",
-      "Gradio",
-      "Configs"
-    ],
-    "rankOrder": 5,
-    "completeness": 4,
-    "speedRank": 6,
-    "sizeRank": 6,
-    "href": "/tools/zoedepth"
-  },
-  {
-    "slug": "dust3r",
-    "name": "DUSt3R",
-    "category": "Cognition and State Modeling",
-    "task": "Geometric 3D reconstruction",
-    "dataset": "CO3Dv2 / RealEstate10K pose; DTU / ETH3D / T&T reconstruction",
-    "metric": "CO3Dv2 RRA@15 96.2; RealEstate10K mAA@30 67.7; DTU overall 1.741 mm",
-    "scoreLabel": "96.2 RRA@15",
-    "speed": "512px inference; multi-view alignment runtime scales with image pairs",
-    "size": "ViT-Large 512px checkpoint; trained on about 8.5M image pairs",
-    "artifacts": [
-      "Paper",
-      "Demo UI",
-      "Checkpoints",
-      "Pointmaps"
-    ],
-    "rankOrder": 2,
-    "completeness": 4,
-    "speedRank": 3,
-    "sizeRank": 4,
-    "href": "/tools/dust3r"
-  },
-  {
-    "slug": "fast-livo2",
-    "name": "FAST-LIVO2",
-    "category": "Cognition and State Modeling",
-    "task": "LiDAR-inertial-visual odometry",
-    "dataset": "Hilti'22 / Hilti'23 / NTU VIRAL / private FAST-LIVO2 sequences",
-    "metric": "Average processing 30.03 ms; AMvalley03 APE RMSE 0.68 m in sequential update",
-    "scoreLabel": "30.03 ms",
-    "speed": "Average 17.13 ms LiDAR + 12.90 ms image per frame; ARM average 78.44 ms",
-    "size": "C++ / ROS package; runs real-time at 10 Hz",
-    "artifacts": [
-      "Paper",
-      "ROS",
-      "Configs",
-      "Trajectories"
-    ],
-    "rankOrder": 1,
-    "completeness": 4,
-    "speedRank": 1,
-    "sizeRank": 1,
-    "href": "/tools/fast-livo2"
-  },
-  {
-    "slug": "r3live",
-    "name": "R3LIVE",
-    "category": "Cognition and State Modeling",
-    "task": "RGB-colored LIV mapping",
-    "dataset": "HKUST campus loop + Belcher Bay RTK sequences",
-    "metric": "Campus drift: 0.093-0.164 m over 1,191-1,524 m trajectories",
-    "scoreLabel": "0.093 m drift",
-    "speed": "PC VIO 7.01 ms at 320x256 / 0.10 m; LIO 18.40 ms per frame",
-    "size": "C++ / ROS; onboard VIO 15.00 ms at 320x256 / 0.10 m",
-    "artifacts": [
-      "Paper",
-      "ROS",
-      "Dataset",
-      "Meshes"
-    ],
-    "rankOrder": 3,
-    "completeness": 4,
-    "speedRank": 2,
-    "sizeRank": 2,
-    "href": "/tools/r3live"
-  },
-  {
-    "slug": "hydra",
-    "name": "Hydra",
-    "category": "Cognition and State Modeling",
-    "task": "3D scene graph construction",
-    "dataset": "uHumans2 Apartment / Office / Subway + SidPac floors",
-    "metric": "Office timing: objects 24.1+/-12.8 ms, places 8.1+/-1.3 ms, rooms 19.0+/-12.3 ms",
-    "scoreLabel": "24.1 ms obj",
-    "speed": "Xavier NX Office: objects 75+/-35 ms, places 33+/-6 ms, rooms 55+/-41 ms at 5 Hz target",
-    "size": "ROS2 / Python bindings / scene graph stack",
-    "artifacts": [
-      "Paper",
-      "ROS2",
-      "GIF",
-      "Configs"
-    ],
-    "rankOrder": 4,
-    "completeness": 4,
-    "speedRank": 4,
-    "sizeRank": 5,
-    "href": "/tools/hydra"
-  },
-  {
-    "slug": "physvlm_avr",
-    "name": "PhysVLM-AVR",
-    "category": "Reasoning and Planning",
-    "task": "Active visual reasoning",
-    "dataset": "CLEVR-AVR and RoboVQA",
-    "metric": "CLEVR-AVR accuracy 84.2%; RoboVQA accuracy 78.0%",
-    "scoreLabel": "84.2% acc",
-    "speed": "Local deployment uses an interactive FastAPI server; source paper accuracy is reported without a bundled latency table in this workspace",
-    "size": "3B multimodal model trained with AVR-152k (152k samples)",
-    "artifacts": [
-      "Paper",
-      "Repo",
-      "Demo",
-      "JSON"
-    ],
-    "rankOrder": 1,
-    "completeness": 4,
-    "speedRank": 5,
-    "sizeRank": 3,
-    "href": "/tools/physvlm_avr"
-  },
-  {
-    "slug": "virf",
-    "name": "VIRF",
-    "category": "Reasoning and Planning",
-    "task": "Safety-verified task reasoning",
-    "dataset": "SafeAgentBench",
-    "metric": "Harmful action rate 0.0%; goal completion rate 77.3%; average correction iterations 1.1",
-    "scoreLabel": "77.3% GCR",
-    "speed": "Average correction iterations 1.1; the bundled local demo does not include a source-reported wall-clock latency table",
-    "size": "Hybrid planner-verifier stack with scene KG and ontology rules",
-    "artifacts": [
-      "Paper",
-      "Repo",
-      "Rules",
-      "JSON"
-    ],
-    "rankOrder": 2,
-    "completeness": 4,
-    "speedRank": 6,
-    "sizeRank": 6,
-    "href": "/tools/virf"
-  }
-];
+type LeaderboardRankConfig = {
+  row: LeaderboardRow;
+  hasNumericBenchmark: boolean;
+  primaryScore: number;
+  speedScore: number;
+};
+
+const higherIsBetterMetricPattern = /accuracy|acc|success|completion|score|ap\b|map|ar@|recall|r@|f1|j&f|delta|psnr|ssim|throughput|fps|faster|performance|overall|precision/i;
+const lowerIsBetterMetricPattern = /rel\b|absrel|rmse|error|whdr|drift|ape|rpe|latency|runtime|time|cost|ms|microsecond|us|second|cm|m\b|mae|objective/i;
+const benchmarkValuePattern = /[-+]?\d*\.?\d+(?:e[-+]?\d+)?/gi;
+
+function numbersFrom(text: string) {
+  return [...text.matchAll(benchmarkValuePattern)].map((match) => Number(match[0])).filter(Number.isFinite);
+}
+
+function hasNumber(text?: string) {
+  return Boolean(text && benchmarkValuePattern.test(text));
+}
+
+function resetNumberPattern() {
+  benchmarkValuePattern.lastIndex = 0;
+}
+
+function benchmarkQuality(row: ToolBenchmarkRow) {
+  const text = `${row.metric} ${row.value}`;
+  resetNumberPattern();
+  const hasValue = hasNumber(row.value);
+  resetNumberPattern();
+  if (!hasValue) return -1;
+
+  let quality = 0;
+  if (higherIsBetterMetricPattern.test(text)) quality += 4;
+  if (lowerIsBetterMetricPattern.test(text)) quality += 2;
+  if (/dataset scale|coverage|demonstration count|training time|setup|annotation/i.test(text)) quality -= 3;
+  if (/baseline|reflexxes|opt_control|tap-net|pips/i.test(text)) quality -= 6;
+  if (/%|fps|ms|microsecond|us|cm|m\b|ap\b|map|ar@|r@|f1|j&f|delta|psnr|ssim|rel\b|rmse|whdr/i.test(text)) quality += 1;
+  return quality;
+}
+
+function scoreDirection(row: ToolBenchmarkRow) {
+  const text = `${row.metric} ${row.value}`;
+  if (lowerIsBetterMetricPattern.test(text) && !higherIsBetterMetricPattern.test(text)) return "asc";
+  return "desc";
+}
+
+function primaryScore(row?: ToolBenchmarkRow) {
+  if (!row) return Number.NEGATIVE_INFINITY;
+  resetNumberPattern();
+  const numbers = numbersFrom(row.value.replace(/@[0-9]+/g, ""));
+  if (!numbers.length) return Number.NEGATIVE_INFINITY;
+  return scoreDirection(row) === "asc" ? -Math.min(...numbers) : Math.max(...numbers);
+}
+
+function speedScore(tool: Tool, row?: ToolBenchmarkRow) {
+  const text = `${row?.runtime ?? ""} ${tool.benchmarkLatency ?? ""}`;
+  const fps = [...text.matchAll(/(\d*\.?\d+)\s*fps/gi)].map((match) => Number(match[1]));
+  if (fps.length) return Math.max(...fps);
+  const milliseconds = [...text.matchAll(/(\d*\.?\d+)\s*ms/gi)].map((match) => Number(match[1]));
+  if (milliseconds.length) return -Math.min(...milliseconds);
+  const microseconds = [...text.matchAll(/(\d*\.?\d+)\s*(?:us|microseconds?)/gi)].map((match) => Number(match[1]) / 1000);
+  if (microseconds.length) return -Math.min(...microseconds);
+  const seconds = [...text.matchAll(/(\d*\.?\d+)\s*s(?:\/|ec|econd|\b)/gi)].map((match) => Number(match[1]) * 1000);
+  if (seconds.length) return -Math.min(...seconds);
+  return Number.NEGATIVE_INFINITY;
+}
+
+function benchmarkRowFor(tool: Tool): ToolBenchmarkRow | undefined {
+  if (!tool.benchmarkRows?.length) return undefined;
+  return [...tool.benchmarkRows].sort((a, b) => {
+    return benchmarkQuality(b) - benchmarkQuality(a) || primaryScore(b) - primaryScore(a);
+  })[0];
+}
+
+function inferScoreLabel(row?: ToolBenchmarkRow) {
+  if (!row) return "No numeric benchmark";
+  resetNumberPattern();
+  const match = row.value.replace(/@[0-9]+/g, "").match(benchmarkValuePattern)?.[0];
+  resetNumberPattern();
+  if (!match) return "No numeric benchmark";
+  const metricToken = row.metric.match(/(accuracy|acc|success|completion|score|ap|mAP|AR@\d+|R@\d+|F1@\d+|F1|J&F|delta\d?|PSNR|SSIM|AbsRel|REL|RMSE|WHDR|drift|APE|runtime|time|FPS|ms|us)/i)?.[0];
+  return metricToken ? `${match} ${metricToken}` : match;
+}
+
+function inferArtifacts(tool: Tool, row?: ToolBenchmarkRow) {
+  const artifacts: string[] = [];
+  const links = tool.paperLinks ?? [];
+  if (links.some((link) => /paper|arxiv|pmlr|openreview|doi/i.test(link.label) || /arxiv|openreview|proceedings|paper|doi/i.test(link.url))) artifacts.push("Paper");
+  if (links.some((link) => /github|repo|code/i.test(link.label) || /github\.com/i.test(link.url))) artifacts.push("Repo");
+  if (tool.modelLinks?.length) artifacts.push("Weights");
+  if (tool.demos?.length) artifacts.push("Demo");
+  if (row) artifacts.push("Benchmark");
+  if (!artifacts.length && tool.deploymentNotes?.length) artifacts.push("Docs");
+  return [...new Set(artifacts)].slice(0, 4);
+}
+
+function buildLeaderboardRow(tool: Tool): LeaderboardRankConfig {
+  const row = benchmarkRowFor(tool);
+  const artifacts = inferArtifacts(tool, row);
+  const hasNumericBenchmark = Boolean(row && primaryScore(row) !== Number.NEGATIVE_INFINITY);
+  return {
+    hasNumericBenchmark,
+    primaryScore: primaryScore(row),
+    speedScore: speedScore(tool, row),
+    row: {
+    slug: tool.slug,
+    name: tool.title,
+    category: tool.category,
+    task: tool.task,
+    dataset: row?.dataset ?? tool.benchmarkDataset ?? "No source-reported numeric benchmark",
+    metric: row ? `${row.metric}: ${row.value}` : tool.benchmarkMetric ?? "No single numeric benchmark reported.",
+    scoreLabel: inferScoreLabel(row),
+    speed: row?.runtime ?? tool.benchmarkLatency ?? "Not reported",
+    size: tool.runtime,
+    artifacts,
+    rankOrder: 99,
+    completeness: artifacts.length + (row ? 2 : 0),
+    speedRank: 99,
+    sizeRank: 99,
+    href: `/tools/${tool.slug}`
+    }
+  };
+}
+
+const categoryIndex = new Map(leaderboardCategories.map((category, index) => [category.name, index]));
+
+const rankedRows = leaderboardCategories.flatMap((category) => {
+  const rows = realTools
+    .filter((tool) => tool.category === category.name)
+    .map(buildLeaderboardRow)
+    .sort((a, b) => {
+      if (a.hasNumericBenchmark !== b.hasNumericBenchmark) return a.hasNumericBenchmark ? -1 : 1;
+      return b.primaryScore - a.primaryScore || a.row.name.localeCompare(b.row.name);
+    });
+
+  const speedRows = [...rows].sort((a, b) => {
+    if (a.speedScore !== b.speedScore) return b.speedScore - a.speedScore;
+    return b.primaryScore - a.primaryScore || a.row.name.localeCompare(b.row.name);
+  });
+  const speedRankBySlug = new Map(speedRows.map((item, index) => [item.row.slug, index + 1]));
+
+  return rows.map((item, index) => ({
+    ...item.row,
+    rankOrder: index + 1,
+    speedRank: speedRankBySlug.get(item.row.slug) ?? index + 1,
+    sizeRank: index + 1
+  }));
+});
+
+export const leaderboardRows: LeaderboardRow[] = rankedRows.sort((a, b) => {
+  return (
+    (categoryIndex.get(a.category) ?? 99) - (categoryIndex.get(b.category) ?? 99) ||
+    a.rankOrder - b.rankOrder ||
+    a.name.localeCompare(b.name)
+  );
+});
