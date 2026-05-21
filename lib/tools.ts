@@ -37,7 +37,7 @@ export function getToolResources(tool: Tool) {
     tool.paperTitle ? "Paper" : "",
     tool.demos?.length ? "Demo images" : "",
     tool.apiExample ? "API docs" : "",
-    tool.benchmarkMetric ? "Benchmark" : ""
+    tool.benchmarkRows?.length ? "Benchmark" : ""
   ].filter(Boolean);
 }
 

@@ -169,8 +169,33 @@ const executionControlTools: Tool[] = [
       "Train or load the descriptor model following the official project instructions.",
       "Use nearest-neighbor descriptor matches to recover manipulation-relevant object points."
     ],
-    "benchmarkDataset": "The paper evaluates dense correspondence and manipulation tasks with robot-collected object views.",
-    "benchmarkArtifacts": "Paper figures, descriptor visualizations, correspondence examples, and manipulation demonstrations."
+    "benchmarkRows": [
+      {
+        "dataset": "Robot-collected object correspondence, standard-SO",
+        "metric": "Image-pair match precision",
+        "value": "93% of image pairs have normalized pixel error under 13% of the image diagonal",
+        "runtime": "Descriptor correspondence evaluation",
+        "source": "Official CoRL 2018 paper, Fig. 3"
+      },
+      {
+        "dataset": "Dense Object Nets object set",
+        "metric": "Training/evaluation coverage",
+        "value": "47 objects, including 3 object classes",
+        "runtime": "Self-supervised robot data collection setup",
+        "source": "Official CoRL 2018 paper"
+      },
+      {
+        "dataset": "standard-SO descriptor model",
+        "metric": "Training time",
+        "value": "about 20 minutes",
+        "runtime": "Model training",
+        "source": "Official CoRL 2018 paper"
+      }
+    ],
+    "benchmarkDataset": "The official paper evaluates dense correspondence and manipulation with robot-collected object views, including 47 objects and 3 object classes.",
+    "benchmarkMetric": "For the standard-SO setting, the paper reports 93% of image pairs below 13% normalized pixel-distance error, with descriptor training taking about 20 minutes.",
+    "benchmarkLatency": "The paper reports approximate training time rather than a single deployment latency number.",
+    "benchmarkArtifacts": "Official CoRL 2018 paper, descriptor visualizations, correspondence examples, and manipulation demonstrations."
   },
   {
     "slug": "octomap",
@@ -242,6 +267,40 @@ const executionControlTools: Tool[] = [
       "Feed depth, LiDAR, or fused point-cloud observations into the map updater.",
       "Query the resulting map before planning motions through partially observed scenes."
     ],
+    "benchmarkRows": [
+      {
+        "dataset": "FR-079 corridor, 5 cm resolution",
+        "metric": "Accuracy / cross-validation",
+        "value": "97.27% / 96.00%",
+        "runtime": "Occupancy map evaluation",
+        "source": "Official Autonomous Robots 2013 paper, Table 1"
+      },
+      {
+        "dataset": "Freiburg campus, 10 cm resolution",
+        "metric": "Accuracy / cross-validation",
+        "value": "97.89% / 95.80%",
+        "runtime": "Occupancy map evaluation",
+        "source": "Official Autonomous Robots 2013 paper, Table 1"
+      },
+      {
+        "dataset": "New College, 10 cm resolution",
+        "metric": "Accuracy / cross-validation",
+        "value": "98.79% / 98.46%",
+        "runtime": "Occupancy map evaluation",
+        "source": "Official Autonomous Robots 2013 paper, Table 1"
+      },
+      {
+        "dataset": "Freiburg campus, 10 cm resolution",
+        "metric": "Memory footprint",
+        "value": "5162.90 MB 3D grid vs 504.76 MB max-likelihood octree; 13.82 MB lossy file",
+        "runtime": "Storage comparison",
+        "source": "Official Autonomous Robots 2013 paper, Table 2"
+      }
+    ],
+    "benchmarkDataset": "Official OctoMap evaluations include FR-079 corridor, Freiburg campus, and New College occupancy maps at 5 cm or 10 cm resolution.",
+    "benchmarkMetric": "The paper reports 97.27-98.79% accuracy across these maps, plus large memory savings versus dense 3D grids.",
+    "benchmarkLatency": "The official table focuses on occupancy accuracy and memory rather than a universal runtime figure.",
+    "benchmarkArtifacts": "Official Autonomous Robots 2013 paper, accuracy table, memory table, and example occupancy maps.",
     "license": "BSD-3-Clause",
     "owner": "OctoMap"
   },
@@ -305,6 +364,33 @@ const executionControlTools: Tool[] = [
       "Provide the robot state, scene observation, and manipulation target.",
       "Run the active perception policy before issuing final manipulation actions."
     ],
+    "benchmarkRows": [
+      {
+        "dataset": "Simple scenes, 500 episodes",
+        "metric": "Success / abort / grasp-failure rate",
+        "value": "95.4% / 1.4% / 3.2%",
+        "runtime": "dtotal 3.59+/-1.69 m; vtotal 12.67+/-5.39",
+        "source": "Official CoRL 2023 paper, Table III"
+      },
+      {
+        "dataset": "Complex scenes, 500 episodes",
+        "metric": "Success / abort / grasp-failure rate",
+        "value": "92.6% / 2.2% / 5.2%",
+        "runtime": "dtotal 4.57+/-2.51 m; vtotal 16.20+/-8.65",
+        "source": "Official CoRL 2023 paper, Table III"
+      },
+      {
+        "dataset": "Complex scenes, hard grasps, 500 episodes",
+        "metric": "Success / abort / grasp-failure rate",
+        "value": "61.8% / 29.6% / 8.6%",
+        "runtime": "dtotal 7.19+/-4.17 m; vtotal 24.81+/-13.24",
+        "source": "Official CoRL 2023 paper, Table III"
+      }
+    ],
+    "benchmarkDataset": "The official paper evaluates 500 simulated episodes per scenario across simple scenes, complex scenes, and complex hard-grasp settings.",
+    "benchmarkMetric": "ActPerMoMa reports 95.4% success on simple scenes, 92.6% on complex scenes, and 61.8% on complex hard-grasp scenes.",
+    "benchmarkLatency": "The paper reports path/view statistics such as dtotal and vtotal rather than a single wall-clock latency.",
+    "benchmarkArtifacts": "Official CoRL 2023 paper, Table III, Isaac Sim setup, and active-perception policy evaluation scripts.",
     "owner": "PEARL Robot Lab"
   },
   {
@@ -389,6 +475,10 @@ const executionControlTools: Tool[] = [
       "Configure maps, localization, planners, controllers, costmaps, and behavior trees.",
       "Use RViz and action feedback to inspect paths, costmaps, and execution status."
     ],
+    "benchmarkDataset": "Nav2 is a ROS 2 navigation framework; the official docs do not publish one canonical benchmark dataset or score for the whole stack.",
+    "benchmarkMetric": "No single official source-reported numeric benchmark is used here because results depend on robot platform, planner/controller plugin, map, costmap settings, localization, and behavior tree.",
+    "benchmarkLatency": "Deployment-specific; measure action success rate, path length, recovery count, and controller loop timing on the target robot.",
+    "benchmarkArtifacts": "Official Nav2 docs, package configuration, RViz/costmap traces, action feedback, and local navigation logs.",
     "license": "Apache-2.0",
     "owner": "ros-navigation"
   },
@@ -461,6 +551,19 @@ const executionControlTools: Tool[] = [
       "Load the robot model and create data structures once per control process.",
       "Call the required kinematics or dynamics routines inside the planner or controller."
     ],
+    "benchmarkRows": [
+      {
+        "dataset": "7-DoF arm to 36-DoF humanoid rigid-body derivative benchmarks",
+        "metric": "Analytical derivative computation cost",
+        "value": "3 microseconds to 17 microseconds",
+        "runtime": "Pinocchio C++ implementation",
+        "source": "RSS 2018 Analytical Derivatives paper"
+      }
+    ],
+    "benchmarkDataset": "The Pinocchio derivative benchmark covers robot models from a 7-DoF arm to a 36-DoF humanoid.",
+    "benchmarkMetric": "The RSS 2018 Pinocchio implementation reports analytical derivative computation costs from 3 microseconds for a 7-DoF arm to 17 microseconds for a 36-DoF humanoid.",
+    "benchmarkLatency": "Microsecond-level rigid-body dynamics derivative computation in the cited benchmark; exact timing depends on model size, compiler, and hardware.",
+    "benchmarkArtifacts": "Official Pinocchio documentation, performance figure, RSS 2018 paper, and C++ benchmark context.",
     "owner": "stack-of-tasks"
   },
   {
@@ -537,6 +640,33 @@ const executionControlTools: Tool[] = [
       "Set per-axis limits according to the robot controller and safety constraints.",
       "Call Ruckig online in the servo loop or offline for trajectory retiming."
     ],
+    "benchmarkRows": [
+      {
+        "dataset": "7-DoF online trajectory generation",
+        "metric": "Mean / worst calculation time",
+        "value": "19.8+/-0.2 us / 123+/-13 us",
+        "runtime": "Intel i7-8700K, single thread",
+        "source": "Official RSS 2021 paper, Table III"
+      },
+      {
+        "dataset": "7-DoF online trajectory generation",
+        "metric": "Reflexxes Type IV mean / worst calculation time",
+        "value": "38.4+/-0.4 us / 155+/-35 us",
+        "runtime": "Intel i7-8700K, single thread",
+        "source": "Official RSS 2021 paper, Table III"
+      },
+      {
+        "dataset": "7-DoF online trajectory generation",
+        "metric": "opt_control mean / worst calculation time",
+        "value": "727+/-7 us / 3203+/-504 us",
+        "runtime": "Intel i7-8700K, single thread",
+        "source": "Official RSS 2021 paper, Table III"
+      }
+    ],
+    "benchmarkDataset": "Official Ruckig benchmarks include 7-DoF online trajectory generation on an Intel i7-8700K single-thread setup.",
+    "benchmarkMetric": "Ruckig reports 19.8+/-0.2 us mean and 123+/-13 us worst calculation time, compared with Reflexxes Type IV at 38.4+/-0.4 us mean.",
+    "benchmarkLatency": "The paper targets real-time control cycles and notes typical robot control cycle times of 0.5 ms to 5 ms.",
+    "benchmarkArtifacts": "Official RSS 2021 paper, Table III, benchmark figure, C++ library, Python package, and online trajectory examples.",
     "owner": "pantor"
   },
   {
@@ -609,6 +739,10 @@ const executionControlTools: Tool[] = [
       "Define the state space and collision/validity checker for the robot and scene.",
       "Choose a planner and solve within the allotted planning time."
     ],
+    "benchmarkDataset": "OMPL ships benchmarking infrastructure and Planner Arena-style comparison workflows, but the library does not expose one canonical official benchmark number for all planners and problem classes.",
+    "benchmarkMetric": "No single numeric score is copied here because OMPL performance depends on the selected planner, state space, validity checker, robot geometry, and timeout.",
+    "benchmarkLatency": "Deployment-specific; use OMPL benchmark logs for planning time, success rate, solution length, and path quality on the target planning problem.",
+    "benchmarkArtifacts": "Official OMPL docs, benchmark database/logs, Planner Arena reports, planner configuration, and solved path artifacts.",
     "license": "BSD-3-Clause",
     "owner": "Kavraki Lab"
   }
@@ -2055,10 +2189,33 @@ export const tools: Tool[] = [
         "url": "https://github.com/IDEA-Research/GroundingDINO/releases/download/v0.1.0-alpha/groundingdino_swint_ogc.pth"
       }
     ],
-    "benchmarkDataset": "The bundled deployment materials do not include source-reported benchmark numbers; the local example demonstrates single-image tabletop grounding with a custom wrapper.",
-    "benchmarkMetric": "No quantitative benchmark value was copied into the deployment notes.",
-    "benchmarkLatency": "CPU inference is supported in the local wrapper; exact source-reported latency is not listed in the deployment notes.",
-    "benchmarkArtifacts": "Official pipeline figure, deployment README, local result JSON, heatmap, overlay, debug image, and run log.",
+    "benchmarkRows": [
+      {
+        "dataset": "Single referring expression, 12 tabletop tasks",
+        "metric": "Success score range",
+        "value": "80.0 to 100.0 across the 12 reported tasks",
+        "runtime": "Source paper result",
+        "source": "Official AAAI 2024 paper, Table 1"
+      },
+      {
+        "dataset": "New spatial predicates",
+        "metric": "Seen/unseen success scores",
+        "value": "close 86.0 / 81.0; far 95.5 / 95.0",
+        "runtime": "Source paper result",
+        "source": "Official AAAI 2024 paper, Table 2"
+      },
+      {
+        "dataset": "Multiple referring expressions",
+        "metric": "Compositional / one-step / composite success scores",
+        "value": "90.5; 97.5 / 96.5; 79.1",
+        "runtime": "Source paper result",
+        "source": "Official AAAI 2024 paper, Table 3"
+      }
+    ],
+    "benchmarkDataset": "The official paper evaluates 20 tabletop manipulation benchmark tests, including single expressions, new predicates, and multiple referring expressions.",
+    "benchmarkMetric": "LINGO-Space reports single-expression task scores from 80.0 to 100.0, new-predicate scores of 86.0/81.0 for close and 95.5/95.0 for far, and multiple-expression scores up to 97.5.",
+    "benchmarkLatency": "The paper reports task success scores rather than a single source-reported latency number; the local wrapper supports CPU inference.",
+    "benchmarkArtifacts": "Official AAAI 2024 paper tables, project page, pipeline figure, deployment README, local result JSON, heatmap, overlay, debug image, and run log.",
     "license": "MIT",
     "owner": "rirolab",
     "version": "main branch"
@@ -2324,7 +2481,7 @@ export const tools: Tool[] = [
       }
     ],
     "benchmarkDataset": "The bundled deployment README verifies service-level functionality on a demo scene, but it does not provide a source benchmark dataset or paper-reported numeric evaluation table.",
-    "benchmarkMetric": "No official benchmark value was bundled with the deployment materials.",
+    "benchmarkMetric": "No official numeric benchmark was found in the bundled public reMap materials, so the page leaves this as a deployment-validated tool rather than inventing a score.",
     "benchmarkLatency": "Interactive ROS service calls are shown in the deployment notes, but no source-reported latency number is given.",
     "benchmarkArtifacts": "Public ROS2 package READMEs, build logs, verified service calls, and runtime notes from the deployment README.",
     "license": "Apache-2.0",
@@ -2347,7 +2504,7 @@ export const tools: Tool[] = [
     "paperLinks": [
       {
         "label": "Paper",
-        "url": "https://arxiv.org/abs/2503.05757"
+        "url": "https://arxiv.org/abs/2505.14938"
       },
       {
         "label": "Genesis GitHub",
@@ -2441,10 +2598,40 @@ export const tools: Tool[] = [
         "url": "https://github.com/zhouxian/genesis-speed-benchmark"
       }
     ],
-    "benchmarkDataset": "The local deployment bundles runnable billiards and quadrotor experiments, but it does not include an official source benchmark table for the SMS wrapper itself.",
-    "benchmarkMetric": "No paper-authenticated benchmark number was bundled with the deployment materials used here.",
-    "benchmarkLatency": "The README recommends the `lite` preset to reduce resolution, frame count, optimization rounds, and simulation cost on local machines.",
-    "benchmarkArtifacts": "Wrapper source, SMS framework README, bundled Genesis assets, test suite, and experiment entrypoints.",
+    "benchmarkRows": [
+      {
+        "dataset": "Billiards, 18 scenes x 30 seeds",
+        "metric": "Task objective, SMS predicted / realized",
+        "value": "5.5 (12.7) cm / 20.5 (17.9) cm",
+        "runtime": "Nelder-Mead averages 1.1 s/iteration, converges in 15-20 of 30 iterations",
+        "source": "Official SMS paper, Table 1"
+      },
+      {
+        "dataset": "Billiards, per-scene best",
+        "metric": "SMS realized vs baseline realized",
+        "value": "5.5 (8.3) cm vs 28.2 (21.7) cm",
+        "runtime": "PyBullet simulation timestep 0.0025 s",
+        "source": "Official SMS paper, Table 1"
+      },
+      {
+        "dataset": "Quadrotor landing, 4 scenes x 10 starts",
+        "metric": "Landing success rate, SMS vs visual prompting",
+        "value": "100% / 80% / 90% / 90% vs 50% / 50% / 60% / 50%",
+        "runtime": "Genesis optimization averages 8.2 s/iteration on RTX 4090",
+        "source": "Official SMS paper"
+      },
+      {
+        "dataset": "Scene reconstruction",
+        "metric": "Scan/mapping setup",
+        "value": "60 RGB-D images; about 3 s/frame optimization; about 3 min total mapping",
+        "runtime": "FR3 controller 400 Hz for billiards setup",
+        "source": "Official SMS paper"
+      }
+    ],
+    "benchmarkDataset": "The official SMS paper evaluates billiards over 18 scenes with 30 random initializations and quadrotor landing across 4 scenes with 10 starts each.",
+    "benchmarkMetric": "SMS reports billiards realized objective 20.5 (17.9) cm overall and quadrotor landing success of 100%, 80%, 90%, and 90% across the four scenes.",
+    "benchmarkLatency": "Official runtime notes include 1.1 s/iteration for billiards Nelder-Mead optimization, 8.2 s/iteration for quadrotor optimization on an RTX 4090, and about 3 minutes for 60-frame mapping.",
+    "benchmarkArtifacts": "Official SMS paper, Table 1, billiards/quadrotor experiment details, wrapper source, SMS framework README, bundled Genesis assets, tests, and experiment entrypoints.",
     "license": "Apache-2.0",
     "owner": "Genesis-Embodied-AI + local SMS wrapper",
     "version": "main branch + local framework"
@@ -2653,10 +2840,33 @@ export const tools: Tool[] = [
       "Run the local wrapper and save graph matches under tools/query-3d-scene-graph/runs/.",
       "Use the returned 3D positions as memory hints for downstream perception or planning."
     ],
-    "benchmarkDataset": "Not provided in the submitted spreadsheet.",
-    "benchmarkMetric": "No source-reported benchmark number was included for this local wrapper.",
-    "benchmarkLatency": "Interactive, according to the submitted spreadsheet.",
-    "benchmarkArtifacts": "Input/output JSON examples and local deployment notes from the submitted spreadsheet.",
+    "benchmarkRows": [
+      {
+        "dataset": "3RScan / 3DSSG, full scene with GT instances",
+        "metric": "Relationship recall",
+        "value": "R@50 0.85; R@100 0.87",
+        "runtime": "Upstream graph prediction, not local wrapper timing",
+        "source": "Upstream proxy: SceneGraphFusion CVPR 2021 paper, Table 1"
+      },
+      {
+        "dataset": "3RScan / 3DSSG, full scene with GT instances",
+        "metric": "Object / predicate recall",
+        "value": "Object R@5 0.70, R@10 0.80; predicate R@3 0.97, R@5 0.99",
+        "runtime": "Upstream graph prediction, not local wrapper timing",
+        "source": "Upstream proxy: SceneGraphFusion CVPR 2021 paper, Table 1"
+      },
+      {
+        "dataset": "Incremental 3D scene graph prediction",
+        "metric": "Runtime",
+        "value": "35 Hz system-level claim; 28 ms reconstruction + 133 ms graph prediction detail",
+        "runtime": "RGB-D sequence processing",
+        "source": "Upstream proxy: SceneGraphFusion CVPR 2021 paper"
+      }
+    ],
+    "benchmarkDataset": "The local wrapper has no separate submitted benchmark; the displayed numbers are upstream proxy results from SceneGraphFusion on 3RScan/3DSSG.",
+    "benchmarkMetric": "SceneGraphFusion reports relationship R@50/R@100 of 0.85/0.87, object R@5/R@10 of 0.70/0.80, and predicate R@3/R@5 of 0.97/0.99.",
+    "benchmarkLatency": "Upstream proxy timing reports 35 Hz in the paper abstract, with detailed reconstruction at 28 ms and graph prediction at 133 ms.",
+    "benchmarkArtifacts": "Upstream SceneGraphFusion paper, 3DSSG/3RScan links, input/output JSON examples, and local deployment notes from the submitted spreadsheet.",
     "license": "Not specified",
     "owner": "Hu Yibo",
     "version": "local wrapper"
@@ -2753,10 +2963,33 @@ export const tools: Tool[] = [
       "Run the query wrapper with a repository-relative feature path.",
       "Save the resulting timeline JSON under tools/query-historical-action-timeline/runs/."
     ],
-    "benchmarkDataset": "Not provided in the submitted spreadsheet.",
-    "benchmarkMetric": "No source-reported benchmark number was included for this local wrapper.",
-    "benchmarkLatency": "Interactive, according to the submitted spreadsheet.",
-    "benchmarkArtifacts": "Feature tensor shape, mock timeline output, and local deployment notes from the submitted spreadsheet.",
+    "benchmarkRows": [
+      {
+        "dataset": "50Salads",
+        "metric": "F1@10 / F1@25 / F1@50; Edit; Acc",
+        "value": "76.3 / 74.0 / 64.5; 67.9; 80.7",
+        "runtime": "MS-TCN 4-stage upstream model",
+        "source": "Upstream proxy: MS-TCN paper, Table 1"
+      },
+      {
+        "dataset": "GTEA",
+        "metric": "F1@10 / F1@25 / F1@50; Edit; Acc",
+        "value": "87.5 / 85.4 / 74.6; 81.4; 79.2",
+        "runtime": "MS-TCN with fine-tuning",
+        "source": "Upstream proxy: MS-TCN paper, Table 10"
+      },
+      {
+        "dataset": "Breakfast",
+        "metric": "F1@10 / F1@25 / F1@50; Edit; Acc",
+        "value": "52.6 / 48.1 / 37.9; 61.7; 66.3",
+        "runtime": "MS-TCN with I3D features",
+        "source": "Upstream proxy: MS-TCN paper, Table 10"
+      }
+    ],
+    "benchmarkDataset": "The local wrapper has no separate submitted benchmark; the displayed numbers are upstream proxy MS-TCN temporal segmentation results on 50Salads, GTEA, and Breakfast.",
+    "benchmarkMetric": "MS-TCN reports 50Salads F1@10/25/50 of 76.3/74.0/64.5, GTEA fine-tuned 87.5/85.4/74.6, and Breakfast I3D 52.6/48.1/37.9.",
+    "benchmarkLatency": "The submitted wrapper is described as interactive, but the upstream proxy paper primarily reports segmentation accuracy metrics rather than wrapper latency.",
+    "benchmarkArtifacts": "Upstream MS-TCN paper, official repository link, feature tensor shape, mock timeline output, and local deployment notes from the submitted spreadsheet.",
     "license": "Not specified",
     "owner": "Hu Yibo",
     "version": "local wrapper"
@@ -2861,10 +3094,26 @@ export const tools: Tool[] = [
       "Run the retrieval wrapper with a repository-relative query path and top-k value.",
       "Save ranked memory results under tools/retrieve-past-visual-state-faiss/runs/."
     ],
-    "benchmarkDataset": "Not provided in the submitted spreadsheet.",
-    "benchmarkMetric": "No source-reported benchmark number was included for this local wrapper.",
-    "benchmarkLatency": "Interactive, according to the submitted spreadsheet.",
-    "benchmarkArtifacts": "Query embedding example, top-k search result JSON, and local deployment notes from the submitted spreadsheet.",
+    "benchmarkRows": [
+      {
+        "dataset": "Billion-scale similarity search",
+        "metric": "Nearest-neighbor search implementation speedup",
+        "value": "8.5x faster than the previous reported state of the art",
+        "runtime": "GPU nearest-neighbor search implementation",
+        "source": "Upstream proxy: Meta Engineering FAISS blog"
+      },
+      {
+        "dataset": "1B high-dimensional vectors",
+        "metric": "k-nearest-neighbor graph scale",
+        "value": "First k-NN graph constructed on 1 billion high-dimensional vectors",
+        "runtime": "GPU k-selection implementation",
+        "source": "Upstream proxy: Meta Engineering FAISS blog"
+      }
+    ],
+    "benchmarkDataset": "The local visual-memory wrapper has no separate submitted benchmark; the displayed numbers are upstream proxy FAISS results for billion-scale similarity search.",
+    "benchmarkMetric": "Meta Engineering reports FAISS nearest-neighbor search implementations for billion-scale datasets at 8.5x faster than the previous reported state of the art, plus a 1B-vector k-NN graph result.",
+    "benchmarkLatency": "The submitted wrapper is described as interactive; actual latency depends on index type, vector count, GPU/CPU backend, and top-k setting.",
+    "benchmarkArtifacts": "Upstream FAISS blog, official FAISS docs, query embedding example, top-k search result JSON, and local deployment notes from the submitted spreadsheet.",
     "license": "Not specified",
     "owner": "Hu Yibo",
     "version": "local wrapper"
@@ -2965,10 +3214,33 @@ export const tools: Tool[] = [
       "Prepare reference images, masks, and query frames using repository-relative paths.",
       "Run the wrapper and save masks, boxes, and attention outputs under tools/stm/runs/."
     ],
-    "benchmarkDataset": "Not provided in the submitted spreadsheet.",
-    "benchmarkMetric": "No benchmark number was copied into the site because the submitted row did not provide one.",
-    "benchmarkLatency": "About 20 ms, according to the submitted spreadsheet.",
-    "benchmarkArtifacts": "Official repository link, weights path, mock input JSON, and local prediction output from the submitted spreadsheet.",
+    "benchmarkRows": [
+      {
+        "dataset": "YouTube-VOS validation",
+        "metric": "Overall / seen J / seen F / unseen J / unseen F",
+        "value": "79.4 / 79.7 / 84.2 / 72.8 / 80.9",
+        "runtime": "Official STM evaluation",
+        "source": "Official ICCV 2019 paper, Table 1"
+      },
+      {
+        "dataset": "DAVIS-2016 validation",
+        "metric": "J / F",
+        "value": "88.7 / 89.9 with YouTube-VOS pretraining",
+        "runtime": "0.16 s/frame",
+        "source": "Official ICCV 2019 paper, Table 2"
+      },
+      {
+        "dataset": "DAVIS-2017 validation",
+        "metric": "J / F",
+        "value": "79.2 / 84.3 with YouTube-VOS pretraining",
+        "runtime": "Official STM evaluation",
+        "source": "Official ICCV 2019 paper, Table 3"
+      }
+    ],
+    "benchmarkDataset": "Official STM results are reported on YouTube-VOS validation and DAVIS-2016/2017 validation.",
+    "benchmarkMetric": "STM reports YouTube-VOS overall 79.4, DAVIS-2016 J/F 88.7/89.9 with YouTube-VOS pretraining, and DAVIS-2017 J/F 79.2/84.3.",
+    "benchmarkLatency": "The official paper reports 0.16 s/frame on DAVIS-2016; the submitted spreadsheet separately described about 20 ms for the local wrapper.",
+    "benchmarkArtifacts": "Official ICCV 2019 paper, repository link, weights path, mock input JSON, and local prediction output from the submitted spreadsheet.",
     "license": "Not specified",
     "owner": "Hu Yibo",
     "version": "local wrapper"
@@ -3066,10 +3338,33 @@ export const tools: Tool[] = [
       "Run the state-graph wrapper with repository-relative video and object paths.",
       "Save state timelines and relation graphs under tools/action-genome/runs/."
     ],
-    "benchmarkDataset": "Not provided in the submitted spreadsheet.",
-    "benchmarkMetric": "No benchmark number was copied into the site because the submitted row did not provide one.",
-    "benchmarkLatency": "Interactive, according to the submitted spreadsheet.",
-    "benchmarkArtifacts": "Official repository link, mock video input, feature tensor shape, bbox tensor shape, and state timeline output from the submitted spreadsheet.",
+    "benchmarkRows": [
+      {
+        "dataset": "Action Genome / Charades",
+        "metric": "Dataset scale",
+        "value": "10K videos, 0.4M objects, 1.7M visual relationships",
+        "runtime": "Official dataset annotation scale",
+        "source": "Official CVPR 2020 paper"
+      },
+      {
+        "dataset": "Action Genome / Charades few-shot action recognition",
+        "metric": "mAP with 10 examples",
+        "value": "42.7%",
+        "runtime": "Few-shot action recognition experiment",
+        "source": "Official CVPR 2020 paper"
+      },
+      {
+        "dataset": "Action Genome detailed annotation",
+        "metric": "Frame/object/relation coverage",
+        "value": "234K video frames, 476K object bounding boxes, 1.72M relationships, 157 action categories",
+        "runtime": "Official dataset statistics",
+        "source": "Official CVPR 2020 paper"
+      }
+    ],
+    "benchmarkDataset": "The official Action Genome paper reports dataset-scale and few-shot recognition numbers on Charades-derived spatio-temporal scene graph annotations.",
+    "benchmarkMetric": "Action Genome contains 10K videos with 0.4M objects and 1.7M relationships, and achieves 42.7% mAP in few-shot action recognition using 10 examples.",
+    "benchmarkLatency": "The submitted wrapper is described as interactive; the official paper focuses on dataset/task metrics rather than wall-clock wrapper latency.",
+    "benchmarkArtifacts": "Official CVPR 2020 paper, project page, repository link, mock video input, feature tensor shape, bbox tensor shape, and state timeline output.",
     "license": "Not specified",
     "owner": "Hu Yibo",
     "version": "local wrapper"
@@ -3160,10 +3455,33 @@ export const tools: Tool[] = [
       "Prepare a proposed step sequence and active constraint file under tools/language2ltl/examples/.",
       "Run the validator and save compliance reports under tools/language2ltl/runs/."
     ],
-    "benchmarkDataset": "Not provided in the submitted spreadsheet.",
-    "benchmarkMetric": "No benchmark number was copied into the site because the submitted row did not provide one.",
-    "benchmarkLatency": "Interactive, millisecond-level according to the submitted spreadsheet.",
-    "benchmarkArtifacts": "Official repository link, mock rule-check example, constraint JSON, and validation output from the submitted spreadsheet.",
+    "benchmarkRows": [
+      {
+        "dataset": "NL2TL, GPT-3-assisted data test",
+        "metric": "T5-large I.O./word accuracy",
+        "value": "97.52+/-0.65%",
+        "runtime": "Upstream NL-to-temporal-logic translation benchmark",
+        "source": "Upstream proxy: NL2TL / Language2LTL paper, Table 1"
+      },
+      {
+        "dataset": "NL-to-STL full task, Circuit / Navigation / Office email",
+        "metric": "T5-large + GPT-3 AP-detect accuracy",
+        "value": "95.13+/-1.42% / 95.03+/-1.20% / 96.73+/-1.03%",
+        "runtime": "Upstream full translation benchmark",
+        "source": "Upstream proxy: NL2TL / Language2LTL paper, Table 2"
+      },
+      {
+        "dataset": "AP detection, Circuit / Navigation / Office email",
+        "metric": "AP-detect accuracy",
+        "value": "98.84+/-0.41% / 99.03+/-0.53% / 100.00+/-0.00%",
+        "runtime": "Upstream AP detection benchmark",
+        "source": "Upstream proxy: NL2TL / Language2LTL paper, Table 3"
+      }
+    ],
+    "benchmarkDataset": "The local validator wrapper has no separate submitted benchmark; the displayed numbers are upstream proxy results from the Language2LTL/NL2TL paper on a 28K NL-TL dataset and NL-to-STL tasks.",
+    "benchmarkMetric": "The upstream paper reports 97.52+/-0.65% T5-large I.O./word accuracy and 95.13-96.73% full NL-to-STL accuracy with T5-large plus GPT-3 AP detection.",
+    "benchmarkLatency": "The submitted spreadsheet describes the local rule checker as millisecond-level; the upstream paper reports translation accuracy rather than a universal runtime.",
+    "benchmarkArtifacts": "Official repository link, upstream NL2TL paper tables, mock rule-check example, constraint JSON, and validation output from the submitted spreadsheet.",
     "license": "Not specified",
     "owner": "Hu Yibo",
     "version": "local wrapper"
@@ -3492,10 +3810,33 @@ export const tools: Tool[] = [
       "Prepare start and end images plus a semantic task instruction under tools/r3m/examples/.",
       "Run the verifier and save scores under tools/r3m/runs/."
     ],
-    "benchmarkDataset": "Not provided in the submitted spreadsheet.",
-    "benchmarkMetric": "No benchmark number was copied into the site because the submitted row did not provide one.",
-    "benchmarkLatency": "About 50 ms, according to the submitted spreadsheet.",
-    "benchmarkArtifacts": "Official repository link, mock start/end image shape, task instruction, and verification output from the submitted spreadsheet.",
+    "benchmarkRows": [
+      {
+        "dataset": "12 simulated manipulation tasks",
+        "metric": "Average imitation-learning success rate",
+        "value": "62% success; over 20% above training from scratch and over 10% above CLIP/MoCo baselines",
+        "runtime": "Frozen R3M representation for downstream policy learning",
+        "source": "Official CoRL 2022 paper, Fig. 4"
+      },
+      {
+        "dataset": "Franka Kitchen / MetaWorld / Adroit",
+        "metric": "R3M ablation success rate",
+        "value": "53.1+/-2.7% / 69.2+/-2.0% / 65.0+/-1.7%; all domains 62.4+/-1.3%",
+        "runtime": "Downstream behavior cloning evaluation",
+        "source": "Official CoRL 2022 paper, Table 1"
+      },
+      {
+        "dataset": "Real-world Franka Emika Panda manipulation",
+        "metric": "Demonstration count",
+        "value": "20 demonstrations for real cluttered-apartment manipulation tasks",
+        "runtime": "Real-robot learning setup",
+        "source": "Official CoRL 2022 paper"
+      }
+    ],
+    "benchmarkDataset": "The official R3M paper evaluates 12 simulated robot manipulation tasks plus real Franka Emika Panda manipulation with limited demonstrations.",
+    "benchmarkMetric": "R3M reports 62% average success in the low-data simulated setting and all-domain ablation success of 62.4+/-1.3%.",
+    "benchmarkLatency": "The submitted wrapper describes about 50 ms local verification; the official R3M paper focuses on policy success rather than verifier latency.",
+    "benchmarkArtifacts": "Official CoRL 2022 paper, project page, repository link, mock start/end image shape, task instruction, and verification output from the submitted spreadsheet.",
     "license": "Not specified",
     "owner": "Hu Yibo",
     "version": "local wrapper"
@@ -3588,10 +3929,33 @@ export const tools: Tool[] = [
       "Run the detector with a repository-relative image path and selected squeeze method.",
       "Save reports under tools/feature-squeezer/runs/ for safety logging."
     ],
-    "benchmarkDataset": "Not provided in the submitted spreadsheet.",
-    "benchmarkMetric": "No benchmark number was copied into the site because the submitted row did not provide one.",
-    "benchmarkLatency": "Interactive, according to the submitted spreadsheet.",
-    "benchmarkArtifacts": "Paper reference and tool-sheet description from the submitted spreadsheet.",
+    "benchmarkRows": [
+      {
+        "dataset": "MNIST, CIFAR-10, and ImageNet adversarial examples",
+        "metric": "Joint detection rate at around 5% false positive rate",
+        "value": "98% on MNIST; 85% on CIFAR-10 and ImageNet",
+        "runtime": "Feature squeezing detector",
+        "source": "Official NDSS 2018 paper"
+      },
+      {
+        "dataset": "MNIST adversarial attacks",
+        "metric": "Best joint detection, 1-bit + 2x2",
+        "value": "0.982 overall detection",
+        "runtime": "Static adversarial input detection",
+        "source": "Official NDSS 2018 paper, Table 4"
+      },
+      {
+        "dataset": "Target model baselines",
+        "metric": "Top-1 accuracy",
+        "value": "MNIST 99.43%; CIFAR-10 94.84%; ImageNet MobileNet 68.36% top-1 / 88.25% top-5",
+        "runtime": "Classifier baselines used for detection evaluation",
+        "source": "Official NDSS 2018 paper, Table 1"
+      }
+    ],
+    "benchmarkDataset": "The official Feature Squeezing paper evaluates adversarial detection on MNIST, CIFAR-10, and ImageNet across eleven static attacks.",
+    "benchmarkMetric": "Joint detection reaches 98% on MNIST and 85% on CIFAR-10/ImageNet at around 5% false positive rate; Table 4 reports 0.982 overall detection for MNIST best joint detection.",
+    "benchmarkLatency": "The submitted tool sheet describes the wrapper as interactive; the paper focuses on detection rate and false-positive behavior rather than one universal latency.",
+    "benchmarkArtifacts": "Official NDSS 2018 paper, attack/detection tables, paper reference, and tool-sheet description from the submitted spreadsheet.",
     "license": "Not specified",
     "owner": "Hu Yibo",
     "version": "recommended tool"
@@ -3691,9 +4055,9 @@ export const tools: Tool[] = [
       "Run the filter with repository-relative image paths and tuned clipping parameters.",
       "Save enhanced images under tools/clahe-filter/runs/ for downstream perception."
     ],
-    "benchmarkDataset": "Not provided in the submitted spreadsheet.",
-    "benchmarkMetric": "No benchmark number was copied into the site because the submitted row did not provide one.",
-    "benchmarkLatency": "Interactive, according to the submitted spreadsheet.",
+    "benchmarkDataset": "CLAHE is an image-processing primitive rather than a learned model; OpenCV and the original paper do not provide a single canonical cross-dataset benchmark number for this wrapper.",
+    "benchmarkMetric": "No universal official numeric benchmark is copied here because contrast improvement is image-dependent and usually evaluated as part of a downstream perception pipeline.",
+    "benchmarkLatency": "Interactive according to the submitted spreadsheet; exact runtime depends on resolution, tile grid size, color space conversion, and CPU/GPU backend.",
     "benchmarkArtifacts": "Tool-sheet description and preprocessing parameters from the submitted spreadsheet.",
     "license": "Not specified",
     "owner": "Hu Yibo",
@@ -4186,10 +4550,33 @@ export const tools: Tool[] = [
         "url": "https://www.sbert.net/docs/sentence_transformer/pretrained_models.html"
       }
     ],
-    "benchmarkDataset": "Sentence-BERT is commonly evaluated on STSBenchmark and MTEB subsets.",
-    "benchmarkMetric": "Primary metric is Spearman/Pearson correlation for semantic similarity tasks.",
-    "benchmarkLatency": "Latency depends on model size and batch settings; MiniLM variants are typically low-latency.",
-    "benchmarkArtifacts": "Pretrained models, evaluation scripts, and embedding outputs.",
+    "benchmarkRows": [
+      {
+        "dataset": "SBERT model table, 14 sentence-embedding datasets",
+        "metric": "all-MiniLM-L6-v2 sentence performance",
+        "value": "68.06",
+        "runtime": "14,200 sentences/sec on V100",
+        "source": "Official SBERT pretrained model table"
+      },
+      {
+        "dataset": "SBERT model table, 6 semantic-search datasets",
+        "metric": "all-MiniLM-L6-v2 semantic-search performance",
+        "value": "49.54",
+        "runtime": "80 MB model, 384 dimensions, max sequence length 256",
+        "source": "Official SBERT pretrained model table"
+      },
+      {
+        "dataset": "SBERT model table",
+        "metric": "Training scale",
+        "value": "1B+ training pairs",
+        "runtime": "Mean pooling, normalized embeddings",
+        "source": "Official SBERT pretrained model table"
+      }
+    ],
+    "benchmarkDataset": "The official SBERT pretrained-model table reports all-MiniLM-L6-v2 results over 14 sentence-embedding datasets and 6 semantic-search datasets.",
+    "benchmarkMetric": "all-MiniLM-L6-v2 reports 68.06 sentence-embedding performance and 49.54 semantic-search performance in the official table.",
+    "benchmarkLatency": "The official SBERT table reports 14,200 sentences/sec on V100, with an 80 MB model, 384-dimensional embeddings, and max sequence length 256.",
+    "benchmarkArtifacts": "Official SBERT pretrained model table, model card link, pretrained models, evaluation scripts, and embedding outputs.",
     "license": "Apache-2.0",
     "owner": "UKPLab",
     "version": "master"
@@ -4474,10 +4861,33 @@ export const tools: Tool[] = [
         "url": "https://github.com/swz30/Restormer#pretrained-models"
       }
     ],
-    "benchmarkDataset": "Paper reports GoPro, SIDD, DND, Rain100H and related restoration benchmarks.",
-    "benchmarkMetric": "Primary metrics are PSNR and SSIM on task-specific datasets.",
-    "benchmarkLatency": "Runtime depends on image resolution and restoration task.",
-    "benchmarkArtifacts": "Paper tables, pretrained checkpoints, and demo scripts.",
+    "benchmarkRows": [
+      {
+        "dataset": "GoPro motion deblurring",
+        "metric": "PSNR / SSIM",
+        "value": "32.92 / 0.961",
+        "runtime": "Task-specific restoration model",
+        "source": "Official CVPR 2022 paper"
+      },
+      {
+        "dataset": "Image deraining average over Test100, Rain100H, Rain100L, Test2800, Test1200",
+        "metric": "Average PSNR / SSIM",
+        "value": "33.96 / 0.935",
+        "runtime": "Task-specific restoration model",
+        "source": "Official CVPR 2022 paper, Table 1"
+      },
+      {
+        "dataset": "Real image denoising, SIDD / DND",
+        "metric": "PSNR / SSIM",
+        "value": "40.02 / 0.960 on SIDD; 40.03 / 0.956 on DND",
+        "runtime": "Task-specific denoising model",
+        "source": "Official CVPR 2022 paper, Table 6"
+      }
+    ],
+    "benchmarkDataset": "The official Restormer paper reports task-specific benchmarks for GoPro motion deblurring, image deraining, SIDD/DND denoising, and related restoration tasks.",
+    "benchmarkMetric": "Restormer reports GoPro 32.92/0.961 PSNR/SSIM, deraining average 33.96/0.935, and real denoising 40.02/0.960 on SIDD plus 40.03/0.956 on DND.",
+    "benchmarkLatency": "Runtime depends on restoration task and image resolution; the paper tables emphasize PSNR/SSIM quality metrics.",
+    "benchmarkArtifacts": "Official CVPR 2022 paper tables, pretrained checkpoints, task demos, and evaluation scripts.",
     "license": "MIT",
     "owner": "swz30",
     "version": "main"
@@ -4584,10 +4994,40 @@ export const tools: Tool[] = [
         "url": "https://github.com/Li-Chongyi/Zero-DCE#testing"
       }
     ],
-    "benchmarkDataset": "Paper evaluates on LOL and multiple no-reference enhancement settings.",
-    "benchmarkMetric": "Common metrics include PSNR/SSIM (paired) and NIQE-based quality checks.",
-    "benchmarkLatency": "Lightweight inference suitable for real-time enhancement scenarios.",
-    "benchmarkArtifacts": "Official code, pretrained weights, and test scripts.",
+    "benchmarkRows": [
+      {
+        "dataset": "Full-reference low-light enhancement comparison",
+        "metric": "PSNR / SSIM / MAE",
+        "value": "16.57 / 0.59 / 98.78",
+        "runtime": "PyTorch GPU",
+        "source": "Official CVPR 2020 paper, Table 2"
+      },
+      {
+        "dataset": "Runtime comparison, 1200x900x3 image",
+        "metric": "Runtime",
+        "value": "0.0025 s",
+        "runtime": "PyTorch GPU",
+        "source": "Official CVPR 2020 paper, Table 3"
+      },
+      {
+        "dataset": "Real-time enhancement claim",
+        "metric": "Throughput / training time",
+        "value": "about 500 FPS for 640x480x3 images on GPU; 30 minutes training",
+        "runtime": "GPU",
+        "source": "Official CVPR 2020 paper"
+      },
+      {
+        "dataset": "No-reference image sets",
+        "metric": "User study / perceptual index average",
+        "value": "3.70 / 2.88",
+        "runtime": "Quality evaluation",
+        "source": "Official CVPR 2020 paper, Table 1"
+      }
+    ],
+    "benchmarkDataset": "The official Zero-DCE paper evaluates full-reference quality, no-reference/user-study quality, runtime, and downstream face detection in low light.",
+    "benchmarkMetric": "Zero-DCE reports PSNR/SSIM/MAE of 16.57/0.59/98.78, user-study/perceptual-index average 3.70/2.88, and 0.0025 s runtime for 1200x900x3 images.",
+    "benchmarkLatency": "The official paper reports about 500 FPS for 640x480x3 images on GPU, 0.0025 s for 1200x900x3 in Table 3, and 30 minutes training.",
+    "benchmarkArtifacts": "Official CVPR 2020 paper, runtime table, quality tables, official code, pretrained weights, and test scripts.",
     "license": "Not specified in repository",
     "owner": "Li-Chongyi",
     "version": "master"
