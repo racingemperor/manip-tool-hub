@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { DatasetFilters } from "@/components/DatasetFilters";
 import { SiteShell } from "@/components/SiteShell";
 import { datasets } from "@/data/datasets";
 
@@ -14,25 +15,7 @@ export default function DatasetsPage() {
         </div>
 
         <div className="toolbar">
-          <div className="filters">
-            <select className="select" aria-label="Task filter" defaultValue="All tasks">
-              <option>All tasks</option>
-              <option>Object detection</option>
-              <option>Segmentation</option>
-              <option>Manipulation</option>
-            </select>
-            <select className="select" aria-label="Format filter" defaultValue="All formats">
-              <option>All formats</option>
-              <option>COCO</option>
-              <option>YOLO</option>
-              <option>Custom</option>
-            </select>
-            <select className="select" aria-label="License filter" defaultValue="All licenses">
-              <option>All licenses</option>
-              <option>Open</option>
-              <option>Research only</option>
-            </select>
-          </div>
+          <DatasetFilters />
           <Link className="btn" href="/leaderboard">Open Leaderboard</Link>
         </div>
 

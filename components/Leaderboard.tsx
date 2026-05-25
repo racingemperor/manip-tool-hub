@@ -4,11 +4,22 @@ import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import { leaderboardCategories, leaderboardRows } from "@/data/leaderboard";
 import { emptyEngagementState, readEngagementState, type EngagementState } from "@/lib/engagement";
+import { CompactSelect, type CompactSelectOption } from "./CompactSelect";
 
 export function Leaderboard() {
   const [category, setCategory] = useState("All");
   const [sort, setSort] = useState("primary");
   const [engagement, setEngagement] = useState<EngagementState>(emptyEngagementState());
+  const categoryOptions: CompactSelectOption[] = [
+    { value: "All", label: "All categories" },
+    ...leaderboardCategories.map((item) => ({ value: item.name, label: item.name }))
+  ];
+  const sortOptions: CompactSelectOption[] = [
+    { value: "primary", label: "Primary metric first" },
+    { value: "hotness", label: "Hotness first" },
+    { value: "speed", label: "Speed first" },
+    { value: "artifacts", label: "Artifacts first" }
+  ];
 
   useEffect(() => {
     setEngagement(readEngagementState());
@@ -48,18 +59,8 @@ export function Leaderboard() {
 
       <div className="toolbar">
         <div className="filters">
-          <select className="select" aria-label="Leaderboard category filter" value={category} onChange={(event) => setCategory(event.target.value)}>
-            <option value="All">All categories</option>
-            {leaderboardCategories.map((item) => (
-              <option value={item.name} key={item.name}>{item.name}</option>
-            ))}
-          </select>
-          <select className="select" aria-label="Leaderboard sort logic" value={sort} onChange={(event) => setSort(event.target.value)}>
-            <option value="primary">Primary metric first</option>
-            <option value="hotness">Hotness first</option>
-            <option value="speed">Speed first</option>
-            <option value="artifacts">Artifacts first</option>
-          </select>
+          <CompactSelect ariaLabel="Leaderboard category filter" value={category} options={categoryOptions} onChange={setCategory} />
+          <CompactSelect ariaLabel="Leaderboard sort logic" value={sort} options={sortOptions} onChange={setSort} />
         </div>
       </div>
 

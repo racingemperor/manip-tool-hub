@@ -4,6 +4,7 @@ import { useDeferredValue, useEffect, useMemo, useRef, useState, type FormEvent 
 import { toolCategories, tools, type ToolCategory } from "@/data/tools";
 import { capabilityLabelForCategory, getToolResources, searchHaystack } from "@/lib/tools";
 import { CapabilityLabel } from "./CapabilityLabel";
+import { CompactSelect, type CompactSelectOption } from "./CompactSelect";
 import { ToolCard } from "./ToolCard";
 
 const pageSize = 8;
@@ -17,9 +18,7 @@ function categoryButtonLabel(category: CategoryFilter, count: number) {
 
 export function ToolRegistry() {
   const resultsRef = useRef<HTMLDivElement>(null);
-  const categoryMenuRef = useRef<HTMLDivElement>(null);
   const [category, setCategory] = useState<CategoryFilter>("All");
-  const [isCategoryMenuOpen, setIsCategoryMenuOpen] = useState(false);
   const [status, setStatus] = useState("All");
   const [resource, setResource] = useState("All");
   const [query, setQuery] = useState("");
@@ -38,25 +37,6 @@ export function ToolRegistry() {
   useEffect(() => {
     setPage(1);
   }, [category, status, resource, query]);
-
-  useEffect(() => {
-    if (!isCategoryMenuOpen) return;
-
-    function closeCategoryMenu(event: MouseEvent) {
-      if (!categoryMenuRef.current?.contains(event.target as Node)) setIsCategoryMenuOpen(false);
-    }
-
-    function handleCategoryKey(event: KeyboardEvent) {
-      if (event.key === "Escape") setIsCategoryMenuOpen(false);
-    }
-
-    document.addEventListener("mousedown", closeCategoryMenu);
-    document.addEventListener("keydown", handleCategoryKey);
-    return () => {
-      document.removeEventListener("mousedown", closeCategoryMenu);
-      document.removeEventListener("keydown", handleCategoryKey);
-    };
-  }, [isCategoryMenuOpen]);
 
   const filteredTools = useMemo(() => {
     const normalized = deferredQuery.trim().toLowerCase();
@@ -78,6 +58,21 @@ export function ToolRegistry() {
     { value: "All", label: `All Tools (${tools.length})`, count: tools.length },
     ...toolCategories.map((item) => ({ value: item, label: item, count: counts[item] }))
   ], [counts]);
+  const statusOptions: CompactSelectOption[] = [
+    { value: "All", label: "All statuses" },
+    { value: "Draft", label: "Draft" },
+    { value: "Docs Ready", label: "Docs Ready" },
+    { value: "Code Linked", label: "Code Linked" },
+    { value: "Runnable", label: "Runnable" },
+    { value: "Verified", label: "Verified" }
+  ];
+  const resourceOptions: CompactSelectOption[] = [
+    { value: "All", label: "All resources" },
+    { value: "Paper", label: "Paper" },
+    { value: "Demo images", label: "Demo images" },
+    { value: "API docs", label: "Code docs" },
+    { value: "Benchmark", label: "Benchmark" }
+  ];
   const totalPages = Math.max(1, Math.ceil(filteredTools.length / pageSize));
   const safePage = Math.min(page, totalPages);
   const paginatedTools = filteredTools.slice((safePage - 1) * pageSize, safePage * pageSize);
@@ -128,57 +123,26 @@ export function ToolRegistry() {
           value={query}
           onChange={(event) => setQuery(event.target.value)}
         />
-        <div className="category-menu" ref={categoryMenuRef}>
-          <button
-            className="category-menu-trigger"
-            type="button"
-            aria-haspopup="listbox"
-            aria-expanded={isCategoryMenuOpen}
-            onClick={() => setIsCategoryMenuOpen((open) => !open)}
-          >
-            <span>{categoryButtonLabel(category, category === "All" ? tools.length : counts[category])}</span>
-            <span className="category-menu-caret" aria-hidden="true" />
-          </button>
-          {isCategoryMenuOpen ? (
-            <div className="category-menu-popover" role="listbox" aria-label="Tool category">
-              {categoryOptions.map((item) => (
-                <button
-                  className={`category-menu-option ${item.value === category ? "active" : ""}`}
-                  type="button"
-                  role="option"
-                  aria-selected={item.value === category}
-                  key={item.value}
-                  onClick={() => {
-                    setCategory(item.value);
-                    setIsCategoryMenuOpen(false);
-                  }}
-                >
-                  {item.value === "All" ? (
-                    <span className="category-menu-all">All Tools</span>
-                  ) : (
-                    <CapabilityLabel info={capabilityLabelForCategory(item.value)} variant="menu" />
-                  )}
-                  <span className="category-menu-count">{item.count}</span>
-                </button>
-              ))}
-            </div>
-          ) : null}
-        </div>
-        <select className="select tool-status-filter" aria-label="Tool status" value={status} onChange={(event) => setStatus(event.target.value)}>
-          <option value="All">All statuses</option>
-          <option value="Draft">Draft</option>
-          <option value="Docs Ready">Docs Ready</option>
-          <option value="Code Linked">Code Linked</option>
-          <option value="Runnable">Runnable</option>
-          <option value="Verified">Verified</option>
-        </select>
-        <select className="select tool-resource-filter" aria-label="Tool resource" value={resource} onChange={(event) => setResource(event.target.value)}>
-          <option value="All">All resources</option>
-          <option value="Paper">Paper</option>
-          <option value="Demo images">Demo images</option>
-          <option value="API docs">Code docs</option>
-          <option value="Benchmark">Benchmark</option>
-        </select>
+        <CompactSelect
+          ariaLabel="Tool category"
+          className="tool-category-filter"
+          value={category}
+          options={categoryOptions}
+          getButtonLabel={(option) => categoryButtonLabel(option.value as CategoryFilter, option.count ?? tools.length)}
+          onChange={(value) => setCategory(value as CategoryFilter)}
+          renderOption={(item) => (
+            <>
+              {item.value === "All" ? (
+                <span className="compact-select-text">All Tools</span>
+              ) : (
+                <CapabilityLabel info={capabilityLabelForCategory(item.value as ToolCategory)} variant="menu" />
+              )}
+              <span className="compact-select-count">{item.count}</span>
+            </>
+          )}
+        />
+        <CompactSelect ariaLabel="Tool status" className="tool-status-filter" value={status} options={statusOptions} onChange={setStatus} />
+        <CompactSelect ariaLabel="Tool resource" className="tool-resource-filter" value={resource} options={resourceOptions} onChange={setResource} />
       </div>
 
       <div className="tool-results-head" ref={resultsRef} aria-live="polite">
