@@ -1179,6 +1179,74 @@ h1 {
   flex-wrap: wrap;
 }
 
+.datasets-page .section-head {
+  margin-bottom: 10px;
+}
+
+.datasets-page .section-head h2 {
+  font-size: 20px;
+}
+
+.datasets-page .section-head p {
+  font-size: 13px;
+}
+
+.datasets-page .toolbar {
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.datasets-page .toolbar > .btn,
+.datasets-page .dataset-actions .btn {
+  min-height: 27px;
+  border-radius: 6px;
+  padding: 0 10px;
+  gap: 6px;
+  font-size: 11.5px;
+  line-height: 1.15;
+  font-weight: 700;
+}
+
+.datasets-page .dataset-card {
+  grid-template-columns: 78px minmax(0, 1fr) auto;
+  gap: 12px;
+  padding: 12px;
+}
+
+.datasets-page .thumb {
+  width: 78px;
+  border-radius: 7px;
+}
+
+.datasets-page .card-title {
+  font-size: 13.5px;
+  line-height: 1.2;
+  margin-bottom: 6px;
+}
+
+.datasets-page .card p {
+  font-size: 12px;
+  line-height: 1.42;
+}
+
+.datasets-page .meta-row {
+  gap: 6px;
+  margin-top: 8px;
+}
+
+.datasets-page .badge {
+  min-height: 19px;
+  border-radius: 6px;
+  padding: 2px 7px;
+  font-size: 10.5px;
+  line-height: 1.1;
+}
+
+.datasets-page .dataset-actions {
+  gap: 6px;
+}
+
 .table-wrap {
   overflow-x: auto;
   background: var(--panel);

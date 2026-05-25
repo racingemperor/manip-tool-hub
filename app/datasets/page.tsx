@@ -6,7 +6,7 @@ import { datasets } from "@/data/datasets";
 export default function DatasetsPage() {
   return (
     <SiteShell>
-      <section>
+      <section className="datasets-page">
         <div className="section-head">
           <div>
             <h2>Datasets</h2>
