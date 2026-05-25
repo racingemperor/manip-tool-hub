@@ -557,18 +557,18 @@ h1 {
 }
 
 .capability-label.menu {
-  gap: 12px;
+  gap: 9px;
 }
 
 .capability-label.menu .capability-label-icon {
-  width: 21px;
-  height: 21px;
+  width: 17px;
+  height: 17px;
   color: #6b7280;
 }
 
 .capability-label.menu .capability-label-text {
   color: #1f2937;
-  font-size: 18px;
+  font-size: 14.5px;
   font-weight: 500;
   white-space: nowrap;
 }
@@ -1326,12 +1326,12 @@ tr:last-child td {
 
 .category-menu-option {
   width: 100%;
-  min-height: 52px;
+  min-height: 40px;
   border: 0;
   border-bottom: 1px solid #eef2f7;
   background: #ffffff;
   color: var(--ink);
-  padding: 0 12px;
+  padding: 0 10px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -1353,21 +1353,21 @@ tr:last-child td {
 
 .category-menu-all {
   color: #172033;
-  font-size: 18px;
+  font-size: 14.5px;
   font-weight: 500;
 }
 
 .category-menu-count {
-  min-width: 28px;
-  height: 24px;
+  min-width: 24px;
+  height: 22px;
   border-radius: 999px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   background: #eef2f7;
   color: #475467;
-  padding: 0 8px;
-  font-size: 12px;
+  padding: 0 7px;
+  font-size: 11px;
   font-weight: 800;
 }
 
