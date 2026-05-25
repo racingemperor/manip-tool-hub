@@ -1440,6 +1440,40 @@ tr:last-child td {
   min-width: 112px;
 }
 
+.tool-controls .compact-select-trigger {
+  height: 38px;
+  border-radius: 8px;
+  padding: 0 34px 0 12px;
+  font-size: 13px;
+  line-height: 1.2;
+  font-weight: 700;
+}
+
+.tool-controls .compact-select-caret {
+  right: 15px;
+  top: 15px;
+  width: 8px;
+  height: 8px;
+}
+
+.tool-controls .compact-select-menu {
+  top: calc(100% + 6px);
+  border-radius: 8px;
+}
+
+.tool-controls .compact-select-option {
+  min-height: 32px;
+  padding: 0 10px;
+  font-size: 12.5px;
+  line-height: 1.2;
+}
+
+.tool-controls .compact-select-count {
+  min-width: 22px;
+  height: 18px;
+  font-size: 10px;
+}
+
 .model-grid {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
