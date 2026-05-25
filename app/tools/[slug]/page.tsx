@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { BackToTop } from "@/components/BackToTop";
+import { CapabilityLabel } from "@/components/CapabilityLabel";
 import { CodePanel } from "@/components/CodePanel";
 import { DemoGallery } from "@/components/DemoGallery";
 import { FloatingLinks } from "@/components/FloatingLinks";
@@ -10,7 +11,7 @@ import { ToolDetailSearch, type ToolDetailSearchEntry } from "@/components/ToolD
 import { ToolEngagement } from "@/components/ToolEngagement";
 import { realTools, tools, type Tool, type ToolLink } from "@/data/tools";
 import { assetPath } from "@/lib/assets";
-import { toolHeroPosition } from "@/lib/tools";
+import { capabilityLabelForTool, toolHeroPosition } from "@/lib/tools";
 import { buildReturnSchema, inferParameters } from "@/lib/toolDocs";
 
 export const dynamicParams = false;
@@ -224,7 +225,7 @@ export default async function ToolDetailPage({ params }: { params: Promise<{ slu
           </div>
           <div className="hero-footer">
             <div className="badge-row">
-              <span className="badge blue">{tool.task}</span>
+              <CapabilityLabel info={capabilityLabelForTool(tool.category, tool.task)} />
               <span className="badge">{tool.runtime}</span>
               <span className="badge green">{tool.status}</span>
             </div>

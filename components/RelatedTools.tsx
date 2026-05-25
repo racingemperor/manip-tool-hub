@@ -4,7 +4,8 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import type { Tool } from "@/data/tools";
 import { assetPath } from "@/lib/assets";
-import { categoryShortLabel, toolHeroPosition } from "@/lib/tools";
+import { capabilityLabelForTool, toolHeroPosition } from "@/lib/tools";
+import { CapabilityLabel } from "./CapabilityLabel";
 
 function pickRandom(items: Tool[], count: number) {
   return [...items].sort(() => Math.random() - 0.5).slice(0, count);
@@ -44,7 +45,7 @@ export function RelatedTools({ current, candidates }: { current: Tool; candidate
             style={backgroundImage ? { backgroundImage, backgroundPosition } : undefined}
           >
             <div className="related-content">
-              <span className="badge">{categoryShortLabel(tool.category, tool.task)}</span>
+              <CapabilityLabel info={capabilityLabelForTool(tool.category, tool.task)} variant="dark" />
               <strong>{tool.title}</strong>
               <p>{tool.summary}</p>
             </div>

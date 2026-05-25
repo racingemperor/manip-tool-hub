@@ -1,7 +1,8 @@
 import Link from "next/link";
 import type { Tool } from "@/data/tools";
 import { assetPath } from "@/lib/assets";
-import { categoryShortLabel, toolHeroPosition, venueLabel } from "@/lib/tools";
+import { capabilityLabelForTool, toolHeroPosition, venueLabel } from "@/lib/tools";
+import { CapabilityLabel } from "./CapabilityLabel";
 import { ToolEngagement } from "./ToolEngagement";
 
 export function ToolCard({ tool }: { tool: Tool }) {
@@ -20,12 +21,12 @@ export function ToolCard({ tool }: { tool: Tool }) {
         >
           <span>{tool.task}</span>
         </div>
-        <div className="tool-card-body">
-          <div className="card-title">
-            <span>{tool.title}</span>
-            <span className="badge blue">{categoryShortLabel(tool.category, tool.task)}</span>
-          </div>
-          <p>{cardSummary}</p>
+          <div className="tool-card-body">
+            <div className="card-title">
+              <span>{tool.title}</span>
+            </div>
+            <CapabilityLabel info={capabilityLabelForTool(tool.category, tool.task)} variant="compact" />
+            <p>{cardSummary}</p>
           <div className="tool-card-tags">
             <span className="badge">{venueLabel(tool)}</span>
             <span className="badge green">{tool.status}</span>

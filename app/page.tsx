@@ -1,9 +1,10 @@
 import Link from "next/link";
+import { CapabilityLabel } from "@/components/CapabilityLabel";
 import { SiteShell } from "@/components/SiteShell";
 import { leaderboardRows } from "@/data/leaderboard";
 import { realTools, toolCategories, type ToolCategory } from "@/data/tools";
 import { assetPath } from "@/lib/assets";
-import { categoryShortLabel, toolHeroPosition } from "@/lib/tools";
+import { capabilityLabelForTool, toolHeroPosition } from "@/lib/tools";
 
 type HomeTone = "amber" | "indigo" | "violet" | "emerald" | "sky" | "rose" | "teal";
 type HomeIconName = "dataset" | "leaderboard" | "tools" | "explore" | "perception" | "cognition" | "reasoning" | "execution";
@@ -170,7 +171,7 @@ export default function HomePage() {
                     key={tool.slug}
                     style={backgroundImage ? { backgroundImage, backgroundPosition } : undefined}
                   >
-                    <span className="badge">{categoryShortLabel(tool.category, tool.task)}</span>
+                    <CapabilityLabel info={capabilityLabelForTool(tool.category, tool.task)} variant="dark" />
                     <div>
                       <strong>{tool.title}</strong>
                       <p>{tool.summary}</p>
