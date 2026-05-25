@@ -54,6 +54,13 @@ export function categoryShortLabel(category: Tool["category"], task?: string) {
   return "Control";
 }
 
+export function capabilityLabelForCategory(category: Tool["category"]): CapabilityLabelInfo {
+  if (category === "Perception and Grounding") return { label: "Perception and Grounding", icon: "box" };
+  if (category === "Cognition and State Modeling") return { label: "Cognition and State Modeling", icon: "memory" };
+  if (category === "Reasoning and Planning") return { label: "Reasoning and Planning", icon: "graph" };
+  return { label: "Execution and Control", icon: "control" };
+}
+
 export function capabilityLabelForTool(category: Tool["category"], task?: string): CapabilityLabelInfo {
   const normalizedTask = task?.toLowerCase() || "";
 

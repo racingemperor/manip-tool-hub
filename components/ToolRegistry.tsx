@@ -1,21 +1,25 @@
 "use client";
 
 import { useDeferredValue, useEffect, useMemo, useRef, useState, type FormEvent } from "react";
-import { toolCategories, tools } from "@/data/tools";
-import { getToolResources, searchHaystack } from "@/lib/tools";
+import { toolCategories, tools, type ToolCategory } from "@/data/tools";
+import { capabilityLabelForCategory, getToolResources, searchHaystack } from "@/lib/tools";
+import { CapabilityLabel } from "./CapabilityLabel";
 import { ToolCard } from "./ToolCard";
 
 const pageSize = 8;
 type PaginationItem = number | "ellipsis";
+type CategoryFilter = ToolCategory | "All";
 
-function categoryButtonLabel(category: string, count: number) {
+function categoryButtonLabel(category: CategoryFilter, count: number) {
   if (category === "All") return `All Tools (${tools.length})`;
   return `${category} (${count})`;
 }
 
 export function ToolRegistry() {
   const resultsRef = useRef<HTMLDivElement>(null);
-  const [category, setCategory] = useState("All");
+  const categoryMenuRef = useRef<HTMLDivElement>(null);
+  const [category, setCategory] = useState<CategoryFilter>("All");
+  const [isCategoryMenuOpen, setIsCategoryMenuOpen] = useState(false);
   const [status, setStatus] = useState("All");
   const [resource, setResource] = useState("All");
   const [query, setQuery] = useState("");
@@ -27,13 +31,32 @@ export function ToolRegistry() {
     const params = new URLSearchParams(window.location.search);
     const nextCategory = params.get("category");
     const nextQuery = params.get("q");
-    if (nextCategory && ["All", ...toolCategories].includes(nextCategory)) setCategory(nextCategory);
+    if (nextCategory === "All" || toolCategories.includes(nextCategory as ToolCategory)) setCategory(nextCategory as CategoryFilter);
     if (nextQuery) setQuery(nextQuery);
   }, []);
 
   useEffect(() => {
     setPage(1);
   }, [category, status, resource, query]);
+
+  useEffect(() => {
+    if (!isCategoryMenuOpen) return;
+
+    function closeCategoryMenu(event: MouseEvent) {
+      if (!categoryMenuRef.current?.contains(event.target as Node)) setIsCategoryMenuOpen(false);
+    }
+
+    function handleCategoryKey(event: KeyboardEvent) {
+      if (event.key === "Escape") setIsCategoryMenuOpen(false);
+    }
+
+    document.addEventListener("mousedown", closeCategoryMenu);
+    document.addEventListener("keydown", handleCategoryKey);
+    return () => {
+      document.removeEventListener("mousedown", closeCategoryMenu);
+      document.removeEventListener("keydown", handleCategoryKey);
+    };
+  }, [isCategoryMenuOpen]);
 
   const filteredTools = useMemo(() => {
     const normalized = deferredQuery.trim().toLowerCase();
@@ -51,6 +74,10 @@ export function ToolRegistry() {
       toolCategories.map((item) => [item, tools.filter((tool) => tool.category === item).length])
     );
   }, []);
+  const categoryOptions = useMemo<Array<{ value: CategoryFilter; label: string; count: number }>>(() => [
+    { value: "All", label: `All Tools (${tools.length})`, count: tools.length },
+    ...toolCategories.map((item) => ({ value: item, label: item, count: counts[item] }))
+  ], [counts]);
   const totalPages = Math.max(1, Math.ceil(filteredTools.length / pageSize));
   const safePage = Math.min(page, totalPages);
   const paginatedTools = filteredTools.slice((safePage - 1) * pageSize, safePage * pageSize);
@@ -101,12 +128,42 @@ export function ToolRegistry() {
           value={query}
           onChange={(event) => setQuery(event.target.value)}
         />
-        <select className="select tool-category-filter" aria-label="Tool category" value={category} onChange={(event) => setCategory(event.target.value)}>
-          <option value="All">{categoryButtonLabel("All", tools.length)}</option>
-          {toolCategories.map((item) => (
-            <option value={item} key={item}>{categoryButtonLabel(item, counts[item])}</option>
-          ))}
-        </select>
+        <div className="category-menu" ref={categoryMenuRef}>
+          <button
+            className="category-menu-trigger"
+            type="button"
+            aria-haspopup="listbox"
+            aria-expanded={isCategoryMenuOpen}
+            onClick={() => setIsCategoryMenuOpen((open) => !open)}
+          >
+            <span>{categoryButtonLabel(category, category === "All" ? tools.length : counts[category])}</span>
+            <span className="category-menu-caret" aria-hidden="true" />
+          </button>
+          {isCategoryMenuOpen ? (
+            <div className="category-menu-popover" role="listbox" aria-label="Tool category">
+              {categoryOptions.map((item) => (
+                <button
+                  className={`category-menu-option ${item.value === category ? "active" : ""}`}
+                  type="button"
+                  role="option"
+                  aria-selected={item.value === category}
+                  key={item.value}
+                  onClick={() => {
+                    setCategory(item.value);
+                    setIsCategoryMenuOpen(false);
+                  }}
+                >
+                  {item.value === "All" ? (
+                    <span className="category-menu-all">All Tools</span>
+                  ) : (
+                    <CapabilityLabel info={capabilityLabelForCategory(item.value)} variant="menu" />
+                  )}
+                  <span className="category-menu-count">{item.count}</span>
+                </button>
+              ))}
+            </div>
+          ) : null}
+        </div>
         <select className="select tool-status-filter" aria-label="Tool status" value={status} onChange={(event) => setStatus(event.target.value)}>
           <option value="All">All statuses</option>
           <option value="Draft">Draft</option>

@@ -117,7 +117,7 @@ function CapabilityIcon({ name }: { name: CapabilityIconName }) {
   );
 }
 
-export function CapabilityLabel({ info, variant = "light" }: { info: CapabilityLabelInfo; variant?: "light" | "dark" | "compact" }) {
+export function CapabilityLabel({ info, variant = "light" }: { info: CapabilityLabelInfo; variant?: "light" | "dark" | "compact" | "menu" }) {
   return (
     <span className={`capability-label ${variant}`}>
       <CapabilityIcon name={info.icon} />
