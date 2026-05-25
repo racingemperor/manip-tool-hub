@@ -1600,6 +1600,7 @@ tr:last-child td {
 }
 
 .tool-thumb {
+  position: relative;
   height: 90px;
   background:
     linear-gradient(135deg, rgba(17, 24, 39, 0.08), rgba(53, 98, 255, 0.16)),
@@ -1636,6 +1637,40 @@ tr:last-child td {
   overflow: hidden;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
+}
+
+.tool-thumb .tool-category-mark {
+  position: absolute;
+  top: 9px;
+  left: 9px;
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  display: grid;
+  place-items: center;
+  color: var(--tone-ink);
+  background: rgba(255, 255, 255, 0.82);
+  border: 1px solid color-mix(in srgb, var(--tone-border) 72%, white);
+  box-shadow: 0 8px 20px rgba(16, 24, 40, 0.14);
+  text-shadow: none;
+  z-index: 2;
+}
+
+.tool-thumb.image .tool-category-mark {
+  display: grid;
+  max-width: none;
+  padding: 0;
+  color: var(--tone-ink);
+  background: rgba(255, 255, 255, 0.86);
+  text-shadow: none;
+  overflow: visible;
+  -webkit-line-clamp: unset;
+}
+
+.tool-category-mark-icon {
+  width: 21px;
+  height: 21px;
+  display: block;
 }
 
 .tool-card h3 {

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import type { Tool } from "@/data/tools";
 import { assetPath } from "@/lib/assets";
+import { CategoryIcon, categoryVisuals, toneClass } from "@/lib/categoryVisuals";
 import { capabilityLabelForTool, toolHeroPosition, venueLabel } from "@/lib/tools";
 import { CapabilityLabel } from "./CapabilityLabel";
 import { ToolEngagement } from "./ToolEngagement";
@@ -19,6 +20,9 @@ export function ToolCard({ tool }: { tool: Tool }) {
           className={`tool-thumb ${tool.heroImage ? "image" : ""}`}
           style={backgroundImage ? { backgroundImage, backgroundPosition } : undefined}
         >
+          <span className={`tool-category-mark ${toneClass(categoryVisuals[tool.category].tone)}`} aria-hidden="true">
+            <CategoryIcon name={categoryVisuals[tool.category].icon} className="tool-category-mark-icon" />
+          </span>
           <span>{tool.task}</span>
         </div>
           <div className="tool-card-body">
