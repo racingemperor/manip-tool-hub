@@ -1198,27 +1198,29 @@ h1 {
 }
 
 .datasets-page .compact-select {
-  min-width: 140px;
+  min-width: 150px;
 }
 
 .datasets-page .compact-select-trigger {
-  height: 34px;
-  padding: 0 30px 0 11px;
-  font-size: 14px;
+  height: 38px;
+  border-radius: 8px;
+  padding: 0 36px 0 12px;
+  font-size: 16px;
   line-height: 1.2;
+  font-weight: 650;
 }
 
 .datasets-page .compact-select-caret {
-  right: 13px;
-  top: 13px;
-  width: 7px;
-  height: 7px;
+  right: 15px;
+  top: 15px;
+  width: 8px;
+  height: 8px;
 }
 
 .datasets-page .compact-select-option {
-  min-height: 32px;
-  padding: 0 10px;
-  font-size: 13px;
+  min-height: 36px;
+  padding: 0 12px;
+  font-size: 15px;
   line-height: 1.2;
 }
 
