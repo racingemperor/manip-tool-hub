@@ -1426,27 +1426,27 @@ tr:last-child td {
 
 .tool-controls {
   display: grid;
-  grid-template-columns: minmax(240px, 1fr) minmax(230px, auto) minmax(112px, auto) minmax(112px, auto);
+  grid-template-columns: minmax(240px, 1fr) minmax(270px, auto) minmax(150px, auto) minmax(150px, auto);
   gap: 8px;
   margin-bottom: 14px;
 }
 
 .tool-category-filter {
-  min-width: 230px;
+  min-width: 270px;
 }
 
 .tool-status-filter,
 .tool-resource-filter {
-  min-width: 112px;
+  min-width: 150px;
 }
 
 .tool-controls .compact-select-trigger {
   height: 38px;
   border-radius: 8px;
-  padding: 0 34px 0 12px;
-  font-size: 13px;
+  padding: 0 36px 0 12px;
+  font-size: 16px;
   line-height: 1.2;
-  font-weight: 700;
+  font-weight: 650;
 }
 
 .tool-controls .compact-select-caret {
@@ -1462,9 +1462,9 @@ tr:last-child td {
 }
 
 .tool-controls .compact-select-option {
-  min-height: 32px;
-  padding: 0 10px;
-  font-size: 12.5px;
+  min-height: 36px;
+  padding: 0 12px;
+  font-size: 15px;
   line-height: 1.2;
 }
 
