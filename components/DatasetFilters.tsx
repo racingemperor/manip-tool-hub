@@ -30,9 +30,27 @@ export function DatasetFilters() {
 
   return (
     <div className="filters">
-      <CompactSelect ariaLabel="Task filter" value={task} options={taskOptions} onChange={setTask} />
-      <CompactSelect ariaLabel="Format filter" value={format} options={formatOptions} onChange={setFormat} />
-      <CompactSelect ariaLabel="License filter" value={license} options={licenseOptions} onChange={setLicense} />
+      <CompactSelect
+        ariaLabel="Dataset task"
+        value={task}
+        options={taskOptions}
+        getButtonLabel={() => "Task"}
+        onChange={setTask}
+      />
+      <CompactSelect
+        ariaLabel="Dataset format"
+        value={format}
+        options={formatOptions}
+        getButtonLabel={() => "Format"}
+        onChange={setFormat}
+      />
+      <CompactSelect
+        ariaLabel="Dataset license"
+        value={license}
+        options={licenseOptions}
+        getButtonLabel={() => "License"}
+        onChange={setLicense}
+      />
     </div>
   );
 }

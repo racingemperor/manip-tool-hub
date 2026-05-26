@@ -59,8 +59,20 @@ export function Leaderboard() {
 
       <div className="toolbar leaderboard-toolbar">
         <div className="filters">
-          <CompactSelect ariaLabel="Leaderboard category filter" value={category} options={categoryOptions} onChange={setCategory} />
-          <CompactSelect ariaLabel="Leaderboard sort logic" value={sort} options={sortOptions} onChange={setSort} />
+          <CompactSelect
+            ariaLabel="Leaderboard category"
+            value={category}
+            options={categoryOptions}
+            getButtonLabel={() => "Benchmark category"}
+            onChange={setCategory}
+          />
+          <CompactSelect
+            ariaLabel="Leaderboard sort"
+            value={sort}
+            options={sortOptions}
+            getButtonLabel={() => "Ranking basis"}
+            onChange={setSort}
+          />
         </div>
       </div>
 

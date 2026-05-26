@@ -27,11 +27,6 @@ function PageArrowIcon({ direction }: { direction: "previous" | "next" }) {
   );
 }
 
-function categoryButtonLabel(category: CategoryFilter, count: number) {
-  if (category === "All") return `All Tools (${tools.length})`;
-  return `${category} (${count})`;
-}
-
 export function ToolRegistry() {
   const resultsRef = useRef<HTMLDivElement>(null);
   const [category, setCategory] = useState<CategoryFilter>("All");
@@ -147,7 +142,7 @@ export function ToolRegistry() {
           className="tool-category-filter"
           value={category}
           options={categoryOptions}
-          getButtonLabel={(option) => categoryButtonLabel(option.value as CategoryFilter, option.count ?? tools.length)}
+          getButtonLabel={() => "Capability"}
           onChange={(value) => setCategory(value as CategoryFilter)}
           renderOption={(item) => (
             <>
@@ -165,7 +160,7 @@ export function ToolRegistry() {
           className="tool-status-filter"
           value={status}
           options={statusOptions}
-          getButtonLabel={(option) => option.value === "All" ? "Readiness" : `Readiness: ${option.label}`}
+          getButtonLabel={() => "Readiness"}
           onChange={setStatus}
           renderOption={(item) => (
             <>
@@ -174,7 +169,14 @@ export function ToolRegistry() {
             </>
           )}
         />
-        <CompactSelect ariaLabel="Tool resource" className="tool-resource-filter" value={resource} options={resourceOptions} onChange={setResource} />
+        <CompactSelect
+          ariaLabel="Tool resource"
+          className="tool-resource-filter"
+          value={resource}
+          options={resourceOptions}
+          getButtonLabel={() => "Resource"}
+          onChange={setResource}
+        />
       </div>
 
       <div className="tool-results-head" ref={resultsRef} aria-live="polite">
