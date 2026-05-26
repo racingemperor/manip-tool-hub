@@ -1574,7 +1574,7 @@ tr:last-child td {
   display: grid;
   grid-template-rows: minmax(0, 1fr) auto;
   color: inherit;
-  height: 240px;
+  min-height: 240px;
   transition: border-color 0.16s ease, box-shadow 0.16s ease, transform 0.16s ease;
 }
 
@@ -1585,19 +1585,17 @@ tr:last-child td {
 
 .tool-card-main {
   display: grid;
-  grid-template-rows: auto minmax(0, 1fr);
+  grid-template-rows: auto auto;
   color: inherit;
   min-height: 0;
-  overflow: hidden;
 }
 
 .tool-card-body {
   min-height: 0;
   padding: 8px 12px 6px;
   display: grid;
-  grid-template-rows: auto auto auto;
+  grid-template-rows: auto auto auto auto;
   align-content: start;
-  overflow: hidden;
 }
 
 .tool-thumb {
@@ -1820,9 +1818,7 @@ tr:last-child td {
   flex-wrap: wrap;
   gap: 5px;
   margin-top: 7px;
-  min-height: 0;
-  max-height: 38px;
-  overflow: hidden;
+  min-height: 22px;
 }
 
 .tool-card .badge {
@@ -1970,7 +1966,7 @@ tr:last-child td {
 
 @supports (-webkit-touch-callout: none) {
   .tool-card {
-    height: 232px;
+    min-height: 270px;
   }
 
   .tool-thumb {
@@ -3799,8 +3795,20 @@ tr:last-child td {
     max-width: none;
   }
 
+  .datasets-page .filters,
+  .leaderboard-toolbar .filters {
+    width: 100%;
+    gap: 6px;
+  }
+
+  .datasets-page .compact-select,
+  .leaderboard-toolbar .compact-select {
+    flex: 1 1 0;
+    min-width: 0;
+  }
+
   .tool-card {
-    height: 236px;
+    min-height: 270px;
   }
 
   .tool-thumb {
@@ -3890,6 +3898,20 @@ tr:last-child td {
 
   .dataset-card {
     grid-template-columns: 1fr;
+  }
+
+  .datasets-page .dataset-card {
+    grid-template-columns: 1fr;
+    align-items: stretch;
+  }
+
+  .datasets-page .thumb {
+    width: 100%;
+    min-height: 104px;
+  }
+
+  .datasets-page .dataset-actions {
+    justify-content: stretch;
   }
 
   .leaderboard-track .table-wrap {
@@ -4141,7 +4163,7 @@ tr:last-child td {
 
 @media (max-width: 420px) {
   .tool-card {
-    height: 232px;
+    min-height: 270px;
   }
 
   .tool-thumb {
