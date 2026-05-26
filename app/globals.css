@@ -2892,10 +2892,19 @@ tr:last-child td {
 
 .detail-bento-grid .paper-summary {
   display: inline-grid;
+  grid-template-columns: 1fr;
 }
 
 .detail-bento-grid .usage-card {
   min-height: 0;
+}
+
+.detail-bento-grid .paper-summary .paper-cover {
+  aspect-ratio: 16 / 9;
+}
+
+.detail-bento-grid .paper-summary .field-row {
+  grid-template-columns: minmax(72px, max-content) minmax(0, 1fr);
 }
 
 .detail-bento-grid .doc-code.equal-preview:not(.expanded) {
