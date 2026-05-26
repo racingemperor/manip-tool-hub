@@ -11,6 +11,12 @@ const pageSize = 8;
 type PaginationItem = number | "ellipsis";
 type CategoryFilter = ToolCategory | "All";
 const readinessOrder = ["Docs Ready", "Code Linked", "Runnable", "Verified"] as const;
+const resourceFilters = [
+  { value: "Paper", label: "Paper" },
+  { value: "Demo images", label: "Demo images" },
+  { value: "API docs", label: "Code docs" },
+  { value: "Benchmark", label: "Benchmark" }
+] as const;
 
 function PageArrowIcon({ direction }: { direction: "previous" | "next" }) {
   return (
@@ -80,12 +86,14 @@ export function ToolRegistry() {
       .filter((item) => statusCounts[item] > 0)
       .map((item) => ({ value: item, label: item, count: statusCounts[item] }))
   ];
+  const resourceCounts = useMemo(() => {
+    return Object.fromEntries(
+      resourceFilters.map((item) => [item.value, tools.filter((tool) => getToolResources(tool).includes(item.value)).length])
+    );
+  }, []);
   const resourceOptions: CompactSelectOption[] = [
-    { value: "All", label: "All resources" },
-    { value: "Paper", label: "Paper" },
-    { value: "Demo images", label: "Demo images" },
-    { value: "API docs", label: "Code docs" },
-    { value: "Benchmark", label: "Benchmark" }
+    { value: "All", label: "All resources", count: tools.length },
+    ...resourceFilters.map((item) => ({ value: item.value, label: item.label, count: resourceCounts[item.value] }))
   ];
   const totalPages = Math.max(1, Math.ceil(filteredTools.length / pageSize));
   const safePage = Math.min(page, totalPages);
@@ -176,6 +184,12 @@ export function ToolRegistry() {
           options={resourceOptions}
           getButtonLabel={() => "Resource"}
           onChange={setResource}
+          renderOption={(item) => (
+            <>
+              <span className="compact-select-text">{item.label}</span>
+              {typeof item.count === "number" ? <span className="compact-select-count">{item.count}</span> : null}
+            </>
+          )}
         />
       </div>
 
