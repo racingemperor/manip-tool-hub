@@ -322,7 +322,7 @@ export default async function ToolDetailPage({ params }: { params: Promise<{ slu
               </div>
             </section>
 
-            <section className="card detail-module module-full detail-bento-module" id="how-to-use">
+            <section className="detail-module module-full detail-bento-module" id="how-to-use">
               <div className="card-head">
                 <div>
                   <h2>How To Use</h2>
@@ -330,18 +330,21 @@ export default async function ToolDetailPage({ params }: { params: Promise<{ slu
                 </div>
               </div>
 
-              <div className={`resource-link-grid detail-bento-resources count-${resourceLinks.length}`}>
-                {resourceLinks.length ? resourceLinks.map((link) => (
-                  <a href={link.url} key={`${link.label}-${link.url}`} target="_blank" rel="noreferrer">
-                    <strong>{link.label}</strong>
-                    <span>{link.url}</span>
-                  </a>
-                )) : (
-                  <div className="empty-track">Add GitHub, Hugging Face, paper, project page, or dataset links for this tool.</div>
-                )}
-              </div>
-
               <div className="detail-bento-grid">
+                <article className="usage-card bento-resources">
+                  <h3>Resources</h3>
+                  <div className={`resource-link-grid detail-bento-resources count-${resourceLinks.length}`}>
+                    {resourceLinks.length ? resourceLinks.map((link) => (
+                      <a href={link.url} key={`${link.label}-${link.url}`} target="_blank" rel="noreferrer">
+                        <strong>{link.label}</strong>
+                        <span>{link.url}</span>
+                      </a>
+                    )) : (
+                      <div className="empty-track">Add GitHub, Hugging Face, paper, project page, or dataset links for this tool.</div>
+                    )}
+                  </div>
+                </article>
+
                 <article className="usage-card bento-notes">
                   <h3>Deployment Notes</h3>
                   <ol className="usage-steps">
@@ -426,32 +429,38 @@ export default async function ToolDetailPage({ params }: { params: Promise<{ slu
                       </tbody>
                     </table>
                   </div>
-                  <div className="field-row"><span>Artifacts</span><strong>{tool.benchmarkArtifacts || "Add paper, logs, videos, configs, or evaluation files."}</strong></div>
                 </div>
+
+                <article className="usage-card bento-artifacts">
+                  <h3>Artifacts</h3>
+                  <p>{tool.benchmarkArtifacts || "Add paper, logs, videos, configs, or evaluation files."}</p>
+                </article>
               </div>
             </section>
 
-            <section className="card detail-module module-full">
-              <div className="card-head">
-                <div>
-                  <h2>Demo Images</h2>
-                  <p className="muted">Visual references from the original tool. Click any image to inspect the original size.</p>
+            <div className="detail-tail-grid">
+              <section className="card detail-module">
+                <div className="card-head">
+                  <div>
+                    <h2>Demo Images</h2>
+                    <p className="muted">Visual references from the original tool. Click any image to inspect the original size.</p>
+                  </div>
                 </div>
-              </div>
-              <div className="demo-module">
-                <DemoGallery demos={demos} />
-              </div>
-            </section>
+                <div className="demo-module">
+                  <DemoGallery demos={demos} />
+                </div>
+              </section>
 
-            <section className="card detail-module module-full" id="related">
-              <div className="card-head">
-                <div>
-                  <h2>Related Tools</h2>
-                  <p className="muted">Three tools are sampled from the same category whenever possible.</p>
+              <section className="card detail-module" id="related">
+                <div className="card-head">
+                  <div>
+                    <h2>Related Tools</h2>
+                    <p className="muted">Three tools are sampled from the same category whenever possible.</p>
+                  </div>
                 </div>
-              </div>
-              <RelatedTools current={tool} candidates={realTools} />
-            </section>
+                <RelatedTools current={tool} candidates={realTools} />
+              </section>
+            </div>
           </div>
         </div>
       </main>

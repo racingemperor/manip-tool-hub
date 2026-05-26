@@ -2851,43 +2851,35 @@ tr:last-child td {
 
 .detail-bento-module {
   height: auto;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
 }
 
 .detail-bento-resources {
-  margin-bottom: 14px;
+  grid-template-columns: 1fr;
+  margin: 10px 0 0;
 }
 
 .detail-bento-grid {
   min-width: 0;
-  display: grid;
-  grid-template-columns: repeat(12, minmax(0, 1fr));
+  columns: 3 300px;
+  column-gap: 14px;
   gap: 14px;
-  align-items: stretch;
 }
 
 .detail-bento-grid > * {
   min-width: 0;
+  display: inline-block;
+  width: 100%;
+  margin: 0 0 14px;
+  break-inside: avoid;
+  page-break-inside: avoid;
 }
 
-.bento-notes {
-  grid-column: span 3;
-}
-
-.bento-example,
-.bento-result {
-  grid-column: span 4;
-}
-
-.bento-paper {
-  grid-column: span 7;
-}
-
-.bento-citation {
-  grid-column: span 5;
-}
-
-.bento-benchmark {
-  grid-column: 1 / -1;
+.bento-resources .resource-link-grid a {
+  min-height: 74px;
 }
 
 .detail-bento-grid .usage-card,
@@ -2898,12 +2890,42 @@ tr:last-child td {
   height: auto;
 }
 
+.detail-bento-grid .paper-summary {
+  display: inline-grid;
+}
+
 .detail-bento-grid .usage-card {
   min-height: 0;
 }
 
 .detail-bento-grid .doc-code.equal-preview:not(.expanded) {
-  height: 230px;
+  height: auto;
+  max-height: 250px;
+}
+
+.detail-bento-grid .benchmark-table-wrap {
+  max-height: 330px;
+  overflow: auto;
+}
+
+.bento-artifacts p {
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.55;
+  margin-top: 8px;
+}
+
+.detail-tail-grid {
+  min-width: 0;
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(360px, 0.72fr);
+  gap: 16px;
+  align-items: start;
+}
+
+.detail-tail-grid .detail-module {
+  height: auto;
 }
 
 .usage-layout {
@@ -3732,9 +3754,9 @@ tr:last-child td {
   }
 
   .content-grid,
+  .detail-tail-grid,
   .tool-intro-layout,
   .usage-layout,
-  .detail-bento-grid,
   .academic-layout,
   .paper-card,
   .paper-summary,
@@ -3954,16 +3976,11 @@ tr:last-child td {
   }
 
   .detail-bento-grid {
-    grid-template-columns: 1fr;
+    column-count: 1;
   }
 
-  .bento-notes,
-  .bento-example,
-  .bento-result,
-  .bento-paper,
-  .bento-citation,
-  .bento-benchmark {
-    grid-column: 1 / -1;
+  .detail-tail-grid {
+    grid-template-columns: 1fr;
   }
 
   .module-compact,
