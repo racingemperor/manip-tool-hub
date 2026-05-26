@@ -3,22 +3,37 @@
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import { leaderboardCategories, leaderboardRows } from "@/data/leaderboard";
+import type { ToolCategory } from "@/data/tools";
 import { emptyEngagementState, readEngagementState, type EngagementState } from "@/lib/engagement";
+import { capabilityLabelForCategory } from "@/lib/tools";
+import { CapabilityLabel } from "./CapabilityLabel";
 import { CompactSelect, type CompactSelectOption } from "./CompactSelect";
+import { FilterMenuLabel, type FilterIconName } from "./FilterMenuLabel";
+
+const sortIcons: Record<string, FilterIconName> = {
+  primary: "benchmark",
+  hotness: "hotness",
+  speed: "speed",
+  artifacts: "artifacts"
+};
 
 export function Leaderboard() {
   const [category, setCategory] = useState("All");
   const [sort, setSort] = useState("primary");
   const [engagement, setEngagement] = useState<EngagementState>(emptyEngagementState());
   const categoryOptions: CompactSelectOption[] = [
-    { value: "All", label: "All categories" },
-    ...leaderboardCategories.map((item) => ({ value: item.name, label: item.name }))
+    { value: "All", label: "All categories", count: leaderboardRows.length },
+    ...leaderboardCategories.map((item) => ({
+      value: item.name,
+      label: item.name,
+      count: leaderboardRows.filter((row) => row.category === item.name).length
+    }))
   ];
   const sortOptions: CompactSelectOption[] = [
-    { value: "primary", label: "Primary metric first" },
-    { value: "hotness", label: "Hotness first" },
-    { value: "speed", label: "Speed first" },
-    { value: "artifacts", label: "Artifacts first" }
+    { value: "primary", label: "Primary metric first", count: leaderboardRows.length },
+    { value: "hotness", label: "Hotness first", count: leaderboardRows.length },
+    { value: "speed", label: "Speed first", count: leaderboardRows.filter((row) => row.speed !== "Not reported").length },
+    { value: "artifacts", label: "Artifacts first", count: leaderboardRows.filter((row) => row.artifacts.length > 0).length }
   ];
 
   useEffect(() => {
@@ -65,6 +80,16 @@ export function Leaderboard() {
             options={categoryOptions}
             getButtonLabel={() => "Benchmark category"}
             onChange={setCategory}
+            renderOption={(item) => (
+              <>
+                {item.value === "All" ? (
+                  <FilterMenuLabel icon="all" label={item.label} />
+                ) : (
+                  <CapabilityLabel info={capabilityLabelForCategory(item.value as ToolCategory)} variant="menu" />
+                )}
+                {typeof item.count === "number" ? <span className="compact-select-count">{item.count}</span> : null}
+              </>
+            )}
           />
           <CompactSelect
             ariaLabel="Leaderboard sort"
@@ -72,6 +97,12 @@ export function Leaderboard() {
             options={sortOptions}
             getButtonLabel={() => "Ranking basis"}
             onChange={setSort}
+            renderOption={(item) => (
+              <>
+                <FilterMenuLabel icon={sortIcons[item.value] ?? "benchmark"} label={item.label} />
+                {typeof item.count === "number" ? <span className="compact-select-count">{item.count}</span> : null}
+              </>
+            )}
           />
         </div>
       </div>
