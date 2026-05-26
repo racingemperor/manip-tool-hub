@@ -1,6 +1,9 @@
 import Link from "next/link";
 import { SiteShell } from "@/components/SiteShell";
 import { realTools, toolCategories, tools } from "@/data/tools";
+import { categoryVisuals, toneClass } from "@/lib/categoryVisuals";
+
+type ExploreTone = "amber" | "indigo" | "violet" | "emerald" | "sky" | "rose" | "teal";
 
 const categoryCopy = {
   "Perception and Grounding": {
@@ -22,10 +25,38 @@ const categoryCopy = {
 } as const;
 
 const shortcuts = [
-  { q: "detection", badge: "Grounding", title: "Find open-vocabulary detectors", text: "Text-prompted detection and flexible vocabularies.", metric: "AP / FPS" },
-  { q: "segmentation", badge: "Segmentation", title: "Find mask and tracking tools", text: "Promptable segmentation and video masks.", metric: "J&F / AR" },
-  { q: "mapping", badge: "Mapping", title: "Find state and mapping tools", text: "SLAM, odometry, scene graphs, and reconstruction.", metric: "RMSE / ms" }
-];
+  { q: "detection", badge: "Grounding", title: "Find open-vocabulary detectors", text: "Text-prompted detection and flexible vocabularies.", metric: "AP / FPS", tone: "emerald" },
+  { q: "segmentation", badge: "Segmentation", title: "Find mask and tracking tools", text: "Promptable segmentation and video masks.", metric: "J&F / AR", tone: "indigo" },
+  { q: "mapping", badge: "Mapping", title: "Find state and mapping tools", text: "SLAM, odometry, scene graphs, and reconstruction.", metric: "RMSE / ms", tone: "sky" }
+] satisfies Array<{ q: string; badge: string; title: string; text: string; metric: string; tone: ExploreTone }>;
+
+const startingPoints = [
+  {
+    href: "/tools/yolo-world",
+    badge: "35.4 AP",
+    title: "YOLO-World",
+    text: "Open-vocabulary detection for prompt-driven perception.",
+    action: "Open detail",
+    tone: "emerald"
+  },
+  {
+    href: "/tools/fast-livo2",
+    badge: "30.03 ms",
+    title: "FAST-LIVO2",
+    text: "Real-time LiDAR-inertial-visual odometry.",
+    action: "Open detail",
+    tone: "sky"
+  },
+  {
+    href: "/leaderboard",
+    badge: "Benchmarks",
+    title: "Compare real metrics",
+    text: "Review source-reported metrics by category.",
+    action: "Open Leaderboard",
+    tone: "amber",
+    badgeVariant: "green"
+  }
+] satisfies Array<{ href: string; badge: string; title: string; text: string; action: string; tone: ExploreTone; badgeVariant?: "green" }>;
 
 export default function ExplorePage() {
   return (
@@ -52,7 +83,7 @@ export default function ExplorePage() {
                 const isTemplateOnly = realTools.every((tool) => tool.category !== category);
                 const copy = categoryCopy[category];
                 return (
-                  <Link className="explore-card" href={`/tools?category=${encodeURIComponent(category)}`} key={category}>
+                  <Link className={`explore-card color-fill-card ${toneClass(categoryVisuals[category].tone)}`} href={`/tools?category=${encodeURIComponent(category)}`} key={category}>
                     <div>
                       <span className={`badge ${isTemplateOnly ? "" : "blue"}`}>{isTemplateOnly ? "Template" : `${count} tools`}</span>
                       <h3>{category}</h3>
@@ -76,7 +107,7 @@ export default function ExplorePage() {
             </div>
             <div className="explore-row">
               {shortcuts.map((item) => (
-                <Link className="explore-card" href={`/tools?q=${encodeURIComponent(item.q)}`} key={item.q}>
+                <Link className={`explore-card color-fill-card ${toneClass(item.tone)}`} href={`/tools?q=${encodeURIComponent(item.q)}`} key={item.q}>
                   <div>
                     <span className="badge blue">{item.badge}</span>
                     <h3>{item.title}</h3>
@@ -96,30 +127,16 @@ export default function ExplorePage() {
               </div>
             </div>
             <div className="explore-row">
-              <Link className="explore-card" href="/tools/yolo-world">
-                <div>
-                  <span className="badge blue">35.4 AP</span>
-                  <h3>YOLO-World</h3>
-                  <p>Open-vocabulary detection for prompt-driven perception.</p>
-                </div>
-                <div className="meta-row"><span className="badge">Open detail</span></div>
-              </Link>
-              <Link className="explore-card" href="/tools/fast-livo2">
-                <div>
-                  <span className="badge blue">30.03 ms</span>
-                  <h3>FAST-LIVO2</h3>
-                  <p>Real-time LiDAR-inertial-visual odometry.</p>
-                </div>
-                <div className="meta-row"><span className="badge">Open detail</span></div>
-              </Link>
-              <Link className="explore-card" href="/leaderboard">
-                <div>
-                  <span className="badge green">Benchmarks</span>
-                  <h3>Compare real metrics</h3>
-                  <p>Review source-reported metrics by category.</p>
-                </div>
-                <div className="meta-row"><span className="badge">Open Leaderboard</span></div>
-              </Link>
+              {startingPoints.map((item) => (
+                <Link className={`explore-card color-fill-card ${toneClass(item.tone)}`} href={item.href} key={item.href}>
+                  <div>
+                    <span className={`badge ${item.badgeVariant ?? "blue"}`}>{item.badge}</span>
+                    <h3>{item.title}</h3>
+                    <p>{item.text}</p>
+                  </div>
+                  <div className="meta-row"><span className="badge">{item.action}</span></div>
+                </Link>
+              ))}
             </div>
           </div>
         </div>
