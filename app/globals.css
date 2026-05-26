@@ -1888,10 +1888,10 @@ tr:last-child td {
 .page-number,
 .page-ellipsis,
 .page-arrow {
-  height: 48px;
+  height: 38px;
   border-radius: 8px;
   color: #344054;
-  font-size: 21px;
+  font-size: 14px;
   font-weight: 500;
 }
 
@@ -1910,7 +1910,7 @@ tr:last-child td {
 .page-number,
 .page-ellipsis,
 .page-arrow {
-  width: 48px;
+  width: 38px;
   display: inline-grid;
   place-items: center;
 }
@@ -1943,8 +1943,8 @@ tr:last-child td {
 }
 
 .page-arrow-icon {
-  width: 24px;
-  height: 24px;
+  width: 18px;
+  height: 18px;
   display: block;
 }
 
@@ -3913,8 +3913,8 @@ tr:last-child td {
   .page-number,
   .page-ellipsis,
   .page-arrow {
-    height: 38px;
-    font-size: 17px;
+    height: 34px;
+    font-size: 13px;
   }
 
   .page-jump input {
@@ -3925,12 +3925,12 @@ tr:last-child td {
   .page-number,
   .page-ellipsis,
   .page-arrow {
-    width: 38px;
+    width: 34px;
   }
 
   .page-arrow-icon {
-    width: 20px;
-    height: 20px;
+    width: 16px;
+    height: 16px;
   }
 
   .page-jump {
