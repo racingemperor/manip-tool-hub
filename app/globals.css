@@ -262,7 +262,7 @@ p {
 .tool-search {
   height: 38px;
   padding: 0 12px;
-  font-size: 16px;
+  font-size: 14px;
   line-height: 1.2;
   font-weight: 400;
 }
@@ -1058,7 +1058,7 @@ h1 {
   border: 1px solid var(--line);
   border-radius: 8px;
   background: #ffffff;
-  color: var(--ink);
+  color: #344054;
   padding: 0 36px 0 12px;
   display: flex;
   align-items: center;
@@ -1066,7 +1066,7 @@ h1 {
   gap: 7px;
   cursor: pointer;
   text-align: left;
-  font-size: 16px;
+  font-size: 14px;
   line-height: 1.2;
   font-weight: 400;
   transition: border-color 0.16s ease, box-shadow 0.16s ease;
@@ -1117,19 +1117,19 @@ h1 {
 .compact-select-option {
   width: 100%;
   min-width: 0;
-  min-height: 46px;
+  min-height: 42px;
   border: 0;
   border-bottom: 1px solid #eef2f7;
   background: #ffffff;
-  color: #172033;
-  padding: 0 20px;
+  color: #344054;
+  padding: 0 18px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 12px;
   cursor: pointer;
   text-align: left;
-  font-size: 18px;
+  font-size: 15px;
   line-height: 1.2;
   font-weight: 400;
 }
@@ -1158,14 +1158,14 @@ h1 {
 }
 
 .compact-select-option .capability-label.menu .capability-label-icon {
-  width: 16px;
-  height: 16px;
-  flex: 0 0 16px;
+  width: 14px;
+  height: 14px;
+  flex: 0 0 14px;
   color: #667085;
 }
 
 .compact-select-option .capability-label.menu .capability-label-text {
-  color: #172033;
+  color: #344054;
   font-size: inherit;
   font-weight: inherit;
   line-height: inherit;
@@ -1173,8 +1173,8 @@ h1 {
 
 .compact-select-count {
   flex: 0 0 auto;
-  min-width: 30px;
-  height: 30px;
+  min-width: 26px;
+  height: 26px;
   border-radius: 999px;
   display: inline-flex;
   align-items: center;
@@ -1182,8 +1182,8 @@ h1 {
   background: #eef2f7;
   color: #475467;
   padding: 0 8px;
-  font-size: 16px;
-  font-weight: 800;
+  font-size: 14px;
+  font-weight: 700;
 }
 
 .dataset-card {
