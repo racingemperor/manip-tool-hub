@@ -2472,15 +2472,15 @@ tr:last-child td {
   display: grid;
   grid-template-columns: minmax(0, 7fr) minmax(360px, 5fr);
   gap: 16px;
-  align-items: stretch;
+  align-items: start;
 }
 
 .how-to-use-module {
-  min-height: 680px;
+  min-height: 560px;
 }
 
 .academic-side-module {
-  min-height: 680px;
+  min-height: 0;
 }
 
 .academic-side-module .academic-layout,
@@ -2886,16 +2886,28 @@ tr:last-child td {
 }
 
 .usage-layout {
-  grid-template-columns: minmax(0, 1fr);
+  grid-template-columns: minmax(220px, 0.9fr) minmax(0, 1.1fr);
+  grid-template-areas:
+    "notes example"
+    "notes result";
   align-items: stretch;
 }
 
 .usage-layout .usage-card {
-  min-height: 220px;
+  min-height: 0;
 }
 
 .usage-layout .usage-card:first-child {
-  min-height: 300px;
+  grid-area: notes;
+  min-height: 430px;
+}
+
+.usage-layout .usage-card:nth-child(2) {
+  grid-area: example;
+}
+
+.usage-layout .usage-card:nth-child(3) {
+  grid-area: result;
 }
 
 .usage-card {
