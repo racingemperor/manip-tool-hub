@@ -2466,6 +2466,14 @@ tr:last-child td {
   grid-column: 1 / -1;
 }
 
+.tool-introduction-module {
+  height: auto;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
 .tool-intro-layout,
 .usage-layout,
 .academic-layout {
@@ -2480,7 +2488,60 @@ tr:last-child td {
 }
 
 .tool-intro-layout {
-  grid-template-columns: 1fr;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  grid-auto-flow: dense;
+  align-items: start;
+}
+
+.tool-intro-layout > * {
+  min-width: 0;
+}
+
+.tool-introduction-module .brief-card,
+.tool-introduction-module .intro-input,
+.tool-introduction-module .intro-output,
+.tool-introduction-module .intro-trigger,
+.tool-introduction-module .intro-runtime,
+.tool-introduction-module .intro-before,
+.tool-introduction-module .intro-after {
+  grid-column: span 3;
+}
+
+.tool-introduction-module.has-preset .brief-card,
+.tool-introduction-module.has-preset .intro-after {
+  grid-column: span 7;
+}
+
+.tool-introduction-module.has-preset .intro-input,
+.tool-introduction-module.has-preset .intro-runtime,
+.tool-introduction-module.has-preset .intro-before {
+  grid-column: span 3;
+}
+
+.tool-introduction-module.has-preset .intro-output,
+.tool-introduction-module.has-preset .intro-trigger {
+  grid-column: span 4;
+}
+
+.tool-introduction-module.has-preset .intro-preset {
+  grid-column: 8 / -1;
+  grid-row: 1 / span 5;
+  align-self: stretch;
+  display: flex;
+  flex-direction: column;
+}
+
+.tool-introduction-module.no-preset .brief-card,
+.tool-introduction-module.no-preset .intro-input,
+.tool-introduction-module.no-preset .intro-output {
+  grid-column: span 4;
+}
+
+.tool-introduction-module.no-preset .intro-trigger,
+.tool-introduction-module.no-preset .intro-runtime,
+.tool-introduction-module.no-preset .intro-before,
+.tool-introduction-module.no-preset .intro-after {
+  grid-column: span 3;
 }
 
 .parameter-board {
@@ -2498,6 +2559,7 @@ tr:last-child td {
 }
 
 .io-flow article,
+.intro-flow-card,
 .usage-card,
 .citation-card,
 .paper-summary {
@@ -2508,26 +2570,30 @@ tr:last-child td {
   padding: 14px;
 }
 
-.io-flow article {
+.io-flow article,
+.intro-flow-card {
   display: grid;
   align-content: start;
   gap: 7px;
 }
 
-.io-flow span {
+.io-flow span,
+.intro-flow-card span {
   color: var(--accent);
   font-size: 12px;
   font-weight: 800;
 }
 
-.io-flow strong {
+.io-flow strong,
+.intro-flow-card strong {
   color: var(--ink);
   font-size: 15px;
   line-height: 1.35;
   overflow-wrap: anywhere;
 }
 
-.io-flow p {
+.io-flow p,
+.intro-flow-card p {
   color: var(--muted);
   font-size: 13px;
   line-height: 1.5;
@@ -2545,6 +2611,33 @@ tr:last-child td {
   color: #344054;
   font-size: 13px;
   line-height: 1.58;
+}
+
+.intro-preset {
+  min-width: 0;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #ffffff;
+  padding: 14px;
+}
+
+.intro-preset .preset-card {
+  margin-top: 10px;
+  flex: 1;
+  height: 100%;
+  grid-template-columns: minmax(180px, 0.9fr) minmax(0, 1.1fr);
+  align-items: stretch;
+}
+
+.intro-preset .preset-visual {
+  height: 100%;
+  min-height: 170px;
+  aspect-ratio: auto;
+  align-self: stretch;
+}
+
+.intro-preset .preset-copy {
+  height: 100%;
 }
 
 .preset-card {
@@ -2943,6 +3036,19 @@ tr:last-child td {
 
 .detail-tail-grid .detail-module {
   height: auto;
+}
+
+.demo-detail-module,
+.related-detail-module {
+  height: auto;
+}
+
+.related-detail-module {
+  grid-column: 1 / -1;
+}
+
+.related-detail-module .related-grid {
+  margin-top: 14px;
 }
 
 .usage-layout {
@@ -3788,6 +3894,50 @@ tr:last-child td {
 
   .hero-media h1 {
     font-size: 30px;
+  }
+
+  .tool-introduction-module .brief-card,
+  .tool-introduction-module .intro-input,
+  .tool-introduction-module .intro-output,
+  .tool-introduction-module .intro-trigger,
+  .tool-introduction-module .intro-runtime,
+  .tool-introduction-module .intro-before,
+  .tool-introduction-module .intro-after,
+  .tool-introduction-module.has-preset .brief-card,
+  .tool-introduction-module.has-preset .intro-input,
+  .tool-introduction-module.has-preset .intro-output,
+  .tool-introduction-module.has-preset .intro-trigger,
+  .tool-introduction-module.has-preset .intro-runtime,
+  .tool-introduction-module.has-preset .intro-before,
+  .tool-introduction-module.has-preset .intro-after,
+  .tool-introduction-module.no-preset .brief-card,
+  .tool-introduction-module.no-preset .intro-input,
+  .tool-introduction-module.no-preset .intro-output,
+  .tool-introduction-module.no-preset .intro-trigger,
+  .tool-introduction-module.no-preset .intro-runtime,
+  .tool-introduction-module.no-preset .intro-before,
+  .tool-introduction-module.no-preset .intro-after,
+  .tool-introduction-module.has-preset .intro-preset {
+    grid-column: 1 / -1;
+    grid-row: auto;
+  }
+
+  .tool-introduction-module.has-preset .intro-preset {
+    display: block;
+  }
+
+  .intro-preset .preset-card {
+    height: auto;
+    grid-template-columns: 1fr;
+  }
+
+  .intro-preset .preset-visual {
+    height: auto;
+    aspect-ratio: 4 / 3;
+  }
+
+  .intro-preset .preset-copy {
+    height: auto;
   }
 }
 

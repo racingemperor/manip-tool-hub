@@ -238,7 +238,7 @@ export default async function ToolDetailPage({ params }: { params: Promise<{ slu
 
         <div className="content-grid">
           <div className="main-stack">
-            <section className="card detail-module module-primary" id="tool-introduction">
+            <section className={`detail-module module-full tool-introduction-module ${tool.presetExample ? "has-preset" : "no-preset"}`} id="tool-introduction">
               <div className="card-head">
                 <div>
                   <h2>Tool Introduction</h2>
@@ -250,38 +250,31 @@ export default async function ToolDetailPage({ params }: { params: Promise<{ slu
                   <h3>Short Explanation</h3>
                   <p>{tool.shortExplanation || tool.summary}</p>
                 </article>
-                <div className="parameter-board">
-                  <div className="metric"><span>Input</span><strong>{tool.input}</strong></div>
-                  <div className="metric"><span>Output</span><strong>{tool.output}</strong></div>
-                  <div className="metric"><span>Trigger Timing</span><strong>{triggerText}</strong></div>
-                  <div className="metric"><span>Runtime</span><strong>{tool.runtime}</strong></div>
-                </div>
-                <div className="io-flow">
-                  <article>
-                    <span>Before</span>
-                    <strong>{tool.input}</strong>
-                    <p>Prepare the scene, image, video, sensor stream, prompt, or configuration expected by the original project.</p>
-                  </article>
-                  <article>
-                    <span>After</span>
-                    <strong>{tool.output}</strong>
-                    <p>Read the produced visualization, prediction, map, trajectory, mask, grasp pose, or other documented artifact.</p>
-                  </article>
-                </div>
+                <div className="metric intro-input"><span>Input</span><strong>{tool.input}</strong></div>
+                <div className="metric intro-output"><span>Output</span><strong>{tool.output}</strong></div>
+                <div className="metric intro-trigger"><span>Trigger Timing</span><strong>{triggerText}</strong></div>
+                <div className="metric intro-runtime"><span>Runtime</span><strong>{tool.runtime}</strong></div>
+                <article className="intro-flow-card intro-before">
+                  <span>Before</span>
+                  <strong>{tool.input}</strong>
+                  <p>Prepare the scene, image, video, sensor stream, prompt, or configuration expected by the original project.</p>
+                </article>
+                <article className="intro-flow-card intro-after">
+                  <span>After</span>
+                  <strong>{tool.output}</strong>
+                  <p>Read the produced visualization, prediction, map, trajectory, mask, grasp pose, or other documented artifact.</p>
+                </article>
+                {tool.presetExample ? (
+                  <div className="intro-preset">
+                    <div className="mini-section-head">
+                      <h3>Preset Example</h3>
+                      <p className="muted">A quick-run style example for the documentation page.</p>
+                    </div>
+                    <PresetExample example={tool.presetExample} />
+                  </div>
+                ) : null}
               </div>
             </section>
-
-            {tool.presetExample ? (
-              <section className="card detail-module module-secondary preset-module">
-                <div className="card-head">
-                  <div>
-                    <h2>Preset Example</h2>
-                    <p className="muted">A quick-run style example for the documentation page. The static site shows the workflow; the model runs in the original repository.</p>
-                  </div>
-                </div>
-                <PresetExample example={tool.presetExample} />
-              </section>
-            ) : null}
 
             <section className="detail-module module-full parameters-output-module">
               <div className="card-head">
@@ -438,29 +431,27 @@ export default async function ToolDetailPage({ params }: { params: Promise<{ slu
               </div>
             </section>
 
-            <div className="detail-tail-grid">
-              <section className="card detail-module">
-                <div className="card-head">
-                  <div>
-                    <h2>Demo Images</h2>
-                    <p className="muted">Visual references from the original tool. Click any image to inspect the original size.</p>
-                  </div>
+            <section className="card detail-module module-full demo-detail-module">
+              <div className="card-head">
+                <div>
+                  <h2>Demo Images</h2>
+                  <p className="muted">Visual references from the original tool. Click any image to inspect the original size.</p>
                 </div>
-                <div className="demo-module">
-                  <DemoGallery demos={demos} />
-                </div>
-              </section>
+              </div>
+              <div className="demo-module">
+                <DemoGallery demos={demos} />
+              </div>
+            </section>
 
-              <section className="card detail-module" id="related">
-                <div className="card-head">
-                  <div>
-                    <h2>Related Tools</h2>
-                    <p className="muted">Three tools are sampled from the same category whenever possible.</p>
-                  </div>
+            <section className="card detail-module module-full related-detail-module" id="related">
+              <div className="card-head">
+                <div>
+                  <h2>Related Tools</h2>
+                  <p className="muted">Three tools are sampled from the same category whenever possible.</p>
                 </div>
-                <RelatedTools current={tool} candidates={realTools} />
-              </section>
-            </div>
+              </div>
+              <RelatedTools current={tool} candidates={realTools} />
+            </section>
           </div>
         </div>
       </main>
