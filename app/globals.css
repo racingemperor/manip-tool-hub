@@ -1502,6 +1502,11 @@ tr:last-child td {
   min-width: min(100%, 150px);
 }
 
+.tool-status-filter {
+  flex-basis: 190px;
+  min-width: min(100%, 190px);
+}
+
 .model-grid {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));

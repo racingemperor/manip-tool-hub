@@ -10,6 +10,7 @@ import { ToolCard } from "./ToolCard";
 const pageSize = 8;
 type PaginationItem = number | "ellipsis";
 type CategoryFilter = ToolCategory | "All";
+const readinessOrder = ["Docs Ready", "Code Linked", "Runnable", "Verified"] as const;
 
 function PageArrowIcon({ direction }: { direction: "previous" | "next" }) {
   return (
@@ -73,13 +74,16 @@ export function ToolRegistry() {
     { value: "All", label: `All Tools (${tools.length})`, count: tools.length },
     ...toolCategories.map((item) => ({ value: item, label: item, count: counts[item] }))
   ], [counts]);
+  const statusCounts = useMemo(() => {
+    return Object.fromEntries(
+      readinessOrder.map((item) => [item, tools.filter((tool) => tool.status === item).length])
+    );
+  }, []);
   const statusOptions: CompactSelectOption[] = [
-    { value: "All", label: "All statuses" },
-    { value: "Draft", label: "Draft" },
-    { value: "Docs Ready", label: "Docs Ready" },
-    { value: "Code Linked", label: "Code Linked" },
-    { value: "Runnable", label: "Runnable" },
-    { value: "Verified", label: "Verified" }
+    { value: "All", label: "All readiness levels" },
+    ...readinessOrder
+      .filter((item) => statusCounts[item] > 0)
+      .map((item) => ({ value: item, label: item, count: statusCounts[item] }))
   ];
   const resourceOptions: CompactSelectOption[] = [
     { value: "All", label: "All resources" },
@@ -156,7 +160,20 @@ export function ToolRegistry() {
             </>
           )}
         />
-        <CompactSelect ariaLabel="Tool status" className="tool-status-filter" value={status} options={statusOptions} onChange={setStatus} />
+        <CompactSelect
+          ariaLabel="Tool readiness"
+          className="tool-status-filter"
+          value={status}
+          options={statusOptions}
+          getButtonLabel={(option) => option.value === "All" ? "Readiness" : `Readiness: ${option.label}`}
+          onChange={setStatus}
+          renderOption={(item) => (
+            <>
+              <span className="compact-select-text">{item.label}</span>
+              {typeof item.count === "number" ? <span className="compact-select-count">{item.count}</span> : null}
+            </>
+          )}
+        />
         <CompactSelect ariaLabel="Tool resource" className="tool-resource-filter" value={resource} options={resourceOptions} onChange={setResource} />
       </div>
 
