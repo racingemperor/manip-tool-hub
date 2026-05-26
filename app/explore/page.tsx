@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { SiteShell } from "@/components/SiteShell";
-import { realTools, toolCategories, tools } from "@/data/tools";
+import { realTools, toolCategories, tools, type ToolCategory } from "@/data/tools";
+import { assetPath } from "@/lib/assets";
 import { categoryVisuals, toneClass } from "@/lib/categoryVisuals";
 
 type ExploreTone = "amber" | "indigo" | "violet" | "emerald" | "sky" | "rose" | "teal";
@@ -8,21 +9,29 @@ type ExploreTone = "amber" | "indigo" | "violet" | "emerald" | "sky" | "rose" | 
 const categoryCopy = {
   "Perception and Grounding": {
     text: "Detection, segmentation, depth, spatial localization, and language-vision grounding.",
-    chips: ["YOLO-World", "LINGO-Space"]
+    chips: ["YOLO-World", "LINGO-Space"],
+    image: "assets/tools/yolo-world/vis-lvis.png",
+    position: "center center"
   },
   "Cognition and State Modeling": {
     text: "Scene graphs, odometry, mapping, memory, relations, and internal state.",
-    chips: ["Hydra", "FAST-LIVO2"]
+    chips: ["Hydra", "FAST-LIVO2"],
+    image: "assets/tools/hydra/hydra.gif",
+    position: "center center"
   },
   "Reasoning and Planning": {
     text: "Goal reasoning, motion planning, action selection, verification, and replanning.",
-    chips: ["OMPL", "VIRF"]
+    chips: ["OMPL", "VIRF"],
+    image: "assets/tools/ompl/fetch-mmp.png",
+    position: "center center"
   },
   "Execution and Control": {
     text: "Grasp planning, navigation control, trajectory generation, monitoring, and actuation.",
-    chips: ["AnyGrasp", "Ruckig"]
+    chips: ["AnyGrasp", "Ruckig"],
+    image: "assets/tools/anygrasp/anygrasp-1-small.gif",
+    position: "center center"
   }
-} as const;
+} satisfies Record<ToolCategory, { text: string; chips: string[]; image: string; position: string }>;
 
 const shortcuts = [
   { q: "detection", badge: "Grounding", title: "Find open-vocabulary detectors", text: "Text-prompted detection and flexible vocabularies.", metric: "AP / FPS", tone: "emerald" },
@@ -83,7 +92,15 @@ export default function ExplorePage() {
                 const isTemplateOnly = realTools.every((tool) => tool.category !== category);
                 const copy = categoryCopy[category];
                 return (
-                  <Link className={`explore-card color-fill-card ${toneClass(categoryVisuals[category].tone)}`} href={`/tools?category=${encodeURIComponent(category)}`} key={category}>
+                  <Link
+                    className="explore-card explore-category-card"
+                    href={`/tools?category=${encodeURIComponent(category)}`}
+                    key={category}
+                    style={{
+                      backgroundImage: `linear-gradient(135deg, rgba(8, 13, 24, 0.76), rgba(8, 13, 24, 0.3)), url('${assetPath(copy.image)}')`,
+                      backgroundPosition: copy.position
+                    }}
+                  >
                     <div>
                       <span className={`badge ${isTemplateOnly ? "" : "blue"}`}>{isTemplateOnly ? "Template" : `${count} tools`}</span>
                       <h3>{category}</h3>
