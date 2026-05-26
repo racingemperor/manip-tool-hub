@@ -1364,6 +1364,26 @@ tr:last-child td {
   min-width: 190px;
 }
 
+.leaderboard-toolbar .leaderboard-category-filter {
+  flex: 0 0 430px;
+  min-width: min(100%, 360px);
+  max-width: min(100%, 430px);
+}
+
+.leaderboard-toolbar .leaderboard-sort-filter {
+  flex: 0 0 320px;
+  min-width: min(100%, 280px);
+  max-width: min(100%, 320px);
+}
+
+.leaderboard-category-filter .compact-select-menu {
+  width: min(480px, calc(100vw - 28px));
+}
+
+.leaderboard-sort-filter .compact-select-menu {
+  width: min(360px, calc(100vw - 28px));
+}
+
 .leaderboard-tracks {
   display: grid;
   gap: 16px;
@@ -3894,6 +3914,20 @@ tr:last-child td {
   .leaderboard-toolbar .compact-select {
     flex: 1 1 0;
     min-width: 0;
+  }
+
+  .leaderboard-toolbar .filters {
+    flex-wrap: wrap;
+  }
+
+  .leaderboard-toolbar .leaderboard-category-filter,
+  .leaderboard-toolbar .leaderboard-sort-filter {
+    flex: 1 1 100%;
+    max-width: none;
+  }
+
+  .leaderboard-toolbar .compact-select-menu {
+    width: min(100%, calc(100vw - 28px));
   }
 
   .tool-card {

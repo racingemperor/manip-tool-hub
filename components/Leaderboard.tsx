@@ -76,6 +76,7 @@ export function Leaderboard() {
         <div className="filters">
           <CompactSelect
             ariaLabel="Leaderboard category"
+            className="leaderboard-category-filter"
             value={category}
             options={categoryOptions}
             getButtonLabel={() => "Benchmark category"}
@@ -93,6 +94,7 @@ export function Leaderboard() {
           />
           <CompactSelect
             ariaLabel="Leaderboard sort"
+            className="leaderboard-sort-filter"
             value={sort}
             options={sortOptions}
             getButtonLabel={() => "Ranking basis"}
