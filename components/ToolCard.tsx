@@ -43,7 +43,6 @@ export function ToolCard({ tool }: { tool: Tool }) {
       </Link>
       <div className="tool-open-row">
         <ToolEngagement slug={tool.slug} />
-        <Link className="tool-open-link" href={`/tools/${tool.slug}`}>Open detail</Link>
       </div>
     </article>
   );
