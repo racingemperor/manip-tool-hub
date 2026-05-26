@@ -1365,19 +1365,19 @@ tr:last-child td {
 }
 
 .leaderboard-toolbar .leaderboard-category-filter {
-  flex: 0 0 430px;
-  min-width: min(100%, 360px);
-  max-width: min(100%, 430px);
-}
-
-.leaderboard-toolbar .leaderboard-sort-filter {
   flex: 0 0 320px;
-  min-width: min(100%, 280px);
+  min-width: min(100%, 300px);
   max-width: min(100%, 320px);
 }
 
+.leaderboard-toolbar .leaderboard-sort-filter {
+  flex: 0 0 340px;
+  min-width: min(100%, 320px);
+  max-width: min(100%, 340px);
+}
+
 .leaderboard-category-filter .compact-select-menu {
-  width: min(480px, calc(100vw - 28px));
+  width: min(430px, calc(100vw - 28px));
 }
 
 .leaderboard-sort-filter .compact-select-menu {
