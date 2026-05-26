@@ -2475,6 +2475,10 @@ tr:last-child td {
   align-items: start;
 }
 
+.detail-split-row .detail-module {
+  height: auto;
+}
+
 .how-to-use-module {
   min-height: 560px;
 }
@@ -2891,6 +2895,7 @@ tr:last-child td {
     "notes example"
     "notes result";
   align-items: stretch;
+  flex: 0 0 auto;
 }
 
 .usage-layout .usage-card {
