@@ -118,7 +118,6 @@ export default function HomePage() {
               <h2>Featured Tools</h2>
               <p>Representative entries with source images, paper context, demos, and implementation links.</p>
             </div>
-            <Link className="btn" href="/tools">All Tools</Link>
           </div>
           <div className="home-overview">
             <div className="home-spotlight-grid">
