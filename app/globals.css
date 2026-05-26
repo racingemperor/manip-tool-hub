@@ -1117,19 +1117,19 @@ h1 {
 .compact-select-option {
   width: 100%;
   min-width: 0;
-  min-height: 42px;
+  min-height: 40px;
   border: 0;
   border-bottom: 1px solid #eef2f7;
   background: #ffffff;
   color: #344054;
-  padding: 0 18px;
+  padding: 0 16px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 12px;
   cursor: pointer;
   text-align: left;
-  font-size: 15px;
+  font-size: 14px;
   line-height: 1.2;
   font-weight: 400;
 }
@@ -1158,9 +1158,9 @@ h1 {
 }
 
 .compact-select-option .capability-label.menu .capability-label-icon {
-  width: 14px;
-  height: 14px;
-  flex: 0 0 14px;
+  width: 13px;
+  height: 13px;
+  flex: 0 0 13px;
   color: #667085;
 }
 
@@ -1173,8 +1173,8 @@ h1 {
 
 .compact-select-count {
   flex: 0 0 auto;
-  min-width: 26px;
-  height: 26px;
+  min-width: 24px;
+  height: 24px;
   border-radius: 999px;
   display: inline-flex;
   align-items: center;
@@ -1182,7 +1182,7 @@ h1 {
   background: #eef2f7;
   color: #475467;
   padding: 0 8px;
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 700;
 }
 
