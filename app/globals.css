@@ -2466,46 +2466,6 @@ tr:last-child td {
   grid-column: 1 / -1;
 }
 
-.detail-split-row {
-  min-width: 0;
-  grid-column: 1 / -1;
-  display: grid;
-  grid-template-columns: minmax(0, 7fr) minmax(360px, 5fr);
-  gap: 16px;
-  align-items: start;
-}
-
-.detail-split-row .detail-module {
-  height: auto;
-}
-
-.how-to-use-module {
-  min-height: 560px;
-}
-
-.academic-side-module {
-  min-height: 0;
-}
-
-.academic-side-module .academic-layout,
-.academic-side-module .paper-summary,
-.academic-side-module .citation-card,
-.academic-side-module .benchmark-focus {
-  flex: 0 0 auto;
-}
-
-.academic-side-module .paper-summary {
-  align-content: start;
-}
-
-.academic-side-module .citation-card {
-  min-height: 260px;
-}
-
-.academic-side-module .benchmark-focus {
-  margin-top: 12px;
-}
-
 .tool-intro-layout,
 .usage-layout,
 .academic-layout {
@@ -2889,6 +2849,63 @@ tr:last-child td {
   overflow-wrap: anywhere;
 }
 
+.detail-bento-module {
+  height: auto;
+}
+
+.detail-bento-resources {
+  margin-bottom: 14px;
+}
+
+.detail-bento-grid {
+  min-width: 0;
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: 14px;
+  align-items: stretch;
+}
+
+.detail-bento-grid > * {
+  min-width: 0;
+}
+
+.bento-notes {
+  grid-column: span 3;
+}
+
+.bento-example,
+.bento-result {
+  grid-column: span 4;
+}
+
+.bento-paper {
+  grid-column: span 7;
+}
+
+.bento-citation {
+  grid-column: span 5;
+}
+
+.bento-benchmark {
+  grid-column: 1 / -1;
+}
+
+.detail-bento-grid .usage-card,
+.detail-bento-grid .paper-summary,
+.detail-bento-grid .citation-card,
+.detail-bento-grid .benchmark-focus {
+  margin: 0;
+  height: auto;
+}
+
+.detail-bento-grid .usage-card {
+  min-height: 0;
+}
+
+.detail-bento-grid .doc-code.equal-preview:not(.expanded) {
+  height: 230px;
+}
+
 .usage-layout {
   grid-template-columns: minmax(220px, 0.9fr) minmax(0, 1.1fr);
   grid-template-areas:
@@ -2948,14 +2965,14 @@ tr:last-child td {
 
 .paper-summary {
   display: grid;
-  grid-template-columns: minmax(0, 1fr);
+  grid-template-columns: minmax(240px, 0.9fr) minmax(0, 1.1fr);
   gap: 14px;
   background: #ffffff;
 }
 
 .paper-summary .paper-cover {
   aspect-ratio: 16 / 10;
-  min-height: 220px;
+  min-height: 260px;
 }
 
 .citation-card {
@@ -2970,10 +2987,6 @@ tr:last-child td {
   flex: 1;
   display: flex;
   flex-direction: column;
-}
-
-.academic-side-module .citation-card .doc-code.equal-preview:not(.expanded) {
-  height: 230px;
 }
 
 .benchmark-focus {
@@ -3718,9 +3731,9 @@ tr:last-child td {
   }
 
   .content-grid,
-  .detail-split-row,
   .tool-intro-layout,
   .usage-layout,
+  .detail-bento-grid,
   .academic-layout,
   .paper-card,
   .paper-summary,
@@ -3939,8 +3952,17 @@ tr:last-child td {
     grid-template-columns: 1fr;
   }
 
-  .detail-split-row {
+  .detail-bento-grid {
     grid-template-columns: 1fr;
+  }
+
+  .bento-notes,
+  .bento-example,
+  .bento-result,
+  .bento-paper,
+  .bento-citation,
+  .bento-benchmark {
+    grid-column: 1 / -1;
   }
 
   .module-compact,
