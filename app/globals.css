@@ -2965,14 +2965,15 @@ tr:last-child td {
 
 .paper-summary {
   display: grid;
-  grid-template-columns: minmax(240px, 0.9fr) minmax(0, 1.1fr);
+  grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
   gap: 14px;
   background: #ffffff;
 }
 
 .paper-summary .paper-cover {
   aspect-ratio: 16 / 10;
-  min-height: 260px;
+  min-height: 0;
+  width: 100%;
 }
 
 .citation-card {
