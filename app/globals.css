@@ -2466,6 +2466,42 @@ tr:last-child td {
   grid-column: 1 / -1;
 }
 
+.detail-split-row {
+  min-width: 0;
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: minmax(0, 7fr) minmax(360px, 5fr);
+  gap: 16px;
+  align-items: stretch;
+}
+
+.how-to-use-module {
+  min-height: 680px;
+}
+
+.academic-side-module {
+  min-height: 680px;
+}
+
+.academic-side-module .academic-layout,
+.academic-side-module .paper-summary,
+.academic-side-module .citation-card,
+.academic-side-module .benchmark-focus {
+  flex: 0 0 auto;
+}
+
+.academic-side-module .paper-summary {
+  align-content: start;
+}
+
+.academic-side-module .citation-card {
+  min-height: 260px;
+}
+
+.academic-side-module .benchmark-focus {
+  margin-top: 12px;
+}
+
 .tool-intro-layout,
 .usage-layout,
 .academic-layout {
@@ -2850,8 +2886,16 @@ tr:last-child td {
 }
 
 .usage-layout {
-  grid-template-columns: minmax(220px, 0.85fr) repeat(2, minmax(0, 1fr));
+  grid-template-columns: minmax(0, 1fr);
   align-items: stretch;
+}
+
+.usage-layout .usage-card {
+  min-height: 220px;
+}
+
+.usage-layout .usage-card:first-child {
+  min-height: 300px;
 }
 
 .usage-card {
@@ -2881,19 +2925,20 @@ tr:last-child td {
 }
 
 .academic-layout {
-  grid-template-columns: minmax(0, 1.18fr) minmax(280px, 0.82fr);
+  grid-template-columns: minmax(0, 1fr);
   align-items: stretch;
 }
 
 .paper-summary {
   display: grid;
-  grid-template-columns: minmax(190px, 0.9fr) minmax(0, 1.1fr);
+  grid-template-columns: minmax(0, 1fr);
   gap: 14px;
   background: #ffffff;
 }
 
 .paper-summary .paper-cover {
-  aspect-ratio: 4 / 3;
+  aspect-ratio: 16 / 10;
+  min-height: 220px;
 }
 
 .citation-card {
@@ -2910,6 +2955,10 @@ tr:last-child td {
   flex-direction: column;
 }
 
+.academic-side-module .citation-card .doc-code.equal-preview:not(.expanded) {
+  height: 230px;
+}
+
 .benchmark-focus {
   min-width: 0;
   display: grid;
@@ -2922,7 +2971,7 @@ tr:last-child td {
 }
 
 #academic-info .benchmark-focus {
-  grid-column: 1 / -1;
+  grid-column: auto;
 }
 
 .benchmark-table-wrap {
@@ -3652,6 +3701,7 @@ tr:last-child td {
   }
 
   .content-grid,
+  .detail-split-row,
   .tool-intro-layout,
   .usage-layout,
   .academic-layout,
@@ -3869,6 +3919,10 @@ tr:last-child td {
   }
 
   .main-stack {
+    grid-template-columns: 1fr;
+  }
+
+  .detail-split-row {
     grid-template-columns: 1fr;
   }
 

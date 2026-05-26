@@ -322,117 +322,119 @@ export default async function ToolDetailPage({ params }: { params: Promise<{ slu
               </div>
             </section>
 
-            <section className="card detail-module module-primary" id="how-to-use">
-              <div className="card-head">
-                <div>
-                  <h2>How To Use</h2>
-                  <p className="muted">Official resources, code download, deployment notes, and a short repository-relative usage example.</p>
-                </div>
-              </div>
-
-              <div className={`resource-link-grid count-${resourceLinks.length}`}>
-                {resourceLinks.length ? resourceLinks.map((link) => (
-                  <a href={link.url} key={`${link.label}-${link.url}`} target="_blank" rel="noreferrer">
-                    <strong>{link.label}</strong>
-                    <span>{link.url}</span>
-                  </a>
-                )) : (
-                  <div className="empty-track">Add GitHub, Hugging Face, paper, project page, or dataset links for this tool.</div>
-                )}
-              </div>
-
-              <div className="usage-layout">
-                <article className="usage-card">
-                  <h3>Deployment Notes</h3>
-                  <ol className="usage-steps">
-                    {usageSteps.map((step) => <li key={step}>{step}</li>)}
-                  </ol>
-                </article>
-                <article className="usage-card">
-                  <h3>Relative Path Example</h3>
-                  <CodePanel
-                    code={tool.apiExample || `python tools/${tool.slug}/demo/run_example.py --input tools/${tool.slug}/examples/input`}
-                    previewLines={5}
-                    previewHeightPx={190}
-                    equalPreviewHeight
-                    expandLabel="Read full example"
-                    collapseLabel="Show less example"
-                  />
-                </article>
-                <article className="usage-card">
-                  <h3>Expected Result Shape</h3>
-                  <CodePanel
-                    code={JSON.stringify(returnPreview, null, 2)}
-                    previewLines={5}
-                    previewHeightPx={190}
-                    equalPreviewHeight
-                    expandLabel="Read full result shape"
-                    collapseLabel="Show less result shape"
-                  />
-                </article>
-              </div>
-            </section>
-
-            <section className="card detail-module module-full" id="academic-info">
-              <div className="card-head">
-                <div>
-                  <h2>Academic Info</h2>
-                  <p className="muted">Paper identity, copyable citation, and the most readable benchmark numbers.</p>
-                </div>
-              </div>
-              <div className="academic-layout">
-                <article className="paper-summary">
-                  <div
-                    className={`paper-cover ${tool.heroImage ? "demo-slot image" : ""}`}
-                    style={tool.heroImage ? { backgroundImage: `linear-gradient(135deg, rgba(16, 24, 40, 0.2), rgba(53, 98, 255, 0.08)), url('${assetPath(tool.heroImage)}')`, backgroundPosition: heroBackgroundPosition } : undefined}
-                  >
-                    <span>Paper figure</span>
+            <div className="detail-split-row">
+              <section className="card detail-module how-to-use-module" id="how-to-use">
+                <div className="card-head">
+                  <div>
+                    <h2>How To Use</h2>
+                    <p className="muted">Official resources, code download, deployment notes, and a short repository-relative usage example.</p>
                   </div>
-                  <div className="field-list">
-                    <div className="field-row"><span>Title</span><strong>{tool.paperTitle || tool.title}</strong></div>
-                    <div className="field-row"><span>Authors</span><strong>{tool.paperAuthors || "Add authors"}</strong></div>
-                    <div className="field-row"><span>Venue</span><strong>{tool.paperVenue || "Add venue"}</strong></div>
-                    <div className="field-row"><span>Contribution</span><strong>{tool.paperContribution || tool.summary}</strong></div>
-                  </div>
-                </article>
-                <article className="citation-card">
-                  <h3>Citation</h3>
-                  <CodePanel code={citation} previewLines={6} previewHeightPx={230} equalPreviewHeight expandLabel="Read full citation" collapseLabel="Show less citation" />
-                </article>
-              </div>
-
-              <div className="benchmark-focus">
-                <div className="mini-section-head">
-                  <h3>Benchmark</h3>
-                  <p className="muted">Only compact, source-reported numbers are shown here.</p>
                 </div>
-                <div className="benchmark-table-wrap">
-                  <table className="benchmark-table">
-                    <thead>
-                      <tr>
-                        <th>Dataset</th>
-                        <th>Metric</th>
-                        <th>Value</th>
-                        <th>Runtime</th>
-                        <th>Source</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {benchmarkRows.map((row) => (
-                        <tr key={`${row.dataset}-${row.metric}`}>
-                          <td>{row.dataset}</td>
-                          <td>{row.metric}</td>
-                          <td><strong>{row.value}</strong></td>
-                          <td>{row.runtime || "Not reported"}</td>
-                          <td>{row.source || tool.paperVenue || "Paper"}</td>
+
+                <div className={`resource-link-grid count-${resourceLinks.length}`}>
+                  {resourceLinks.length ? resourceLinks.map((link) => (
+                    <a href={link.url} key={`${link.label}-${link.url}`} target="_blank" rel="noreferrer">
+                      <strong>{link.label}</strong>
+                      <span>{link.url}</span>
+                    </a>
+                  )) : (
+                    <div className="empty-track">Add GitHub, Hugging Face, paper, project page, or dataset links for this tool.</div>
+                  )}
+                </div>
+
+                <div className="usage-layout">
+                  <article className="usage-card">
+                    <h3>Deployment Notes</h3>
+                    <ol className="usage-steps">
+                      {usageSteps.map((step) => <li key={step}>{step}</li>)}
+                    </ol>
+                  </article>
+                  <article className="usage-card">
+                    <h3>Relative Path Example</h3>
+                    <CodePanel
+                      code={tool.apiExample || `python tools/${tool.slug}/demo/run_example.py --input tools/${tool.slug}/examples/input`}
+                      previewLines={5}
+                      previewHeightPx={190}
+                      equalPreviewHeight
+                      expandLabel="Read full example"
+                      collapseLabel="Show less example"
+                    />
+                  </article>
+                  <article className="usage-card">
+                    <h3>Expected Result Shape</h3>
+                    <CodePanel
+                      code={JSON.stringify(returnPreview, null, 2)}
+                      previewLines={5}
+                      previewHeightPx={190}
+                      equalPreviewHeight
+                      expandLabel="Read full result shape"
+                      collapseLabel="Show less result shape"
+                    />
+                  </article>
+                </div>
+              </section>
+
+              <section className="card detail-module academic-side-module" id="academic-info">
+                <div className="card-head">
+                  <div>
+                    <h2>Academic Info</h2>
+                    <p className="muted">Paper identity, copyable citation, and the most readable benchmark numbers.</p>
+                  </div>
+                </div>
+                <div className="academic-layout">
+                  <article className="paper-summary">
+                    <div
+                      className={`paper-cover ${tool.heroImage ? "demo-slot image" : ""}`}
+                      style={tool.heroImage ? { backgroundImage: `linear-gradient(135deg, rgba(16, 24, 40, 0.2), rgba(53, 98, 255, 0.08)), url('${assetPath(tool.heroImage)}')`, backgroundPosition: heroBackgroundPosition } : undefined}
+                    >
+                      <span>Paper figure</span>
+                    </div>
+                    <div className="field-list">
+                      <div className="field-row"><span>Title</span><strong>{tool.paperTitle || tool.title}</strong></div>
+                      <div className="field-row"><span>Authors</span><strong>{tool.paperAuthors || "Add authors"}</strong></div>
+                      <div className="field-row"><span>Venue</span><strong>{tool.paperVenue || "Add venue"}</strong></div>
+                      <div className="field-row"><span>Contribution</span><strong>{tool.paperContribution || tool.summary}</strong></div>
+                    </div>
+                  </article>
+                  <article className="citation-card">
+                    <h3>Citation</h3>
+                    <CodePanel code={citation} previewLines={6} previewHeightPx={230} equalPreviewHeight expandLabel="Read full citation" collapseLabel="Show less citation" />
+                  </article>
+                </div>
+
+                <div className="benchmark-focus">
+                  <div className="mini-section-head">
+                    <h3>Benchmark</h3>
+                    <p className="muted">Only compact, source-reported numbers are shown here.</p>
+                  </div>
+                  <div className="benchmark-table-wrap">
+                    <table className="benchmark-table">
+                      <thead>
+                        <tr>
+                          <th>Dataset</th>
+                          <th>Metric</th>
+                          <th>Value</th>
+                          <th>Runtime</th>
+                          <th>Source</th>
                         </tr>
-                      ))}
-                    </tbody>
-                  </table>
+                      </thead>
+                      <tbody>
+                        {benchmarkRows.map((row) => (
+                          <tr key={`${row.dataset}-${row.metric}`}>
+                            <td>{row.dataset}</td>
+                            <td>{row.metric}</td>
+                            <td><strong>{row.value}</strong></td>
+                            <td>{row.runtime || "Not reported"}</td>
+                            <td>{row.source || tool.paperVenue || "Paper"}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                  <div className="field-row"><span>Artifacts</span><strong>{tool.benchmarkArtifacts || "Add paper, logs, videos, configs, or evaluation files."}</strong></div>
                 </div>
-                <div className="field-row"><span>Artifacts</span><strong>{tool.benchmarkArtifacts || "Add paper, logs, videos, configs, or evaluation files."}</strong></div>
-              </div>
-            </section>
+              </section>
+            </div>
 
             <section className="card detail-module module-full">
               <div className="card-head">
