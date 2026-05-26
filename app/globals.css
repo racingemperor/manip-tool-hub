@@ -2695,9 +2695,17 @@ tr:last-child td {
   min-height: 0;
   flex: 1;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  grid-template-columns: repeat(2, minmax(260px, 1fr));
   gap: 12px;
   align-items: stretch;
+}
+
+.parameters-output-module {
+  height: auto;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
 }
 
 .info-pair-grid > .usage-card {

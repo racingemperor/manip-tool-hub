@@ -283,7 +283,7 @@ export default async function ToolDetailPage({ params }: { params: Promise<{ slu
               </section>
             ) : null}
 
-            <section className="card detail-module module-secondary">
+            <section className="detail-module module-full parameters-output-module">
               <div className="card-head">
                 <div>
                   <h2>Parameters And Output</h2>
