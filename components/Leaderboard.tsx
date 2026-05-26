@@ -57,7 +57,7 @@ export function Leaderboard() {
         Ranking is grouped by the four tool categories. The values shown here are source-reported benchmark numbers, so AP, J&amp;F, REL, success rate, APE/RMSE, and runtime are not mixed into one universal score. Templates are excluded. Hotness is calculated as likes + saves from the current engagement data.
       </div>
 
-      <div className="toolbar">
+      <div className="toolbar leaderboard-toolbar">
         <div className="filters">
           <CompactSelect ariaLabel="Leaderboard category filter" value={category} options={categoryOptions} onChange={setCategory} />
           <CompactSelect ariaLabel="Leaderboard sort logic" value={sort} options={sortOptions} onChange={setSort} />
