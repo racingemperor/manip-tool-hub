@@ -1,12 +1,9 @@
-# Static export deployment for GitHub Pages.
 name: Deploy Pages
 
 on:
   push:
     branches: [main]
   workflow_dispatch:
-  repository_dispatch:
-    types: [deploy-pages]
 
 permissions:
   contents: read
