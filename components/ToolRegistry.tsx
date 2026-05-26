@@ -11,6 +11,21 @@ const pageSize = 8;
 type PaginationItem = number | "ellipsis";
 type CategoryFilter = ToolCategory | "All";
 
+function PageArrowIcon({ direction }: { direction: "previous" | "next" }) {
+  return (
+    <svg className="page-arrow-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+      <path
+        d={direction === "previous" ? "M15 18 9 12l6-6" : "m9 6 6 6-6 6"}
+        fill="none"
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="2"
+      />
+    </svg>
+  );
+}
+
 function categoryButtonLabel(category: CategoryFilter, count: number) {
   if (category === "All") return `All Tools (${tools.length})`;
   return `${category} (${count})`;
@@ -158,11 +173,15 @@ export function ToolRegistry() {
           {totalPages > 1 ? (
             <div className="tool-pagination" aria-label="Tool pagination">
               <div className="page-numbers" aria-label="Page numbers">
-                {safePage > 1 ? (
-                  <button className="page-next" type="button" onClick={() => goToPage(safePage - 1)}>
-                    Previous
-                  </button>
-                ) : null}
+                <button
+                  aria-label="Previous page"
+                  className="page-arrow"
+                  disabled={safePage <= 1}
+                  type="button"
+                  onClick={() => goToPage(safePage - 1)}
+                >
+                  <PageArrowIcon direction="previous" />
+                </button>
                 {paginationItems.map((item, index) => item === "ellipsis" ? (
                   <span className="page-ellipsis" key={`ellipsis-${index}`}>...</span>
                 ) : (
@@ -176,11 +195,15 @@ export function ToolRegistry() {
                     {item}
                   </button>
                 ))}
-                {safePage < totalPages ? (
-                  <button className="page-next" type="button" onClick={() => goToPage(safePage + 1)}>
-                    Next
-                  </button>
-                ) : null}
+                <button
+                  aria-label="Next page"
+                  className="page-arrow"
+                  disabled={safePage >= totalPages}
+                  type="button"
+                  onClick={() => goToPage(safePage + 1)}
+                >
+                  <PageArrowIcon direction="next" />
+                </button>
               </div>
               <form className="page-jump" onSubmit={submitJump}>
                 <span>Total {totalPages} pages / {filteredTools.length} tools, go to</span>
