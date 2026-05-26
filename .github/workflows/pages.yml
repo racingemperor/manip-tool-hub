@@ -1,3 +1,4 @@
+# Static export deployment for GitHub Pages.
 name: Deploy Pages
 
 on:
