@@ -84,9 +84,9 @@ export default function HomePage() {
       <section>
         <div className="hero">
           <div className="eyebrow">Embodied Tools</div>
-          <h1>Find datasets, compare tools, and pick capabilities by task.</h1>
+          <h1>Discover, Use, and Evaluate Embodied Tools</h1>
           <p>
-            A standardized tool extension and management framework for embodied intelligence, by encapsulating heterogeneous perception, control and physical constraint modules, endows the visual language model (VLM) with high robustness, reliability and real-time closed-loop decision-making and execution capabilities in complex physical interactions.
+            This website provides an open hub of curated embodied toolsets and benchmark resources. Researchers can browse tools across perception, cognition, reasoning, planning, and execution, and evaluate whether current models can recognize, select, invoke, and compose embodied tools for complex embodied tasks.
           </p>
         </div>
 
