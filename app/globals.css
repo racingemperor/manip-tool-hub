@@ -3026,8 +3026,8 @@ tr:last-child td {
 }
 
 .detail-bento-grid .doc-code.equal-preview:not(.expanded) {
-  height: auto;
-  max-height: 250px;
+  height: 100%;
+  max-height: none;
 }
 
 .detail-bento-grid .benchmark-table-wrap {
@@ -3252,10 +3252,14 @@ tr:last-child td {
 .citation-card .doc-code.equal-preview:not(.expanded) {
   flex: 1;
   min-height: var(--code-preview-height, 190px);
-  padding-bottom: 36px;
   overflow: hidden;
   border: 1px solid #c9d6ff;
   background: #eef4ff;
+}
+
+.usage-card > .doc-code.equal-preview.collapsible:not(.expanded),
+.citation-card .doc-code.equal-preview.collapsible:not(.expanded) {
+  padding-bottom: 36px;
 }
 
 .usage-card > .doc-code.equal-preview:not(.expanded) .api-block,
@@ -3263,8 +3267,14 @@ tr:last-child td {
   position: absolute;
   inset: 0;
   width: 100%;
-  height: auto;
+  height: 100%;
   max-height: none;
+}
+
+.usage-card > .doc-code.equal-preview.collapsible:not(.expanded) .api-block,
+.citation-card .doc-code.equal-preview.collapsible:not(.expanded) .api-block {
+  bottom: 36px;
+  height: auto;
 }
 
 .doc-code .api-block {
