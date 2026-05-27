@@ -238,7 +238,7 @@ export default async function ToolDetailPage({ params }: { params: Promise<{ slu
 
         <div className="content-grid">
           <div className="main-stack">
-            <section className={`detail-module module-full tool-introduction-module ${tool.presetExample ? "has-preset" : "no-preset"}`} id="tool-introduction">
+            <section className={`detail-module module-medium tool-introduction-module ${tool.presetExample ? "has-preset" : "no-preset"}`} id="tool-introduction">
               <div className="card-head">
                 <div>
                   <h2>Tool Introduction</h2>
@@ -264,19 +264,22 @@ export default async function ToolDetailPage({ params }: { params: Promise<{ slu
                   <strong>{tool.output}</strong>
                   <p>Read the produced visualization, prediction, map, trajectory, mask, grasp pose, or other documented artifact.</p>
                 </article>
-                {tool.presetExample ? (
-                  <div className="intro-preset">
-                    <div className="mini-section-head">
-                      <h3>Preset Example</h3>
-                      <p className="muted">A quick-run style example for the documentation page.</p>
-                    </div>
-                    <PresetExample example={tool.presetExample} />
-                  </div>
-                ) : null}
               </div>
             </section>
 
-            <section className="detail-module module-full parameters-output-module">
+            {tool.presetExample ? (
+              <section className="detail-module module-medium intro-preset-module">
+                <div className="card-head">
+                  <div>
+                    <h2>Preset Example</h2>
+                    <p className="muted">A quick-run style example for the documentation page.</p>
+                  </div>
+                </div>
+                <PresetExample example={tool.presetExample} />
+              </section>
+            ) : null}
+
+            <section className={`detail-module ${tool.presetExample ? "module-full" : "module-medium"} parameters-output-module`}>
               <div className="card-head">
                 <div>
                   <h2>Parameters And Output</h2>
