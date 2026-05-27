@@ -2468,9 +2468,9 @@ tr:last-child td {
 
 .tool-introduction-module {
   height: auto;
-  padding: 0;
-  border: 0;
-  background: transparent;
+  padding: 18px;
+  border: 1px solid var(--line);
+  background: #ffffff;
   box-shadow: none;
 }
 
@@ -2490,11 +2490,12 @@ tr:last-child td {
 .tool-intro-layout {
   grid-template-columns: repeat(12, minmax(0, 1fr));
   grid-auto-flow: dense;
-  align-items: start;
+  align-items: stretch;
 }
 
 .tool-intro-layout > * {
   min-width: 0;
+  height: 100%;
 }
 
 .tool-introduction-module .brief-card,
@@ -2505,27 +2506,28 @@ tr:last-child td {
 .tool-introduction-module .intro-before,
 .tool-introduction-module .intro-after {
   grid-column: span 3;
+  height: 100%;
 }
 
-.tool-introduction-module.has-preset .brief-card,
-.tool-introduction-module.has-preset .intro-after {
-  grid-column: span 7;
+.tool-introduction-module.has-preset .brief-card {
+  grid-column: span 6;
 }
 
 .tool-introduction-module.has-preset .intro-input,
-.tool-introduction-module.has-preset .intro-runtime,
-.tool-introduction-module.has-preset .intro-before {
+.tool-introduction-module.has-preset .intro-output {
   grid-column: span 3;
 }
 
-.tool-introduction-module.has-preset .intro-output,
-.tool-introduction-module.has-preset .intro-trigger {
-  grid-column: span 4;
+.tool-introduction-module.has-preset .intro-trigger,
+.tool-introduction-module.has-preset .intro-runtime,
+.tool-introduction-module.has-preset .intro-before,
+.tool-introduction-module.has-preset .intro-after {
+  grid-column: span 3;
 }
 
 .tool-introduction-module.has-preset .intro-preset {
-  grid-column: 8 / -1;
-  grid-row: 1 / span 5;
+  grid-column: 1 / -1;
+  grid-row: auto;
   align-self: stretch;
   display: flex;
   flex-direction: column;
@@ -2619,13 +2621,16 @@ tr:last-child td {
   border-radius: 8px;
   background: #ffffff;
   padding: 14px;
+  height: 100%;
+  overflow-wrap: anywhere;
 }
 
 .intro-preset .preset-card {
   margin-top: 10px;
   flex: 1;
-  height: 100%;
-  grid-template-columns: minmax(180px, 0.9fr) minmax(0, 1.1fr);
+  height: auto;
+  min-height: 220px;
+  grid-template-columns: minmax(220px, 0.8fr) minmax(0, 1.2fr);
   align-items: stretch;
 }
 
@@ -2733,8 +2738,8 @@ tr:last-child td {
 }
 
 .preset-copy .field-row > * {
-  overflow-wrap: break-word;
-  word-break: normal;
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
 
 .preset-copy .field-row span:first-child {
@@ -2965,18 +2970,16 @@ tr:last-child td {
 
 .detail-bento-grid {
   min-width: 0;
-  columns: 3 300px;
-  column-gap: 14px;
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
   gap: 14px;
+  align-items: stretch;
 }
 
 .detail-bento-grid > * {
   min-width: 0;
-  display: inline-block;
   width: 100%;
-  margin: 0 0 14px;
-  break-inside: avoid;
-  page-break-inside: avoid;
+  margin: 0;
 }
 
 .bento-resources .resource-link-grid a {
@@ -2988,11 +2991,25 @@ tr:last-child td {
 .detail-bento-grid .citation-card,
 .detail-bento-grid .benchmark-focus {
   margin: 0;
-  height: auto;
+  height: 100%;
+}
+
+.bento-resources,
+.bento-notes,
+.bento-example,
+.bento-result,
+.bento-paper,
+.bento-citation,
+.bento-artifacts {
+  grid-column: span 4;
+}
+
+.bento-benchmark {
+  grid-column: span 8;
 }
 
 .detail-bento-grid .paper-summary {
-  display: inline-grid;
+  display: grid;
   grid-template-columns: 1fr;
 }
 
@@ -3587,7 +3604,7 @@ tr:last-child td {
 
 .floating-nav {
   position: fixed;
-  left: 12px;
+  left: max(12px, calc((100vw - 1500px) / 2 - 58px));
   top: 176px;
   z-index: 7;
   display: none;
@@ -3800,7 +3817,7 @@ tr:last-child td {
   outline-offset: 3px;
 }
 
-@media (min-width: 1180px) {
+@media (min-width: 1600px) {
   .floating-nav {
     display: flex;
   }
@@ -4143,7 +4160,18 @@ tr:last-child td {
   }
 
   .detail-bento-grid {
-    column-count: 1;
+    grid-template-columns: 1fr;
+  }
+
+  .bento-resources,
+  .bento-notes,
+  .bento-example,
+  .bento-result,
+  .bento-paper,
+  .bento-citation,
+  .bento-benchmark,
+  .bento-artifacts {
+    grid-column: 1 / -1;
   }
 
   .detail-tail-grid {
