@@ -27,33 +27,36 @@ export function CategoryIcon({ name, className = "home-entry-icon" }: { name: Ca
     <svg className={className} viewBox="0 0 32 32" aria-hidden="true" focusable="false">
       {name === "perception" ? (
         <>
-          <path {...common} d="M4 16s4.5-8 12-8 12 8 12 8-4.5 8-12 8S4 16 4 16Z" />
-          <circle {...common} cx="16" cy="16" r="4" />
-          <path {...common} d="M23 23l4 4" />
+          <path {...common} d="M4.5 16s4.4-6.5 11.5-6.5S27.5 16 27.5 16 23.1 22.5 16 22.5 4.5 16 4.5 16Z" />
+          <circle {...common} cx="16" cy="16" r="3.4" />
         </>
       ) : null}
       {name === "cognition" ? (
         <>
-          <path {...common} d="M9 12a7 7 0 0 1 14 0v8a5 5 0 0 1-5 5h-6a5 5 0 0 1-5-5v-5" />
-          <circle {...common} cx="12" cy="13" r="1.7" />
-          <circle {...common} cx="20" cy="13" r="1.7" />
-          <path {...common} d="M12 20h8M15 9V5M21 7l2-3M9 7l7 7" />
+          <circle {...common} cx="16" cy="16" r="3.2" />
+          <circle {...common} cx="8.5" cy="10.5" r="2.4" />
+          <circle {...common} cx="23.5" cy="10.5" r="2.4" />
+          <circle {...common} cx="10.5" cy="23" r="2.4" />
+          <circle {...common} cx="21.5" cy="23" r="2.4" />
+          <path {...common} d="M10.6 12 13.4 14M21.4 12 18.6 14M12.8 21.1l1.6-2.4M19.2 21.1l-1.6-2.4" />
         </>
       ) : null}
       {name === "reasoning" ? (
         <>
-          <path {...common} d="M7 8h8v8H7zM18 16h7v8h-7z" />
-          <path {...common} d="M15 12h4a3 3 0 0 1 3 3v1" />
-          <path {...common} d="M18 20h-4a3 3 0 0 1-3-3v-1" />
-          <path {...common} d="M24 9l3 3-3 3M8 23l-3-3 3-3" />
+          <circle {...common} cx="8.5" cy="8.5" r="2.7" />
+          <circle {...common} cx="23.5" cy="8.5" r="2.7" />
+          <circle {...common} cx="16" cy="23.5" r="2.7" />
+          <path {...common} d="M11.2 8.5h9.6M22.1 11 17.7 21M9.9 11l4.4 10" />
         </>
       ) : null}
       {name === "execution" ? (
         <>
-          <path {...common} d="M9 6v7M16 5v8M23 7v9" />
-          <path {...common} d="M7 13h4l2 7 3-7h4l2 7 3-4" />
-          <path {...common} d="M8 26h16" />
-          <path {...common} d="M16 20v6" />
+          <path {...common} d="M6.5 25.5h11" />
+          <path {...common} d="M11 25.5v-6" />
+          <circle {...common} cx="11" cy="17.5" r="2.4" />
+          <path {...common} d="M13 16.1 19.5 10" />
+          <circle {...common} cx="20.8" cy="8.8" r="2.1" />
+          <path {...common} d="M22.6 7.6 26 5M22.8 10.2l3.8 2" />
         </>
       ) : null}
     </svg>

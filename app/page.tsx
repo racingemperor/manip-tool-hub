@@ -172,12 +172,14 @@ export default function HomePage() {
           </div>
           <div className="home-category-map">
             {capabilityCoverage.map(({ category, entries, href }) => (
-              <Link className={`home-category-card color-fill-card ${homeToneClass(categoryVisuals[category].tone)}`} href={href} key={category}>
-                <div className="home-category-head">
-                  <div className="home-entry-icon-wrap">
-                    <CategoryIcon name={categoryVisuals[category].icon} />
-                  </div>
-                  <span className="home-category-count">{entries.length || "Ready"}</span>
+              <Link
+                aria-label={`${category}, ${entries.length} tools`}
+                className={`home-category-card color-fill-card ${homeToneClass(categoryVisuals[category].tone)}`}
+                href={href}
+                key={category}
+              >
+                <div className="home-entry-icon-wrap">
+                  <CategoryIcon name={categoryVisuals[category].icon} />
                 </div>
                 <div>
                   <h3>{category}</h3>
