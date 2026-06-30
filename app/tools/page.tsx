@@ -8,7 +8,7 @@ export default function ToolsPage() {
         <div className="section-head">
           <div>
             <h2>Tools</h2>
-            <p>Interactive tool registry with paper, demo, API, and benchmark slots ready for real entries.</p>
+            <p>Interactive registry of robotics and embodied-AI tools with paper context, demos, input/output contracts, official links, and benchmark evidence.</p>
           </div>
         </div>
         <ToolRegistry />

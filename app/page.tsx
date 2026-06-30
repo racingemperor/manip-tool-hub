@@ -11,10 +11,10 @@ type HomeTone = "amber" | "indigo" | "violet" | "emerald" | "sky" | "rose" | "te
 type HomeIconName = "dataset" | "leaderboard" | "tools" | "explore";
 
 const modules = [
-  { href: "/datasets", icon: "dataset", tone: "teal", title: "Dataset Library", text: "Dataset entries and download links." },
-  { href: "/leaderboard", icon: "leaderboard", tone: "amber", title: "Leaderboard", text: "Benchmark metrics by category." },
-  { href: "/tools", icon: "tools", tone: "indigo", title: "Tools", text: "Capability-based tool catalog." },
-  { href: "/explore", icon: "explore", tone: "violet", title: "Explore", text: "Task-based discovery shortcuts." }
+  { href: "/datasets", icon: "dataset", tone: "teal", title: "Dataset Library", text: "Public datasets and source links." },
+  { href: "/leaderboard", icon: "leaderboard", tone: "amber", title: "Leaderboard", text: "Source-reported benchmark signals." },
+  { href: "/tools", icon: "tools", tone: "indigo", title: "Tools", text: "Capability-based robotics tool catalog." },
+  { href: "/explore", icon: "explore", tone: "violet", title: "Explore", text: "Task-oriented discovery paths." }
 ] satisfies Array<{ href: string; icon: HomeIconName; tone: HomeTone; title: string; text: string }>;
 
 function HomeIcon({ name }: { name: HomeIconName }) {
@@ -83,10 +83,10 @@ export default function HomePage() {
     <SiteShell>
       <section>
         <div className="hero">
-          <div className="eyebrow">Embodied Tools</div>
-          <h1>Discover, Use, and Evaluate Embodied Tools</h1>
+          <div className="eyebrow">Manip Tool Hub</div>
+          <h1>Map, Inspect, and Validate Embodied AI Tools</h1>
           <p>
-            This website provides an open hub of curated embodied toolsets and benchmark resources. Researchers can browse tools across perception, cognition, reasoning, planning, and execution, and evaluate whether current models can recognize, select, invoke, and compose embodied tools for complex embodied tasks.
+            A public research-engineering hub for robotics and embodied-intelligence tools. Browse perception, mapping, planning, and control modules, inspect their input/output contracts, follow official resources, and track which entries have benchmark evidence or runnable validation paths.
           </p>
         </div>
 
@@ -94,7 +94,7 @@ export default function HomePage() {
           <div className="section-head">
             <div>
               <h2>Core Modules</h2>
-              <p>Browse the platform by dataset, benchmark, tool, or task.</p>
+              <p>Move from public resources to tools, benchmark signals, and task-oriented discovery.</p>
             </div>
           </div>
           <div className="module-strip">
@@ -116,7 +116,7 @@ export default function HomePage() {
           <div className="section-head">
             <div>
               <h2>Featured Tools</h2>
-              <p>Representative entries with source images, paper context, demos, and implementation links.</p>
+              <p>Representative entries with source images, paper context, demos, benchmark rows, and implementation links.</p>
             </div>
           </div>
           <div className="home-overview">
@@ -147,7 +147,7 @@ export default function HomePage() {
               <div>
                 <span className="eyebrow">Benchmark Snapshot</span>
                 <h3>Current Evaluation Signals</h3>
-                <p>Compact source-reported numbers used by the leaderboard.</p>
+                <p>Compact source-reported numbers used to keep tool claims evidence-aware.</p>
               </div>
               <div className="home-benchmark-list">
                 {benchmarkHighlights.map((row) => (
@@ -167,7 +167,7 @@ export default function HomePage() {
           <div className="section-head">
             <div>
               <h2>Capability Coverage</h2>
-              <p>Tools are organized by embodied-intelligence capability so new entries stay easy to scan.</p>
+              <p>Tools are grouped by embodied-intelligence capability so entries stay easy to review and extend.</p>
             </div>
           </div>
           <div className="home-category-map">
